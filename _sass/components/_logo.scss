@@ -1,0 +1,33 @@
+.bb-engineering-logo {
+  height: 1em;
+  line-height: 1;
+  font-weight: 200;
+  font-size: $logo-font-size;
+  display: inline-flex;
+  vertical-align: middle;
+
+  svg {
+    object-fit: contain;
+    height: .85em;
+    margin-top: .15em;
+  }
+
+  &,
+  &:hover {
+    color: map-get($bb-palette, "white");
+  }
+
+  &::before {
+    content: "/";
+    order: 1;
+    color: map-get($bb-palette, "red");
+    font-size: .894em;
+    margin-left: .45em;
+    margin-right: .4em;
+  }
+
+  &::after {
+    content: "Engineering";
+    order: 2;
+  }
+}

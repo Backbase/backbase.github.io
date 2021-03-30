@@ -1,0 +1,41 @@
+$primary: map-get($bb-palette, 'dark-blue');
+$secondary: map-get($bb-palette, "red");
+$info: map-get($bb-palette, "bright-blue");
+$warning: map-get($bb-palette, "light-orange");
+$danger: map-get($bb-palette, "red");
+$light: map-get($bb-palette, "offwhite");
+$dark: map-get($bb-palette, "slate");
+
+$gray-100: $light;
+$gray-200: mix(black, $gray-100, 25%);
+$gray-300: mix(black, $gray-100, 50%);
+$gray-400: map-get($bb-palette, "lightgrey");
+$gray-500: mix(black, $gray-400, 25%);
+$gray-600: mix(black, $gray-400, 50%);
+$gray-700: mix(white, $dark, 40%);
+$gray-800: mix(white, $dark, 20%);
+$gray-900: $dark;
+
+$body-bg: map-get($bb-palette, "white");
+$body-color: $dark;
+
+$link-color: map-get($bb-palette, "dark-orange");
+
+$font-family-sans-serif: 'Inter', sans-serif;
+
+$headings-font-weight: 200;
+
+$btn-link-color: $primary;
+$btn-link-hover-color: $btn-link-color;
+
+$nav-link-color: map-get($bb-palette, "white");
+$nav-link-hover-color: $nav-link-color;
+
+$card-border-radius: 8px;
+$card-border-width: 0;
+
+$enable-shadows: true;
+
+$min-contrast-ratio:   2.8;
+
+$navbar-dark-color: map-get($bb-palette, "white");

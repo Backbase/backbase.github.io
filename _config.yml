@@ -8,7 +8,7 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 #
-# If you need help with YAML syntax, here are some quick references for you: 
+# If you need help with YAML syntax, here are some quick references for you:
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 #
@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Engineering
+title: Backbase Engineering
 email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
@@ -33,7 +33,34 @@ github_username:  jekyll
 theme: minimal-mistakes-jekyll
 plugins:
   - jekyll-feed
-logo: "assets/images/backbase.svg"
+bb_engineering_logo: true
+
+footer_scripts:
+  - assets/js/bundle/main.js
+
+atom_feed:
+  hide: true
+
+footer:
+  links:
+    - label: YouTube
+      url: https://www.youtube.com/user/Backbase
+      icon: fab fa-youtube
+    - label: LinkedIn
+      url: https://www.linkedin.com/company/backbase/
+      icon: fab fa-linkedin-in
+    - label: Instagram
+      url: https://www.instagram.com/life_at_backbase/
+      icon: fab fa-instagram
+    - label: Glassdoor
+      url: https://www.glassdoor.nl/Overzicht/Werken-bij-Backbase-EI_IE117266.11,19.htm?countryRedirect=true
+      icon: glassdoor
+    - label: Facebook
+      url: https://www.facebook.com/backbase
+      icon: fab fa-facebook-f
+    - label: Stack Overflow
+      url: https://stackoverflow.com/jobs/companies/backbase
+      icon: fab fa-stack-overflow
 
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -54,3 +81,70 @@ logo: "assets/images/backbase.svg"
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+include:
+  - _pages
+  - node_modules/bootstrap/dist/js
+
+sass:
+  style: compressed
+  load_paths:
+    - ./node_modules
+
+# Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+  # _docs
+  - scope:
+      path: ""
+      type: docs
+    values:
+      layout: single
+      read_time: false
+      author_profile: false
+      share: false
+      comments: false
+      sidebar:
+        nav: "docs"
+  # _recipes
+  - scope:
+      path: ""
+      type: recipes
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      comments: true
+  # _pets
+  - scope:
+      path: ""
+      type: pets
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      comment: true
+  # _portfolio
+  - scope:
+      path: ""
+      type: portfolio
+    values:
+      layout: single
+      author_profile: false
+      share: true

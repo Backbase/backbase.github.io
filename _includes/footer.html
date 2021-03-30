@@ -1,0 +1,38 @@
+<div class="page__footer-follow">
+  <div class="footer-brand">
+    {% if site.bb_engineering_logo == true %}
+      <a class="site-logo text-decoration-none" href="{{ '/' | relative_url }}">
+        {% include bb_engineering_logo.html %}
+      </a>
+    {% else %}
+      {% unless logo_path == empty %}
+        <a class="site-logo" href="{{ '/' | relative_url }}">
+          <img src="{{ logo_path | relative_url }}" alt="">
+        </a>
+      {% endunless %}
+      <a class="site-title" href="{{ '/' | relative_url }}">
+        {{ site.masthead_title | default: site.title }}
+        {% if site.subtitle %}<span class="site-subtitle">{{ site.subtitle }}</span>{% endif %}
+      </a>
+    {% endif %}
+  </div>
+  <ul class="social-icons list-unstyled">
+    {% if site.data.ui-text[site.locale].follow_label %}
+      <li><strong>{{ site.data.ui-text[site.locale].follow_label }}</strong></li>
+    {% endif %}
+
+    {% if site.footer.links %}
+      {% for link in site.footer.links %}
+        {% if link.label and link.url %}
+          <li><a href="{{ link.url }}" rel="nofollow noopener noreferrer"><i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i><span class="visually-hidden">{{ link.label }}</span></a></li>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% unless site.atom_feed.hide %}
+      <li><a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].feed_label | default: "Feed" }}</a></li>
+    {% endunless %}
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}. {{ site.data.ui-text[site.locale].powered_by | default: "Powered by" }} <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
