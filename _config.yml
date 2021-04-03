@@ -31,12 +31,9 @@ github_username:  jekyll
 
 # Build settings
 theme: minimal-mistakes-jekyll
-plugins:
-  - jekyll-feed
 bb_engineering_logo: true
 
 footer_scripts:
-  - assets/js/bundle/main.js
 
 atom_feed:
   hide: true
@@ -54,7 +51,7 @@ footer:
       icon: fab fa-instagram
     - label: Glassdoor
       url: https://www.glassdoor.nl/Overzicht/Werken-bij-Backbase-EI_IE117266.11,19.htm?countryRedirect=true
-      icon: glassdoor
+      icon: fab custom-glassdoor
     - label: Facebook
       url: https://www.facebook.com/backbase
       icon: fab fa-facebook-f
@@ -83,12 +80,12 @@ footer:
 #   - vendor/ruby/
 include:
   - _pages
-  - node_modules/bootstrap/dist/js
+  - vendor/bundle
 
 sass:
   style: compressed
   load_paths:
-    - ./node_modules
+    - ./vendor/bundle/ruby/*/gems/bootstrap-5.0.0.beta2/assets/stylesheets
 
 # Defaults
 defaults:
@@ -110,41 +107,3 @@ defaults:
     values:
       layout: single
       author_profile: true
-  # _docs
-  - scope:
-      path: ""
-      type: docs
-    values:
-      layout: single
-      read_time: false
-      author_profile: false
-      share: false
-      comments: false
-      sidebar:
-        nav: "docs"
-  # _recipes
-  - scope:
-      path: ""
-      type: recipes
-    values:
-      layout: single
-      author_profile: true
-      share: true
-      comments: true
-  # _pets
-  - scope:
-      path: ""
-      type: pets
-    values:
-      layout: single
-      author_profile: true
-      share: true
-      comment: true
-  # _portfolio
-  - scope:
-      path: ""
-      type: portfolio
-    values:
-      layout: single
-      author_profile: false
-      share: true

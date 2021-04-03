@@ -26,7 +26,7 @@
       <ul class="navbar-nav">
         {%- for link in site.data.navigation.main -%}
           <li class="nav-item">
-            <a class="nav-link" href="{{ link.url | relative_url }}"{% if link.description %} title="{{ link.description }}"{% endif %}>{{ link.title }}</a>
+            <a class="nav-link" href="{{ link.url | relative_url }}"{% if link.description %} title="{{ link.description }}"{% endif %} {% if link.external %}target="_blank"{% endif %}>{{ link.title }}</a>
           </li>
         {%- endfor -%}
       </ul>
