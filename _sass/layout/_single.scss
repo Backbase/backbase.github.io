@@ -1,25 +1,24 @@
-.layout--single {
-  .page {
-    padding-top: $page-spacer-y;
-    padding-bottom: $page-spacer-y;
+.page {
+  padding-top: $page-spacer-y;
+  padding-bottom: $page-spacer-y;
 
-    &__content {
-      position: relative;
-      .sidebar {
-        &__right {
-          @include make-col-ready();
-          position: absolute;
-          top: 0;
-          left: 100%;
-          width: 25%;
-        }
+  &__content {
+    position: relative;
+    .sidebar {
+      &__right {
+        @include make-col-ready();
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 25%;
       }
     }
   }
-
-  .row > .sidebar {
-    position: sticky;
-    max-height: calc(100vh - (#{$navbar-padding-y * 2} + #{$navbar-brand-padding-y * 2} + #{$logo-font-size} * #{$line-height-base}) - #{$page-spacer-y});
-    top: calc((#{$navbar-padding-y * 2} + #{$navbar-brand-padding-y * 2} + #{$logo-font-size} * #{$line-height-base}) + #{$page-spacer-y})
-  }
 }
+
+.row > .sidebar {
+  position: sticky;
+  max-height: calc(100vh - (#{$navbar-padding-y * 2} + #{$navbar-brand-padding-y * 2} + #{$logo-font-size} * #{$line-height-base}) - #{$page-spacer-y});
+  top: calc((#{$navbar-padding-y * 2} + #{$navbar-brand-padding-y * 2} + #{$logo-font-size} * #{$line-height-base}) + #{$page-spacer-y})
+}
+

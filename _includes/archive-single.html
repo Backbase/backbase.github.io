@@ -10,8 +10,7 @@
   {% assign title = post.title %}
 {% endif %}
 
-{% if include.type != 'grid' %}works{% endif %}
-<div class="grid__item col-12 {% if include.type == 'grid' %}col-md-4{% endif %} mb-4">
+<div class="grid__item col-12 {% if include.type == 'grid' %}col-md{% if include.columns %}-{{ 12 | divided_by: include.columns }}{% endif %}{% endif %} mb-4">
   <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
     <div class="card-body d-flex flex-column">
       {% if include.type == "grid" and teaser %}
@@ -29,7 +28,7 @@
       {% include page__meta.html type=include.type %}
       {% if post.excerpt %}<p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify | strip_html | truncate: 160 }}</p>{% endif %}
       <div class="mt-auto d-flex mt-auto justify-content-end">
-        <a href="{{ post.url | relative_url }}" rel="permalink" class="btn btn-sm btn-link text-uppercase">Read more</a>
+        <a href="{{ post.url | relative_url }}" rel="permalink" class="btn btn-sm btn-link">Read more</a>
       </div>
     </div>
   </article>

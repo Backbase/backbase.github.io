@@ -85,7 +85,7 @@ include:
 sass:
   style: compressed
   load_paths:
-    - ./vendor/bundle/ruby/*/gems/bootstrap-5.0.0.beta2/assets/stylesheets
+    - ./vendor/bundle/ruby/*/gems/bootstrap-5.0.0/assets/stylesheets
 
 # Defaults
 defaults:
@@ -105,5 +105,5 @@ defaults:
       path: ""
       type: pages
     values:
-      layout: single
+      layout: page
       author_profile: true

@@ -8,5 +8,5 @@ def copy_files(source, destination)
 end
 
 Jekyll::Hooks.register :site, :after_init do |jekyll|
-	copy_files 'vendor/bundle/ruby/*/gems/bootstrap-5.0.0.beta2/assets/javascripts', 'assets/js/vendor/bootstrap'
+	copy_files 'vendor/bundle/ruby/*/gems/bootstrap-5.0.0/assets/javascripts', 'assets/js/vendor/bootstrap'
 end
