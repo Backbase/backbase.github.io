@@ -6,7 +6,8 @@ Robinson Zimmermann:
 
 Arthur Alves:
   name        : "Arthur Alves"
-  bio         : "CS Tech Lead | Principal Mobile Engineer"
+  avatar      : "assets/images/avatars/arthur.jpeg"
+  bio         : "Principal Mobile Engineer (Developer Enablement)"
 
 Andrés Torres:
   name        : "Andrés Torres García"
