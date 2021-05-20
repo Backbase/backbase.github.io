@@ -17,11 +17,7 @@ layout: default
 <div id="main" role="main">
   <div class="container">
     <div class="row">
-      <aside class="sidebar col-md-2">
-        {% include sidebar.html %}
-      </aside>
-
-      <article class="page col-md-8" itemscope itemtype="http://schema.org/CreativeWork">
+      <article class="page offset-md-2 col-md-8" itemscope itemtype="http://schema.org/CreativeWork">
         {% if page.title %}<meta itemprop="headline" content="{{ page.title | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
         {% if page.excerpt %}<meta itemprop="description" content="{{ page.excerpt | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
         {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date: "%B %d, %Y" }}">{% endif %}
@@ -31,9 +27,12 @@ layout: default
           {% unless page.header.overlay_color or page.header.overlay_image %}
             <header>
               {% if page.title %}<h1 class="page__title" itemprop="headline">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</h1>{% endif %}
-              {% if page.read_time %}
-                <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> {% include read-time.html %}</p>
-              {% endif %}
+
+              <aside class="author">
+                {% include author-profile.html %}
+              </aside>
+
+              {% include page__meta.html show_date=true %}
             </header>
           {% endunless %}
 
@@ -47,11 +46,6 @@ layout: default
               <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label }}</h4>
             {% endif %}
             {% include page__taxonomy.html %}
-            {% if page.modified %}
-              <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ page.modified | date: "%Y-%m-%d" }}">{{ page.modified | date: "%B %d, %Y" }}</time></p>
-            {% elsif page.date %}
-              <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time></p>
-            {% endif %}
           </footer>
 
           {% if page.share %}{% include social-share.html %}{% endif %}

@@ -2,15 +2,13 @@
 
 Robinson Zimmermann:
   name        : "Robinson Zimmermann"
-  uri         : ""
-  email       : ""
   bio         : "FE Engineer @ CS Department"
-  # avatar      : "bio-photo-2.jpg"
-  twitter     : ""
 
 Arthur Alves:
   name        : "Arthur Alves"
-  email       : ""
   bio         : "CS Tech Lead | Principal Mobile Engineer"
-  # avatar      : "bio-photo.jpg"
-  twitter     : ""
+
+Andrés Torres:
+  name        : "Andrés Torres García"
+  avatar      : "assets/images/avatars/2_5sAa9bhvo0AOjIvZ_oX-nA.jpeg"
+  bio         : "ni tan arrepentido ni encantado, de haberme conocido, lo confieso"
