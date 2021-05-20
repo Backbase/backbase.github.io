@@ -2,7 +2,8 @@
 title: "Kubernetes Application Developer Certification Tips"
 excerpt: "I just passed the CKAD exam: And I want to share my journey and some tips and recommendations on how to handle the exam itself."
 tags: Ckad Kubernetes Certification Certified Kubernetes K8s
-author: Andrés Torres
+authors:
+- Andrés Torres
 header:
   teaser: /assets/images/post/1_KjxjnnQLnPaQWtAiPmG1uw.png
 ---
