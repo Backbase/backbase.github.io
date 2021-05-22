@@ -41,7 +41,8 @@
       width: 25%;
 
       &__avatar {
-        width: auto;
+        width: 7rem;
+        margin: 0 auto map-get($spacers, 3);
       }
 
       > div {
@@ -53,6 +54,7 @@
   &__content {
     position: relative;
     font-size: 1.2em;
+    overflow-wrap: break-word;
 
     .sidebar {
       &__right {

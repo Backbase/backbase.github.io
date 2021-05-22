@@ -1,4 +1,4 @@
-$primary: map-get($bb-palette, 'dark-blue');
+$primary: map-get($bb-palette, "dark-blue");
 $secondary: map-get($bb-palette, "red");
 $info: map-get($bb-palette, "bright-blue");
 $warning: map-get($bb-palette, "light-orange");
@@ -24,9 +24,12 @@ $headings-color: $primary;
 $body-bg: map-get($bb-palette, "white");
 $body-color: $dark;
 
-$link-color: map-get($bb-palette, "bright-blue");
+$text-muted: map-get($bb-palette, "grey");
+$figure-caption-color: $text-muted;
 
-$font-family-sans-serif: 'Inter', sans-serif;
+$link-color: map-get($bb-palette, "dark-blue");
+
+$font-family-sans-serif: "Inter", sans-serif;
 
 $headings-font-weight: 200;
 

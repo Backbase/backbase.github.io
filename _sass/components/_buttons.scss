@@ -3,18 +3,20 @@
     font-weight: 500;
     text-decoration: none;
     text-transform: uppercase;
+    display: flex;
+    flex-direction: row-reverse;
     $this: &;
 
-    &::after {
+    &::before {
       @extend %material-icons-round;
       content: 'east';
       color: map-get($bb-palette, 'red');
       text-transform: initial;
-      margin-left: .5em;
+      margin-left: map-get($spacers, 2);
       transition: transform .3s;
       display: inline-block;
 
-      @at-root #{$this}:hover:after {
+      @at-root #{$this}:hover:before {
         transform: translateX(.15em);
         transition: transform .1s;
       }

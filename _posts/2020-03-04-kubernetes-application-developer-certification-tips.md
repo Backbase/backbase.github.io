@@ -6,6 +6,7 @@ authors:
 - Andrés Torres
 header:
   teaser: /assets/images/post/1_KjxjnnQLnPaQWtAiPmG1uw.png
+  teaser_alt: Kubernetes certificate
 ---
 
 ![](/assets/images/post/1_z6NGFcNqfSgJaIvuzaY0sA.png)
@@ -40,7 +41,8 @@ For something more academic I would recommend following the course:
   components/link-card.html
   heading="Introduction to Kubernetes"
   body="Want to learn Kubernetes? Get an in-depth primer on this powerful system for managing containerized applications."
-  link="https://www.edx.org"
+  link="https://www.edx.org/course/introduction-to-kubernetes"
+  linkLabel="www.edx.org"
   image="/assets/images/post/0_XDOX4FxMG8-4iWZl.png"
 %}
 

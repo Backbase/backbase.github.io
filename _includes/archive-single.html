@@ -12,12 +12,12 @@
 
 <div class="grid__item col-12 {% if include.type == 'grid' %}col-md{% if include.columns %}-{{ 12 | divided_by: include.columns }}{% endif %}{% endif %} mb-4">
   <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    {% if include.type == "grid" and teaser %}
+      <div class="archive__item-teaser">
+        <img src="{{ teaser | relative_url }}" alt="{{ post.header.teaser_alt }}" class="rounded-top">
+      </div>
+    {% endif %}
     <div class="card-body d-flex flex-column">
-      {% if include.type == "grid" and teaser %}
-        <div class="archive__item-teaser">
-          <img src="{{ teaser | relative_url }}" alt="">
-        </div>
-      {% endif %}
       <h2 class="archive__item-title no_toc">
         {% if post.link %}
           <a class="text-decoration-none" href="{{ post.link }}">{{ title }}</a> <a href="{{ post.url | relative_url }}" rel="permalink"><i class="fas fa-link" aria-hidden="true" title="permalink"></i><span class="sr-only">Permalink</span></a>
@@ -27,8 +27,8 @@
       </h2>
       {% include page__meta.html type=include.type %}
       {% if post.excerpt %}<p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify | strip_html | truncate: 160 }}</p>{% endif %}
-      <div class="mt-auto d-flex mt-auto justify-content-end">
-        <a href="{{ post.url | relative_url }}" rel="permalink" class="btn btn-sm btn-link">Read more</a>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="{{ post.url | relative_url }}" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
       </div>
     </div>
   </article>
