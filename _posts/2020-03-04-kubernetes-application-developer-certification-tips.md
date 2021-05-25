@@ -5,7 +5,7 @@ tags: Ckad Kubernetes Certification Certified Kubernetes K8s
 authors:
 - Andrés Torres
 header:
-  teaser: /assets/images/post/1_KjxjnnQLnPaQWtAiPmG1uw.png
+  teaser: /assets/images/post/1_678aknjbvxta67HJka.png
   teaser_alt: Kubernetes certificate
 ---
 
