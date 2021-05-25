@@ -3,14 +3,19 @@
 Robinson Zimmermann:
   name        : "Robinson Zimmermann"
   avatar      : "assets/images/avatars/placeholder.jpg"
-  bio         : "FE Engineer @ CS Department"
+  bio         : "FE Engineer - Customer Success"
 
 Arthur Alves:
   name        : "Arthur Alves"
   avatar      : "assets/images/avatars/arthur.jpg"
-  bio         : "Principal Mobile Engineer (Developer Enablement)"
+  bio         : "Principal Mobile Engineer - R&D"
 
 Andrés Torres:
   name        : "Andrés Torres García"
   avatar      : "assets/images/avatars/2_5sAa9bhvo0AOjIvZ_oX-nA.jpeg"
   bio         : "Director of Backend"
+
+Hari Vignesh:
+  name        : "Hari Vignesh Jayapalan"
+  avatar      : "assets/images/avatars/hari.vignesh.jpg"
+  bio         : "Senior Mobile Engineer - R&D"
