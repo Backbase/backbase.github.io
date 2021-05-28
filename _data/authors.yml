@@ -1,28 +1,21 @@
 # Authors
 
-Billy Rick:
-  name        : "Billy Rick"
-  bio         : "What do you want, jewels? I am a very extravagant man."
-  avatar      : "/assets/images/bio-photo-2.jpg"
-  links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:billyrick@rick.com"
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
-      url: "https://thewhip.com"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/extravagantman"
+Robinson Zimmermann:
+  name        : "Robinson Zimmermann"
+  avatar      : "assets/images/avatars/placeholder.jpg"
+  bio         : "FE Engineer - Customer Success"
 
-Cornelius Fiddlebone:
-  name        : "Cornelius Fiddlebone"
-  bio         : "I ordered what?"
-  avatar      : "/assets/images/bio-photo.jpg"
-  links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:cornelius@thewhip.com"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/rhymeswithsackit"
+Arthur Alves:
+  name        : "Arthur Alves"
+  avatar      : "assets/images/avatars/arthur.jpg"
+  bio         : "Principal Mobile Engineer - R&D"
+
+Andrés Torres:
+  name        : "Andrés Torres García"
+  avatar      : "assets/images/avatars/2_5sAa9bhvo0AOjIvZ_oX-nA.jpeg"
+  bio         : "Director of Backend"
+
+Hari Vignesh:
+  name        : "Hari Vignesh Jayapalan"
+  avatar      : "assets/images/avatars/hari.vignesh.jpg"
+  bio         : "Senior Mobile Engineer - R&D"

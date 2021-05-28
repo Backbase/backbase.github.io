@@ -1,0 +1,15 @@
+.page__footer {
+  .social-icons {
+    margin-top: map-get($spacers, 3);
+    margin-bottom: map-get($spacers, 3);
+    font-size: 1.5em;
+
+    li {
+      display: inline-flex;
+      padding: map-get($spacers, 2);
+      a {
+        color: map-get($bb-palette, "white");
+      }
+    }
+  }
+}

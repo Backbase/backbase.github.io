@@ -1,0 +1,16 @@
+<div class="card position position-relative mb-4">
+  <div class="row g-0 flex-md-row flex-column-reverse">
+    <div class="col-md{% if include.image %}-8{% endif %}">
+      <div class="card-body">
+        <h5>{{ include.heading }}</h5>
+        <p>{{ include.body }}</p>
+        <a href="{{ include.link }}" target="_blank" class="small stretched-link text-muted">{{ include.linkLabel | default: include.link }}</a>
+      </div>
+    </div>
+    {% if include.image %}
+    <div class="col-md-4 d-flex">
+      <img class="w-100 fit-cover rounded-top rounded-start-md-0 rounded-end-md" src="{{ include.image }}" alt="{{ include.alt }}">
+    </div>
+    {% endif %}
+  </div>
+</div>
