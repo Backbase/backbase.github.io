@@ -24,7 +24,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Backbase is a global fintech company creating the best digital banking solutions on the planet.
   We are a young-spirited, diverse (45+ nationalities), fast-growing and leading company in our niche.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://engineering.backbase.com" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://backbase.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
 github_username:  jekyll
 
