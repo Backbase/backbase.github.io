@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://engineering.backbase.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://engineering.backbase.com/" rel="alternate" type="text/html" /><updated>2021-05-31T08:45:32+02:00</updated><id>https://engineering.backbase.com/feed.xml</id><title type="html">Backbase Engineering</title><subtitle>Backbase is a global fintech company creating the best digital banking solutions on the planet. We are a young-spirited, diverse (45+ nationalities), fast-growing and leading company in our niche.</subtitle><entry><title type="html">Android: Configuration Driven UI from Epoxy to Compose</title><link href="https://engineering.backbase.com/2020/08/14/android-configuration-driven-ui-from-epoxy-to-compose.html" rel="alternate" type="text/html" title="Android: Configuration Driven UI from Epoxy to Compose" /><published>2020-08-14T00:00:00+02:00</published><updated>2020-08-14T00:00:00+02:00</updated><id>https://engineering.backbase.com/2020/08/14/android-configuration-driven-ui-from-epoxy-to-compose</id><content type="html" xml:base="https://engineering.backbase.com/2020/08/14/android-configuration-driven-ui-from-epoxy-to-compose.html">&lt;p&gt;&lt;img src=&quot;/assets/images/post/2_678ajYYaik18GyxVFa.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is a story of how we came up with the solution for Configuration driven UI (a level below server-driven UI) in Android at Backbase. It’s not a super perfect system or not highly reactive as Jetpack compose, but it absolutely solves the use-case: to create a framework or library, where developers can create or replace view components via configurations.&lt;/p&gt;
+
+&lt;h2 id=&quot;who-should-read&quot;&gt;&lt;strong&gt;Who should read?&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;This is about a special Android library. This solution might not be useful for all the devs who write apps every day. But I guarantee that this is an interesting problem to think and solve.&lt;/p&gt;
+
+&lt;h2 id=&quot;background--requirements&quot;&gt;&lt;strong&gt;Background &amp;amp; Requirements&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;We need to deliver a library, where customers can build or configure UI components into our OOTB (out of the box) screen or collection of screens. They should also be able to do the following&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Add new screens&lt;/li&gt;
+  &lt;li&gt;Configure OOTB UI components - Create quickly and add new UI components.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;All above should be possible via &lt;strong&gt;the configurations&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;which-configurations&quot;&gt;&lt;strong&gt;Which configurations?&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Configurations can mean anything. It can be a simple class with properties, JSON object (local or remote). Here, we’ll be working with Kotlin DSLs.&lt;/p&gt;
+
+&lt;p&gt;Why? they are type-safe, IDE intelli-sense support, manageable in terms of upgrading and maintaining the source and binary compatibility (how? more below). Even if we need to do it remotely (Server driven UI), we can receive a JSON object and map them to DSL.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-big-picture&quot;&gt;&lt;strong&gt;The big picture&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/post/2_XHya6aMkqGtYUjSAD.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Not really that big, but here’s how this is achieved:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;A Screen is nothing but a fragment and it just contains the list, here RecyclerView. I believe that this is what &lt;strong&gt;Airbnb&lt;/strong&gt; app consists of - each screen is a RecyclerView with different views.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The screen gets the configuration injected via DI or Service locators such as Koin.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Using this DSL configuration, the &lt;a href=&quot;https://github.com/airbnb/epoxy&quot;&gt;Epoxy&lt;/a&gt; populates all the views in our RecyclerView.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;We are also using &lt;strong&gt;Navigation Component&lt;/strong&gt; here, to use the same screen with multiple instances working together to solve this (a) task.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;why-epoxy&quot;&gt;&lt;strong&gt;Why Epoxy?&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;As per the requirements, we need to provide an accelerator solution, where developers should be able to create view components quickly. Using traditional methods might burn a bit more time. Epoxy, on the other hand, manages this complexity very well with a very little learning curve and with DSLs as output, it makes the configuration seamless.&lt;/p&gt;
+
+&lt;h1 id=&quot;configuration-driven-ui-with-epoxy&quot;&gt;&lt;strong&gt;Configuration-driven UI with Epoxy&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/post/2_TGUBANjniuayIUTIYOPahJN.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For a better explanation, why not show code? Let’s build a simple payment transfer screen, which will allow users to choose an account, a contact, enter the amount and hit pay!&lt;/p&gt;
+
+&lt;p&gt;In this screen, there are 2 configurable/customizable/replaceable components - and room for more!&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Account selector&lt;/strong&gt;: Allows users to select the originator account and a destination account which opens up a bottom sheet and gets the result back.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Amount view&lt;/strong&gt;: Allows users to enter the amount.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Here, the button is part of the screen for a reason, not important to know 😛&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;the-configuration&quot;&gt;&lt;strong&gt;The Configuration&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;To better explain, let’s take a look at the actual configuration that brings out this screen to life.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/cc93e720a57a896b0186dceb177f3886.js&quot;&gt;&lt;/script&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Navigation Graph&lt;/strong&gt;: In this example, we are dealing with one screen. If there is an use-case for multiple screens, navigation graph would be a good choice (optional).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Step&lt;/strong&gt;: This represents a screen. Multiple steps mean many screens, which can be wrapped using a list of steps (bad naming?).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Layout&lt;/strong&gt;: A sealed class entity, that supports different layouts. Here, a stack of views. Purely business-case oriented (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FormLayout&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ListLayout&lt;/code&gt; etc.).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Stack&lt;/strong&gt;: Here, to stack up the views takes in a list of Epoxy Views.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Epoxy View&lt;/strong&gt;: View components created using epoxy.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;AccountSelectorView&lt;/strong&gt; uses a few interesting functional callbacks to open up a bottom-sheet dialog and get the result back.&lt;/p&gt;
+
+&lt;p&gt;For a more detailed implementation, please refer the &lt;a href=&quot;https://github.com/Hariofspades/configuration-driven-ui&quot;&gt;Configuration Driven UI&lt;/a&gt; repository.&lt;/p&gt;
+
+&lt;h1 id=&quot;moving-from-epoxy-to-composable-functions&quot;&gt;&lt;strong&gt;Moving from Epoxy to Composable functions&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;Let’s try this interesting experiment. If you wonder why epoxy was the first choice is that the API was very stable, it provided a very quick way to create UI components with DSL wrapper - &lt;strong&gt;which was seamless with the whole configuration-driven UI concept&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;I happened to try Jetpack compose and it was quite promising. It was very close to the Flutter experience. But let’s check the reality on this date (Oct 2020):&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Still in alpha&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;A lot of breaking changes&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Not super good with existing projects (Adding compose to existing Kotlin synthetic binding projects causes build failure, probably be fixed at the time of stable release)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;More features to come&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Considering all these, epoxy is still a stable option for the above-mentioned date. But I’m curious about the migration strategy to this promising library.&lt;/p&gt;
+
+&lt;p&gt;What if Compose becomes the default way to create UI components in Android? (Maybe!) and it’s already a part of &lt;strong&gt;Modern Android Development (MAD)&lt;/strong&gt; marketing tag! So, this library should be able to cater or move to the new solution.&lt;/p&gt;
+
+&lt;h2 id=&quot;configuration-driven-ui-with-jetpack-compose&quot;&gt;&lt;strong&gt;Configuration-driven UI with Jetpack Compose&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/post/2_YbhKAUOMxx5167A.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;To migrate from epoxy, our Sealed class implementation of the layout is the key. Instead of using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;StackLayout&lt;/code&gt; we add a new implementation in place - &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ComposeLayout&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Also, we replace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RecyclerView&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ComposeView&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here’s the full configuration:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/e5e9c375e4550dbb8f7ca0dc32e0e86b.js&quot;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;adding-composelayout-to-steplayout&quot;&gt;&lt;strong&gt;Adding ComposeLayout to StepLayout&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;A New class gets to be a part of the Step layout - &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ComposeLayout&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: We are creating DSLs this way - to cater for binary compatibility. You can generate DSLs that are binary-safe way + support Java interoperability using this Android Studio plugin - &lt;a href=&quot;https://plugins.jetbrains.com/plugin/14386-dsl-api-generator&quot;&gt;DSL API Generator - Plugins | JetBrains&lt;/a&gt;.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/1fa853f9b4c3239a7909578a91b34ba5.js&quot;&gt;&lt;/script&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;implementation-of-account-selector&quot;&gt;&lt;strong&gt;Implementation of Account selector&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Compose version: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1.0.0-alpha04&lt;/code&gt;&lt;br /&gt;
+Refer to this code on &lt;a href=&quot;https://github.com/Hariofspades/configuration-driven-ui/blob/compose/app/src/main/java/dev/harivignesh/configuration/ui/compose/ComposeAccountSelector.kt&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/8bb673bcde450456a28786f58a89e016.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;For the full implementation of compose components and layout, please refer to the &lt;a href=&quot;https://github.com/Hariofspades/configuration-driven-ui/tree/compose&quot;&gt;“compose” branch&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;challenges-faced&quot;&gt;&lt;strong&gt;Challenges faced&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;We did not migrate the actual repository yet. But here are some of the challenges that I faced working on this small repo:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Compose hates Kotlin Synthetic binding? when I added all the necessary dependencies, I faced build errors around Kotlin synthetic view binding. Folks in Stackoverflow have suggested moving to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ViewBinding&lt;/code&gt; or simply use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;findViewById&lt;/code&gt; approach - may be fixed in the future?&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;A bit of learning curve for the new state management around Compose - which was expected. My little Flutter knowledge made it better (considering that the above repo was created in 3 hours).&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;final-thoughts&quot;&gt;&lt;strong&gt;Final thoughts&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;If you have reached till here, I’d appreciate your time for reading this post. Configuration driven UI might not be for everyone, it’s simply one of the business case and a very interesting problem to solve in terms of the architecture and public APIs. Hope you are taking something home :)&lt;/p&gt;
+
+&lt;p&gt;Thank you and see you on another post!&lt;/p&gt;</content><author><name>Hari Vignesh Jayapalan</name></author><category term="Mobile" /><category term="Android" /><category term="Jetpack" /><category term="Epoxy" /><summary type="html">This is a story of how we came up with the solution for Configuration driven UI (a level below server-driven UI) in Android at Backbase.</summary></entry><entry><title type="html">Building an iOS 14 Widget to Show Account Balance</title><link href="https://engineering.backbase.com/2020/07/24/building-an-ios14-widget-to-show-account-balance.html" rel="alternate" type="text/html" title="Building an iOS 14 Widget to Show Account Balance" /><published>2020-07-24T00:00:00+02:00</published><updated>2020-07-24T00:00:00+02:00</updated><id>https://engineering.backbase.com/2020/07/24/building-an-ios14-widget-to-show-account-balance</id><content type="html" xml:base="https://engineering.backbase.com/2020/07/24/building-an-ios14-widget-to-show-account-balance.html">&lt;p&gt;&lt;img src=&quot;/assets/images/post/3_rTFabjU6GfTYxahKA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;em&gt;&lt;strong&gt;Disclaimer&lt;/strong&gt;: This is merely used as proof of concept rather than a production feature, as there are security points to be taken in consideration for showing private and sensitive data for banking apps and similar applications.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/wwdc20/&quot;&gt;WWDC20&lt;/a&gt; has introduced us to &lt;a href=&quot;https://www.apple.com/ios/ios-14-preview/&quot;&gt;iOS 14&lt;/a&gt;, which along other features now include widgets on the home screen. Widgets aren’t new, but now they are totally different - including the way you build them, support up to 3 different sizes and &lt;strong&gt;are on the home screen!&lt;/strong&gt; 😱&lt;/p&gt;
+
+&lt;h2 id=&quot;why-is-this-a-big-deal-for-us&quot;&gt;&lt;strong&gt;Why is this a big deal for us?&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Right there on your home screen you have meaningful information from your apps without even opening them. It’s meant to save you time and extend your experience. It’s an extension of your application.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/post/3_UxHjauYTAjko.png&quot; alt=&quot;widgets&quot; /&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;The fact that your apps can now take up to 12 icons spaces with a widget make it the most important iOS feature since forever. It&amp;#39;ll give insane engagement and usage to apps that provide valuable widgets. This is the biggest feature in iOS history for apps developers IMO.&lt;/p&gt;&amp;mdash; Thomas Ricouard (@Dimillian) &lt;a href=&quot;https://twitter.com/Dimillian/status/1275776420686553089?ref_src=twsrc%5Etfw&quot;&gt;June 24, 2020&lt;/a&gt;&lt;/blockquote&gt; &lt;script async=&quot;&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;things-to-consider&quot;&gt;&lt;strong&gt;Things to consider&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Widgets are powered by SwiftUI, building one with UIKit is out of equation;&lt;/li&gt;
+  &lt;li&gt;They are extensions of your application, building a standalone widget is not possible;&lt;/li&gt;
+  &lt;li&gt;You can’t interact with a widget other than tapping on it to launch your application - provide read-only information.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;what-we-will-build&quot;&gt;&lt;strong&gt;What we will build&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;We’ll assume my banking app has an open API which provides my list of accounts - in banking terms, products - in the following format. Where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;type&lt;/code&gt; is an enumeration of values &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;main&quot;&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;secondary&quot;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/873f10882d710e62d14562ef24963940.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Considering we can only have one main account, our widget will show the following details of this account:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;	Name
+	CurrencySign Balance
+
+	When it was last updated
+	SF Symbol (why not?! 🙂)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;our-banking-app&quot;&gt;&lt;strong&gt;Our banking app&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;As a widget can’t exist standalone, I’ve previously built a SwiftUI application to list my accounts - not just the main one. It doesn’t do much other than allowing me to show an accounts upon tapping on it and hidding it by tapping again.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/post/04_ios_widget_app.gif&quot; alt=&quot;Accounts app&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;setup&quot;&gt;Setup&lt;/h3&gt;
+
+&lt;p&gt;We now start by creating a new target of Widget Extension.
+&lt;img src=&quot;/assets/images/post/04_ios_widget_new_target.png&quot; alt=&quot;Widget Target&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;During this process, I’ve named my Widget &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CurrentAccount&lt;/code&gt; and disabled &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Include Configuration Intent&lt;/code&gt; - as I don’t want users to configure/edit the widget but read information from the main account only.&lt;/p&gt;
+
+&lt;p&gt;This process will create my target and add the following folder for my project&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/post/04_ios_widget_folder.png&quot; alt=&quot;Widget Folder&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;now-comes-the-fun-part&quot;&gt;Now comes the fun part&lt;/h3&gt;
+
+&lt;p&gt;In &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CurrentAccount.swift&lt;/code&gt; we already have everything we need, a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TimelineProvider&lt;/code&gt;, a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TimelineEntry&lt;/code&gt;, a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PlaceholderView&lt;/code&gt;, a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EntryView&lt;/code&gt; and our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Widget&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let’s first go through every component in order to understand what they do and why we need them.&lt;/p&gt;
+
+&lt;h4 id=&quot;timelineentry&quot;&gt;TimelineEntry&lt;/h4&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/db94223877075ee8fa79fa90bffa3161.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;A widget receives information in time. This information is passed via a timeline entry, which by default needs a date where WidgetKit will render the widget.&lt;/p&gt;
+
+&lt;p&gt;Our Widget needs more than that. We’ll create another type of entry which contains our main account (product)&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/db994081b8ca84d0aa91590b3038529f.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Product&lt;/code&gt; is a simple struct shared from our main target&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/29dcb64ef89512baf6d578134db95174.js&quot;&gt;&lt;/script&gt;
+
+&lt;h4 id=&quot;timelineprovider&quot;&gt;TimelineProvider&lt;/h4&gt;
+
+&lt;p&gt;Now that we have an entry, we need a way to provide this to the widget through time. The timeline provider is responsible for this.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/1993f908023a6d50a297efc01eed0cb0.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Here you notice it contains two methods, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;snapshot&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;timeline&lt;/code&gt;. The first is used to configure/render the widget in transient circumstances, think of it as a demonstration with mock data. We’ll therefore implement it like so:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/5e9f912d224cee638eea974c303c0a89.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;timeline&lt;/code&gt; is the method used for the real implementation. It will return on completion an array of your entries to be rendered at a given time. WidgetKit will be able to request multiple timelines, so it’s not necessary to return multiple values in this array if your content is dynamically fetched.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/3d4054897532f7148748c802cd41cbe4.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;One important thing in the code above is the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;policy&lt;/code&gt; expected when initializing a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Timeline&lt;/code&gt;. From the documentation we see: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;The policy that determines the earliest date and time WidgetKit requests a new timeline from a timeline provider&lt;/code&gt;. It’s a reload policy which can be:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;atEnd&lt;/code&gt; - Specifies that WidgetKit requests a new timeline after the last date in a timeline passes&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;never&lt;/code&gt; - Specifies that WidgetKit should never request a new timeline. As an option, the application can still prompt WidgetKit when new timelines are available&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;after(_ date: Date)&lt;/code&gt; - Pre defines a future date (from the last date in a timeline) that WidgetKit shall request a new one.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Knowing this and the fact that we retrieve a list of accounts for the given moment, our timeline will only return one entry. We’ll make use of policy &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;after(_ date: Date)&lt;/code&gt; to specify how many minutes after rendering we shall request a new timeline, therefore making a new request to fetch our data.&lt;/p&gt;
+
+&lt;p&gt;We’ll use the current date for the current entry and a future date - 10 minutes apart - where the next timeline will be requested&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/c4d57a1284b28ee47d012174b06c5b80.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;We’ll have to fetch new data in order to create our entry, since a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Product&lt;/code&gt; is required. Having our entry, we can create a timeline and complete our implementation&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/6c244640c2e9def6e6060f76bb235eb0.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Our entire &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;timeline&lt;/code&gt; method looks like:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/022e2b1d9e18c568cf3b681afc53ae00.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Our widget will receive a new timeline - containing 1 entry - every 10 minutes.&lt;/p&gt;
+
+&lt;h4 id=&quot;widget&quot;&gt;Widget&lt;/h4&gt;
+
+&lt;p&gt;The widget is very straight forward. We’ll have to configure minor details, such as display name and description.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/8c1682877a19d4364ee9c0917de03266.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Note that this Widget uses a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;StaticConfiguration&lt;/code&gt;, as we don’t want to allow users to configure/edit it. For a configurable widget, there is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IntentConfiguration&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;views&quot;&gt;Views&lt;/h4&gt;
+
+&lt;p&gt;As you might have seen, we have a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PlaceholderView()&lt;/code&gt; and a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MainAccountEntryView&lt;/code&gt;, that this widget uses. Both are pure SwiftUI views already provided during setup.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/ef092f999ef088f5745bfc379f29d6fe.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PlaceholderView&lt;/code&gt; - if the name isn’t clear enough - is used when there is no timeline/entry to render. You can use it to display a generic message.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MainAccountEntryView&lt;/code&gt; is used to render your entries, here you want to display the information needed. It contains an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;entry&lt;/code&gt; property which, based on our Provider, contain a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Product&lt;/code&gt;. We could therefore use product’s information. Example:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/198d8879002d1c5e677d290766a3fd15.js&quot;&gt;&lt;/script&gt;
+
+&lt;h4 id=&quot;previews&quot;&gt;Previews&lt;/h4&gt;
+
+&lt;p&gt;As for any other SwiftUI view, we can also preview them in Xcode Canvas. We create a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PreviewProvider&lt;/code&gt; to show multiple previews with a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Group&lt;/code&gt;, one for our placeholder and another for our entry view.&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/92b90dc8d77e1e6c28b68c58fac8a448.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;You can potentially preview multiple &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MainAccountEntryView&lt;/code&gt; using different preview contexts, for instance, for the different widget sizes, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.systemSmall&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.systemMedium&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.systemLarge&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/post/04_ios_widget_preview.png&quot; alt=&quot;Widget Preview&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;entry-view&quot;&gt;Entry View&lt;/h4&gt;
+
+&lt;p&gt;You have the freedom - and restrictions 😅 - of SwiftUI to build your placeholder and entry views. Therefore, the focus here isn’t to go in depth there, but this is what I’ve used for the entry view:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/8e68e9af101b2737516a87655e747fed.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;The color sets &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;widgetBackgroundColor&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;widgetBackgroundColor&lt;/code&gt; have been added to the Assets and support dark mode 🌙&lt;/p&gt;
+
+&lt;h4 id=&quot;supporting-different-sizes&quot;&gt;Supporting Different Sizes&lt;/h4&gt;
+
+&lt;p&gt;Our widget is now ready in all 3 available sizes. What if you want to change that?
+It’s fairly easy with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;supportedFamilies&lt;/code&gt;. Let’s add that to our widget:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/arthurpalves/063658004a8d04e5a7acfc8124fa2d1f.js&quot;&gt;&lt;/script&gt;
+
+&lt;h4 id=&quot;our-widget-in-action&quot;&gt;Our widget in action&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/post/04_ios_widget_demo.gif&quot; alt=&quot;Widget Preview&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Widgets in the home screen is a powerful feature of iOS 14. We’ve seen how easy it is to create one and improve the user experience of our users. An addition to a static widget is to make it configurable - say, if I’d allow the users to select which account they want to see instead of always the main account, this is possible with the power of intents and an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;IntentConfiguration&lt;/code&gt;, which I’ll try to cover later.&lt;/p&gt;</content><author><name>Arthur Alves</name></author><category term="Mobile" /><category term="iOS14" /><category term="Swift" /><category term="Widget" /><summary type="html">WWDC20 has introduced us to iOS 14, which along other features now include widgets on the home screen.</summary></entry><entry><title type="html">Kubernetes Application Developer Certification Tips</title><link href="https://engineering.backbase.com/2020/03/04/kubernetes-application-developer-certification-tips.html" rel="alternate" type="text/html" title="Kubernetes Application Developer Certification Tips" /><published>2020-03-04T00:00:00+01:00</published><updated>2020-03-04T00:00:00+01:00</updated><id>https://engineering.backbase.com/2020/03/04/kubernetes-application-developer-certification-tips</id><content type="html" xml:base="https://engineering.backbase.com/2020/03/04/kubernetes-application-developer-certification-tips.html">&lt;p&gt;&lt;img src=&quot;/assets/images/post/1_z6NGFcNqfSgJaIvuzaY0sA.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I just passed the Certified Kubernetes Application Developer (CKAD) exam: &lt;a href=&quot;https://www.cncf.io/certification/ckad/&quot;&gt;https://www.cncf.io/certification/ckad/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;And I want to share my journey and some tips on how to handle the CKAD preparation and the exam itself.&lt;/p&gt;
+
+&lt;h2 id=&quot;preparation&quot;&gt;Preparation&lt;/h2&gt;
+
+&lt;h3 id=&quot;starting-point&quot;&gt;Starting point&lt;/h3&gt;
+
+&lt;p&gt;First, you need a base, if you have no work experience with production Kubernetes then I would recommend going through basics of Kubernetes first.&lt;/p&gt;
+
+&lt;p&gt;Here some nice intros:&lt;/p&gt;
+
+&lt;figure class=&quot;mb-5&quot;&gt;
+  &lt;div class=&quot;w-100 ratio ratio-16x9&quot;&gt;
+    &lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/4ht22ReBjno&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+  &lt;/div&gt;
+  &lt;figcaption class=&quot;figure-caption text-center&quot;&gt;The illustrated Children’s Guide to Kubernetes&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure class=&quot;mb-5&quot;&gt;
+  &lt;div class=&quot;w-100 ratio ratio-16x9&quot;&gt;
+    &lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/aSrqRSk43lY&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+  &lt;/div&gt;
+  &lt;figcaption class=&quot;figure-caption text-center&quot;&gt;Kubernetes explained&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;For something more academic I would recommend following the course:&lt;/p&gt;
+
+&lt;div class=&quot;card position position-relative mb-4&quot;&gt;
+  &lt;div class=&quot;row g-0 flex-md-row flex-column-reverse&quot;&gt;
+    &lt;div class=&quot;col-md-8&quot;&gt;
+      &lt;div class=&quot;card-body&quot;&gt;
+        &lt;h5&gt;Introduction to Kubernetes&lt;/h5&gt;
+        &lt;p&gt;Want to learn Kubernetes? Get an in-depth primer on this powerful system for managing containerized applications.&lt;/p&gt;
+        &lt;a href=&quot;https://www.edx.org/course/introduction-to-kubernetes&quot; target=&quot;_blank&quot; class=&quot;small stretched-link text-muted&quot;&gt;www.edx.org&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div class=&quot;col-md-4 d-flex&quot;&gt;
+      &lt;img class=&quot;w-100 fit-cover rounded-top rounded-start-md-0 rounded-end-md&quot; src=&quot;/assets/images/post/0_XDOX4FxMG8-4iWZl.png&quot; alt=&quot;&quot; /&gt;
+    &lt;/div&gt;
+    
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;study-the-curriculum&quot;&gt;Study the curriculum&lt;/h3&gt;
+
+&lt;p&gt;Next step with be to study all topics as proposed in the curriculum until you feel comfortable with all:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;13% — Core Concepts&lt;/strong&gt;
+Understand Kubernetes API primitives
+Create and configure basic Pods&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;18% — Configuration&lt;/strong&gt;
+Understand ConfigMaps
+Understand SecurityContexts
+Define an application’s resource requirements
+Create &amp;amp; consume Secrets
+Understand ServiceAccounts&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;10% — Multi-Container Pods&lt;/strong&gt;
+Understand Multi-Container Pod design patterns (e .g. ambassador, adapter, sidecar&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;18% — Observability&lt;/strong&gt;
+Understand LivenessProbes and ReadinessProbes
+Understand container logging
+Understand how to monitor applications in Kubernetes
+Understand debugging in Kubernetes&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;20% — Pod Design&lt;/strong&gt;
+Understand Deployments and how to perform rolling updates
+Understand Deployments and how to perform rollbacks
+Understand Jobs and CronJobs
+Understand how to use Labels, Selectors, and Annotations&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;13% — Services &amp;amp; Networking&lt;/strong&gt;
+Understand Services
+Demonstrate a basic understanding of NetworkPolicies&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;8% — State Persistence&lt;/strong&gt;
+Understand PersistentVolumeClaims for storage&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You can use the official docs to prepare all those topics &lt;a href=&quot;https://kubernetes.io/docs/home/&quot;&gt;https://kubernetes.io/docs/home/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In my experience, an online course helped me to prepare for the certification better, and that’s what I did when I obtained the Cloud Foundry Certified Developer (CFCD) certification:&lt;/p&gt;
+
+&lt;div class=&quot;card position position-relative mb-4&quot;&gt;
+  &lt;div class=&quot;row g-0 flex-md-row flex-column-reverse&quot;&gt;
+    &lt;div class=&quot;col-md-8&quot;&gt;
+      &lt;div class=&quot;card-body&quot;&gt;
+        &lt;h5&gt;CFCD: Cloud Foundry Certified Developer was issued by The Linux Foundation to Andres Torres Garcia.&lt;/h5&gt;
+        &lt;p&gt;Earners of this designation demonstrated the skills and expertise to perform the responsibilities of a Cloud Foundry…&lt;/p&gt;
+        &lt;a href=&quot;https://www.youracclaim.com/badges/845a02b0-ba8a-4657-820b-5b833e46142d/linked_in_profile&quot; target=&quot;_blank&quot; class=&quot;small stretched-link text-muted&quot;&gt;youracclaim.com&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div class=&quot;col-md-4 d-flex&quot;&gt;
+      &lt;img class=&quot;w-100 fit-cover rounded-top rounded-start-md-0 rounded-end-md&quot; src=&quot;/assets/images/post/0_fFnZQ4ZmOeR6D9c7.png&quot; alt=&quot;&quot; /&gt;
+    &lt;/div&gt;
+    
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;And at that time before taking the exam I have followed an online course from The Linux Foundation:&lt;/p&gt;
+
+&lt;div class=&quot;card position position-relative mb-4&quot;&gt;
+  &lt;div class=&quot;row g-0 flex-md-row flex-column-reverse&quot;&gt;
+    &lt;div class=&quot;col-md-8&quot;&gt;
+      &lt;div class=&quot;card-body&quot;&gt;
+        &lt;h5&gt;Cloud Foundry for Developers (LFD232) - Linux Foundation - Training&lt;/h5&gt;
+        &lt;p&gt;Businesses around the world need more skilled developers. Update your cloud-native skills with Cloud Foundry training…&lt;/p&gt;
+        &lt;a href=&quot;https://training.linuxfoundation.org/training/cloud-foundry-for-developers/&quot; target=&quot;_blank&quot; class=&quot;small stretched-link text-muted&quot;&gt;training.linuxfoundation.org&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div class=&quot;col-md-4 d-flex&quot;&gt;
+      &lt;img class=&quot;w-100 fit-cover rounded-top rounded-start-md-0 rounded-end-md&quot; src=&quot;/assets/images/post/0_4SN57mGsNxgDomXv.png&quot; alt=&quot;&quot; /&gt;
+    &lt;/div&gt;
+    
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The training was ok and hands-on, with exercises to practice and documentation to study, slides-style, so I decided to do the same for the Kubernetes certification.&lt;/p&gt;
+
+&lt;p&gt;I took advantage of a promotion they had during CyberMonday and got a bundle of Training + Example with a 60% discount:
+The Linux Foundation announces discounts every now and then so be alert!
+This is the training I’ve followed:&lt;/p&gt;
+
+&lt;div class=&quot;card position position-relative mb-4&quot;&gt;
+  &lt;div class=&quot;row g-0 flex-md-row flex-column-reverse&quot;&gt;
+    &lt;div class=&quot;col-md-8&quot;&gt;
+      &lt;div class=&quot;card-body&quot;&gt;
+        &lt;h5&gt;Kubernetes for Developers (LFD259) - Linux Foundation - Training&lt;/h5&gt;
+        &lt;p&gt;Kubernetes is a high-velocity open source orchestration tool to deploy, scale, and update containerized applications…&lt;/p&gt;
+        &lt;a href=&quot;https://training.linuxfoundation.org/training/kubernetes-for-developers/&quot; target=&quot;_blank&quot; class=&quot;small stretched-link text-muted&quot;&gt;training.linuxfoundation.org&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div class=&quot;col-md-4 d-flex&quot;&gt;
+      &lt;img class=&quot;w-100 fit-cover rounded-top rounded-start-md-0 rounded-end-md&quot; src=&quot;/assets/images/post/0_cBOGVm0Bjk95liMH.png&quot; alt=&quot;&quot; /&gt;
+    &lt;/div&gt;
+    
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It’s self-paced, contains videos, slides and hands-on labs, you have one year access to the content and you will obtain an official badge (never hurts). Here the course outline:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;Chapter 1. Course Introduction&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Chapter 2. Kubernetes Architecture&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Chapter 3. Build&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Chapter 4. Design&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Chapter 5. Deployment Configuration&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Chapter 6. Security&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Chapter 7. Exposing Applications&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Chapter 8. Troubleshooting&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;building-a-kubernetes-cluster&quot;&gt;Building a Kubernetes cluster&lt;/h3&gt;
+
+&lt;p&gt;After you are done with basics of Kubernetes you should try to create Kubernetes cluster from the scratch, for the Developer exam is not mandatory because is too deep, for the admin examen CKA I would say yes, but it’s good a learning exercise for everybody wanting to know how Kubernetes works.&lt;/p&gt;
+
+&lt;p&gt;The classic example will be using Kelsey Hightower git repo: &lt;a href=&quot;https://github.com/kelseyhightower/kubernetes-the-hard-way&quot;&gt;https://github.com/kelseyhightower/kubernetes-the-hard-way&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;There’s also an interesting one, more up to date and using new Kubernetes features, it’s divided into 5 parts: &lt;a href=&quot;https://clusterise.com/articles/kbp-1-intro/&quot;&gt;https://clusterise.com/articles/kbp-1-intro/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Try to create a cluster on your own a couple of times, it’s a nice way to understand the whole picture and how the components you just learned work with each other.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;practice-practice-practice&quot;&gt;Practice, Practice, Practice&lt;/h3&gt;
+
+&lt;p&gt;Reading and learning concepts is ok but not enough, you really need a lot of practice basically because of the time constraint of 2 hours for the CKAD exam, you don’t have time to search in the documentation for examples or read concepts, you need to go straight to the point.&lt;/p&gt;
+
+&lt;p&gt;Some resources to help you be fast and breath &lt;em&gt;kubectl&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Here you have 150 questions to practices, divided by topics: &lt;a href=&quot;https://medium.com/bb-tutorials-and-thoughts/practice-enough-with-these-questions-for-the-ckad-exam-2f42d1228552&quot;&gt;https://medium.com/bb-tutorials-and-thoughts/practice-enough-with-these-questions-for-the-ckad-exam-2f42d1228552&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Do all of these, maybe 2–3 times: &lt;a href=&quot;https://github.com/dgkanatsios/CKAD-exercises&quot;&gt;https://github.com/dgkanatsios/CKAD-exercises&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Game of Pods&lt;/strong&gt; a nice gamified set of exercises based on Game Of Thrones: &lt;a href=&quot;https://kodekloud.com/p/game-of-pods&quot;&gt;https://kodekloud.com/p/game-of-pods&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Here a series with scenarios, try to do all of them and understand the alternatives to achieve the same result.&lt;/li&gt;
+  &lt;li&gt;Read this and do all examples: &lt;a href=&quot;https://kubernetes.io/docs/concepts/cluster-administration/logging/&quot;&gt;https://kubernetes.io/docs/concepts/cluster-administration/logging/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Kubernetes docs also gives you some Tasks you can review and do yourself the ones that apply CKAD curriculum: &lt;a href=&quot;https://github.com/twajr/ckad-prep-notes#tasks-from-kubernetes-doc&quot;&gt;https://github.com/twajr/ckad-prep-notes#tasks-from-kubernetes-doc&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Killer.sh&lt;/strong&gt; is a great page with an exam simulator that you can do 2 times, with a real cluster, alive for 24 hours, with real scenarios ready and even a timer so you get the feeling of the exam time pressure:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;card position position-relative mb-4&quot;&gt;
+  &lt;div class=&quot;row g-0 flex-md-row flex-column-reverse&quot;&gt;
+    &lt;div class=&quot;col-md-8&quot;&gt;
+      &lt;div class=&quot;card-body&quot;&gt;
+        &lt;h5&gt;Kubernetes CKA CKAD Simulator&lt;/h5&gt;
+        &lt;p&gt;Kubernetes CKA CKAD Simulator / Example Questions / Practice Exam&lt;/p&gt;
+        &lt;a href=&quot;https://killer.sh/ckad&quot; target=&quot;_blank&quot; class=&quot;small stretched-link text-muted&quot;&gt;killer.sh&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div class=&quot;col-md-4 d-flex&quot;&gt;
+      &lt;img class=&quot;w-100 fit-cover rounded-top rounded-start-md-0 rounded-end-md&quot; src=&quot;/assets/images/post/0_3Glp6AXn3hZlIDRD.png&quot; alt=&quot;&quot; /&gt;
+    &lt;/div&gt;
+    
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It’s not free, but I definitely think is totally worth it.&lt;/p&gt;
+
+&lt;p&gt;Do both test sessions with this CKAD Simulator, one after doing all the study and let the final one for the day before the real exam, to get into the exam mood.
+Understand the solutions and maybe try out other ways to achieve the same.&lt;/p&gt;
+
+&lt;h2 id=&quot;books&quot;&gt;Books&lt;/h2&gt;
+
+&lt;p&gt;I’ve used some books also during my preparation:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://shop.oreilly.com/product/0636920273219.do&quot;&gt;Kubernetes Best Practices: Blueprints for Building Successful Applications on Kubernetes&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://leanpub.com/erase-una-vez-kubernetes&quot;&gt;Erase una vez Kubernetes (Spanish)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;exam-day-preparation&quot;&gt;Exam day Preparation&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Read the Curriculum:&lt;/strong&gt; &lt;a href=&quot;https://github.com/cncf/curriculum&quot;&gt;https://github.com/cncf/curriculum&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Read the Handbook:&lt;/strong&gt; &lt;a href=&quot;https://training.linuxfoundation.org/go/cka-ckad-candidate-handbook&quot;&gt;https://training.linuxfoundation.org/go/cka-ckad-candidate-handbook&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Read the important tips:&lt;/strong&gt; &lt;a href=&quot;http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD&quot;&gt;http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;kubernetes-documentation&quot;&gt;Kubernetes documentation&lt;/h2&gt;
+
+&lt;p&gt;Get familiar with the Kubernetes documentation and be able to use the search. You can have one browser tab open with one of the allowed links: &lt;a href=&quot;https://kubernetes.io/docs&quot;&gt;https://kubernetes.io/docs&lt;/a&gt; &lt;a href=&quot;https://github.com/kubernetes&quot;&gt;https://github.com/kubernetes&lt;/a&gt; &lt;a href=&quot;https://kubernetes.io/blog&quot;&gt;https://kubernetes.io/blog&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;the-test-environment--browser-terminal&quot;&gt;The Test Environment / Browser Terminal&lt;/h2&gt;
+
+&lt;p&gt;You’ll be provided with a browser terminal which uses Ubuntu 16. The standard shells included with a minimal install of Ubuntu 16 will be available, including bash.&lt;/p&gt;
+
+&lt;h3 id=&quot;laggin&quot;&gt;Laggin&lt;/h3&gt;
+
+&lt;p&gt;There could be some lagging, definitely make sure you are using a good internet connection because your webcam and screen are uploading all the time.&lt;/p&gt;
+
+&lt;h3 id=&quot;kubectl-autocompletion&quot;&gt;Kubectl autocompletion&lt;/h3&gt;
+
+&lt;p&gt;Autocompletion is not configured by default. Some wouldn’t recommend setting this up because of the lagging internet connection but you can check if it works for you. See further down for how to set up.&lt;/p&gt;
+
+&lt;h3 id=&quot;copy--paste&quot;&gt;Copy &amp;amp; Paste&lt;/h3&gt;
+
+&lt;p&gt;There could be issues copying text (like pod names) from the left task information into the terminal. Some suggested to “hard” hit or long hold &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Cmd/Ctrl+C&lt;/code&gt; a few times to take action. Apart from that copy and paste should just work like in normal terminals.&lt;/p&gt;
+
+&lt;h3 id=&quot;percentages-and-score&quot;&gt;Percentages and Score&lt;/h3&gt;
+
+&lt;p&gt;There are 19 questions in the exam and you need a 66% percentage to reach. Each question shows the % it gives if you solve it. Your results will be automatically checked according to the handbook. If you don’t agree with the results you can request a review.&lt;/p&gt;
+
+&lt;h3 id=&quot;notepad--skipping-questions&quot;&gt;Notepad &amp;amp; Skipping Questions&lt;/h3&gt;
+
+&lt;p&gt;You have access to a simple notepad in the browser which can be used for storing any kind of plain text. It makes sense to use this for saving skipped question numbers and their percentages. This way it’s possible to move some questions to the end. It might make sense to skip 2% or 3% questions and go directly to higher ones.&lt;/p&gt;
+
+&lt;h3 id=&quot;contexts-and-namespaces&quot;&gt;Contexts and namespaces&lt;/h3&gt;
+
+&lt;p&gt;You’ll receive access to 4 different clusters which multiple namespaces and various resources in each.&lt;/p&gt;
+
+&lt;figure class=&quot;figure d-block text-center mb-4&quot;&gt;
+  &lt;img class=&quot;figure-img img-fluid&quot; src=&quot;/assets/images/post/1__70CzlisT3rrbOprVs4wXQ.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption class=&quot;figure-caption&quot;&gt;CKAD Clusters&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Each task on this exam must be completed on a designated cluster/configuration context. To minimize switching, the questions are grouped so that all questions on a given cluster appear consecutively. At the start of each task, you’ll be provided with the command to ensure you are on the correct cluster to complete the question. But you should be comfortable working in different namespaces with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;your-desktop&quot;&gt;Your Desktop&lt;/h2&gt;
+
+&lt;p&gt;You are allowed to have multiple monitors connected and have to share every monitor with the proctor. Having one large screen definitely helps as you’re only allowed &lt;strong&gt;one&lt;/strong&gt; application open (Chrome Browser) with two tabs, one terminal and one k8s docs. The questions will be on the left (maybe ~30% space), the terminal on the right. The larger your desktop the larger the browser terminal.&lt;/p&gt;
+
+&lt;p&gt;If you use a laptop you could work with lid closed, external mouse+keyboard+monitor attached. Make sure you also have a webcam+microphone working.&lt;/p&gt;
+
+&lt;p&gt;You could also have both monitors, laptop screen and external, active. Though Chrome can only run on one screen. You might be asked that your webcam points straight into your face. So using an external screen and your laptop webcam could not be accepted. Just keep that in mind.&lt;/p&gt;
+
+&lt;p&gt;You have to be able to move your webcam around in the beginning to show your whole room and desktop. Have a clean desk with only the necessary on it. You can have a glass/cup with water without anything printed on.
+In the end you should feel very comfortable with your setup.&lt;/p&gt;
+
+&lt;h2 id=&quot;browser-terminal-setup&quot;&gt;Browser Terminal Setup&lt;/h2&gt;
+
+&lt;p&gt;It should be considered to spend ~1 minute in the beginning to setup your terminal. In the real exam, the vast majority of questions will be done from the main terminal. For a few, you might need to ssh into another machine. Just be aware that configurations to your shell will not be transferred in this case.&lt;/p&gt;
+
+&lt;h3 id=&quot;minimal-setup&quot;&gt;Minimal Setup&lt;/h3&gt;
+
+&lt;h4 id=&quot;alias&quot;&gt;Alias&lt;/h4&gt;
+
+&lt;p&gt;I suggest to any developer using Kubernetes to setup this alias:&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;alias k=kubectl
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;which means you always run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; just with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;k&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;kubectl-autocompletion-1&quot;&gt;Kubectl autocompletion&lt;/h4&gt;
+
+&lt;p&gt;Depending on how much is already pre-installed in the CKAD terminal it might be enough to do this:&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;source &amp;lt;(kubectl completion bash)
+
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;complete -F __start_kubectl k #&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;to make it work with the &lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;k
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You don’t need to remember all that, you can copy-paste from the official docs CheatSheet: &lt;a href=&quot;https://kubernetes.io/docs/reference/kubectl/cheatsheet/&quot;&gt;https://kubernetes.io/docs/reference/kubectl/cheatsheet/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;optional-alias-namespace&quot;&gt;Optional: Alias Namespace&lt;/h4&gt;
+
+&lt;p&gt;In addition, you could define an alias like:&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;alias kn=&apos;kubectl config set-context --current --namespace &apos;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Which allows you to define the default namespace of the current context. Then once you switch a context or namespace you can just run:&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;kn another-namespace #&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;default to another-namespace
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;But again, only do this if you used it before and are comfortable doing so. You can always specify the namespace for every call, which is also fine:&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;k -n another-namespace get services
+k -n another-namespace get pod
+&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;...
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;persist-bash-settings&quot;&gt;Persist bash settings&lt;/h4&gt;
+
+&lt;p&gt;You can store aliases and other setups in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.bashrc&lt;/code&gt; if you’re planning on using different shells or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tmux&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;vim&quot;&gt;Vim&lt;/h2&gt;
+
+&lt;p&gt;Be great with vim.&lt;/p&gt;
+
+&lt;p&gt;At the beginning of the exam, create the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.vimrc&lt;/code&gt; with the following content:&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;set tabstop=2
+set expandtab
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;expandtab&lt;/code&gt; make sure to use spaces for tabs. You will need to memorize these and just type them down because you can search internet have any commands note on your desktop, etc.&lt;/p&gt;
+
+&lt;h3 id=&quot;optional-vim&quot;&gt;Optional: Vim&lt;/h3&gt;
+
+&lt;p&gt;You can also add the following to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.vimrc&lt;/code&gt; to be able to apply tab on multiple selected lines.&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;set shiftwidth=2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;More further down in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vim&lt;/code&gt; section.&lt;/p&gt;
+
+&lt;h3 id=&quot;toggle-vim-line-numbers&quot;&gt;toggle vim line numbers&lt;/h3&gt;
+
+&lt;p&gt;When in vim you can press &lt;strong&gt;Esc&lt;/strong&gt; and type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:set&lt;/code&gt; number or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:set&lt;/code&gt; nonumber followed by &lt;strong&gt;Enter&lt;/strong&gt; to toggle line numbers. This can be useful when finding syntax errors based on the line number- but can be bad when wanting to mark&amp;amp;copy by mouse. You can also just jump to a line number with &lt;strong&gt;Esc&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:22&lt;/code&gt; + &lt;strong&gt;Enter&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;copypaste&quot;&gt;copy&amp;amp;paste&lt;/h3&gt;
+
+&lt;p&gt;Get used to copy/paste/cut with vim:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Mark lines: Esc+V (then arrow keys)
+Copy marked lines: y
+Cut marked lines: d
+Past lines: p or P
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;indent-multiple-lines&quot;&gt;Indent multiple lines&lt;/h3&gt;
+
+&lt;p&gt;To indent multiple lines press &lt;strong&gt;Esc&lt;/strong&gt; and type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:set shiftwidth=2&lt;/code&gt;. First, mark multiple lines using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shift v&lt;/code&gt; and the up/down keys. Then to indent the marked lines press &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shift .&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shift ,&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;time-is-precious-be-fast&quot;&gt;Time is precious, Be fast&lt;/h2&gt;
+
+&lt;p&gt;2 hours, 120 minutes, 19 questions, that’s less than 7 minutes per question, keep that mind, most of the people failing the test is not because of a lack of knowledge is just a time management issue.&lt;/p&gt;
+
+&lt;p&gt;Each question has the % you get if you solve it, if any question looks too complex or too difficult or even too long to accomplish, please write down the number in the Notebook and move to the next one.&lt;/p&gt;
+
+&lt;p&gt;There’s always quick wins in the exam, questions like:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;“List all the namespaces and save the output in a file in \exam01\folder\namespaces.txt” 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So go for those first.&lt;/p&gt;
+
+&lt;p&gt;Also in most of the questions, you can validate the answer is right, check the Pod is running, check if the Deployment is running, check the number of executions, check the logs in the containers, etc.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Solving a challenge and knowing how to verify a solution is critical&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;you don’t have to get 100% to pass the exam, try to attempt as much as you can, cross verify to make sure all questions attempted are correct.&lt;/p&gt;
+
+&lt;h2 id=&quot;avoid-yaml-do-dry-run&quot;&gt;Avoid YAML, do dry-run&lt;/h2&gt;
+
+&lt;figure class=&quot;figure d-block text-center mb-4&quot;&gt;
+  &lt;img class=&quot;figure-img img-fluid&quot; src=&quot;/assets/images/post/1_MT6vRvUwZxbIsCsgOeMidQ.png&quot; alt=&quot;&quot; /&gt;
+  &lt;figcaption class=&quot;figure-caption&quot;&gt;High tech tooling to debug YAML issues&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;It’s a waste of time, it’s annoying and nobody on this planet like to type YAML files and find it enjoying.&lt;/p&gt;
+
+&lt;p class=&quot;lead text-center text-primary&quot;&gt;AVOID writing YAML manifests at all cost&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--dry-run&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-o yaml&lt;/code&gt; flags, ALWAYS&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;These flags are incredibly useful to redirect the YAML configuration to a file by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; sign&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml &amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;nginx.yaml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;With the file, you can verify the config and make small changes if needed.&lt;/p&gt;
+
+&lt;h2 id=&quot;run-command-and-restart-flag&quot;&gt;Run command and restart flag&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl run&lt;/code&gt; command is a convenient and useful way to quickly create kubernetes resources without dealing with yaml files. Since kubernetes v1.12, creation acknowledgement (“object created”) is preceded by a message noting that this creation command is deprecated and will no longer be available in future &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; releases.&lt;/p&gt;
+
+&lt;p&gt;It can save you a lot of time, but keep in mind it’ll eventually be removed by the kubectl command line because it’s deprecated. (kubectl create is the new proposed way)&lt;/p&gt;
+
+&lt;p&gt;You’ll use kubectl run command all the time. It basically creates different workloads/objects based on what you pass to this flag.&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;+----------------------------------------+----------------------+
+|             Command &amp;amp; Flag             |  Generated Resource  |
++----------------------------------------+----------------------+
+| k run (without flag)                   | Creates a deployment |
+| k run --restart=Never                  | Creates a Pod        |
+| k run --restart=OnFailure              | Creates a Job        |
+| k run --restart=OnFailure --schedule=  | Creates a Cronjob    |
++----------------------------------------+----------------------+
+
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;be-smart-using-documentation-examples&quot;&gt;Be smart using documentation examples&lt;/h2&gt;
+
+&lt;p&gt;You can wget those files and make small changes, faster than creating the file from the scratch:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Pod with InitContainer:&lt;/strong&gt; &lt;a href=&quot;https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-initialization/#create-a-pod-that-has-an-init-container&quot;&gt;https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-initialization/#create-a-pod-that-has-an-init-container&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Persistent Volume:&lt;/strong&gt; &lt;a href=&quot;https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume&quot;&gt;https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Persistent Volume Claim:&lt;/strong&gt; &lt;a href=&quot;https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim&quot;&gt;https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Job:&lt;/strong&gt; &lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#running-an-example-job&quot;&gt;https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#running-an-example-job&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;CronJob:&lt;/strong&gt; &lt;a href=&quot;https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#creating-a-cron-job&quot;&gt;https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#creating-a-cron-job&lt;/a&gt; e.g:
+    &lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;wget https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/job/cronjob.yaml
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;reuse&quot;&gt;Reuse&lt;/h2&gt;
+
+&lt;p&gt;Use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;history&lt;/code&gt; command to reuse already entered commands or use even faster history search through &lt;strong&gt;Ctrl r&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;If a command takes some time to execute, like sometimes &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;kubectl delete pod x&lt;/code&gt;. You can put a task in the background using &lt;strong&gt;Ctrl z&lt;/strong&gt; and pull it back into foreground running command &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fg&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can delete pods fast with:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;k delete pod x --grace-period 0 --force
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;the-result&quot;&gt;The Result&lt;/h2&gt;
+
+&lt;p&gt;Preparing and passing the CKAD examination was fun but also a little bit stressing, in the real world you have plenty of access to documentation and plenty of time to search for solutions, edit YAML (but try to avoid!) and use vim ;-)&lt;/p&gt;
+
+&lt;p&gt;In my opinion, the above resources are a good help to pass the exam without issues. I am hopeful that these resources can be helpful to everybody trying to get their Kubernetes CKAD certification.&lt;/p&gt;
+
+&lt;p&gt;Good luck with your exam and if you pass it, come back and share your badge!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/post/1_KjxjnnQLnPaQWtAiPmG1uw.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name>Andrés Torres García</name></author><category term="Ckad" /><category term="Kubernetes" /><category term="Certification" /><category term="Certified" /><category term="Kubernetes" /><category term="K8s" /><summary type="html">I just passed the CKAD exam: And I want to share my journey and some tips and recommendations on how to handle the exam itself.</summary></entry></feed>
