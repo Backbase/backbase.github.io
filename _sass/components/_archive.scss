@@ -1,8 +1,10 @@
-// /* ==========================================================================
-//    ARCHIVE
-//    ========================================================================== */
-
 .archive {
+  $nav-link-color: $primary;
+  $nav-link-hover-color: $nav-link-color;
+  $nav-link-padding-x: 0;
+
+  @import "bootstrap/nav";
+
   &__item {
     height: 100%;
 
@@ -38,6 +40,20 @@
       &-body {
         @include make-col-ready();
         max-width: 500px;
+      }
+    }
+  }
+
+  .nav {
+    &-link {
+      span {
+        border-bottom: 3px solid transparent;
+        transition: .25s border-color;
+      }
+      &.active span,
+      &:hover span {
+        border-bottom-color: map-get($bb-palette, "red");
+        transition: .25s border-color;
       }
     }
   }

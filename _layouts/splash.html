@@ -33,7 +33,7 @@ layout: default
       {% assign entries_layout = page.entries_layout | default: 'list' %}
       <div class="row">
       {% for post in posts %}
-          {% include archive-single.html type=entries_layout columns=3 %}
+          {% include archive-single.html type=entries_layout class="col-md-6 col-lg-4" %}
       {% endfor %}
       </div>
 

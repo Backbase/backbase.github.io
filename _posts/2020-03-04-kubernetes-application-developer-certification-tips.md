@@ -7,6 +7,7 @@ authors:
 header:
   teaser: /assets/images/post/1_678aknjbvxta67HJka.png
   teaser_alt: Kubernetes certificate
+category: DevOps
 ---
 
 ![](/assets/images/post/1_z6NGFcNqfSgJaIvuzaY0sA.png)
