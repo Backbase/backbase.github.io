@@ -36,7 +36,7 @@ $headings-font-weight: 200;
 $btn-link-color: $primary;
 $btn-link-hover-color: $btn-link-color;
 
-$nav-link-color: map-get($bb-palette, "white");
+$nav-link-color: $primary;
 $nav-link-hover-color: $nav-link-color;
 
 $border-radius: .5rem;
@@ -48,7 +48,7 @@ $enable-shadows: true;
 $min-contrast-ratio: 2.8;
 
 $navbar-dark-color: map-get($bb-palette, "white");
-$navbar-dark-hover-color: rgba($navbar-dark-color, .75);
+$navbar-dark-hover-color: $navbar-dark-color;
 $navbar-nav-link-padding-x: 1rem;
 
 $navbar-padding-y: 1.5rem;

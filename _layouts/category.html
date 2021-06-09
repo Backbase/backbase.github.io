@@ -17,7 +17,7 @@ layout: archive
         {% for category in site.categories %}
           {% assign category_name = category | first %}
           <li class="nav-item">
-            <a href="/{{ site.category_path | default: 'category' }}/{{ category_name | slugify }}" class="nav-link {% if category_name == page.title %}active{% endif %}">
+            <a href="/{{ site.category_path | default: 'category' }}/{{ category_name | slugify }}" class="px-0 nav-link {% if category_name == page.title %}active{% endif %}">
               <span>{{ category_name }}</span>
             </a>
           </li>

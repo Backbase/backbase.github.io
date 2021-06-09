@@ -28,18 +28,22 @@
           {% if item.id == 'categories' %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarCategoriesDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{ item.title }}
+                <span>{{ item.title }}</span>
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarCategoriesDropdownMenuLink">
                 {%- for category in site.categories %}
                   {% assign category_name = category | first %}
-                  <a class="nav-link" href="/{{ site.category_path | default: 'category' }}/{{ category_name | slugify }}">{{ category_name }}</a>
+                  <a class="nav-link" href="/{{ site.category_path | default: 'category' }}/{{ category_name | slugify }}">
+                    <span>{{ category_name }}</span>
+                  </a>
                 {% endfor %}
               </ul>
             </li>
           {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ item.url | relative_url }}"{% if item.description %} title="{{ item.description }}"{% endif %} {% if item.external %}target="_blank"{% endif %}>{{ item.title }}</a>
+              <a class="nav-link" href="{{ item.url | relative_url }}"{% if item.description %} title="{{ item.description }}"{% endif %} {% if item.external %}target="_blank"{% endif %}>
+                <span>{{ item.title }}</span>
+              </a>
             </li>
           {% endif %}
         {%- endfor -%}
