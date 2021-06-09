@@ -12,5 +12,7 @@ Our core product, the Backbase Digital-First Banking Platform, gives financials 
 
 Change is at the core of everything we do, which means you will never get bored or too comfortable around here. People work at Backbase because of the challenges we face every day and the people we face these challenges with.
 
+<!-- vale off -->
 Here, you make it happen!
+<!-- vale on -->
 
