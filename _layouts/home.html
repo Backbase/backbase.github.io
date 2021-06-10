@@ -1,22 +1,45 @@
 ---
-layout: archive
+layout: default
 ---
 
-{{ content }}
+{% include base_path %}
 
-<h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>
+<div id="main" role="main">
+  <section class="section__splash">
+    <article class="splash" itemscope itemtype="http://schema.org/CreativeWork">
+      {% if page.title %}<meta itemprop="headline" content="{{ page.title | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
+      {% if page.excerpt %}<meta itemprop="description" content="{{ page.excerpt | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
+      {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date: "%B %d, %Y" }}">{% endif %}
+      {% if page.modified %}<meta itemprop="dateModified" content="{{ page.modified | date: "%B %d, %Y" }}">{% endif %}
 
-{% if paginator %}
-  {% assign posts = paginator.posts %}
-{% else %}
-  {% assign posts = site.posts %}
-{% endif %}
+      <section class="page__content" itemprop="text">
+        {% if page.splash %}
+          {% include bb_splash.html %}
+        {% endif %}
+        {% if page.feature_row %}
+          {% include feature_row.html %}
+        {% endif %}
+        {{ content }}
+      </section>
+    </article>
+  </section>
 
-{% assign entries_layout = page.entries_layout | default: 'list' %}
-<div class="{{ entries_layout }}">
-  {% for post in posts %}
-    {% include archive-single.html type=entries_layout %}
-  {% endfor %}
+  <section class="section__entries">
+    <div class="container">
+      {% if paginator %}
+      {% assign posts = paginator.posts %}
+      {% else %}
+      {% assign posts = site.posts %}
+      {% endif %}
+
+      {% assign entries_layout = page.entries_layout | default: 'list' %}
+      <div class="row">
+      {% for post in posts %}
+          {% include archive-single.html type=entries_layout class="col-md-6 col-lg-4" %}
+      {% endfor %}
+      </div>
+
+      {% include paginator.html %}
+    </div>
+  </div>
 </div>
-
-{% include paginator.html %}

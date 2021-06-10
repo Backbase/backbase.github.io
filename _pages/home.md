@@ -1,5 +1,5 @@
 ---
-layout: splash
+layout: home
 permalink: /
 entries_layout: grid
 # feature_row:
@@ -13,6 +13,3 @@ entries_layout: grid
 splash: true
 ---
 
-{% include bb_splash.html %}
-
-{% include feature_row.html %}

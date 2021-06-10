@@ -7,6 +7,7 @@ authors:
 header:
   teaser: /assets/images/post/3_gYa678jAKLhagDFfA.png
   teaser_alt: Account Balance Widget
+category: Mobile
 ---
 
 ![](/assets/images/post/3_rTFabjU6GfTYxahKA.png)

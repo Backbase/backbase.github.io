@@ -7,6 +7,7 @@ authors:
 header:
   teaser: /assets/images/post/2_mAYtyuuuajXGyaujaoP.png
   teaser_alt: Kotlin
+category: Mobile
 ---
 
 ![](/assets/images/post/2_678ajYYaik18GyxVFa.png)

@@ -1,0 +1,14 @@
+.nav {
+  &-link {
+    span {
+      padding: map-get($spacers, 1) 0;
+      border-bottom: 3px solid transparent;
+      transition: .25s border-color;
+    }
+    &.active span,
+    &:hover span {
+      border-bottom-color: map-get($bb-palette, "red");
+      transition: .25s border-color;
+    }
+  }
+}
