@@ -13,11 +13,11 @@ category: Mobile
 Our feature libraries, which include UI, have a number of varying requirements regarding
 configuration by our customers. (My colleague Hari wrote about one such library's requirements
 [here]({% post_url 2020-08-14-android-configuration-driven-ui-from-epoxy-to-compose %}).) One
-category of common configurations is resources—text, colors, images—that may be defined in various
+category of common configurations is resources—text, colors, images—which may be defined in various
 ways, like code, resources, or theme attributes. We created
 [Deferred Resources](https://engineering.backbase.com/DeferredResources) to support such
-configurations, and with it our customers can easily declare configuration properties from any of
-these common sources:
+configurations, and with it our customers can consistently declare configuration properties from
+any of these common sources:
 ```kotlin
 SomeConfiguration {
     textColor = DeferredColor.Constant(Color.WHITE)
@@ -42,7 +42,7 @@ examples of how we are taking advantage of this flexibility.
 
 ## Color variants
 
-The Backbase design system has a concept of "color variants", where any theme color has lighter and
+The Backbase design system has a concept of "color variants," where any theme color has lighter and
 darker alternates. These variants are defined by a computed overlay: a "lighter" variant is the
 base color with a 30% white overlay, while a "darker" variant is the base color with a 30% black
 overlay.
@@ -88,9 +88,8 @@ public fun DeferredColor.variant(variant: ColorVariant): DeferredColor =
 }
 ```
 
-With this, anyone using our design system can easily convert any configured color to a variant of
-the same color, even if the base color comes from an outside source and its value has not been
-resolved yet.
+With this, anyone using our design system can convert any configured color to a variant of the same
+color, even if the base color comes from an outside source and its value has not been resolved yet.
 
 ```kotlin
 SomeConfiguration {
@@ -172,9 +171,9 @@ SomeConfiguration {
 
 ## Remote configuration
 
-We're just starting to explore another possible application of deferred resources: Resolving
-resources from a remote server. Imagine one of our libraries has a configuration to enable a new
-feature:
+We're just starting to explore another possible resource-resolution approach with Deferred
+Resources: resolving values from a remote server. Imagine one of our libraries has a configuration
+to enable a new feature:
 
 ```kotlin
 SomeConfiguration {
@@ -233,7 +232,7 @@ don't.
 
 ---
 
-All three of these utilizations of Deferred Resources have one thing in common: They decouple the
+All three of these utilizations of Deferred Resources have one thing in common: they decouple the
 specific feature in question from the consumption site—our feature libraries. With this
 abstraction, our feature libraries are almost limitlessly flexible while remaining uncoupled from
 any specialized resource-resolution approaches.
