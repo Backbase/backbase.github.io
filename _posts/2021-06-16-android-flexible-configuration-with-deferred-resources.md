@@ -1,6 +1,6 @@
 ---
 title: "Android: Flexible configuration with Deferred Resources"
-excerpt: "TODO"
+excerpt: Deferred Resources provides flexibility beyond the standard resource-resolution approaches.
 tags: Mobile Android Open-source Deferred-Resources
 authors:
 - Drew Hamilton
@@ -43,15 +43,16 @@ examples of how we are taking advantage of this flexibility.
 ## Color variants
 
 The Backbase design system has a concept of "color variants", where any theme color has lighter and
-darker alternates. These variants are defined by a computed overlay: a "lighter" variant is the base
-color with a 30% white overlay, while a "darker" variant is the base color with a 30% black overlay.
+darker alternates. These variants are defined by a computed overlay: a "lighter" variant is the
+base color with a 30% white overlay, while a "darker" variant is the base color with a 30% black
+overlay.
 
 ```kotlin
 enum class ColorVariant(
-    @ColorInt internal val foreground: Int
+    @ColorInt internal val overlay: Int
 ) {
-    LIGHTER(Color.WHITE.withAlpha(0x4D)),
-    DARKER(Color.BLACK.withAlpha(0x4D)),
+    LIGHTER(overlay = Color.WHITE.withAlpha(0x4D)),
+    DARKER(overlay = Color.BLACK.withAlpha(0x4D)),
 }
 ```
 
@@ -60,7 +61,8 @@ feature libraries as well as for our customers to use the same variants:
 
 ```kotlin
 /**
- * Convert a [DeferredColor] to a [variant] of the same color without resolving it yet.
+ * Convert a [DeferredColor] to a [variant] of the same color without resolving it
+ * yet.
  */
 public fun DeferredColor.variant(variant: ColorVariant): DeferredColor =
   DeferredVariantColor(this, variant)
@@ -100,9 +102,9 @@ SomeConfiguration {
 ## Supporting Lottie without depending on it
 
 Some of our customers want to use [Lottie](https://airbnb.design/lottie/) to provide fun
-micro-animations to the UI provided by our feature libraries. Other customers don't want to use
-Lottie, or don't want animations at all. A custom implementation of the `DeferredDrawable`
-interface lets us support Lottie  animations indirectly, without actually coupling our libraries
+micro-animations to our feature libraries' UI. Other customers don't want to use Lottie, or don't
+want these animations at all. A custom implementation of the `DeferredDrawable` interface lets us
+support Lottie animations indirectly, without actually coupling our libraries
 to it or forcing our customers to take it on as a dependency.
 
 As a standalone library, we ship a `DeferredLottieDrawable` class:
@@ -117,7 +119,8 @@ interface DeferredLottieDrawable : DeferredDrawable {
         private val transformations: LottieDrawable.(Context) -> Unit = {},
     ) : DeferredLottieDrawable {
         override fun resolve(context: Context): LottieDrawable? {
-            val compositionResult = LottieCompositionFactory.fromRawResSync(context, rawRes)
+            val compositionResult =
+                LottieCompositionFactory.fromRawResSync(context, rawRes)
             when (val exception = compositionResult.exception) {
                 null -> return compositionResult.value?.asDrawable()?.apply {
                     transformations(context)
@@ -130,7 +133,7 @@ interface DeferredLottieDrawable : DeferredDrawable {
     // Other supported types are implemented too: Constant, Asset, and Stream
 }
 
-private fun LottieComposition.asDrawable(): LottieDrawable = LottieDrawable().apply {
+private fun LottieComposition.asDrawable() = LottieDrawable().apply {
     composition = this@asDrawable
 }
 ```
@@ -140,7 +143,8 @@ standard Android APIs, UI code that expects an animation can display this withou
 Lottie is involved:
 
 ```kotlin
-val paymentSuccessIndication = configuration.paymentSuccessIndication.resolve(context)
+val paymentSuccessIndication =
+    configuration.paymentSuccessIndication.resolve(context)
 imageView.setImageDrawable(paymentSuccessIndication)
 if (paymentSuccessIndication is Animatable) {
     paymentSuccessIndication.start()
@@ -152,11 +156,15 @@ any other `DeferredDrawable` if they don't use Lottie:
 
 ```kotlin
 SomeConfiguration {
-    paymentSuccessIndication = DeferredLottieDrawable.Raw(R.raw.payment_success_animation) {
+    paymentSuccessIndication = DeferredLottieDrawable.Raw(
+        R.raw.payment_success_animation
+    ) {
         repeatCount = LottieDrawable.INFINITE
     }
     // or
-    paymentSuccessIndication = DeferredDrawable.Resource(R.drawable.payment_success_icon)
+    paymentSuccessIndication = DeferredDrawable.Resource(
+        R.drawable.payment_success_icon
+    )
     // or
     paymentSuccessIndication = SomeCustomDeferredAnimatedDrawable(customInputs)
 }
@@ -182,8 +190,9 @@ implementation is resolved:
 interface RemoteConfigApi {
 
     /**
-     * Returns the boolean value defined by [key] according to this [RemoteConfigApi]'s internal
-     * state. This may return a default value if the remote API call has not completed.
+     * Returns the boolean value defined by [key] according to this
+     * [RemoteConfigApi]'s internal state. This may return a default value
+     * if the remote API call has not completed.
      */
     fun getBooleanValue(key: String): Boolean
 }
@@ -191,16 +200,17 @@ interface RemoteConfigApi {
 class FeatureFlagFactory(
     private val remoteConfigApi: RemoteConfigApi,
 ) {
-    fun createDeferredFeatureFlag(featureName: String): DeferredBoolean = object : DeferredBoolean {
-        override fun resolve(context: Context): Boolean =
-            remoteConfigApi.getBooleanValue(featureName)
-    }
+    fun createDeferredFeatureFlag(featureName: String): DeferredBoolean =
+        object : DeferredBoolean {
+            override fun resolve(context: Context): Boolean =
+                remoteConfigApi.getBooleanValue(featureName)
+        }
 }
 ```
 
-The consuming app can fetch the remote values in the background when the app is launched and use this
-factory to create their deferred feature flag, and the feature will be enabled depending on whatever
-the configuration backend has returned:
+The consuming app can fetch the remote values in the background when the app is launched and use
+this factory to create its deferred feature flag, and the feature will be enabled depending on
+whatever the configuration backend has returned:
 
 ```kotlin
 val remoteConfigApi = MyRemoteConfigApi(
@@ -212,7 +222,8 @@ val remoteConfigApi = MyRemoteConfigApi(
 val featureFlagFactory = FeatureFlagFactory(remoteConfigApi)
 
 SomeConfiguration {
-    coolNewFeatureEnabled = featureFlagFactory.createDeferredFeatureFlag("coolNewFeature")
+    coolNewFeatureEnabled =
+        featureFlagFactory.createDeferredFeatureFlag("coolNewFeature")
 }
 ```
 
@@ -223,6 +234,6 @@ don't.
 ---
 
 All three of these utilizations of Deferred Resources have one thing in common: They decouple the
-specific feature in question from the consumption site—our feature libraries. With this abstraction,
-our feature libraries are almost limitlessly flexible while remaining uncoupled from any specialized
-resource resolution approaches.
+specific feature in question from the consumption site—our feature libraries. With this
+abstraction, our feature libraries are almost limitlessly flexible while remaining uncoupled from
+any specialized resource-resolution approaches.
