@@ -5,7 +5,7 @@ tags: Mobile Android Open-source Deferred-Resources
 authors:
 - Drew Hamilton
 header:
-  teaser: TODO
+  teaser: /assets/images/post/05_color_configuration.png
   teaser_alt: Deferred Resources
 category: Mobile
 ---
