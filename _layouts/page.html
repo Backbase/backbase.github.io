@@ -10,11 +10,11 @@ layout: default
       {{ content }}
     </section>
     <aside class="row">
-      <div class="col-md-6 offset-md-4">
-        <h2>Latest posts</h2>
+      <div class="col-md-8 col-lg-6 offset-md-4">
+        <h2 class="text-lowercase">Latest <span class="fw-bolder">posts</span></h2>
         <div class="row">
           {% for post in site.posts limit:2 %}
-            {% include archive-single.html type="grid" %}
+            {% include archive-single.html type="grid" class="col-md-6" %}
           {% endfor %}
         </div>
       </div>

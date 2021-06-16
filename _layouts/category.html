@@ -2,9 +2,27 @@
 layout: archive
 ---
 
-{{ content }}
-
-{% assign entries_layout = page.entries_layout | default: 'list' %}
-<div class="entries-{{ entries_layout }}">
-  {% include posts-category.html taxonomy=page.taxonomy type=entries_layout %}
+<div class="row">
+  <section class="col-md-8 col-lg-10">
+    <div class="row">
+      {% for post in page.posts %}
+        {% include archive-single.html type="grid" class="col-md-6 col-lg-4" %}
+      {% endfor %}
+    </div>
+  </section>
+  <aside class="col-md-4 col-lg-2">
+    <h2 class="text-lowercase">Other <span class="fw-bolder">categories</span></h2>
+    <nav>
+      <ul class="nav flex-column">
+        {% for category in site.categories %}
+          {% assign category_name = category | first %}
+          <li class="nav-item">
+            <a href="/{{ site.category_path | default: 'category' }}/{{ category_name | slugify }}" class="px-0 nav-link {% if category_name == page.title %}active{% endif %}">
+              <span>{{ category_name }}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </aside>
 </div>
