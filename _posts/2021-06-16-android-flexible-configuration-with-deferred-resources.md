@@ -12,9 +12,9 @@ category: Mobile
 
 Our feature libraries, which include UI, have a number of varying requirements regarding
 configuration by our customers. (My colleague Hari wrote about one such library's requirements
-[here]({% post_url 2020-08-14-android-configuration-driven-ui-from-epoxy-to-compose %}).) One
-category of common configurations is resources—text, colors, images—which may be defined in various
-ways, like code, resources, or theme attributes. We created
+[here]({% post_url 2020-08-14-android-configuration-driven-ui-from-epoxy-to-compose %}).)
+Resources (text, colors, images, etc.) are a common type of configuration, and can be defined in
+various ways—typically in code, resources, or theme attributes. We created
 [Deferred Resources](https://engineering.backbase.com/DeferredResources) to support such
 configurations, and with it our customers can consistently declare configuration properties from
 any of these common sources:
@@ -37,8 +37,8 @@ over a year now.
 But beyond these common use cases, Deferred Resources' design provides a lot of flexibility to
 provide resources in other ways. Each deferred resource type is an interface with one or more
 abstract functions to resolve the underlying resource. Thus, a user of the Deferred Resources
-library can define any resource-resolution implementation they'd like. The following are a few
-examples of how we are taking advantage of this flexibility.
+library can define any resource-resolution implementation they'd like. Here are some examples of
+how we're taking advantage of this flexibility.
 
 ## Color variants
 
@@ -67,6 +67,7 @@ feature libraries as well as for our customers to use the same variants:
 public fun DeferredColor.variant(variant: ColorVariant): DeferredColor =
   DeferredVariantColor(this, variant)
 
+// See https://github.com/drewhamilton/Poko for more on the @Poko annotation
 @Poko internal class DeferredVariantColor(
     private val base: DeferredColor,
     private val variant: ColorVariant
@@ -235,4 +236,4 @@ don't.
 All three of these utilizations of Deferred Resources have one thing in common: they decouple the
 specific feature in question from the consumption site—our feature libraries. With this
 abstraction, our feature libraries are almost limitlessly flexible while remaining uncoupled from
-any specialized resource-resolution approaches.
+any specialized resource-resolution approach.
