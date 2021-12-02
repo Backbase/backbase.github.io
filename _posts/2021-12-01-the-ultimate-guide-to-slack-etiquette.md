@@ -10,7 +10,7 @@ header:
 category: Remote Work
 ---
 
-We all know that COVID changed the world we live in today. It also changed the way most people work. Although remote work is nothing new for a lot of people, many of us had to adapt to it. Before, we could simply have a coffee with our team mates and discuss things face to face, but now messaging tools (e.g. [Slack](https://youtu.be/qUkYkm9bWak)) take a very important role in a "the less useless meetings the better" remote work strategy.
+We all know that COVID changed the world we live in today. It also changed the way most people work. Although remote work is nothing new for a lot of people, many of us had to adapt to it. Before, we could simply have a coffee with our team mates and discuss things face to face, but now messaging tools (for example [Slack](https://youtu.be/qUkYkm9bWak)) take a very important role in a "the less useless meetings the better" remote work strategy.
 
 Slack is a messaging app for business that connects people to the information they need. It has several features that makes remote cooperation *"an easier, more organized way to work"* (as they promote on their website). Slack team is so kind that they even give you some [etiquette tips](https://slack.com/blog/collaboration/etiquette-tips-in-slack) of how to collaborate with kindness (I recommend the read, as I don't plan to repeat all of them here). However, I want to take this a step further.
 
@@ -24,15 +24,15 @@ I believe that challenging habits in order to achieve a more "polite behaviour" 
 
  I know this might look a bit controversial at first: *how am I looking to improve polite behaviour telling you not to say hello?* However, this is not what this is about. The "no hello" approach is all about practicality. It still motivates you to say hello to your colleagues, but also includes the actual message you wanna send. I'd recommend you to have a look on [their website](https://nohello.net/), where they illustrate with very good examples. And, please, don't keep your colleagues waiting.
 
-# 2. Use threads. Seriously, use threads!
+# 2. Use threads. Seriously, use threads.
 
- I know that this is already one of the items under the [Slack etiquette tips post](https://slack.com/blog/collaboration/etiquette-tips-in-slack), but I can't help it to emphasize this more. For some, this might seem just as some annoying formality. One might even say *"why would I use threads?"*. Well, I'm glad you asked. The non thread usage can cause many variations of issues. One classic example is the "split discussion".
+ I know that this is already one of the items under the [Slack etiquette tips post](https://slack.com/blog/collaboration/etiquette-tips-in-slack), but I can't help it to emphasize this more. For some, this might seem just as some annoying formality. One might even say *"why would I use threads?"* Well, I'm glad you asked. The non thread usage can cause many variations of issues. One classic example is the "split discussion".
 
 ## **❌ Don't do this**
 
  ![](/assets/images/post/split-discussion-dont.png)
 
- Instead, **always answer on the thread**. This habit avoids duplication of information and confusion in the discussion. Another interesting variation of this issue causes what I like to call the "birthday channels". I'm sure you have been there, and I'm sure, at some point, you were persuaded to do the same as everyone else: *happy birthday, Pablo!*
+ Instead, **always answer on the thread**. This habit avoids duplication of information and confusion in the discussion. Another interesting variation of this issue causes what I like to call the "birthday channels". I'm sure you have been there, and I'm sure, at some point, you were persuaded to do the same as everyone else: *"happy birthday, Pablo."*
 
 ## **❌ Don't do this**
 
@@ -62,9 +62,9 @@ Now, imagine you have to ask a question on the retail mobile support channel. Yo
 
  ![](/assets/images/post/here-do.png)
 
-# 4. Format your code!
+# 4. Format your code
 
-This one might only be relevant for developers, and I will keep it short: please, format your code! Slack normal text is not meant to accommodate longer lines of code. It becomes messy and illegible.
+This one might only be relevant for developers, and I will keep it short: please, format your code. Slack normal text is not meant to accommodate longer lines of code. It becomes messy and illegible.
 
 ## **❌ Don't do this**
 
@@ -76,7 +76,7 @@ This one might only be relevant for developers, and I will keep it short: please
 
 # 5. Fill in your profile
 
-Imagine the following scenario: you just received the following message: *"Hi, could you give me access to this repository?"*. Your immediate reaction is to look at the sender's name, and you see "Arya", no surname. Then you wonder *"which Arya is it?"*, *"do I even know anyone called Arya?"*. Then you try to look at the person's profile picture, but they only have the default avatar. Alright, maybe looking at their position you might know how to help them. But no, that is not filled in either. *Are they from the US Hub? Or maybe the UK? How should you answer them? Is "who are you?" rude? Is the security team testing me here now? Maybe I should not answer at all…*
+Imagine the following scenario: you just received the following message: *"Hi, could you give me access to this repository?"* Your immediate reaction is to look at the sender's name, and you see "Arya", no surname. Then you wonder *"which Arya is it?"*, *"do I even know anyone called Arya?"* Then you try to look at the person's profile picture, but they only have the default avatar. Alright, maybe looking at their position you might know how to help them. But no, that is not filled in either. *Are they from the US Hub? Or maybe the UK? How should you answer them? Is "who are you?" rude? Is the security team testing me here now? Maybe I should not answer at all…*
 
 ![](/assets/images/post/a-girl-has-no-name.jpeg)
 *Thank you, Tolu, for the amazing reference.*
@@ -85,4 +85,4 @@ Alright, that was a bit exaggerated, I agree. But you get the idea. It seems obv
 
 # Conclusion
 
-As I said, my intention was not to tell you how you should do your work, but to challenge some of your current habits. Next time you see some of these happening, in an active or passive way, maybe ask yourself *"am I being kind to my coworkers?"*, *"am I enabling everyone to work in an easier and more organized way?"*. If those are some of your priorities, then following those rules will make you and your team improve cooperation 100% guaranteed. Or your money back.
+As I said, my intention was not to tell you how you should do your work, but to challenge some of your current habits. Next time you see some of these happening, in an active or passive way, maybe ask yourself *"am I being kind to my coworkers?", "am I enabling everyone to work in an easier and more organized way?"* If those are some of your priorities, then following those rules will make you and your team improve cooperation 100% guaranteed. Or your money back.
