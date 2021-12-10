@@ -23,6 +23,8 @@ Regardless of the topic, the first question to ask yourself is, "Why should a re
  
 Engineering blog posts are not just about "show and tell"; they're how our engineering teams shares knowledge with peers across the wider tech community. And engineering blog posts provide value to the engineers writing them; they increase an engineer's profile and they give the engineer the chance to share what they've worked on. Also, they're a great way of attracting new candidates ;-)
 
+Do you have an interesting topic to share but it's not technical? we have a place for that too, please check: https://medium.com/backbase
+
 
 ## Publishing an article
 
