@@ -90,12 +90,11 @@ footer:
 #   - vendor/ruby/
 include:
   - _pages
-  - vendor/bundle
 
 sass:
   style: compressed
   load_paths:
-    - ./vendor/bundle/ruby/*/gems/bootstrap-5.0.0/assets/stylesheets
+    - ./assets/css/vendor/bootstrap
 
 # Defaults
 defaults:
