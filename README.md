@@ -4,9 +4,17 @@ Static blog powered by [Jekyll](https://jekyllrb.com/)
 
 ## Build locally
 
+Using Docker Compose:
+
 ```sh
-bundle install
-bundle exec jekyll serve
+$ docker-compose up
+```
+
+Using your local Ruby environment:
+
+```sh
+$ bundle install
+$ bundle exec jekyll serve
 ```
 
 ## Content
