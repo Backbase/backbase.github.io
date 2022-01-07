@@ -10,12 +10,18 @@ Using Docker Compose:
 $ docker-compose up
 ```
 
+> Make sure you have [Docker Compose installed](https://docs.docker.com/compose/install/) to run it.
+
 Using your local Ruby environment:
 
 ```sh
 $ bundle install
 $ bundle exec jekyll serve
 ```
+
+---
+
+The blog is served at http://localhost:4000
 
 ## Content
 
@@ -41,7 +47,7 @@ Do you have an interesting topic to share but it's not technical? we have a plac
 * Create a file inside folder [_posts/](_posts/) with the following naming convention: `yyyy-mm-dd-title-with-spaces.md`
 * Add images that you'll use in this post to folder [assets/images/post/](assets/images/post/)
 * Ensure your header is correct. Use existing posts as an example, both for the header and the content.
-* Ensure you run `bundle install && bundle exec jekyll serve` locally and double check everything is fine at http://127.0.0.1:4000/ before submitting a PR to branch `main`.
+* Ensure you [run it locally](#build-locally) and double check everything is fine in your browser before submitting a PR to branch `main`.
 
 ## Linting your posts
 
@@ -51,7 +57,7 @@ The linting tool is [Vale](https://github.com/errata-ai/vale) and you can run it
 
 
 ```bash
-vale --glob='*.md' --minAlertLevel=warning .
+$ vale --glob='*.md' --minAlertLevel=warning .
 ```
 
 For more information, check the [usage docs](https://docs.errata.ai/vale/cli)
