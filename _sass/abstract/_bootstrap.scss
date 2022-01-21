@@ -40,6 +40,7 @@ $nav-link-color: $primary;
 $nav-link-hover-color: $nav-link-color;
 
 $border-radius: .5rem;
+$border-radius-sm: .2rem;
 $card-border-radius: $border-radius;
 $card-border-width: 0;
 
@@ -65,3 +66,9 @@ $lead-font-weight: 200;
 
 $dropdown-dark-bg: $primary;
 $dropdown-dark-link-color: $navbar-dark-color;
+
+$enable-caret: false;
+
+$thumbnail-border-radius: $border-radius-sm;
+
+$badge-font-weight: 300;

@@ -1,7 +1,11 @@
 # main links links
 main:
-  - title: "Categories"
-    id: categories
+  # removed temporarily as we don't have so many posts
+  # to be moved to the page body
+  # - title: "Categories"
+  #   id: categories
+  - title: "Our Principles"
+    url: /principles
   - title: "About"
     url: /about
   - title: "Jobs"

@@ -15,7 +15,8 @@ layout: default
       <section class="page__content" itemprop="text">
         {% if page.splash %}
           {% include bb_splash.html %}
-        {% else %}
+        {% endif %}
+        {% if page.feature_row %}
           {% include feature_row.html %}
         {% endif %}
         {{ content }}
@@ -25,17 +26,16 @@ layout: default
 
   <section class="section__entries">
     <div class="container">
-      {% if paginator %}
-      {% assign posts = paginator.posts %}
-      {% else %}
-      {% assign posts = site.posts %}
-      {% endif %}
 
-      {% assign entries_layout = page.entries_layout | default: 'list' %}
+      {% assign posts = site.principles %}
       <div class="row">
-      {% for post in posts %}
-        {% include archive-single.html type=entries_layout class="col-md-6 col-lg-4" %}
-      {% endfor %}
+        <div class="offset-md-4 col-md-8">
+          <div class="row">
+            {% for post in posts %}
+              {% include archive-single.html type='list' %}
+            {% endfor %}
+          </div>
+        </div>
       </div>
 
       {% include paginator.html %}

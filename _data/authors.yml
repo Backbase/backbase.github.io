@@ -34,3 +34,13 @@ Rafael Nascimento:
   name        : "Rafael Nascimento"
   avatar      : "assets/images/avatars/rn.png"
   bio         : "Senior Mobile Engineer - Customer Success"
+
+Craig Walker:
+  name        : "Craig Walker"
+  avatar      : "assets/images/avatars/craig_walker.jpeg"
+  bio         : "Product Director Developer Enablement"
+
+Marco Santarelli:
+  name        : "Marco Santarelli"
+  avatar      : "assets/images/avatars/marco.jpeg"
+  bio         : "Director of Frontend"

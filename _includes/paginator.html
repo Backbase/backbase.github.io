@@ -1,0 +1,44 @@
+{% if paginator.total_pages > 1 %}
+<nav>
+  {% if paginator.page_trail %}
+    <ul class="pagination justify-content-center">
+      {% if paginator.previous_page_path %}
+        <li class="page-item">
+          <a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl }}" aria-label="Previous">
+            {{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}
+          </a>
+        </li>
+      {% endif %}
+      {% unless paginator.page_trail.first.num == 1 %}
+        <li class="page-item"><a class="page-link" href="{{ paginator.first_page_path | prepend: site.baseurl }}">{{ paginator.first_page }}</a></li>
+        {% unless paginator.page_trail.first.num == 2 %}
+          <li class="page-item"><span class="page-link">&hellip;</span></li>
+        {% endunless %}
+      {% endunless %}
+      {% for trail in paginator.page_trail %}
+        <li class="page-item{% if paginator.page == trail.num %} active{% endif %}">
+          {% if paginator.page == trail.num %}
+            <span class="page-link">{{ trail.num }}</a>
+          {% else %}
+            <a class="page-link" href="{{ trail.path | prepend: site.baseurl }}" title="{{trail.title}}">{{ trail.num }}</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+      {% unless paginator.page_trail.last.num == paginator.total_pages %}
+        {% assign penultimate = paginator.total_pages | minus: 1 %}
+        {% unless paginator.page_trail.last.num == penultimate %}
+          <li class="page-item"><span class="page-link">&hellip;</span></li>
+        {% endunless %}
+        <li class="page-item"><a class="page-link" href="{{ paginator.last_page_path | prepend: site.baseurl }}">{{ paginator.last_page }}</a></li>
+      {% endunless %}
+      {% if paginator.next_page_path %}
+        <li class="page-item">
+          <a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl }}" aria-label="Next">
+            {{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  {% endif %}
+</nav>
+{% endif %}
