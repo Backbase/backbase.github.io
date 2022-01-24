@@ -1,11 +1,15 @@
 ---
 layout: archive
 ---
-
+{% if paginator %}
+  {% assign posts = paginator.posts %}
+{% else %}
+  {% assign posts = site.posts %}
+{% endif %}
 <div class="row">
   <section class="col-md-8 col-lg-10">
     <div class="row">
-      {% for post in page.posts %}
+      {% for post in posts %}
         {% include archive-single.html type="grid" class="col-md-6 col-lg-4" %}
       {% endfor %}
     </div>

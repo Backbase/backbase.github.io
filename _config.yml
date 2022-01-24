@@ -32,6 +32,15 @@ categories:
   - DevOps
   - Architecture
 
+collections:
+  principles:
+    label: "Our Principles"
+    permalink: /:collection/:title
+    output: true
+    order:
+      - software-engineering.md
+      - innersource.md
+
 # Build settings
 theme: minimal-mistakes-jekyll
 bb_engineering_logo: true
@@ -43,6 +52,7 @@ atom_feed:
 
 plugins:
   - jekyll-category-pages
+  - jekyll-paginate
 
 permalink: /:year/:month/:day/:title
 
@@ -116,3 +126,34 @@ defaults:
     values:
       layout: page
       author_profile: true
+
+pagination:
+  enabled: true
+  debug: false
+  collection: 'posts'
+  per_page: 9
+  permalink: '/page/:num/' # Pages are index.html inside this folder (default)
+  title: ':title - page :num'
+  limit: 0
+  sort_field: 'date'
+  sort_reverse: true
+  category: 'posts'
+  tag: ''
+  locale: ''
+  trail:
+    before: 1
+    after: 1
+  extension: html
+  indexpage: 'index'
+
+autopages:
+  enabled: true
+  categories:
+    layouts:
+      - 'category.html'
+    title: 'Posts in category :cat'
+    permalink: '/category/:cat'
+    silent: false
+    slugify:
+      mode: 'default'
+      case: false

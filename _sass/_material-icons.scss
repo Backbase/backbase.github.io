@@ -23,6 +23,7 @@
   font-feature-settings: 'liga';
 
   &-round {
+    @extend %material-icons;
     font-family: 'Material Icons Round';
   }
 }

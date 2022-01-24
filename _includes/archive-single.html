@@ -10,10 +10,10 @@
   {% assign title = post.title %}
 {% endif %}
 
-<div class="grid__item col-12 {% if include.type == 'grid' %}{% if include.class %}{{ include.class }}{% else %}col-md{% endif %}{% endif %} mb-4">
+<div class="{% if include.type == 'grid' %}grid{% else %}list{% endif %}__item col-12 {% if include.type == 'grid' %}{% if include.class %}{{ include.class }}{% else %}col-md{% endif %}{% endif %} mb-4">
   <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
-    {% if include.type == "grid" and teaser %}
-      <div class="archive__item-teaser">
+    {% if teaser %}
+      <div class="archive__item-teaser {{ post.header.teaser_class }}">
         <img src="{{ teaser | relative_url }}" alt="{{ post.header.teaser_alt }}" class="rounded-top">
       </div>
     {% endif %}

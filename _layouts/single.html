@@ -34,8 +34,10 @@ layout: default
                 {% endfor %}
               </aside>
 
-              {% include page__meta.html show_date=true %}
+              {% if page.collection contains 'posts' %}{% assign show_date=true %}{% else %}{% assign show_date=false %}{% endif %}
+              {% include page__meta.html show_date=show_date %}
 
+              {% if page.categories >= 1 %}
               <p>
                 {% assign categories = page.categories | default: page.category %}
                 <span class="text-muted">{% if categories.size > 1 %}Categories{% else %}Category{% endif %}:</span>
@@ -45,6 +47,7 @@ layout: default
                   </a>
                 {% endfor %}
               </p>
+              {% endif %}
             </header>
           {% endunless %}
 
@@ -61,8 +64,6 @@ layout: default
           </footer>
 
           {% if page.share %}{% include social-share.html %}{% endif %}
-
-          {% include post_pagination.html %}
         </div>
 
         {% if site.comments.provider and page.comments %}
