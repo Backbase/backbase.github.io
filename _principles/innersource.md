@@ -18,7 +18,7 @@ You may develop proprietary software, while opening up work between developers a
 
 With the increasing pace of technological change, internal communication and collaboration have become key competitive differentiators. Not only between technical teams in software, IT, security, or data science, but across entire organizations. It has never been more important to get everyone working better together.
 
-By setting the default to open for projects within Backbse, we can enable reuse of existing solutions and minimize redundancy, empower and incentivize collaboration across teams, and leverage all the talent in Backbase.
+By setting the default to open for projects within Backbase, we can enable reuse of existing solutions and minimize redundancy, empower and incentivize collaboration across teams, and leverage all the talent in Backbase.
 
 ## Benefits of InnerSource
 
