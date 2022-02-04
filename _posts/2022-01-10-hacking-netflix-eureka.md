@@ -6,7 +6,7 @@ authors:
 - Maxim Tyukov
 header: 
     teaser: /assets/images/post/hacking-netflix-eureka/hacking-netflix-eureka.jpeg
-    teaser_alt: Hello, Blockchain!
+    teaser_alt: Hacking Netflix Eureka
 category: Security
 ---
 # Hacking Netflix Eureka!
