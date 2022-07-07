@@ -40,7 +40,7 @@ Now we have Fastlane tools installed. You should have `fastlane` directory in yo
 
 # Executing tests via command line ⌨️
 
-In order to run tests on the Continuous Integration Server, we need to execute them via a command-line interface. There are multiple approaches for this task, in this tutorial we'll be using the Fastlane Scan action. 
+In order to run tests on the Continuous Integration Server, we need to execute them via a command-line interface. You will find multiple approaches for this task, in this tutorial we'll be using the Fastlane Scan action. 
 
 Let's set it up:
  - Navigate to created fastlane directory `cd fastlane/`
