@@ -1,18 +1,14 @@
 ---
 
 title: "Android Mobile Testing: Fragments"
-
 excerpt: "How to decrease the number of E2E tests and improve coverage with Fragments Testing"
-
 tags: Mobile Android testing
-
 authors:
-
 - Raman Koushyk
-  header:
+header:
   teaser: /assets/images/post/espresso-logo.png
   teaser_alt: Fragments
-  category: Software Quality Assurance
+category: Software Quality Assurance
 
 ---
 
