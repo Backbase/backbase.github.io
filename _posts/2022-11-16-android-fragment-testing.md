@@ -17,8 +17,11 @@ category: Software Quality Assurance
 
 Firstly, we need to know what Fragments in Android are.
 
-![](/assets/images/post/containers.jpeg)
-Reusable containers
+{% include
+  components/figure.html
+  url="/assets/images/post/containers.jpeg"
+  description="Reusable containers"
+%}
 
 
 Fragments are reusable containers within our app allowing us to present the same user interface layout in a variety of activities and layout configurations. Given the versatility of fragments, it's important to validate that they provide a consistent and resource-efficient experience.
@@ -27,7 +30,7 @@ Note the following:
 * Your fragment shouldn't be dependent on a specific parent activity or another fragment.
 * You shouldn't create a fragment's view hierarchy unless the fragment is visible to the user.
 
-To perform Fragments testing we have such helper as AndroidX "fragment-testing" library, which provides the "FragmentScenario" class to create Fragments and change their Lifecycle.State. We are able to launch the screen we want to test and skip the rest.
+To perform Fragments testing we have such helper as AndroidX "fragment-testing" library, which provides the "FragmentScenario" class to create Fragments and change their `Lifecycle.State`. We are able to launch the screen we want to test and skip the rest.
 
 
 ## **Let's Start**
@@ -35,16 +38,17 @@ To perform Fragments testing we have such helper as AndroidX "fragment-testing" 
 ## 0. Before
 I'm going to use our test Application to showcase. It's called Jukebox (and was created by our awesome android developer Kunal Jadhav). It's a simple application but ideal for a demo. Let's have a look at it.
 
-<figure>
-    <center><img src="/assets/images/post/E2E_test.gif" style="width:220px;height:420px;">
-    <figcaption>E2E Test</figcaption></center>
-</figure>
+{% include
+  components/figure.html
+  url="/assets/images/post/E2E_test.gif"
+  description="E2E Test"
+%}
 
 As you can see we have Login, Playing Now, Most Popular and More Menu Screens.
 
 For the demo I want to test Title on Most Popular Screen and check if it contains text according to the requirements or not.
 
-<b>Before</b><br>
+**Before**<br>
 In our usual approach(E2E) we would have written a test which would do the following:
 - Open the app
 - Enter Username and Password
@@ -52,7 +56,7 @@ In our usual approach(E2E) we would have written a test which would do the follo
 - Select Most Popular tab
 - Check Title
 
-<b>Now</b><br>
+**Now**<br>
 Fragments testing approach:
 - Open the app at Most Popular Screen in Fragment
 - Check Title
@@ -123,9 +127,9 @@ In the test we check whether the title is there displaying the text specified in
 
 ## 3. Results
 
-<figure>
-    <center><img src="/assets/images/post/fragment_test.gif" style="width:220px;height:420px;">
-    <figcaption>Fragment Test</figcaption></center>
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/fragment_test.gif" style="max-width: 220px">
+  <figcaption class="figure-caption">Fragment Test</figcaption>
 </figure>
 
 Looks pretty nice (if you don't blink) :)
@@ -137,9 +141,10 @@ Testing android Fragments in isolation gives us time to d̶r̶i̶n̶k̶ ̶c̶o̶
 I've made the same test but as E2E. You can see the results below.
 
 
-<figure>
-    <center><img src="/assets/images/post/e2e_fragment_results.png" ></center>
-</figure>
+{% include
+  components/figure.html
+  url="/assets/images/post/e2e_fragment_results.png"
+%}
 
 The same checks are done using the different approaches. Fragment test is more than 5 times faster, and we avoid possible fails during test execution. Sounds amazing. If we think about the scalability of these tests then the results are even more impressive.
 Just imagine that in your project there are 100 E2E tests (execution time of ~20 minutes based on my previous project) and then you replace half of them with Fragment tests. The same checks are performed but your execution time decreases to ~7-8 minutes. You get more stable and less flaky tests.
