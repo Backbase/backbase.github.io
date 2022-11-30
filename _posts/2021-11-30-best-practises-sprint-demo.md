@@ -1,6 +1,6 @@
 ---
 title: "Sprint Demo:Best Practises"
-excerpt: "How to conduct a Perfect Sprint Review(Demo)"
+excerpt: "To ensure we follow best practises in ensuring successful sprint demo for the customer."
 tags: Sprint Demo
 authors:
 - Venkata Gopu
