@@ -25,8 +25,9 @@ The blog is served at http://localhost:4000
 
 ## Content
 
-Welcome to our official technology blog. The idea is to share with the Community about our technology challenges. A blog post in an engineering blog should show readers what in-house engineering teams are actually working on. Engineering posts help peers understand what a particular individual or team within a much larger organization actually works on, keeping sales and marketing to an absolute minimum. These posts tell us about an engineering team’s philosophy as well as their stack.  
-But they're be educational. Well-written blog posts offer unique perspectives and different solutions to old problems. They help the reader learn about a specific topic and technology, and walk readers through how that topic/technology is applied to help the team work through a challenge. Readers should learn something new. 
+Welcome to our official technology blog. The idea is to share with the Community about our technology challenges. A blog post in an engineering blog should show readers what in-house engineering teams are actually working on. Engineering posts help peers understand what a particular individual or team within a much larger organization actually works on, keeping sales and marketing to an absolute minimum. These posts tell us about an engineering team’s philosophy as well as their stack.
+
+They should be educational. Well-written blog posts offer unique perspectives and different solutions to old problems. They help the reader learn about a specific topic and technology, and walk readers through how that topic/technology is applied to help the team work through a challenge. Readers should learn something new. 
 
 Regardless of the topic, the first question to ask yourself is, "Why should a reader care?" Readers don't just want to look at a blog post and say, "Cool, Company X did this thing...." and that's it. At the very least, they want to understand:
 
