@@ -34,6 +34,6 @@ gem "webrick", "~> 1.7"
 
 gem "minimal-mistakes-jekyll"
 
-gem 'bootstrap', '~> 5.0.0.beta3'
+gem 'bootstrap', '~> 5.2.3'
 
 gem 'jekyll_asset_pipeline', '~> 0.6.2'
