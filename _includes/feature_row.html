@@ -14,17 +14,17 @@
     {% assign teaser = site.teaser %}
   {% endif %}
 
-  <div class="feature__item{% if include.type %}--{{ include.type }}{% endif %}">
+  <div class="feature__item{% if include.type %}--{{ include.type }}{% endif %} card">
     <div class="archive__item">
       {% if teaser %}
-        <div class="archive__item-teaser {{ post.header.teaser_class }}">
-          <div class="card overflow-hidden">
-            <img src="{{ teaser | relative_url }}" alt="{{ post.header.teaser_alt }}">
+        <div class="archive__item-teaser {{ post.header.teaser_class }} m-0">
+          <div class="overflow-hidden h-100">
+            <img class="h-100" src="{{ teaser | relative_url }}" alt="{{ post.header.teaser_alt }}">
           </div>
         </div>
       {% endif %}
 
-      <div class="archive__item-body">
+      <div class="archive__item-body card-body">
         {% if post.title %}
           <h2 class="archive__item-title">{{ post.title }}</h2>
         {% endif %}

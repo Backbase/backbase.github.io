@@ -22,31 +22,27 @@
         }
       }
 
-      @at-root .card & {
-        max-height: 170px;
-        overflow: hidden;
-      }
+      max-height: 170px;
+      overflow: hidden;
     }
 
     @at-root .feature__item & {
       display: flex;
-      @include make-row();
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+      }
 
       &-teaser {
         margin-bottom: map-get($spacers, 3);
 
-        .card {
-          max-height: 270px;
-        }
-
         @include media-breakpoint-up(md) {
+          max-height: 270px;
           @include make-col-ready();
           @include make-col(4, 12);
         }
       }
 
       &-body {
-        @include make-col-ready();
         max-width: 500px;
       }
     }

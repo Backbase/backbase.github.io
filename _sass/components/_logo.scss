@@ -5,22 +5,18 @@
   font-size: $logo-font-size;
   display: inline-flex;
   vertical-align: middle;
+  color: map-get($bb-palette, "white");
 
   svg {
     object-fit: contain;
     height: .85em;
-    margin-top: .15em;
-  }
-
-  &,
-  &:hover {
-    color: map-get($bb-palette, "white");
+    fill: map-get($bb-palette, "white");
   }
 
   &::before {
     content: "/";
     order: 1;
-    color: map-get($bb-palette, "red");
+    color: map-get($bb-palette, "dark-blue");
     font-size: .894em;
     margin-left: .45em;
     margin-right: .4em;

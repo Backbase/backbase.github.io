@@ -1,3 +1,3 @@
 .card {
-  @include box-shadow($box-shadow);
+  @include box-shadow($card-box-shadow);
 }

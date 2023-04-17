@@ -1,4 +1,8 @@
 .nav {
+  &bar {
+    margin-bottom: 2rem;
+  }
+
   &-link {
     span {
       padding: map-get($spacers, 1) 0;
@@ -7,8 +11,27 @@
     }
     &.active span,
     &:hover span {
-      border-bottom-color: map-get($bb-palette, "red");
+      border-bottom-color: map-get($bb-palette, "blue");
       transition: .25s border-color;
     }
+  }
+
+  &bar:before {
+    @include media-breakpoint-up(md) {
+      @at-root .layout--home & {
+        height: 50vh;
+        min-height: 625px;
+      }
+    }
+
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: map-get($bb-palette, 'blue');
+    border-bottom-right-radius: 100rem;
+    z-index: -1;
   }
 }
