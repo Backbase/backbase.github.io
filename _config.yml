@@ -109,6 +109,7 @@ sass:
   style: compressed
   load_paths:
     - ./assets/css/vendor/bootstrap
+  sourcemap: development
 
 # Defaults
 defaults:
