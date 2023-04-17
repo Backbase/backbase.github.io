@@ -23,9 +23,9 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     autoprefixer-rails (10.4.13.0)
       execjs (~> 2)
-    bootstrap (5.2.3)
+    bootstrap (5.0.2)
       autoprefixer-rails (>= 9.1.0)
-      popper_js (>= 2.11.6, < 3)
+      popper_js (>= 2.9.2, < 3)
       sassc-rails (>= 2.0.0)
     builder (3.2.4)
     colorator (1.1.0)
@@ -181,7 +181,7 @@ PLATFORMS
   x86_64-darwin-19
 
 DEPENDENCIES
-  bootstrap (~> 5.2.3)
+  bootstrap (~> 5.0.2)
   jekyll (~> 4.2.0)
   jekyll-category-pages
   jekyll-paginate-v2
