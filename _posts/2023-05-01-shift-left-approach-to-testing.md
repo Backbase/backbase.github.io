@@ -73,7 +73,7 @@ Key benefits of above approach within the development cycle:
 - QA can inform the developers about issues in the review session which can be fixed right away
 - QA knows where to focus when the functionality is released to test
 - QAs have increased time for exploratory testing
-- QAs have increased time for UI automation within the sprint
+- QAs have increased time for UI automation within the development cycle
 <br>
 <br>
 
@@ -123,7 +123,7 @@ description="Key benefits of Shift Left Approach"
 - Early Bug Detection ensures Better Code and Product Quality. 
 - Offers a competitive advantage in the market as higher quality product is delivered. 
 - Enhanced Test Coverage, considering both functional and NFRs are covered as part of test suite and the application is evaluated for all its features. 
-- QAs have more room for automation and exploratory testing within the sprint/ release.
+- QAs have more room for automation and exploratory testing within the development cycle.
 
 
 
