@@ -5,12 +5,12 @@ tags: Blockchain React
 authors:
 - Alexey Buistov
 header:
-  teaser: /assets/images/post/people.png
+  teaser: /assets/images/post/blockchain_banner.png
   teaser_alt: Hello, Blockchain!
 category: Dev
 ---
 
-![](/assets/images/post/people.png)
+![](/assets/images/post/blockchain_banner.png)
 
 
 This tutorial walks you through the process of creating a very minimal "Hello, world!" - style React app that reads and displays data from the Joystream blockchain. Along the way, I comment a thing or two about scaffolding React applications, JSON-RPC APIs and about the blockhain itself. 

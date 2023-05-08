@@ -6,11 +6,13 @@ tags: Mobile Android testing
 authors:
 - Raman Koushyk
 header:
-  teaser: /assets/images/post/espresso-logo.png
+  teaser: /assets/images/post/espresso-banner.png
   teaser_alt: Fragments
 category: Software Quality Assurance
 
 ---
+
+![](/assets/images/post/espresso-banner.png)
 
 ## **What is Fragment testing on Android**
 

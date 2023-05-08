@@ -6,11 +6,13 @@ tags: Testing, Quality Assurance
 authors:
 - Anjali Goyal
 header:
-  teaser: /assets/images/post/shift-left1.png
+  teaser: /assets/images/post/shift-left-banner.png
   teaser_alt: Quality Assistance Approach
 category: Software Quality Assurance
 
 ---
+
+![](/assets/images/post/shift-left-banner.png)
 
 “**Shift left**” testing movement is about pushing testing towards the early stages of Software Development Life Cycle.
 

@@ -5,12 +5,12 @@ tags: Ckad Kubernetes Certification Certified Kubernetes K8s
 authors:
 - Andrés Torres
 header:
-  teaser: /assets/images/post/1_678aknjbvxta67HJka.png
+  teaser: /assets/images/post/kubernetes-banner.png
   teaser_alt: Kubernetes certificate
 category: DevOps
 ---
 
-![](/assets/images/post/1_z6NGFcNqfSgJaIvuzaY0sA.png)
+![](/assets/images/post/kubernetes-banner.png)
 
 I just passed the Certified Kubernetes Application Developer (CKAD) exam: [https://www.cncf.io/certification/ckad/](https://www.cncf.io/certification/ckad/)
 

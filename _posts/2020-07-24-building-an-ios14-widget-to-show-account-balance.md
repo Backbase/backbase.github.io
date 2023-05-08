@@ -5,12 +5,12 @@ tags: Mobile iOS14 Swift Widget
 authors:
 - Arthur Alves
 header:
-  teaser: /assets/images/post/3_gYa678jAKLhagDFfA.png
+  teaser: /assets/images/post/ios-widget-banner.png
   teaser_alt: Account Balance Widget
 category: Mobile
 ---
 
-![](/assets/images/post/3_rTFabjU6GfTYxahKA.png)
+![](/assets/images/post/ios-widget-banner.png)
 
 > ***Disclaimer**: This is merely used as proof of concept rather than a production feature, as there are security points to be taken in consideration for showing private and sensitive data for banking apps and similar applications.*
 
