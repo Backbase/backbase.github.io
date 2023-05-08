@@ -4,8 +4,8 @@ main:
   # to be moved to the page body
   # - title: "Categories"
   #   id: categories
-  - title: "Our Principles"
-    url: /principles
+  # - title: "Our Principles"
+  #   url: /principles
   - title: "About"
     url: /about
   - title: "Jobs"
