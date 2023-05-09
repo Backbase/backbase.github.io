@@ -1,14 +1,16 @@
 ---
-title: "Android: Flexible configuration with Deferred Resources"
+title: "Flexible configuration with Deferred Resources"
 excerpt: Deferred Resources provides flexibility beyond the standard resource-resolution approaches.
 tags: Mobile Android Open-source Deferred-Resources
 authors:
 - Drew Hamilton
 header:
-  teaser: /assets/images/post/05_color_configuration.png
+  teaser: /assets/images/post/deferred-resources-banner.png
   teaser_alt: Deferred Resources
 category: Mobile
 ---
+
+![](/assets/images/post/deferred-resources-banner.png)
 
 Our feature libraries, which include UI, have a number of varying requirements regarding
 configuration by our customers. (My colleague Hari wrote about one such library's requirements

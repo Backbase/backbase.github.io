@@ -5,10 +5,12 @@ tags: Slack Remote Work Etiquette
 authors:
 - Rafael Nascimento
 header:
-  teaser: /assets/images/post/remote_work_teaser.png
+  teaser: /assets/images/post/slack-etiquette-banner.png
   teaser_alt: The ultimate guide to Slack etiquette
 category: Remote Work
 ---
+
+![](/assets/images/post/slack-etiquette-banner.png)
 
 We all know that COVID changed the world we live in today. It also changed the way most people work. Although remote work is nothing new for a lot of people, many of us had to adapt to it. Before, we could simply have a coffee with our team mates and discuss things face to face, but now messaging tools (for example [Slack](https://youtu.be/qUkYkm9bWak)) take a very important role in a "the less useless meetings the better" remote work strategy.
 

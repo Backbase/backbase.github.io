@@ -1,15 +1,16 @@
 ---
-title: "iOS Mobile Testing: Ease your life at work with Fastlane"
-excerpt: "This is the story how we use fastlane in CI pipeline for iOS"
+title: "Ease your life at work with Fastlane"
+excerpt: "A brief overview of how we use fastlane in CI pipelines for iOS"
 tags: Mobile iOS testing
 authors:
 - Dilshan Fernando
 header:
-  teaser: /assets/images/post/ios_fastlane.png
+  teaser: /assets/images/post/fastlane_banner.png
   teaser_alt: Ease your life at work with Fastlane
 category: Software Quality Assurance 
 ---
-![](/assets/images/post/ios_fastlane.png)
+
+![](/assets/images/post/fastlane_banner.png)
 
 # As a software Tester, are you curious in finding the solutions to the below questions? (for iOS)
  - How to reduce test execution time by running in parallel on physical devices and simulators? 
