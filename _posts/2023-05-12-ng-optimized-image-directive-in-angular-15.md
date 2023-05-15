@@ -228,5 +228,5 @@ url="/assets/images/post/ng-optimized-image-directive-in-angular-15-9.png"
 description="Results with NgOptimizedImage directive"
 %}
 
-## Final Thoughts  
-The PageSpeed results for the application using `NgOptimizedImage` are a significant improvement with less time for the largest contentful paint. The intelligent lazy loading feature also improves the cumulative layout shift. In conclusion, using the `NgOptimizedImage` directive in your application drastically improves the performance of your application by enforcing the best practices for image optimisation.
+## In conclusion  `NgOptimizedImage` means significant improvements...
+The PageSpeed results for the application using `NgOptimizedImage` show a significant reduction in time for the largest contentful paint. The intelligent lazy loading feature also improves the cumulative layout shift. In conclusion, the `NgOptimizedImage` directive drastically improves the performance of your application by enforcing the best practices for image optimisation.
