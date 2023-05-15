@@ -1,6 +1,6 @@
 ---
 title: "NgOptimizedImage Directive in Angular 15"
-excerpt: "Image optimisation techniques and performance improvements with the new NgOptimizedImage directive in angular 15"
+excerpt: "Image optimisation techniques and performance improvements with the new NgOptimizedImage directive in Angular 15"
 tags: Web NgOptimizedImage Angular
 authors:
 - Manisha Arya
@@ -30,7 +30,7 @@ To improve the Web Vitals metrics, loading times, and responsiveness of a single
 
 # Default `<img>`Tag
 
-Before diving into the key features of the NgOptimizedImage directive, let's first examine how the default `<img>` tag functions and the extra optimisation techniques that can be implemented with it.
+Before diving into the key features of the `NgOptimizedImage` directive, let's first examine how the default `<img>` tag functions and the extra optimisation techniques that can be implemented with it.
 
 **No default lazy loading:** the following example includes 6 `img` tags which the browser requests and eagerly loads all of them.
 
@@ -48,9 +48,9 @@ url="/assets/images/post/ng-optimized-image-directive-in-angular-15-2.png"
 description="All images eagerly loaded with img directive"
 %}
 
-This problem can be mitigated by using the `loading="lazy"` attribute. This defers the loading of images until they are needed.
+This problem can be mitigated by using the `loading="lazy"` attribute. It defers the loading of images until they are needed.
 
-It is also possible to prioritise the loading of a critical image using `fetchPriority` attribute. For example, by using `fetchpriority="low"` for images in a carousel.
+Prioritising the loading of a critical image can also be done using the `fetchPriority` attribute. For example, by using `fetchpriority="low"` for images in a carousel.
 
 {% include
 components/figure.html
@@ -62,14 +62,13 @@ description="Image optimisation with img tag"
 
 This directive includes built-in image optimisation techniques and improves the website’s performance with minimal configuration.
 
-## Integration
+## Integrating `NgOptimizedImage`
 
 To integrate the `NgOptimizedImage` directive, follow these steps:
 
 1.  Import `NgOptimizedImage` into your standalone component or module.    
 2.  Replace the `src` attribute of the image with `ngSrc`.   
-3.  Specify the `width` and `height` attributes, as these are the required inputs by the `NgOptimizedImage` directive.
-    
+3.  Specify the `width` and `height` attributes that must be specified for the `NgOptimizedImage` directive in one of the following ways.
 ```
 //import in module
 import { NgModule } from '@angular/core';
@@ -90,17 +89,17 @@ Alternatively, you can add it directly in a standalone component.
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 @Component({ 
     selector: 'app-optimised-image-catalog', standalone: true, 
-    imports: [CommonModule, NgOptimizedImage], 
+    imports: [ CommonModule, NgOptimizedImage ], 
     template: ` <img ngSrc="blog-food-img" width="500" height="300" alt="Food Blog Image" /> `, })
 ```
 
-## Key Features
+## Key features of `NgOptimizedImage`
 
 The following are the main highlights of this directive:
 
-### **Intelligent lazy loading**
+### Intelligent lazy loading
 
-The directive lazy loads non-critical images by default and only eagerly loads images marked with the `priority` attribute. This ensures that most images are loaded optimally.
+By default, the directive lazy loads non-critical images and only eagerly loads images marked with the `priority` attribute. This ensures that most images are loaded optimally.
 
 {% include
 components/figure.html
@@ -108,7 +107,7 @@ url="/assets/images/post/ng-optimized-image-directive-in-angular-15-4.png"
 description="Six img tags in HTML"
 %}
 
-The following shows that the browser only requests 4 images that are on the view port with `NgOptimizedImage` directive.
+The following shows that the browser only requests 4 images that are on the view port with the `NgOptimizedImage` directive.
 
 {% include
 components/figure.html
@@ -116,7 +115,7 @@ url="/assets/images/post/ng-optimized-image-directive-in-angular-15-5.png"
 description="Images loaded lazily"
 %}
 
-### Serve Responsive images
+### Serve responsive images
 
 Before implementing responsive images using the directive, you must consider how the `ngSrcset` and `sizes` attributes work.
 
@@ -176,11 +175,11 @@ src="https://ik.imagekit.io/ith29bzjr/tr:q-auto/custom-img.webp"
 srcset="https://ik.imagekit.io/ith29bzjr/tr:q-auto,w-50/custom-img.webp 1x, https://ik.imagekit.io/ith29bzjr/tr:q-auto,w-100/custom-img.webp 2x">
  ```
 
-#### Custom Loaders
+#### Custom loaders
 
 If your image service is not provided by the `NgOptimizedImage` default loaders, you can create your custom loader as shown in the following example.
 
-> You must include a check for the width in the function creating the URL otherwise the provider generates the src with an undefined width.
+> You must include a width check for creating the URL otherwise the provider generates the src with an undefined width.
 
 ```
 //in module add to providers
@@ -200,9 +199,9 @@ import { NgOptimizedImage, IMAGE_LOADER, ImageLoaderConfig } from '@angular/comm
  srcset="./assets/content/business-img-400.webp 1x, ./assets/content/business-img-800.webp 2x">
  ```
 
-### [preconnect](https://web.dev/preconnect-and-dns-prefetch/) **Image URL**
+### preconnect image URL
 
-`NgOptimizedImage` warns if there is no `preconnect` tag for the third-party image URLs in the head of the page in `index.html`.
+`NgOptimizedImage` throws a warning in browser console if there is no `preconnect` tag for the third-party image URLs in the head of the page in `index.html`. For more information on preconnect, please refer [here](https://web.dev/preconnect-and-dns-prefetch/).
 
 `<link rel="preconnect" href="https://my.cdn.origin" />`
 
@@ -214,7 +213,7 @@ description="Browser Warning without preconnect image url"
 
 ## Performance results
 
-In the following example, an [Angular App](https://github.com/manisha-backbase/image-optimisation-angular) was created with two pages: one using the Angular `NgOptimizedImage` directive, and one with the native image tag. The app was [deployed](https://image-optimisation-angular.vercel.app/ngoptimized-img-list) and the results were compared using [PageSpeed](https://pagespeed.web.dev/).
+In the following example, an [Angular App](https://github.com/manisha-backbase/image-optimisation-angular) was created with two pages: one using the Angular `NgOptimizedImage` directive, and one with the native image tag. The app was [Deployed](https://image-optimisation-angular.vercel.app/ngoptimized-img-list) and the results compared using [PageSpeed](https://pagespeed.web.dev/).
 
 {% include
 components/figure.html
@@ -228,4 +227,4 @@ url="/assets/images/post/ng-optimized-image-directive-in-angular-15-9.png"
 description="Results with NgOptimizedImage directive"
 %}
   
-Using `NgOptimizedImage` directive in your application drastically improves the performance of your application by enforcing the best practices for image optimisation.
+The PageSpeed results for the application using `NgOptimizedImage` are a significant improvement with less time for the largest contentful paint. The intelligent lazy loading feature also improves the cumulative layout shift. In conclusion, using the `NgOptimizedImage` directive in your application drastically improves the performance of your application by enforcing the best practices for image optimisation.
