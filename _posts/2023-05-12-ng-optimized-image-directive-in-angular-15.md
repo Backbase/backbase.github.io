@@ -37,7 +37,7 @@ Before diving into the key features of the `NgOptimizedImage` directive, let's f
 {% include
 components/figure.html
 url="/assets/images/post/ng-optimized-image-directive-in-angular-15-1.png"
-description=" List of images in html"
+description=" List of images in HTML"
 %}
 
 This can be costly on low-bandwidth devices when there are pages with huge number of images.
@@ -65,10 +65,10 @@ This directive includes built-in image optimisation techniques and improves the 
 ## Integrating `NgOptimizedImage`
 
 To integrate the `NgOptimizedImage` directive, follow these steps:
-
 1.  Import `NgOptimizedImage` into your standalone component or module.    
 2.  Replace the `src` attribute of the image with `ngSrc`.   
 3.  Specify the `width` and `height` attributes that must be specified for the `NgOptimizedImage` directive in one of the following ways.
+   
 ```
 //import in module
 import { NgModule } from '@angular/core';
@@ -85,7 +85,8 @@ import { Component } from '@angular/core';
 
 Alternatively, you can add it directly in a standalone component.
 
-```import { Component } from '@angular/core';
+```
+import { Component } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 @Component({ 
     selector: 'app-optimised-image-catalog', standalone: true, 
@@ -156,7 +157,7 @@ description="NgOptimizedImage automatically sets srcset attribute based on width
 
 The Angular directive provides a built in loader API for third-party image services such as Imagekit, Cloudfare, Imgix. For more information see [the Angular documentation](https://angular.io/guide/image-directive#configuring-an-image-loader-for-ngoptimizedimage).
 
-In the following example, the directive creates two image URLs in `srcset` for the different widths and density of an image for a an image of size 50\*50.
+In the following example, the directive creates two image URLs in `srcset` for the different widths and density of an image for an image of size 50\*50.
 
 ```
  // in module providers add
@@ -179,20 +180,20 @@ srcset="https://ik.imagekit.io/ith29bzjr/tr:q-auto,w-50/custom-img.webp 1x, http
 
 If your image service is not provided by the `NgOptimizedImage` default loaders, you can create your custom loader as shown in the following example.
 
-> You must include a width check for creating the URL otherwise the provider generates the src with an undefined width.
+> **_NOTE:_** You must include a width check for creating the URL otherwise the provider generates the src with an undefined width.
 
 ```
-//in module add to providers
+// in module add to providers
 import { NgOptimizedImage, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common'; 
 [{ provide: IMAGE_LOADER,
  useValue: (config: ImageLoaderConfig) => {
     const url = config.src && config.width ? `./assets/content/${config.src}-img-${config.width}.webp` : `./assets/content/${config.src}-img.webp`;
     return url; } }], 
  
- //in markup 
+// in markup 
  <img priority ngSrc="custom-img" width="50" height="50" alt="custom image"/> 
  
- //in DOM the img tag is changed to this
+// in DOM the img tag is changed to this
  <img _ngcontent-btb-c158="" ng-reflect-ng-src="business" ng-reflect-width="400" ng-reflect-height="400" 
  alt="business" width="400" height="400" loading="lazy" fetchpriority="auto" 
  ng-img="true" src="./assets/content/business-img.webp" 
@@ -226,5 +227,6 @@ components/figure.html
 url="/assets/images/post/ng-optimized-image-directive-in-angular-15-9.png"
 description="Results with NgOptimizedImage directive"
 %}
-  
+
+## Final Thoughts  
 The PageSpeed results for the application using `NgOptimizedImage` are a significant improvement with less time for the largest contentful paint. The intelligent lazy loading feature also improves the cumulative layout shift. In conclusion, using the `NgOptimizedImage` directive in your application drastically improves the performance of your application by enforcing the best practices for image optimisation.
