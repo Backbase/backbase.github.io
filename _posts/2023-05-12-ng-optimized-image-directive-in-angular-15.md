@@ -79,7 +79,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core'; 
 @Component({ 
    selector: 'app-optimised-image-catalog',
-   template: `<img ngSrc="blog-food-img" width="500" height="300" alt="Food Blog Image"/> `, 
+   template: `<img ngSrc="blog-food-img.png" width="500" height="300" alt="Food Blog Image"/> `, 
 })
 ```
 
@@ -91,7 +91,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 @Component({ 
     selector: 'app-optimised-image-catalog', standalone: true, 
     imports: [ CommonModule, NgOptimizedImage ], 
-    template: ` <img ngSrc="blog-food-img" width="500" height="300" alt="Food Blog Image" /> `, })
+    template: ` <img ngSrc="blog-food-img.png" width="500" height="300" alt="Food Blog Image" /> `, })
 ```
 
 ## Key features of `NgOptimizedImage`
@@ -191,7 +191,7 @@ import { NgOptimizedImage, IMAGE_LOADER, ImageLoaderConfig } from '@angular/comm
     return url; } }], 
  
 // in markup 
- <img priority ngSrc="custom-img" width="50" height="50" alt="custom image"/> 
+ <img priority ngSrc="custom-img.png" width="50" height="50" alt="custom image"/> 
  
 // in DOM the img tag is changed to this
  <img _ngcontent-btb-c158="" ng-reflect-ng-src="business" ng-reflect-width="400" ng-reflect-height="400" 
