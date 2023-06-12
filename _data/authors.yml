@@ -69,3 +69,8 @@ Manisha Arya:
   name        : "Manisha Arya"
   avatar      : "assets/images/avatars/manisha_arya.jpg"
   bio         : "Senior Frontend Engineer - R&D"
+
+Maxim Tyukov:
+  name        : "Maxim Tyukov"
+  avatar      : "assets/images/avatars/mt.jpg"
+  bio         : "Principal Application Security Engineer - R&D"
