@@ -1,6 +1,6 @@
 ---
 title: "Hacking Netflix Eureka"
-excerpt: "Found explosed Eureka server and don't know what to do?"
+excerpt: "Found exposed Eureka server and don't know what to do?"
 tags: Eureka Security 
 authors:
 - Maxim Tyukov
