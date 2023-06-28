@@ -74,3 +74,8 @@ Maxim Tyukov:
   name        : "Maxim Tyukov"
   avatar      : "assets/images/avatars/mt.jpg"
   bio         : "Principal Application Security Engineer - R&D"
+
+Ankit Pant:
+  name        : "Ankit Pant"
+  avatar      : "assets/images/avatars/ankit_pant.png"
+  bio         : "Senior Frontend Engineer - R&D"
