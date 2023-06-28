@@ -161,13 +161,11 @@ _**NOTE:**_ After the migration the specs might be broken and might need manual 
 
 Here are a few ways in which Angular standalone components can contribute to performance improvements:
 
-* **Reduced bundle size:** When you build an Angular standalone component as an Angular element, it can help reduce the overall bundle size of your application. By including only the necessary code for the standalone component instead of the entire Angular framework.
+* **Reduced bundle size:** You can reduce the overall bundle size of your app by using Angular's standalone feature and eliminating NgModules and the boilerplate code that comes with it.
 
-* **Independent loading and caching:** Angular standalone components can be loaded and cached independently of the main application.
+* **Isolation and lazy loading:** You can enhance the performance by encapsulating functionality within standalone components which helps to load all the resource only when it is lazy loaded.
 
-* **Isolation and lazy loading:** By encapsulating functionality within standalone components, you can achieve better isolation and lazy loading. This means that components and their associated resources are only loaded when they are needed, rather than upfront.
-
-* **Reusability and code modularity:** Angular standalone components promote reusability and code modularity. By building components that are self-contained and independent, you can easily reuse them across multiple applications or parts of an application.
+* **Reusability:** Angular standalone components are self-contained, independent, and can be re-utilized across the application.
 
 # Bundle size
 
