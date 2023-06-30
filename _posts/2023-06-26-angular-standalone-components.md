@@ -14,8 +14,9 @@ category: Frontend
 
 # Introduction
 
-Until now, the developers had to add or update NgModules specifying which components, directives, pipes, etc are available to be used in templates but after the release of the standalone feature, you don't need to do it anymore in the NgModules. Angular [standalone components](https://angular.io/guide/standalone-components "https://angular.io/guide/standalone-components") are independent and self-contained building blocks in an Angular application which can be used to independently import the dependencies required for its functionality.  
-Standalone components are not mandatory and there are no strict rules for using them, however, their use is recommended by Angular architects especially for newly created components.
+Until now, the developers had to add or update NgModules specifying which components, directives, pipes, etc are available to be used in templates but after the release of the standalone feature, you don't need to do it anymore in the NgModules.
+The Angular standalone feature was released as a beta feature in V14 for developers to try out the standalone feature, and it was made stable from v15. Angular [standalone components](https://angular.io/guide/standalone-components "https://angular.io/guide/standalone-components") are independent and self-contained building blocks in an Angular app which can be used to independently import the dependencies required for its functionality.
+Although the standalone components are not mandatory, and there are no strict rules for using them, Angular architects recommend using the Standalone feature for the newly created Angular components.
 
 To designate a component, directive, or a pipe as a standalone component, you have to mark it as `standalone: true`. The component does not have to be declared or imported in `NgModule`, and you can import all the dependencies directly in the component itself, thus eliminating the use of `NgModule` entirely.
 
@@ -71,7 +72,8 @@ You can convert a component in one of the following ways:
 
 ## Migrate to Standalone via schematics
 
-Angular provides a [schematic to migrate](https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone "https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone") existing Angular applications that use Angular `v15` or later, to use the standalone features.
+Angular provides a [schematic to migrate](https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone "https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone") existing Angular apps that use Angular `v15` or later, to use the standalone features.
+Have a look at the [prerequisites](https://angular.io/guide/standalone-migration#prerequisites) before migrating to Standalone components.
 
 ```
 ng generate @angular/core:standalone
@@ -81,11 +83,14 @@ Use this as follows:
 
 1. Run `ng generate @angular/core:standalone` to convert all components, directives and pipes to standalone. All the files are converted and migrated to use standalone features.
 
-2. Run `ng generate @angular/core:standalone` again to remove unnecessary NgModule classes. Empty `NgModules` are searched for removed them from the application.
+2. Run `ng generate @angular/core:standalone` again to remove unnecessary NgModule classes. Empty `NgModules` are searched for removed them from the app.
 
-3. Run `ng generate @angular/core:standalone` a third time to bootstrap the project using standalone APIs. The schematics change how the application is bootstrapped in the `main.ts` file.
+3. Run `ng generate @angular/core:standalone` a third time to bootstrap the project using standalone APIs. The schematics change how the app is bootstrapped in the `main.ts` file.
 
-_**Note:**_ To avoid any breaking changes to an application with the standalone feature, in Angular, most of the `NgModule` or other files, so you might have to remove and migrated some of the files manually.
+_**Note:**_
+
+* `ng generate @angular/core:standalone` should be executed at the root of the project.
+* To avoid any breaking changes to an app with the standalone feature, in Angular, most of the `NgModule` or other files, so you might have to remove and migrated some of the files manually.
 
 ## Migrate a component manually
 The steps below shows how to migrate an existing component to a standalone component
@@ -127,7 +132,7 @@ description="Migrate a component to a Standalone"
 
 # Differences between using NgModules and Standalone feature
 
-## Bootstrapping an Application
+## Bootstrapping an app
 
 Once the `AppComponent` is standalone you can get rid of the `AppModules` completely and use  
 [bootstrapApplication](https://angular.io/api/platform-browser/bootstrapApplication "https://angular.io/api/platform-browser/bootstrapApplication") API to bootstrap the application in `src/main.ts` file and importing the dependencies directly in the `AppComponent`, you can find more about this [here](https://angular.io/guide/standalone-components#bootstrapping-an-application-using-a-standalone-component "https://angular.io/guide/standalone-components#bootstrapping-an-application-using-a-standalone-component").
@@ -169,13 +174,13 @@ Here are a few ways in which Angular standalone components can contribute to per
 
 * **Isolation and lazy loading:** You can enhance the performance by encapsulating functionality within standalone components which helps to load all the resource only when it is lazy loaded.
 
-* **Reusability:** Angular standalone components are self-contained, independent, and can be re-utilized across the application.
+* **Reusability:** Angular standalone components are self-contained, independent, and can be re-utilized across the app.
 
 # Bundle size
 
-The actual impact on bundle size will depend on the complexity and size of your Angular component as well as the specific dependencies it requires. The difference in bundle size was not that huge (about 8.5 kb) for a small application which is also mentioned in the table below, but it might make a big difference with the large applications. While using Angular standalone components can reduce bundle size, other factors such as code optimization, tree shaking, and lazy loading can also play a role in optimizing bundle size.
+The actual impact on bundle size will depend on the complexity and size of your Angular component as well as the specific dependencies it requires. The difference in bundle size was not that huge (about 8.5 kb) for a small app which is also mentioned in the table below, but it might make a big difference with the large apps. While using Angular standalone components can reduce bundle size, other factors such as code optimization, tree shaking, and lazy loading can also play a role in optimizing bundle size.
 
-| Application type            | Bundle size   |
-| -------------------------   | ------------- |
-| Non Standalone application  | 7648528 bytes |
-| Standalone application      | 7640882 bytes |
+| App type            | Bundle size   |
+| ------------------- | ------------- |
+| Non Standalone app  | 7648528 bytes |
+| Standalone app      | 7640882 bytes |
