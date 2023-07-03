@@ -14,11 +14,11 @@ category: Frontend
 
 # Introduction
 
-Until now, the developers had to add or update NgModules specifying which components, directives, pipes, etc are available to be used in templates but after the release of the standalone feature, you don't need to do it anymore in the NgModules.
-The Angular standalone feature was released as a beta feature in V14 for developers to try out the standalone feature, and it was made stable from v15. Angular [standalone components](https://angular.io/guide/standalone-components "https://angular.io/guide/standalone-components") are independent and self-contained building blocks in an Angular app which can be used to independently import the dependencies required for its functionality.
+Until now, developers have been using NgModules to specify the components, directives, pipes, etc that are available for use in templates, however, after the release of Angular [standalone components](https://angular.io/guide/standalone-components "https://angular.io/guide/standalone-components"), you don't need to do this anymore in the NgModules.
+Angular standalone feature was fully released with Angular v15. Angular [standalone components](https://angular.io/guide/standalone-components "https://angular.io/guide/standalone-components") are independent and self-contained building blocks in an Angular app which can be used to independently import the dependencies required for its functionality.
 Although the standalone components are not mandatory, and there are no strict rules for using them, Angular architects recommend using the Standalone feature for the newly created Angular components.
 
-To designate a component, directive, or a pipe as a standalone component, you have to mark it as `standalone: true`. The component does not have to be declared or imported in `NgModule`, and you can import all the dependencies directly in the component itself, thus eliminating the use of `NgModule` entirely.
+To designate a component, directive, or a pipe as a standalone component, you must mark it as `standalone: true`. The component does not have to be declared or imported in `NgModule`, and you can import all the dependencies directly in the component itself, thus eliminating the use of `NgModule` entirely.
 
  ```typescript
  @Component({
@@ -72,16 +72,19 @@ You can convert a component in one of the following ways:
 
 ## Migrate to Standalone via schematics
 
+To migrate standalone components, you must satisfy the [prerequisites from Angular](https://angular.io/guide/standalone-migration#prerequisites).
 Angular provides a [schematic to migrate](https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone "https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone") existing Angular apps that use Angular `v15` or later, to use the standalone features.
-Have a look at the [prerequisites](https://angular.io/guide/standalone-migration#prerequisites) before migrating to Standalone components.
+
 
 ```
 ng generate @angular/core:standalone
 ```
 
+`ng generate @angular/core:standalone` should be executed at the root of the project.
+
 Use this as follows:
 
-1. Run `ng generate @angular/core:standalone` to convert all components, directives and pipes to standalone. All the files are converted and migrated to use standalone features.
+1. Run `ng generate @angular/core:standalone` to convert all components, directives and pipes to standalone. This will try to convert and migrate all the files to use standalone features.
 
 2. Run `ng generate @angular/core:standalone` again to remove unnecessary NgModule classes. Empty `NgModules` are searched for removed them from the app.
 
@@ -89,7 +92,6 @@ Use this as follows:
 
 _**Note:**_
 
-* `ng generate @angular/core:standalone` should be executed at the root of the project.
 * To avoid any breaking changes to an app with the standalone feature, in Angular, most of the `NgModule` or other files, so you might have to remove and migrated some of the files manually.
 
 ## Migrate a component manually
@@ -135,7 +137,7 @@ description="Migrate a component to a Standalone"
 ## Bootstrapping an app
 
 Once the `AppComponent` is standalone you can get rid of the `AppModules` completely and use  
-[bootstrapApplication](https://angular.io/api/platform-browser/bootstrapApplication "https://angular.io/api/platform-browser/bootstrapApplication") API to bootstrap the application in `src/main.ts` file and importing the dependencies directly in the `AppComponent`, you can find more about this [here](https://angular.io/guide/standalone-components#bootstrapping-an-application-using-a-standalone-component "https://angular.io/guide/standalone-components#bootstrapping-an-application-using-a-standalone-component").
+[bootstrapApplication](https://angular.io/api/platform-browser/bootstrapApplication "https://angular.io/api/platform-browser/bootstrapApplication") API to bootstrap the application in `src/main.ts` file and import the dependencies directly in the `AppComponent`, for more information see [here](https://angular.io/guide/standalone-components#bootstrapping-an-application-using-a-standalone-component "https://angular.io/guide/standalone-components#bootstrapping-an-application-using-a-standalone-component").
 
 {% include
 components/figure.html
@@ -145,7 +147,8 @@ description="Bootstrapping an Application"
 
 ## Changes in the Routing configuration
 
-With standalone feature in place, `NgModule` is no long required for many lazy loading scenarios, you can simply lazy load a standalone component by exporting the routes and using `loadComponent` instead of `loadChildren` and then provide them in the `src/main.ts` files using `provideRouter()` from `@angular/router` as shown below.
+With standalone feature in place, `NgModule` is no long required for many lazy loading scenarios.
+You can simply lazy load a standalone component by exporting the routes and using `loadComponent` instead of `loadChildren` and include them in `src/main.ts` files using `provideRouter()` from `@angular/router` as follows.
 
 {% include
 components/figure.html
@@ -153,7 +156,7 @@ url="/assets/images/post/angular-standalone-components-2.png"
 description="Changes in the Routing configuration"
 %}
 
-## Specs for Standalone component
+## Specs for Standalone components
 
 The TestBed configuration now doesn't needs to import all the dependencies used by the component  
 you are testing and hence reduces the boilerplate code in the spec file.
