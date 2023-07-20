@@ -5,7 +5,7 @@ tags: Web Frontend Career Development
 authors:
 - Oleksii Horbunov
 header:
-  teaser: SOME TEASER
+  teaser: /assets/images/post/future-career-growth-for-frontend-engineer/teaser.jpg
   teaser_alt: Self-development tips for front-end developers
 category: Frontend
 ---
