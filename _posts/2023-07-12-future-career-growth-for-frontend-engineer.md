@@ -1,18 +1,18 @@
 ---
 title: "Future career growth for Frontend Engineer: aspects which you need to know besides frontend"
-excerpt: "Self-development tips for front-end developers"
+excerpt: "Self-development tips for frontend developers"
 tags: Web Frontend Career Development
 authors:
 - Oleksii Horbunov
 header:
   teaser: /assets/images/post/future-career-growth-for-frontend-engineer/teaser.jpg
-  teaser_alt: Self-development tips for front-end developers
+  teaser_alt: Self-development tips for frontend developers
 category: Frontend
 ---
 
 ## Introduction
 
-Many individuals who are reading this article now - new in a frontend development or experienced frontend engineers. And many experienced developers start to think “What is next? What do I need to learn to be a Senior or Architect?”. Switching to the new seniority level is not only about better knowledge of JavaScript/TypeScript or new framework, it’s about communication, ability to analyse situation from the third person, more complex task. Moreover, the primary role has exactly “growth in width” - acquiring with the ecosystem, obtaining skills in related technologies and automatisation. In this article I will tell you what, in my opinion, every front-end developer aspiring to new career heights needs, and I will also share materials that have helped me personally.
+Many individuals who are reading this article now - new in a frontend development or experienced frontend engineers. And many experienced developers start to think “What is next? What do I need to learn to be a Senior or Architect?”. Switching to the new seniority level is not only about better knowledge of JavaScript/TypeScript or new framework, it’s about communication, ability to analyse situation from the third person, more complex task. Moreover, the primary role has exactly “growth in width” - acquiring with the ecosystem, obtaining skills in related technologies and automatisation. In this article I will tell you what, in my opinion, every frontend developer aspiring to new career heights needs, and I will also share materials that have helped me personally.
 
 In comments please leave your thoughts and I will be pleasant to read about your experience.
 
@@ -171,7 +171,7 @@ It was an amazing experience and I will definitely participate in similar events
 
 ## Summary
 
-These are all the basic skills that I develop in myself as a front-end engineer. Finally, I would like to say that all of the above should be developed along with direct professional skills - HTML, CSS, JS, accessibility, optimisation, etc - this is what an experienced Frontend developer should know, follow the news in their field and implement new practices in their lives.
+These are all the basic skills that I develop in myself as a frontend engineer. Finally, I would like to say that all of the above should be developed along with direct professional skills - HTML, CSS, JS, accessibility, optimisation, etc - this is what an experienced Frontend developer should know, follow the news in their field and implement new practices in their lives.
 
 ### P.S Subscribe to my social networks 
 - **GitHub**: <https://github.com/Algoritm211>
