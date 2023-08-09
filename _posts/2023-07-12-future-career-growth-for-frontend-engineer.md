@@ -43,7 +43,7 @@ With each successful execution of the CI pipeline, the team could rest assured t
 
 With the CI pipeline in place, we turned their focus to Continuous Deployment. The goal was to automate the deployment process to various environments, such as staging and production, while maintaining a tight control on version releases.
 
-Alex set up a CD pipeline that would:
+I set up a CD pipeline that would:
 
 1. Push approved changes to a staging environment for thorough testing.
 2. Run automated integration tests in a replica of the production environment.
@@ -89,6 +89,9 @@ Without knowledge of AWS services, for development and deployment of the new app
 - [https://www.udemy.com/course/aws-certified-developer-associate-practice-tests-dva-c01/](https://www.udemy.com/course/aws-certified-developer-associate-practice-tests-dva-c01/)
 - [https://www.udemy.com/course/aws-developer-associate-practice-exams/](https://www.udemy.com/course/aws-developer-associate-practice-exams/)
 - [https://aws.amazon.com/getting-started/hands-on/build-react-app-amplify-graphql/](https://aws.amazon.com/getting-started/hands-on/build-react-app-amplify-graphql/)
+
+And article from our blog:
+- [https://engineering.backbase.com/2022/06/08/deploying-angular-app-on-azure](https://engineering.backbase.com/2022/06/08/deploying-angular-app-on-azure)
 
 **Real examples**
 - [Angular Application Deployment to Azure Web App using GitHub](https://blog.devgenius.io/angular-application-deployment-to-azure-web-app-using-github-49a4e3a7ba87)
