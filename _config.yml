@@ -67,7 +67,7 @@ footer:
       url: https://www.linkedin.com/company/backbase/
       icon: fab fa-linkedin-in
     - label: Instagram
-      url: https://www.instagram.com/life_at_backbase/
+      url: https://www.instagram.com/backbase_global/
       icon: fab fa-instagram
     - label: Glassdoor
       url: https://www.glassdoor.nl/Overzicht/Werken-bij-Backbase-EI_IE117266.11,19.htm?countryRedirect=true
@@ -75,9 +75,6 @@ footer:
     - label: Facebook
       url: https://www.facebook.com/backbase
       icon: fab fa-facebook-f
-    - label: Stack Overflow
-      url: https://stackoverflow.com/jobs/companies/backbase
-      icon: fab fa-stack-overflow
 
 # Exclude from processing.
 # The following items will not be processed, by default.
