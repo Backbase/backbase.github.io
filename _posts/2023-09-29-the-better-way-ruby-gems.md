@@ -125,7 +125,7 @@ This will create the file `.ruby-version`. This file should be committed, so tha
 
 ### **2.** Using Ruby Gems.
 
-So far you’ve managed to have multiple versions of Ruby and set different versions for different repositories. Now, we’re set to use Ruby Gems.
+You’ve managed to have multiple versions of Ruby and set different versions for different repositories. Now, we’re set to use Ruby Gems.
 
 Ruby Gems is a package manager, responsible for distributing Ruby programs and libraries. Programs such as Cocoapods and Fastlane.
 
