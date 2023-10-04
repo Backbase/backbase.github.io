@@ -12,7 +12,7 @@ category: mobile
 
 ![](/assets/images/post/ruby-gems/the_better_way_ruby_gems.png)
 
-# Instroduction
+# Introduction
 
 Working with an iOS project involves the usage of tools such as Cocoapods, Slather, SwiftLint, Fastlane and more. Ideally, all engineers working on a particular codebase - as well as the CI machine it runs on - should maintain the same versions of these tools.
 
