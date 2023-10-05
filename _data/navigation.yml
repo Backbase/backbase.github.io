@@ -4,10 +4,11 @@ main:
   # to be moved to the page body
   # - title: "Categories"
   #   id: categories
-  # - title: "Our Principles"
-  #   url: /principles
-  - title: "About"
-    url: /about
   - title: "Jobs"
     url: https://workatbackbase.com/
     external: true
+  - title: "About"
+    url: /about
+  - title: "Our Principles"
+    url: /principles
+    id: principles
