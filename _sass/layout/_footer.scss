@@ -2,6 +2,13 @@
   .bb-engineering-logo {
     color: map-get($bb-palette, "white");
     fill: map-get($bb-palette, "white");
+    svg {
+      fill: map-get($bb-palette, "white");
+    }
+    &::before {
+      content: "/";
+      color: map-get($bb-palette, "white");
+    }
   } 
   .social-icons {
     margin-top: map-get($spacers, 3);

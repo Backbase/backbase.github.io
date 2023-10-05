@@ -1,10 +1,12 @@
 .nav {
   &bar {
-    margin-bottom: 2rem;
+    margin-bottom: 0rem;
   }
 
   &-link {
     span {
+      vertical-align: middle;
+      display: table-cell;
       padding: map-get($spacers, 1) 0;
       border-bottom: 3px solid transparent;
       transition: .25s border-color;
@@ -13,6 +15,23 @@
     &:hover span {
       border-bottom-color: map-get($bb-palette, "blue");
       transition: .25s border-color;
+    }
+  }
+
+  &-primarylink {
+    span {
+      vertical-align: middle;
+      display: table-cell;
+      background: map-get($bb-palette, "blue");
+      color: map-get($bb-palette, "white");
+      font-weight: bold;
+      padding: map-get($spacers, 2) map-get($spacers, 3);
+      transition: .25s background-color;
+    }
+    &.active span,
+    &:hover span {
+      background: map-get($bb-palette, "red");
+      transition: .25s background-color;
     }
   }
 
@@ -30,7 +49,7 @@
     right: 0;
     width: 100%;
     height: 100%;
-    background: map-get($bb-palette, 'blue');
+    background: map-get($bb-palette, 'white');
     z-index: -1;
   }
 }
