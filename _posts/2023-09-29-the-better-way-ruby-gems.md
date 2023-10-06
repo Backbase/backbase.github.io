@@ -22,7 +22,7 @@ Consider, for a moment, you’ve aligned the versions of all the tools above, in
 
 # Solution
 
-There is a way to maintain all these alignments, regardless of how many projects you’re working on, without changes to your global setup. A solution where, for every project, you can make use of different versions of Ruby, Cocoapods, Fastlane etc. Only by making use of:
+A solution to maintain all these alignments, regardless of how many projects you’re working on, without changes to your global setup. A solution where, for every project, you can make use of different versions of Ruby, Cocoapods, Fastlane etc. Only by making use of:
 
 * Ruby Gems; and
 * [rbenv](https://github.com/rbenv/rbenv) - A Ruby version manager tool.
