@@ -12,13 +12,13 @@ category: QA
 
 ![](/assets/images/post/code-coverage/code_coverage.png)
 
-# Instroduction
+# Introduction
 
 Code coverage is the percentage of lines of your code that is being executed by your tests. This is an indicative of how safe your code is and how bug proof it can be while refactoring or adding new features. Code coverage helps in the easy maintenance of the codebase, exposure of bad code, and results in faster time to market. 
 
-Code coverage is measured using the following formula:
+This metric is measured using the following formula:
 
-**_Code Coverage Percentage = (number of unique lines of code executed / total number of lines of code) * 100._**
+**_Coverage Percentage = (number of unique lines of code executed / total number of lines of code) * 100._**
 
 # Coverage Criteria
 
@@ -48,7 +48,7 @@ It’s worth to start by mentioning that 100% of code coverage is most of times 
 
 When setting a code coverage target it is important to take into account benefit vs effort. This means that you choose the target to improve the quality of the codebase, not to please a certain metric. Discuss with your team some of the following questions.
 
-* _Does it worth the effort of aiming for a high code coverage?_
+* _Is it worth the effort of aiming for a high code coverage?_
 * _Does the client have the time allocation for implementing those tests?_
 * _What code coverage criteria make sense to my team?_
 
