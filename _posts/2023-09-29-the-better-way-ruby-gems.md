@@ -1,6 +1,6 @@
 ---
 title: "The Better Way with Ruby Gems"
-excerpt: "Using Ruby Gems to ensure the everyone in the project shares the same setup."
+excerpt: "Using Ruby Gems to ensure that everyone in the project shares the same setup."
 tags: Mobile Android iOS Ruby
 authors:
 - Arthur Alves
