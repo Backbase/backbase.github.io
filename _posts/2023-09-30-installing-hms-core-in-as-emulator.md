@@ -12,7 +12,7 @@ category: Android
 
 ![](/assets/images/post/hms-core/hms_core_banner.png)
 
-# Instroduction
+# Introduction
 
 This is a quick guide with few and simple instructions on installing HMS Core in Android Studio Emulator. If you want to test your HMS implementation and you do not have a Huawei device, this is your best option.
 
@@ -34,42 +34,34 @@ You can either Google or install it from the [Huawei Consumer website](http://co
 
 Download the AppGallery APK.
 
-<div style="margin:auto;text-align:center">
-<img src="/assets/images/post/hms-core/hms_core_step_2.png" height="600"/>
-</div><br>
+{% include components/figure.html url="/assets/images/post/hms-core/hms_core_step_2.png" max-height="600px" %}
 
 Allow installing unknown apps in Chrome browser and install the app.
 
-<div style="margin:auto;text-align:center">
-<img src="/assets/images/post/hms-core/hms_core_step_2.1.png" height="600"/>
-</div><br>
+{% include components/figure.html url="/assets/images/post/hms-core/hms_core_step_2.1.png" max-height="600px" %}
 
 **3.** Install HMS Core.
 
 Open the AppGallery, you will be prompted to install HMS Core. Proceed with the installation.
 
-<div style="margin:auto;text-align:center">
-<img src="/assets/images/post/hms-core/hms_core_step_3.png" height="600"/>
-</div><br>
+{% include components/figure.html url="/assets/images/post/hms-core/hms_core_step_3.png" max-height="600px" %}
 
 **4.** Allow the installation of unknown apps.
 
-Once the HMS Core has been downloaded, you will need to allow installing unknown apps from AppGallery to install it.
+Once the HMS Core has been downloaded, you need to allow installing unknown apps from AppGallery to install it.
 
-<div style="margin:auto;text-align:center">
-<img src="/assets/images/post/hms-core/hms_core_step_4.png" height="600"/>
-</div><br>
+{% include components/figure.html url="/assets/images/post/hms-core/hms_core_step_4.png" max-height="600px" %}
 
 **5.** Verify it all went well.
 
 Press “Done”, then press the back button, you will see the AppGallery login screen.
 
-<div style="margin:auto;text-align:center">
-<img src="/assets/images/post/hms-core/hms_core_step_5.png" height="600"/>
-</div><br>
+{% include components/figure.html url="/assets/images/post/hms-core/hms_core_step_5.png" max-height="600px" %}
 
 Verify that the HMS Core app is installed.
 
-<div style="margin:auto;text-align:center">
-<img src="/assets/images/post/hms-core/hms_core_step_6.png" height="600"/>
-</div><br>
+{% include components/figure.html url="/assets/images/post/hms-core/hms_core_step_6.png" max-height="600px" %}
+
+# Conclusion
+
+Installing HMS Core in Android Studio Emulator is straight forward and now you can use its rich arrat of open device and cloud capabilities. 
