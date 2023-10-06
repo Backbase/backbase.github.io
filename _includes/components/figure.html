@@ -1,4 +1,4 @@
 <figure class="figure d-block text-center mb-4">
-  <img class="figure-img img-fluid" src="{{ include.url }}" alt="{{ include.alt }}">
+  <img class="figure-img img-fluid" src="{{ include.url }}" alt="{{ include.alt }}" {% if include.max-height %} style="max-height:{{ include.max-height }}" {% endif %}>
   <figcaption class="figure-caption">{{ include.description }}</figcaption>
 </figure>
