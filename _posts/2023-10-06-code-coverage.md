@@ -16,9 +16,22 @@ category: QA
 
 Code coverage is the percentage of lines of your code that is being executed by your tests. This is an indicative of how safe your code is and how bug proof it can be while refactoring or adding new features. Code coverage helps in the easy maintenance of the codebase, exposure of bad code, and results in faster time to market. 
 
-This metric is measured using the following formula:
+# How do we measure it?
 
-**_Coverage Percentage = (number of unique lines of code executed / total number of lines of code) * 100._**
+The formula to calculate code coverage can vary. [Sonar](https://www.sonarsource.com/) does calculate it as:
+
+`Coverage = (CT + CF + LC)/(2*B + EL)`
+
+Where:
+* CT = conditions that have been evaluated to 'true' at least once
+* CF = conditions that have been evaluated to 'false' at least once
+* LC = covered lines = lines_to_cover - uncovered_lines
+* B = total number of conditions
+* EL = total number of executable lines (lines_to_cover)
+
+It can also be much simpler, such as:
+
+`Coverage = (LC / EL) * 100`
 
 # Coverage Criteria
 
@@ -38,9 +51,9 @@ To measure the lines of code that are actually exercised by test runs, various c
 
 When making your test strategy you should aim to set up your team for success by understanding what is important to test in your project and what is not. This should be discussed before undertaking any new feature work, and should be part of the DoD (definition of done) of a user story.
 
-You should keep in mind the following:
+**Keep in mind the following:**
 
-* You should write unit test to all the business logic of features developed by your team, such as view model methods, use cases and utility classes should be tested. Etc.
+> You should write unit test to all the business logic of features developed by your team, such as view model methods, use cases and utility classes should be tested. Etc.
 
 # Setting a code coverage target
 
@@ -73,7 +86,7 @@ With that in mind, we recommend you to follow a guideline rather than a specific
   </tr>
   <tr>
     <td>60-80</td>
-    <td>Great</td>
+    <td>Good</td>
   </tr>
   <tr>
     <td>80-100</td>
