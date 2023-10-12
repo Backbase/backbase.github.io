@@ -64,4 +64,4 @@ Verify that the HMS Core app is installed.
 
 # Conclusion
 
-Installing HMS Core in Android Studio Emulator is straight forward and now you can use its rich arrat of open device and cloud capabilities. 
+Installing HMS Core in Android Studio Emulator is straight forward and now you can use its rich array of open device and cloud capabilities. 
