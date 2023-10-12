@@ -11,34 +11,18 @@ layout: default
       {% if page.excerpt %}<meta itemprop="description" content="{{ page.excerpt | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
       {% if page.date %}<meta itemprop="datePublished" content="{{ page.date | date: "%B %d, %Y" }}">{% endif %}
       {% if page.modified %}<meta itemprop="dateModified" content="{{ page.modified | date: "%B %d, %Y" }}">{% endif %}
-
-      <section class="page__content" itemprop="text">
-        {% if page.splash %}
-          {% include bb_splash.html %}
-        {% endif %}
-        {% if page.feature_row %}
-          {% include feature_row.html %}
-        {% endif %}
-        {{ content }}
-      </section>
     </article>
   </section>
 
   <section class="section__entries">
     <div class="container">
-
       {% assign posts = site.principles %}
+      {% assign entries_layout = page.entries_layout | default: 'list' %}
       <div class="row">
-        <div class="offset-md-4 col-md-8">
-          <div class="row">
-            {% for post in posts %}
-              {% include archive-single.html type='list' %}
-            {% endfor %}
-          </div>
-        </div>
+      {% for post in posts %}
+        {% include archive-single.html type=entries_layout class="col-md-6 col-lg-4" %}
+      {% endfor %}
       </div>
-
-      {% include paginator.html %}
     </div>
   </div>
 </div>

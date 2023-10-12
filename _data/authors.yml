@@ -43,7 +43,7 @@ Craig Walker:
 Marco Santarelli:
   name        : "Marco Santarelli"
   avatar      : "assets/images/avatars/marco.jpeg"
-  bio         : "Director of Frontend"
+  bio         : "Director of Frontend & Mobile"
 
 Dilshan Fernando:
   name        : "Dilshan Fernando"
@@ -79,3 +79,8 @@ Ankit Pant:
   name        : "Ankit Pant"
   avatar      : "assets/images/avatars/ankit_pant.png"
   bio         : "Senior Frontend Engineer - R&D"
+
+Edgar Barragan:
+  name        : "Edgar Garcia Barragan"
+  avatar      : "assets/images/avatars/edgar_barragan.png"
+  bio         : "Senior Android Engineer - Customer Success"
