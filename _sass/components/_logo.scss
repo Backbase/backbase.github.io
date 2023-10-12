@@ -5,12 +5,12 @@
   font-size: $logo-font-size;
   display: inline-flex;
   vertical-align: middle;
-  color: map-get($bb-palette, "white");
+  color: map-get($bb-palette, "dark-blue");
 
   svg {
     object-fit: contain;
     height: .85em;
-    fill: map-get($bb-palette, "white");
+    fill: map-get($bb-palette, "dark-blue");
   }
 
   &::before {
