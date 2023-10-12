@@ -3,12 +3,12 @@
 Robinson Zimmermann:
   name        : "Robinson Zimmermann"
   avatar      : "assets/images/avatars/placeholder.jpg"
-  bio         : "FE Engineer - Customer Success"
+  bio         : "Principal FE Engineer - Customer Success"
 
 Arthur Alves:
   name        : "Arthur Alves"
   avatar      : "assets/images/avatars/arthur.jpg"
-  bio         : "Principal Mobile Engineer - Customer Success"
+  bio         : "Lead Principal Mobile Engineer - Expert Services"
 
 Andrés Torres:
   name        : "Andrés Torres García"
@@ -23,7 +23,7 @@ Hari Vignesh:
 Drew Hamilton:
   name        : "Drew Hamilton"
   avatar      : "assets/images/avatars/drew.jpg"
-  bio         : "Principal Mobile Engineer - R&D"
+  bio         : "(Former) Principal Mobile Engineer - R&D"
 
 Alexey Buistov:
   name        : "Alexey Buistov"
@@ -58,7 +58,7 @@ Raman Koushyk:
 Yash Kapila:
   name        : "Yash Kapila"
   avatar      : "assets/images/avatars/yash.jpeg"
-  bio         : "Principal Frontend Engineer - Customer Success"
+  bio         : "Principal Frontend Engineer - Expert Services"
 
 Anjali Goyal:
   name        : "Anjali Goyal"
