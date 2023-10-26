@@ -1,5 +1,5 @@
 name: Linting
-on: [push]
+on: [pull_request]
 
 jobs:
   prose:
@@ -9,8 +9,9 @@ jobs:
       uses: actions/checkout@master
 
     - name: Vale
-      uses: errata-ai/vale-action@v1.4.0
+      uses: errata-ai/vale-action@v2.0.1
       with:
          onlyAnnotateModifiedLines: true
+         reporter: github-pr-check
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
