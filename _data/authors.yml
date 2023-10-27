@@ -84,3 +84,8 @@ Edgar Barragan:
   name        : "Edgar Garcia Barragan"
   avatar      : "assets/images/avatars/edgar_barragan.png"
   bio         : "Senior Android Engineer - Customer Success"
+
+Utku:
+  name        : "Utku"
+  avatar      : "assets/images/avatars/utku.jpeg"
+  bio         : "Frontend Engineer - Customer Success"
