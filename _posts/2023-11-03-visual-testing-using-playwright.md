@@ -156,7 +156,7 @@ So, here we are with problem statement from Visual Testing
 
 ## **Automated Visual Testing using Playwright**
 
-To address the above challenges we need to implement automated visual testing in place of ‘function testing’/’manual visual testing’ to accomplish efficient and reliable results in visual testing
+To address the above challenges we need to implement automated visual testing in place of ‘function testing’/’manual visual testing’ to **accomplish efficient and reliable results in visual testing**
 
 - **Playwright** is an open-source test automation framework that enables end-to-end testing for modern web-apps
 - It uses languages - JavaScript, TypeScript, Python, Java, and C#
@@ -199,10 +199,3 @@ When the **toHaveScreenshot()** function executes, it performs the following
   url="/assets/images/post/visual-testing9.png"
 %}
 
-
-**References**
-
-- **Developer Enablement:-**
-https://backbase.atlassian.net/wiki/spaces/DE/pages/4066119941/Visual+testing+Approaches+and+Best+Practices
-- **Guild:-**
-https://backbase.atlassian.net/wiki/spaces/GUIL/pages/4109697277/Visual+testing+Best+Practices
