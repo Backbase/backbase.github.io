@@ -46,11 +46,11 @@ Visual testing also aims to verify that the application’s **visual elements** 
 Look at this UI, how did this happen in production?
 The text and advertisement are crammed together. If this was your advertisement, do you think there would be a revenue impact? Absolutely
 
-These aren’t cosmetic issues.In each case, **visual bugs are blocking revenue**
+These aren’t cosmetic issues. In each case, **visual bugs are blocking revenue**
 
-Why do these visual bugs occur? Don’t they do functional testing? They do — but it’s not enough
+Why do these visual bugs occur? Don’t they do functional testing? They do, but it’s not enough
 
-Many believe that functional tests are enough to catch visual bugs (–) but that is not true.Functional tests validate only the functional behaviour of the application
+Many believe that functional tests are enough to catch visual bugs, but that is not true. Functional tests validate only the functional behaviour of the application
 
 Visual bugs are rendering issues. And rendering validation is not what functional testing tools are designed to catch.
 
@@ -93,7 +93,7 @@ let’s look at an Instagram advertisement screen that’s properly rendered
   description="Advertisement screen that has properly rendered"
 %}
 
-If we look at the advertisement, there are 21 visual elements like — various icons, text.(This ignores iOS elements at the top like WiFi signal and time, since those aren’t controlled by the Instagram app)
+If we look at the advertisement, there are 21 visual elements like, various icons, text.(This ignores iOS elements at the top like WiFi signal and time, since those aren’t controlled by the Instagram app)
 
 Consider each element has to be validated with all 5 checkpoints
 
