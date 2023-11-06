@@ -16,15 +16,15 @@ category: Software Quality Assurance
 
 “**Visual testing**” is a software testing technique that evaluates the visible output of an app and compares that output against the results expected by a known-good source, such as a design mockup created in Photoshop or Figma, or a screenshot from a previous version of the same app.
 
-Visual testing also aims to verify that the application’s **visual elements** like **colours, images, fonts, and layouts,** are displayed correctly and consistently across different devices, operating systems, and browsers.
+Visual testing also aims to verify that the app’s **visual elements** like **colours, images, fonts, and layouts,** are displayed correctly and consistently across different devices, operating systems, and browsers.
 
 
 ## **Why is visual testing important?**
 
 - Visual testing captures defects that other types of UI tests cannot
-- It is essential for ensuring a positive user experience with your app
+- Visual testing is essential for ensuring a positive user experience with your app
 - Maintaining a visually perfect UI is important for retaining customers
-- It is important to reduce the revenue impact
+- Visual testing is important to reduce the revenue impact
 
 **List of Visual Bugs:-** below are the list of visual defects that may occur
 - Pixel-by-pixel differences
@@ -50,7 +50,7 @@ These aren’t cosmetic issues. In each case, **visual bugs are blocking revenue
 
 Why do these visual bugs occur? Don’t they do functional testing? They do, but it’s not enough
 
-Many believe that functional tests are enough to catch visual bugs, but that is not true. Functional tests validate only the functional behaviour of the application
+Many believe that functional tests are enough to catch visual bugs, but that is not true. Functional tests validate only the functional behaviour of the app
 
 Visual bugs are rendering issues. And rendering validation is not what functional testing tools are designed to catch.
 
@@ -61,7 +61,7 @@ Visual bugs are rendering issues. And rendering validation is not what functiona
   url="/assets/images/post/visual-testing2.png"
 %}
 
-In the above example each snapshot has rendered with different visual error
+In the preceding example each snapshot has rendered with different visual error
 
 ## **How Visual Testing can help?**
 
@@ -93,7 +93,7 @@ let’s look at an Instagram advertisement screen that’s properly rendered
   description="Advertisement screen that has properly rendered"
 %}
 
-If we look at the advertisement, there are 21 visual elements like, various icons, text.(This ignores iOS elements at the top like WiFi signal and time, since those aren’t controlled by the Instagram app)
+If we look at the advertisement, there are 21 visual elements like, various icons, text.(This ignores iOS elements at the top like Wi-Fi signal and time, since those aren’t controlled by the Instagram app)
 
 Consider each element has to be validated with all 5 checkpoints
 
@@ -117,7 +117,7 @@ For each combination of **OS/browser/font size/screen size/screen orientation**.
 
 ## **What is Manual Visual Testing?**
 
-Manual visual testing means comparing two screenshots manually, one from your known good baseline image, and another from the latest version of your application. For each pair of images, you have to invest a lot of time to ensure you’ve caught all issues. Especially if the page is long, or has a lot of visual elements it is very difficult to identify all the visual issues. 
+Manual visual testing means comparing two screenshots manually, one from your known good baseline image, and another from the latest version of your app. For each pair of images, you have to invest a lot of time to ensure you’ve caught all issues. Especially if the page is long, or has a lot of visual elements in that case very difficult to identify all the visual issues. 
 
 {% include
   components/figure.html
@@ -128,8 +128,8 @@ Manual visual testing means comparing two screenshots manually, one from your kn
 **Challenges of manual Visual Testing:-**
 Imagine you need to test your application on
 
-- 5 operating systems: Windows, MacOS, Android, iOS, and Chrome
-- 5 popular browsers: Chrome, Firefox, Internet Explorer (Windows only), Microsoft Edge (Windows Only), and Safari (Mac only)
+- 5 operating systems: windows, MacOS, Android, iOS, and Chrome
+- 5 popular browsers: chrome, Firefox, Internet Explorer (Windows only), Microsoft Edge (Windows Only), and Safari (Mac only)
 - 2 screen orientations for mobile devices: portrait and landscape
 - 10 standard mobile device display resolutions and 18 standard desktop/laptop display resolutions from XGA to 4G
 
@@ -156,7 +156,7 @@ Here we are with the problem statement from Visual Testing
 
 ## **Automated Visual Testing using Playwright**
 
-To address the above challenges we need to implement automated visual testing in place of ‘function testing’/’manual visual testing’ to **accomplish efficient and reliable results in visual testing**
+To address the preceding challenges automated visual testing need to be implented in place of ‘function testing’/’manual visual testing’ to **achieve efficient and reliable results in visual testing**
 
 - **Playwright** is an open-source test automation framework that enables end-to-end testing for modern web-apps
 - It uses languages - JavaScript, TypeScript, Python, Java, and C#
