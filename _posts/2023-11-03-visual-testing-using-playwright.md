@@ -14,7 +14,7 @@ category: Software Quality Assurance
 
 ![](/assets/images/post/visual-testing-banner.png)
 
-“**Visual testing**” is a software testing technique that evaluates the visible output of an application and compares that output against the results expected by a known-good source, such as a design mockup created in Photoshop or Figma, or a screenshot from a previous version of the same application.
+“**Visual testing**” is a software testing technique that evaluates the visible output of an app and compares that output against the results expected by a known-good source, such as a design mockup created in Photoshop or Figma, or a screenshot from a previous version of the same app.
 
 Visual testing also aims to verify that the application’s **visual elements** like **colours, images, fonts, and layouts,** are displayed correctly and consistently across different devices, operating systems, and browsers.
 
@@ -22,7 +22,7 @@ Visual testing also aims to verify that the application’s **visual elements** 
 ## **Why is visual testing important?**
 
 - Visual testing captures defects that other types of UI tests cannot
-- It is essential for ensuring a positive user experience with your application
+- It is essential for ensuring a positive user experience with your app
 - Maintaining a visually perfect UI is important for retaining customers
 - It is important to reduce the revenue impact
 
@@ -46,11 +46,11 @@ Visual testing also aims to verify that the application’s **visual elements** 
 Look at this UI, how did this happen in production?
 The text and advertisement are crammed together. If this was your advertisement, do you think there would be a revenue impact? Absolutely
 
-These aren’t cosmetic issues. In each case, **visual bugs are blocking revenue**
+These aren’t cosmetic issues.In each case, **visual bugs are blocking revenue**
 
 Why do these visual bugs occur? Don’t they do functional testing? They do — but it’s not enough
 
-Many believe that functional tests are enough to catch visual bugs – but that is not true. Functional tests validate only the functional behaviour of the application
+Many believe that functional tests are enough to catch visual bugs (–) but that is not true.Functional tests validate only the functional behaviour of the application
 
 Visual bugs are rendering issues. And rendering validation is not what functional testing tools are designed to catch.
 
@@ -93,9 +93,9 @@ let’s look at an Instagram advertisement screen that’s properly rendered
   description="Advertisement screen that has properly rendered"
 %}
 
-There are 21 visual elements in the advertisement — various icons, text. (This ignores iOS elements at the top like WiFi signal and time, since those aren’t controlled by the Instagram app.)
+If we look at the advertisement, there are 21 visual elements like — various icons, text.(This ignores iOS elements at the top like WiFi signal and time, since those aren’t controlled by the Instagram app)
 
-So each element has to be validated with all 5 checkpoints
+Consider each element has to be validated with all 5 checkpoints
 
 **Check Points**
 - Visible [true/false]
@@ -112,7 +112,7 @@ Even with all this assertion code, you wouldn’t be able to detect all visual b
 
 For each combination of **OS/browser/font size/screen size/screen orientation**. You could end up with thousands of lines of assertion code to be added in the test script, which is not a best approach to be followed
 
-**So, we need visual testing to catch all the visual errors and we cannot rely on functional tests to catch visual errors**
+**Hence, we need visual testing to catch all the visual errors and we cannot rely on functional tests to catch visual errors**
 
 
 ## **What is Manual Visual Testing?**
@@ -144,7 +144,7 @@ Wouldn’t it be great if there was a way to automate this crazy-tedious process
 Well, yes there is… a process is in place to do the tedious 
 
 
-So, here we are with problem statement from Visual Testing
+Here we are with the problem statement from Visual Testing
 
 **🚨The problem** - Visual bugs are blocking revenue and resulting in not retaining customers.
 
