@@ -11,7 +11,7 @@ jobs:
     - name: Vale
       uses: errata-ai/vale-action@v2.0.1
       with:
-         onlyAnnotateModifiedLines: true
+         filter_mode: added
          reporter: github-pr-check
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
