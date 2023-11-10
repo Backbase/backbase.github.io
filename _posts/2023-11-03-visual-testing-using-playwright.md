@@ -1,7 +1,7 @@
 ---
 
 title: "Visual Testing using Playwright"
-excerpt: "Visual testing helps to find issues that are important for end-users that can not be caught by other types of testing"
+excerpt: "Visual testing helps to find issues that are important for end-users that cannot be caught by other types of testing"
 tags: Testing, Quality Assurance
 authors:
 - Venkata Ravi Majjari
