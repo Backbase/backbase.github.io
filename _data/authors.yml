@@ -89,3 +89,8 @@ Utku:
   name        : "Utku"
   avatar      : "assets/images/avatars/utku.jpeg"
   bio         : "Frontend Engineer - Customer Success"
+
+Venkata Ravi Majjari:
+  name        : "Venkata Ravi Majjari"
+  avatar      : "assets/images/avatars/venkataravi_majjari.jpg"
+  bio         : "Senior QA Engineer - Customer Success"
