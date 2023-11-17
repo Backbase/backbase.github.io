@@ -44,13 +44,13 @@ Visual testing also aims to verify that the app’s **visual elements** like **c
 %}
 
 Look at this UI, how did this happen in production?
-The text and advertisement are crammed together. If this was your advertisement, do you think there would be a revenue impact? Absolutely
+The text and advertisement are crammed together. If this was your advertisement, do you think there would be a revenue impact? Absolutely.
 
-These aren’t cosmetic issues. In each case, **visual bugs are blocking revenue**
+These aren’t cosmetic issues. In each case, **visual bugs are blocking revenue**.
 
-Why do these visual bugs occur? Don’t they do functional testing? They do, but it’s not enough
+Why do these visual bugs occur? Don’t they do functional testing? They do, but it’s not enough.
 
-Many believe that functional tests are enough to catch visual bugs, but that is not true. Functional tests validate only the functional behavior of the app
+Many believe that functional tests are enough to catch visual bugs, but that is not true. Functional tests validate only the functional behavior of the app.
 
 Visual bugs are rendering issues. And rendering validation is not what functional testing tools are designed to catch.
 
@@ -61,7 +61,7 @@ Visual bugs are rendering issues. And rendering validation is not what functiona
   url="/assets/images/post/visual-testing2.png"
 %}
 
-In the preceding example each snapshot has rendered with different visual error
+In the preceding example each snapshot has rendered with different visual error.
 
 ## **How can Visual Testing help?**
 
@@ -83,9 +83,9 @@ In the preceding example each snapshot has rendered with different visual error
 
 ## **Why can’t functional tests cover visual issues?**
 
-Functional test scripts can validate the size, position, and color scheme of visual elements. But if we follow this approach, then our test scripts will soon balloon in size due to checkpoint bloat
+Functional test scripts can validate the size, position, and color scheme of visual elements. But if we follow this approach, then our test scripts will soon balloon in size due to checkpoint bloat.
 
-let’s look at an Instagram advertisement screen that’s properly rendered
+Let’s look at an Instagram advertisement screen that’s properly rendered:
 
 {% include
   components/figure.html
@@ -93,11 +93,10 @@ let’s look at an Instagram advertisement screen that’s properly rendered
   description="Advertisement screen that has properly rendered"
 %}
 
-If we look at the advertisement, there are 21 visual elements like, various icons, text.(This ignores iOS elements at the top like Wi-Fi signal and time, since those aren’t controlled by the Instagram app)
+If we look at the advertisement, there are 21 visual elements, like various icons, text – this ignores iOS elements at the top like Wi-Fi signal and time, since those aren’t controlled by the Instagram app.
 
-Consider each element has to be validated with all 5 checkpoints
+Consider that each element has to be validated with all these 5 checkpoints:
 
-**Check Points**
 - Visible [true/false]
 - Upper-left x, y coordinates
 - Height
@@ -108,11 +107,11 @@ That means we need the following number of assertions in the test script:
 
 **21 visual elements x 5 assertions per element = 105 lines of assertion code**
 
-Even with all this assertion code, you wouldn’t be able to detect all visual bugs. Such as whether a visual element can’t be accessed because it’s being covered up in the DOM as hidden mode
+Even with all this assertion code, you wouldn’t be able to detect all visual bugs. Such as whether a visual element can’t be accessed because it’s being covered up in the DOM as hidden mode.
 
-For each combination of **OS/browser/font size/screen size/screen orientation**. You could end up with thousands of lines of assertion code to be added in the test script, which is not a best approach to be followed
+For each combination of **OS/browser/font size/screen size/screen orientation**. You could end up with thousands of lines of assertion code to be added in the test script, which is not a best approach to be followed.
 
-**Hence, we need visual testing to catch all the visual errors and we cannot rely on functional tests to catch visual errors**
+**Hence, we need visual testing to catch all the visual errors and we cannot rely on functional tests to catch visual errors.**
 
 
 ## **What is Manual Visual Testing?**
@@ -126,7 +125,7 @@ Manual visual testing means comparing two screenshots manually, one from your kn
 %}
 
 **Challenges of manual Visual Testing:-**
-Imagine you need to test your application on
+Imagine you need to test your application on:
 
 - 5 operating systems: windows, MacOS, Android, iOS, and Chrome
 - 5 popular browsers: chrome, Firefox, Internet Explorer (Windows only), Microsoft Edge (Windows Only), and Safari (Mac only)
@@ -135,7 +134,7 @@ Imagine you need to test your application on
 
 **1 Screen to test = 21 x (20+18) = 21 x 38 = 798 Unique Screen Configurations**
 
-Let’s say if your application has 100 pages to test
+Let’s say if your application has 100 pages to test:
 
 **798 Screen Configurations x 100 Screens in-app = 79,800 Screen Configurations to test**
 
@@ -144,7 +143,7 @@ Wouldn’t it be great if there was a way to automate this crazy-tedious process
 Well, yes there is… a process is in place to do the tedious 
 
 
-Here we are with the problem statement from Visual Testing
+Here we are with the problem statement from Visual Testing:
 
 **🚨The problem** - Visual bugs are blocking revenue and resulting in not retaining customers.
 
@@ -156,7 +155,7 @@ Here we are with the problem statement from Visual Testing
 
 ## **Automated Visual Testing using Playwright**
 
-To address the preceding challenges automated visual testing need to be implemented in place of ‘function testing’/’manual visual testing’ to **achieve efficient and reliable results in visual testing**
+To address the preceding challenges, automated visual testing needs to be implemented in place of ‘function testing’/’manual visual testing’ to **achieve efficient and reliable results in visual testing**.
 
 - **Playwright** is an open-source test automation framework that enables end-to-end testing for modern web-apps
 - It uses languages - JavaScript, TypeScript, Python, Java, and C#
@@ -164,21 +163,21 @@ To address the preceding challenges automated visual testing need to be implemen
 - OS support - Windows, Linux, and macOS
 
 
-**Snapshot Comparison Workflow:-**
+**Snapshot Comparison Workflow:**
 
 {% include
   components/figure.html
   url="/assets/images/post/visual-testing6.png"
 %}
 
-**Simple Visual Snapshot Comparison Tests in Playwright**
+**Simple Visual Snapshot Comparison Tests in Playwright:**
 
 {% include
   components/figure.html
   url="/assets/images/post/visual-testing7.png"
 %}
 
-When the **toHaveScreenshot()** function executes, it performs the following
+When the **toHaveScreenshot()** function executes, it performs the following:
 
 
 - It verifies if there is an existing screenshot file. If not present, it fails
