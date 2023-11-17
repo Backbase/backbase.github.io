@@ -125,7 +125,7 @@ Manual visual testing means comparing two screenshots manually, one from your kn
 %}
 
 **Challenges of manual Visual Testing:-**
-Imagine you need to test your application on:
+Imagine you need to test your app on:
 
 - 5 operating systems: windows, MacOS, Android, iOS, and Chrome
 - 5 popular browsers: chrome, Firefox, Internet Explorer (Windows only), Microsoft Edge (Windows Only), and Safari (Mac only)
@@ -134,7 +134,7 @@ Imagine you need to test your application on:
 
 **1 Screen to test = 21 x (20+18) = 21 x 38 = 798 Unique Screen Configurations**
 
-Let’s say if your application has 100 pages to test:
+Let’s say if your app has 100 pages to test:
 
 **798 Screen Configurations x 100 Screens in-app = 79,800 Screen Configurations to test**
 
