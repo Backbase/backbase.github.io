@@ -93,7 +93,7 @@ Let’s look at an Instagram advertisement screen that’s properly rendered:
   description="Advertisement screen that has properly rendered"
 %}
 
-If we look at the advertisement, there are 21 visual elements, like various icons, text – this ignores iOS elements at the top like Wi-Fi signal and time, since those aren’t controlled by the Instagram app.
+If we look at the advertisement, there are 21 visual elements, like various icons, text (—) this ignores iOS elements at the top like Wi-Fi signal and time, since those aren’t controlled by the Instagram app
 
 Consider that each element has to be validated with all these 5 checkpoints:
 
@@ -198,3 +198,10 @@ When the **toHaveScreenshot()** function executes, it performs the following:
   url="/assets/images/post/visual-testing9.png"
 %}
 
+## **Key benefits/take-aways from Visual Testing Approach**
+
+- **Enhanced User Experience (UX):** Visual testing is crucial for a seamless and visually pleasing user experience, positively impacting satisfaction, reducing bounce rates, and reinforcing brand image.
+- **Efficiency Through Automation:** Automated visual testing accelerates the detection and resolution of visual discrepancies, enhancing efficiency and accuracy in software development.
+- **Cross-Platform Compatibility Assurance:** Visual testing ensures consistency across browsers and devices, expanding user reach and maintaining a uniform brand image.
+- **Cost-Effective and Time-Efficient:** Automation in visual testing leads to significant time and cost savings compared to manual methods, allowing teams to focus on complex development tasks.
+- **Integration with CI/CD:** Visual testing seamlessly integrates into CI/CD pipelines, supporting rapid, high-quality software delivery by validating visual aspects with each code change.
