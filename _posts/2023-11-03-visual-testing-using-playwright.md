@@ -93,7 +93,7 @@ Let’s look at an Instagram advertisement screen that’s properly rendered:
   description="Advertisement screen that has properly rendered"
 %}
 
-If we look at the advertisement, there are 21 visual elements, like various icons, text — this ignores iOS elements at the top like Wi-Fi signal and time, since those aren’t controlled by the Instagram app
+If we look at the advertisement, there are 21 visual elements, like various icons, text —this ignores iOS elements at the top like Wi-Fi signal and time, since those aren’t controlled by the Instagram app.
 
 Consider that each element has to be validated with all these 5 checkpoints:
 
@@ -149,7 +149,7 @@ Here we are with the problem statement from Visual Testing:
 
 **🎯The goal** - Visual testing captures defects that other types of UI tests cannot [Functional, Manual & Regression].
 
-**💡The solution** - **Automated Visual Testing is a solution** and **Playwright** is one of the good option used in Backbase [**Applitools** or **Percy** are the other automated tools are available for visual testing]
+**💡The solution** - **Automated Visual Testing is a solution** and **Playwright** is one of the good option used in Backbase [**Applitools** or **Percy** are the other automated tools are available for visual testing].
 <br>
 <br>
 
