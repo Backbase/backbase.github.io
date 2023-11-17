@@ -93,7 +93,7 @@ Let’s look at an Instagram advertisement screen that’s properly rendered:
   description="Advertisement screen that has properly rendered"
 %}
 
-If we look at the advertisement, there are 21 visual elements, like various icons, text (—) this ignores iOS elements at the top like Wi-Fi signal and time, since those aren’t controlled by the Instagram app
+If we look at the advertisement, there are 21 visual elements, like various icons, text — this ignores iOS elements at the top like Wi-Fi signal and time, since those aren’t controlled by the Instagram app
 
 Consider that each element has to be validated with all these 5 checkpoints:
 
@@ -140,7 +140,7 @@ Let’s say if your application has 100 pages to test:
 
 Wouldn’t it be great if there was a way to automate this crazy-tedious process?
 
-Well, yes there is… a process is in place to do the tedious 
+Well, yes there is… a process is in place to do the tedious process
 
 
 Here we are with the problem statement from Visual Testing:
