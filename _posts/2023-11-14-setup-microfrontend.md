@@ -29,16 +29,15 @@ Note: Module federation support starts from webpack 5 and Angular 11
 
 Without delay let's jump to a practical example.
 
-### Break monolithic app into shell and Remote application.
-
-`Usecase`: Mix two Angular versions.
+### Break monolithic app into Shell and Remote application.
 
 ![](/assets/images/post/monolithic.png)
 
 **Convert our existing project to a shell application.**
 
+Use below command to add module federation dependency in shell application.
 ```
-ng add @angular-architects/module-federation@12.5.3 --project projectName --port shellPort
+ng add @angular-architects/module-federation@<version> --project projectName --port shellPort --type host
 ```
 
 `Use relevant version of @angular-architects/module-federation.` 
@@ -51,7 +50,7 @@ with ngx-build-plus in angular.json, to use extra webpack config with angular-cl
 
 ![](/assets/images/post/microfrontend.png)
 
-**Create a slot to inject Remote application in the shell application. i.e. <div #vc></div>**
+**Create a slot to inject Remote application in the shell application. i.e.** `<div #vc></div>`
 
 ```typescript
 import { AfterContentInit, ChangeDetectorRef, Component, ElementRef,
@@ -88,7 +87,7 @@ export class WrapperComponent implements AfterContentInit {
 
 **Create a Registry for loading remote app inside shell application**
 
-
+By using `loadRemoteModule` from module federation, load the remote application in `WrapperComponent`
 ```typescript
 import { loadRemoteModule } from '@angular-architects/module-federation';
 
@@ -100,20 +99,23 @@ export const registry = {
     })
 };
 ```
-<br/>
-
-### Remote application 
 
 **Create Remote application**
 
+Bootstrap a new Angular project and run the following commands to add module federation dependencies. Additionally, we need to add the Angular Elements package to the project.
 ```typescript
 ng new remote-app 
-ng add @angular-architects/module-federation@13.0.1 --project remote-app  --port 4201 --type remote
+ng add @angular-architects/module-federation@<version> --project remote-app  --port 4201 --type remote
+npm install @angular/elements@<version>
 ```
 
 `Use relevant version of @angular-architects/module-federation` <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" style="color:#1d42b3; text-decoration: none;" target="_blank">check here version compatibility.</a>
 
 **Define customElement**
+
+Angular elements are Angular components packaged as custom elements (also called Web Components), a web standard for defining new HTML elements in a framework-agnostic way.
+
+Angular provides the createCustomElement() function for converting an Angular component, together with its dependencies, to a custom element
 
 ```typescript
 export class AppModule {
