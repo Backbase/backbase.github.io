@@ -94,3 +94,13 @@ Venkata Ravi Majjari:
   name        : "Venkata Ravi Majjari"
   avatar      : "assets/images/avatars/venkataravi_majjari.jpg"
   bio         : "Senior QA Engineer - Customer Success"
+
+Sri Balaji:
+  name        : "Sri Balaji"
+  avatar      : "assets/images/avatars/sribalaji.jpeg"
+  bio         : "System Engineer - Customer Success"
+
+Ashish Arora:
+  name        : "Ashish Arora"
+  avatar      : "assets/images/avatars/ashish.jpg"
+  bio         : "DevOps Consultant - Customer Success"
