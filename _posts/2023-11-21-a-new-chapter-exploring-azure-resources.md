@@ -20,20 +20,20 @@ category: System Engineering
 
 **Introduction to Cloud Computing**
 - Cloud computing is a transformative technology that delivers various services over the internet. 
-- Instead of relying on local servers or computers, these services are hosted remotely in data centers, commonly referred to as "the cloud."    
+- Instead of relying on local servers or computers, hosts these services remotely in data centers, commonly referred to as "the cloud."    
 - This model offers benefits like scalability, accessibility, and cost-efficiency. 
 
 **What is Cloud Computing** 
-- Cloud computing delivers on-demand computing services over the internet and enables you to pay only for what you need. 
+- Cloud computing delivers on-demand computing services over the internet and enables you to pay for what you need. 
 - It includes several different deployment types and service models so that you can find the solution that best meets your business needs. 
 
 
-## **Types of Cloud Services**
+## **Types of cloud services**
 **Cloud computing has three main service models:** 
 
 - **Infrastructure as a Service (IaaS):** Virtualized computing resources, allowing users to build and manage their own IT infrastructure.
 <br>
-    Example: Amazon Web Services (AWS), Microsoft Azure, and Google Compute Engine (GCE)
+    Example: amazon web services, microsoft azure, and google compute engine
 
 {% include
   components/figure.html
