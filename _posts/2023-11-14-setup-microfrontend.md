@@ -65,7 +65,7 @@ export class WrapperComponent implements AfterContentInit {
   @ViewChild('vc', {read: ElementRef, static: true})
   vc: ElementRef;
   module: any;
-  constructor(private route: ActivatedRoute, private cdf: ChangeDetectorRef) { }
+  constructor(private renderer2: Renderer2, private route: ActivatedRoute) { }
 
   ngAfterContentInit(): void {
     const elementName = this.route.snapshot.data['elementName'];
@@ -79,8 +79,8 @@ export class WrapperComponent implements AfterContentInit {
         })
         .catch(err => console.error(`error loading ${elementName}:`, err));  
     }
-    const element = document.createElement(elementName);
-    this.vc.nativeElement.appendChild(element);
+    const element = this.renderer2.createElement(elementName) as HTMLElement;
+    this.renderer.appendChild(this.vc.nativeElement, element);
   }
 }
 ```
