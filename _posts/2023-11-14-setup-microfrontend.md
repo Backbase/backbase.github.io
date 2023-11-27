@@ -21,11 +21,11 @@ Micro Frontends Architecture is composed of two or more applications
 
 Transform your Angular application into a powerful micro frontend with ease. Simply add these essential dependencies to your project and start unlocking the full potential of micro frontends.
 - `@angular-architects/module-federation:` This provides support for webpack module federation plugin.
-- `@angular/elements:` Angular elements uses customElementRegistry interface which provides methods for registering custom elements and querying registered elements.
+- `@angular/elements:` Angular elements uses `CustomElementRegistry` interface which provides methods for registering custom elements and querying registered elements.
 
-```
-Note: Module federation support starts from webpack 5 and Angular 11
-```
+
+**Note**: Module federation support starts from webpack 5 and Angular 11
+
 
 Without delay let's jump to a practical example.
 
@@ -36,17 +36,17 @@ Without delay let's jump to a practical example.
 **Convert our existing project to a shell application.**
 
 Use below command to add module federation dependency in shell application.
-```
+
+```console
 ng add @angular-architects/module-federation@<version> --project projectName --port shellPort --type host
 ```
 
 `Use relevant version of @angular-architects/module-federation.` 
-<a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" style="color:#1d42b3; text-decoration: none;" target="_blank">check here version compatibility.</a>
+<a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">check here version compatibility.</a>
 
-```
-Note: Above command will generate webpack.config and will replace @angular-devkit/build-angular
+
+**Note:** Above command will generate webpack.config and will replace @angular-devkit/build-angular
 with ngx-build-plus in angular.json, to use extra webpack config with angular-cli.
-```
 
 ![](/assets/images/post/microfrontend.png)
 
@@ -103,13 +103,13 @@ export const registry = {
 **Create Remote application**
 
 Bootstrap a new Angular project and run the following commands to add module federation dependencies. Additionally, we need to add the Angular Elements package to the project.
-```typescript
+```console
 ng new remote-app 
 ng add @angular-architects/module-federation@<version> --project remote-app  --port 4201 --type remote
 npm install @angular/elements@<version>
 ```
 
-`Use relevant version of @angular-architects/module-federation` <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" style="color:#1d42b3; text-decoration: none;" target="_blank">check here version compatibility.</a>
+`Use relevant version of @angular-architects/module-federation` <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">check here version compatibility.</a>
 
 **Define customElement**
 
@@ -132,8 +132,8 @@ export class AppModule {
 **Connect navigation b/w shell and remote application**
 
 ```
-Note: We are using wrapperComponent that we have created in above steps.
-We are also passing extra data object which will be used to loadModule in through module federation i.e registry we created in above steps.
+Note: We are using WrapperComponent that we have created in above steps.
+We are also passing an extra data object which will be used to load the Module in through module federation i.e registry we created in above steps.
 ```
 
 ```typescript
@@ -167,6 +167,24 @@ const routes: Routes = [
     }
 ]
 ```
+
+**Handle Remote App Navigation**
+
+```typescript
+export class AppComponent implements OnInit {
+  constructor(
+    private router: Router,
+    @Inject(APP_BASE_HREF) public baseHref:string
+  ) { }
+
+
+  ngOnInit(): void {
+    const path = environment.production ? location.pathname.split(this.baseHref)[1] : location.pathname.substr(1);
+    this.router.navigateByUrl(path);
+  }
+}
+```
+**Note**: APP_BASE_HREF is base href of shell application
 
 **Integrate Lerna**
 
@@ -207,9 +225,201 @@ npx lerna init
 
 ```
 
+**Challenges and Solutions in implementing Micro Frontends**
+
+**Theming**
+
+`Challenge`: How to ensure consistent styling across shell and remote applications?
+
+Let's see four different ways to share theming between shell and remote applications.
+- Shared global theme for shell and remote applications.
+- Theme in only shell application.
+- Standalone theme in both shell and remote applications.
+- Standalone theme in shell application and lazy load theme of remote application.
+
+![](/assets/images/post/mf-theming.png)
+
+`Solution`: Based on above illustration, the most efficient approach for maintaining consistent CSS is to implement global shared theme.
+
+`A shared global theme or at shell only is the only possible way to do styling in micro frontends. Also, we only considered` <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">ITCSS architecture</a> `for this POC and haven't explored component-level styling.` 
+
+
+**Duplicate Source Code**
+
+`Challenge:` How to prevent code duplicacy between shell and remote applications?
+
+`Example:` Duplicate Interceptors between shell and remote application.
+
+An interceptor is a middleware component that intercepts incoming and outgoing HTTP requests and responses. It provides a way to modify or enhance these requests and responses before they are processed by the application or sent to the server. It can be used for a variety of purposes, such as logging, caching, authentication, and error handling.
+
+**Note:** We can’t share instance of a class between applications. Thus, we can’t use same interceptor at both shell and remote level. 
+
+
+`Solution:`
+
+- Create a shared library 
+- Using shared key of module federation plugin, we can define the library which should be shared between
+all the federated modules.
+
+```typescript
+const { ModuleFederationPlugin } = require('webpack').container;
+module.exports = {
+  plugins: [
+    new ModuleFederationPlugin({
+      // adds date-fns as shared module
+      shared: share({
+      'date-fns': {
+          singleton: false,
+          strictVersion: true,
+          requiredVersion: 'auto',
+          eager: true
+        }
+      })
+    }),
+  ],
+};
+```
+
+So in your application you could do something like
+
+```typescript
+import { format } from 'date-fns';
+
+format(new Date(2014, 1, 11), 'MM/dd/yyyy');
+```
+
+and webpack will automatically share date-fns between all your federated modules that define date-fns as a shared library. For more details
+please refer <a href="https://www.npmjs.com/package/@angular-architects/module-federation#sharing-libs-of-a-monorepo" target="_blank">@angular-architects/module-federation#sharing-libs-of-a-monorepo</a> and <a href="https://webpack.js.org/plugins/module-federation-plugin/" target="_blank">webpack's module federation plugin.</a>
+
+
+**Deployment**
+
+`Challenge:` Existing CI/CD pipelines are required to be modified.
+
+`Solution:` Follow below steps to modify existing pipeline.
+
+**Shell App Changes**
+
+- Dynamic entry point for Remote app
+
+``` typescript
+
+export const RemoteAppRegistry = {
+    'remoteApp': () => loadRemoteModule({
+        remoteEntry: getRemoteUrl(),
+        remoteName: 'remoteApp',
+        exposedModule: './web-components'
+    })
+};
+
+function getRemoteUrl() {
+    if(!environment.isProduction) {
+        return `http://localhost:${REMOTE_PORT}/remoteEntry.js`
+    } else {
+        // We need to configure REMOTE_BASE_PORT (optional) for local docker app testing.
+        return '${PROTOCOL}//${HOSTNAME}:${REMOTE_BASE_PORT}${REMOTE_BASE_HREF}remoteEntry.js'
+    }
+}
+```
+
+- Add BASE_HREF in shell and remote application
+
+``` typescript
+ "architect": {
+  "build": {
+    "configurations": {
+      "production": {
+        "baseHref": "${BASE_HREF}",
+      }
+    }
+  }
+ }
+```
+
+- Modify entry point in webpack.prod.config.js
+
+``` typescript
+plugins: [
+  new ModuleFederationPlugin({
+    remotes: {
+      "remoteApp": "remoteApp@https://${HOSTNAME}${REMOTE_BASE_HREF}/remoteEntry.js",
+    },
+  })
+]
+```
+
+- Sample `docker.yaml`
+
+```yaml
+version: "3"
+
+services:
+  web:
+    build:
+      context: .
+    ports:
+      - target: 8080
+        published: 8080
+    environment:
+      ...
+      PROTOCOL: 'http:'
+      HOSTNAME: localhost
+      PORT: 8080
+      BASE_HREF: /retail-shell/     
+      REMOTE_BASE_HREF: /retail-journeys/
+      REMOTE_BASE_PORT: 8081
+```
+
+- Sample Dockerfile
+
+```Dockerfile
+FROM repo.backbase.com/backbase-docker-releases/web-base:1.1.2
+COPY ./retail-shell ./statics
+
+```
+
+**Remote App Changes**
+
+- Modify webpack config to make public path dynamic
+
+**Note:** TEST_PORT is required to run application on local docker env, However for production it will be 443a and hence can be removed.
+
+```
+output: {
+    uniqueName: "remoteApp",
+    publicPath: "${PROTOCOL}//${HOSTNAME}:${TEST_PORT}${BASE_HREF}",
+    module: true,
+  },
+```
+
+- Sample docker.yaml
+
+```yaml
+version: "3"
+
+services:
+  journeys:
+    build:
+      context: .
+    ports:
+      - target: 8081
+        published: 8081
+    environment:
+      ...
+      PROTOCOL: 'http:'
+      HOSTNAME: localhost
+      PORT: 8081
+      BASE_HREF: /retail-journeys/
+      TEST_PORT: '8081'
+      SHEL_BASE_HREF: retail-shell/
+```
+
+
+
 **Benefits & Drawbacks of using Micro Frontends:**
 
-![](/assets/images/post/mf-worth-it.png)
+![](/assets/images/post/mf-pros-cons.png)
+
 
 # Conclusion
 Micro Frontends offer tremendous flexibility and scalability to developers and enterprise applications. With this architecture, individual teams can work and deploy features independently without affecting other features. However, the initial setup of Micro Frontends requires extra time to set up on developer machines as well as on pipelines. Despite this, the benefits of Micro Frontends architecture outweigh the drawbacks by a significant margin.
