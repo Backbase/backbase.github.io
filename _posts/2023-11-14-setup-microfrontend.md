@@ -384,7 +384,7 @@ COPY ./retail-shell ./statics
 
 **Note:** TEST_PORT is required to run application on local docker env, However for production it will be 443a and hence can be removed.
 
-```
+```typescript
 output: {
     uniqueName: "remoteApp",
     publicPath: "${PROTOCOL}//${HOSTNAME}:${TEST_PORT}${BASE_HREF}",
