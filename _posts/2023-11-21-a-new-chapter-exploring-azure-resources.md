@@ -71,35 +71,29 @@ category: System Engineering
 
 In the dynamic landscape of Cloud Technology, the transition to Microsoft Azure has paved the way for enhanced performance, scalability, and innovation. 
 
-- **Azure Virtual Machines (VMs):** Providing scalable compute resources tailored to Backbase BaaS workloads. 
-- **Azure Blob Storage:** Ensuring reliable and scalable object storage for data and media assets. 
-- **Azure Virtual Network:** Establishing a secure and scalable network infrastructure for seamless connectivity. 
-- **Azure SQL Database:** Powering Backbase BaaS with a fully managed and scalable relational database solution. 
-- **Azure Functions:** Enabling serverless computing for efficient and cost-effective execution of code. 
-
 **Azure Kubernetes Service (AKS)** 
 -   AKS is a managed Kubernetes service provided by Microsoft Azure. 
 -   AKS simplifies the process of deploying and managing containerized applications using Kubernetes. 
 
-**Key aspects of Azure Kubernetes Service:** 
+    **Key aspects of Azure Kubernetes Service:** 
 
-- **Managed Kubernetes:** 
-    AKS provides a fully managed Kubernetes cluster, abstracting away the complexities of managing the underlying infrastructure. 
+    - **Managed Kubernetes:** 
+        AKS provides a fully managed Kubernetes cluster, abstracting away the complexities of managing the underlying infrastructure. 
 
-- **Scalability:**
-    AKS supports the automatic scaling of applications based on demand. 
+    - **Scalability:**
+        AKS supports the automatic scaling of applications based on demand. 
 
-- **Integration with Azure Services:** 
-    AKS allows you to easily connect your containerized applications to services such as Azure Active Directory, Azure Monitor, and Azure Container Registry. 
+    - **Integration with Azure Services:** 
+        AKS allows you to easily connect your containerized applications to services such as Azure Active Directory, Azure Monitor, and Azure Container Registry. 
 
-- **DevOps Integration:** 
-    AKS integrates with popular DevOps tools, including Azure DevOps, Jenkins, and others, facilitating a streamlined continuous integration and continuous deployment (CI/CD) pipeline for containerized applications. 
+    - **DevOps Integration:** 
+        AKS integrates with popular DevOps tools, including Azure DevOps, Jenkins, and others, facilitating a streamlined continuous integration and continuous deployment (CI/CD) pipeline for containerized applications. 
 
-- **Monitoring and Diagnostics:** 
-    Azure Monitor provides monitoring and allows you to gain insights into the performance, health, and behavior of your containerized applications. 
+    - **Monitoring and Diagnostics:** 
+        Azure Monitor provides monitoring and allows you to gain insights into the performance, health, and behavior of your containerized applications. 
 
-- **Security:**
-    AKS includes security features such as Azure Active Directory integration for identity and access management, network policies for controlling the flow of traffic between pods.
+    - **Security:**
+        AKS includes security features such as Azure Active Directory integration for identity and access management, network policies for controlling the flow of traffic between pods.
 
 
 **Azure Active Directory (Azure AD)** is Microsoft's cloud-based identity and access management service. 
@@ -122,7 +116,7 @@ In the dynamic landscape of Cloud Technology, the transition to Microsoft Azure 
 
 Azure provides a range of network components that enable the creation of secure, scalable, and well-connected applications and services.
 
-**Key Azure network components:** 
+**Azure network components:** 
 
 - **Virtual Network (VNet)** is the fundamental building block for your private network in Azure. 
 
