@@ -131,10 +131,8 @@ export class AppModule {
 
 **Connect navigation b/w shell and remote application**
 
-```
-Note: We are using WrapperComponent that we have created in above steps.
+**Note:** We are using WrapperComponent that we have created in above steps.
 We are also passing an extra data object which will be used to load the Module in through module federation i.e registry we created in above steps.
-```
 
 ```typescript
 // Shell application router
