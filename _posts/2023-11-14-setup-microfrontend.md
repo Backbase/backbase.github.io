@@ -372,7 +372,7 @@ services:
 - Sample Dockerfile
 
 ```Dockerfile
-FROM repo.backbase.com/backbase-docker-releases/web-base:1.1.2
+FROM {YOUR_BASE_IMAGE}:x.x.x
 COPY ./retail-shell ./statics
 
 ```
