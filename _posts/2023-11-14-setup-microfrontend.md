@@ -41,7 +41,7 @@ Use below command to add module federation dependency in shell application:
 ng add @angular-architects/module-federation@<version> --project projectName --port shellPort --type host
 ```
 
-`Use relevant version of @angular-architects/module-federation.` 
+Use relevant version of @angular-architects/module-federation.
 <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">Check version compatibility here.</a>
 
 
@@ -109,13 +109,13 @@ ng add @angular-architects/module-federation@<version> --project remote-app  --p
 npm install @angular/elements@<version>
 ```
 
-`Use relevant version of @angular-architects/module-federation.` <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">Check version compatibility here.</a>
+Use relevant version of @angular-architects/module-federation. <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">Check version compatibility here.</a>
 
 **Define customElement**
 
 Angular elements are Angular components packaged as custom elements (also called Web Components), a web standard for defining new HTML elements in a framework-agnostic way.
 
-Angular provides the createCustomElement() function for converting an Angular component, together with its dependencies, to a custom element.
+Angular provides the `createCustomElement()` function for converting an Angular component, together with its dependencies, to a custom element.
 
 ```typescript
 export class AppModule {
