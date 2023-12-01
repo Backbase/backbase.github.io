@@ -381,7 +381,7 @@ COPY ./retail-shell ./statics
 
 - Modify webpack config to make public path dynamic
 
-**Note:** TEST_PORT is required to run application on local docker env, However for production it will be 443 and hence can be removed.
+**Note:** TEST_PORT is required to run application on local docker env. However, for production it will be 443 and hence can be removed.
 
 ```typescript
 output: {
