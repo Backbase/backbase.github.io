@@ -372,7 +372,7 @@ services:
 - Sample Dockerfile
 
 ```Dockerfile
-FROM {YOUR_BASE_IMAGE}:x.x.x
+FROM {YOUR_BASE_IMAGE}:{Version}
 COPY ./retail-shell ./statics
 
 ```
