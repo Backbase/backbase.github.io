@@ -132,6 +132,7 @@ export class AppModule {
 **Connect navigation b/w shell and remote application**
 
 To load the remote application, you can use `WrapperComponent` that was created in above steps.
+
 **Note:** Also, pass an extra data object which will be used to load the relevant module.
 
 ```typescript
@@ -227,7 +228,7 @@ npx lerna init
 
 **Theming**
 
-`Challenge`: How to ensure consistent styling across shell and remote applications?
+**Challenge**: How to ensure consistent styling across shell and remote applications?
 
 Let's see four different ways to share theming between shell and remote applications.
 - Shared global theme for shell and remote applications.
@@ -237,23 +238,23 @@ Let's see four different ways to share theming between shell and remote applicat
 
 ![](/assets/images/post/mf-theming.png)
 
-`Solution`: Based on above illustration, the most efficient approach for maintaining consistent CSS is to implement global shared theme.
+**Solution**: Based on above illustration, the most efficient approach for maintaining consistent CSS is to implement global shared theme.
 
 `A shared global theme or at shell only is the only possible way to do styling in micro frontends. Also, we only considered` <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">ITCSS architecture</a> `for this POC and haven't explored component-level styling.` 
 
 
 **Duplicate Source Code**
 
-`Challenge:` How to prevent code duplicacy between shell and remote applications?
+**Challenge:** How to prevent code duplicacy between shell and remote applications?
 
-`Example:` Duplicate Interceptors between shell and remote application.
+**Example:** Duplicate Interceptors between shell and remote application.
 
 An interceptor is a middleware component that intercepts incoming and outgoing HTTP requests and responses. It provides a way to modify or enhance these requests and responses before they are processed by the application or sent to the server. It can be used for a variety of purposes, such as logging, caching, authentication, and error handling.
 
 **Note:** We can’t share instance of a class between applications. Thus, we can’t use same interceptor at both shell and remote level. 
 
 
-`Solution:`
+**Solution:**
 
 - Create a shared library 
 - Using shared key of module federation plugin, we can define the library which should be shared between
@@ -292,9 +293,9 @@ please refer <a href="https://www.npmjs.com/package/@angular-architects/module-f
 
 **Deployment**
 
-`Challenge:` Existing CI/CD pipelines are required to be modified.
+**Challenge:** Existing CI/CD pipelines are required to be modified.
 
-`Solution:` Follow below steps to modify existing pipeline.
+**Solution:** Follow below steps to deploy micro frontends.
 
 **Shell App Changes**
 
