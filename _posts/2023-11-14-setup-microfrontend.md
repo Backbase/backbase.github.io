@@ -240,7 +240,7 @@ Let's see four different ways to share theming between shell and remote applicat
 
 **Solution**: Based on above illustration, the most efficient approach for maintaining consistent CSS is to implement global shared theme.
 
-`A shared global theme or at shell only is the only possible way to do styling in micro frontends. Also, we only considered` <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">ITCSS architecture</a> `for this POC and haven't explored component-level styling.` 
+A shared global theme or at shell only is the only possible way to do styling in micro frontends. Also, we only considered <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">ITCSS architecture</a> for this POC and haven't explored component-level styling.
 
 
 **Duplicate Source Code**
