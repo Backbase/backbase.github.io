@@ -13,44 +13,44 @@ category: Frontend
 ![](/assets/images/post/angular_microfrontends.png)
 
 # Introduction
-Micro Frontends is a modern architectural approach for developing web applications. Instead of creating a large, monolithic web application, it involves building multiple smaller frontend applications. Each of these small applications is responsible for a specific feature, which can be independently deployed and scaled. These Micro Frontends interact with each other to create a seamless user interface. This approach allows for greater flexibility and easier maintenance of web applications.
+Micro Frontends is a modern architectural approach for developing web applications. Instead of creating a large, monolithic web application, it involves building multiple smaller frontend applications. Each of these small application is responsible for a specific feature, which can be independently deployed and scaled. These micro frontends interact with each other to create a seamless user interface. This approach allows for greater flexibility and easier maintenance of web applications.
 
-Micro Frontends Architecture is composed of two or more applications
+Micro Frontends Architecture is composed of two or more applications:
 - Shell/Host Application
-- Mutiple Remote applications.
+- Mutiple Remote applications
 
-Transform your Angular application into a powerful micro frontend with ease. Simply add these essential dependencies to your project and start unlocking the full potential of micro frontends.
+You can transform your Angular application into a powerful micro frontend with ease. Simply add these essential dependencies to your project and start unlocking the full potential of micro frontends.
 - `@angular-architects/module-federation:` This provides support for webpack module federation plugin.
-- `@angular/elements:` Angular elements uses `CustomElementRegistry` interface which provides methods for registering custom elements and querying registered elements.
+- `@angular/elements:` Angular elements use `CustomElementRegistry` interface which provide methods for registering custom elements and querying registered elements.
 
 
-**Note**: Module federation support starts from webpack 5 and Angular 11
+**Note**: Module federation support starts from Webpack 5 and Angular 11.
 
 
-Without delay let's jump to a practical example.
+Without delay let's jump into a practical example.
 
-### Break monolithic app into Shell and Remote application.
+### Break monolithic app into Shell and Remote application
 
 ![](/assets/images/post/monolithic.png)
 
-**Convert our existing project to a shell application.**
+**Convert your existing project to a shell application**
 
-Use below command to add module federation dependency in shell application.
+Use below command to add module federation dependency in shell application:
 
 ```console
 ng add @angular-architects/module-federation@<version> --project projectName --port shellPort --type host
 ```
 
 `Use relevant version of @angular-architects/module-federation.` 
-<a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">check here version compatibility.</a>
+<a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">Check version compatibility here.</a>
 
 
-**Note:** Above command will generate webpack.config and will replace @angular-devkit/build-angular
-with ngx-build-plus in angular.json, to use extra webpack config with angular-cli.
+**Note:** Above command will generate `webpack.config` and will replace `@angular-devkit/build-angular`
+with `ngx-build-plus` in `angular.json`, to use additional webpack config with angular-cli.
 
 ![](/assets/images/post/microfrontend.png)
 
-**Create a slot to inject Remote application in the shell application. i.e.** `<div #vc></div>`
+**Create a slot to inject Remote application in the shell application, i.e.** `<div #vc></div>`
 
 ```typescript
 import { AfterContentInit, ChangeDetectorRef, Component, ElementRef,
@@ -109,13 +109,13 @@ ng add @angular-architects/module-federation@<version> --project remote-app  --p
 npm install @angular/elements@<version>
 ```
 
-`Use relevant version of @angular-architects/module-federation` <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">check here version compatibility.</a>
+`Use relevant version of @angular-architects/module-federation.` <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">Check version compatibility here.</a>
 
 **Define customElement**
 
 Angular elements are Angular components packaged as custom elements (also called Web Components), a web standard for defining new HTML elements in a framework-agnostic way.
 
-Angular provides the createCustomElement() function for converting an Angular component, together with its dependencies, to a custom element
+Angular provides the createCustomElement() function for converting an Angular component, together with its dependencies, to a custom element.
 
 ```typescript
 export class AppModule {
@@ -131,8 +131,8 @@ export class AppModule {
 
 **Connect navigation b/w shell and remote application**
 
-**Note:** We are using WrapperComponent that we have created in above steps.
-We are also passing an extra data object which will be used to load the Module in through module federation i.e registry we created in above steps.
+To load the remote application, you can use `WrapperComponent` that was created in above steps.
+**Note:** Also, pass an extra data object which will be used to load the relevant module.
 
 ```typescript
 // Shell application router
@@ -182,14 +182,14 @@ export class AppComponent implements OnInit {
   }
 }
 ```
-**Note**: APP_BASE_HREF is base href of shell application
+**Note**: APP_BASE_HREF is base href of shell application.
 
 **Integrate Lerna**
 
 Currently, we have two separate workspaces and require a monorepo tool to efficiently run and cache them. To accomplish this, we have decided to utilize Lerna.
 
 It solves two of the biggest problems of JavaScript/TypeScript monorepos:
-- Lerna runs a command against any number of projects, and it does it in the most efficient way, in the right order, and with the possibility to distribute that on multiple machines.
+- Lerna executes a command against any number of projects, and it does it in the most efficient way, in the right order, and with the possibility to distribute that on multiple machines.
 
 - Lerna manages your publishing process, from version management to publishing to NPM, and it provides a variety of options to make sure any workflow can be accommodated.
 
@@ -278,7 +278,7 @@ module.exports = {
 };
 ```
 
-So in your application you could do something like
+So in your application you could do something like:
 
 ```typescript
 import { format } from 'date-fns';
@@ -286,7 +286,7 @@ import { format } from 'date-fns';
 format(new Date(2014, 1, 11), 'MM/dd/yyyy');
 ```
 
-and webpack will automatically share date-fns between all your federated modules that define date-fns as a shared library. For more details
+and, webpack will automatically share `date-fns` between all your federated modules that define date-fns as a shared library. For more details,
 please refer <a href="https://www.npmjs.com/package/@angular-architects/module-federation#sharing-libs-of-a-monorepo" target="_blank">@angular-architects/module-federation#sharing-libs-of-a-monorepo</a> and <a href="https://webpack.js.org/plugins/module-federation-plugin/" target="_blank">webpack's module federation plugin.</a>
 
 
@@ -380,7 +380,7 @@ COPY ./retail-shell ./statics
 
 - Modify webpack config to make public path dynamic
 
-**Note:** TEST_PORT is required to run application on local docker env, However for production it will be 443a and hence can be removed.
+**Note:** TEST_PORT is required to run application on local docker env, However for production it will be 443 and hence can be removed.
 
 ```typescript
 output: {
