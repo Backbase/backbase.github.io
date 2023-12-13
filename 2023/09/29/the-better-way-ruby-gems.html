@@ -1,0 +1,760 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>The Better Way with Ruby Gems - Backbase Engineering</title>
+<meta name="description" content="Using Ruby Gems to ensure that everyone in the project shares the same setup.">
+
+
+  <meta name="author" content="Arthur Alves">
+  
+  <meta property="article:author" content="Arthur Alves">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Backbase Engineering">
+<meta property="og:title" content="The Better Way with Ruby Gems">
+<meta property="og:url" content="https://backbase.github.io/2023/09/29/the-better-way-ruby-gems">
+
+
+  <meta property="og:description" content="Using Ruby Gems to ensure that everyone in the project shares the same setup.">
+
+
+
+  <meta property="og:image" content="https://backbase.github.io/assets/images/post/ruby-gems/the_better_way_ruby_gems.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2023-09-29T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://backbase.github.io/2023/09/29/the-better-way-ruby-gems">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://backbase.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap" rel="stylesheet" data-optimized-fonts="true">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+  </head>
+
+  <body class="layout--single min-vh-100 d-flex flex-column">
+    <nav class="skip-links visually-hidden-focusable">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li class="list-group-item"><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li class="list-group-item"><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<nav id="site-nav" class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <div class="navbar-brand">
+      
+        <a class="site-logo text-decoration-none" href="/">
+          <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+        </a>
+      
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end me-4" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="https://workatbackbase.com/" target="_blank">
+                <span>Jobs</span>
+              </a>
+            </li>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about" >
+                <span>About</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+        <ul class="navbar-nav" style="text-align:right;">
+          <li class="nav-item">
+            <a class="nav-primarylink" href="/principles"  style="text-decoration:none;">
+              <span>Our Principles</span>
+            </a>
+          </li>
+        </ul>
+      
+  </div>
+</nav>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  <div class="container">
+    <div class="row">
+      <article class="page offset-md-2 col-md-8" itemscope itemtype="http://schema.org/CreativeWork">
+        <meta itemprop="headline" content="The Better Way with Ruby Gems">
+        <meta itemprop="description" content="Using Ruby Gems to ensure that everyone in the project shares the same setup.">
+        <meta itemprop="datePublished" content="September 29, 2023">
+        
+
+        <div class="page__inner-wrap">
+          
+            <header>
+              <h1 class="page__title" itemprop="headline">The Better Way with Ruby Gems
+</h1>
+
+              <aside class="author">
+                
+                  
+
+<div itemscope itemtype="https://schema.org/Person">
+  
+    <div class="author__avatar">
+      
+        <img class="rounded-circle" src="/assets/images/avatars/arthur.jpg" alt="Arthur Alves" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content text-muted">
+    
+      <h3 class="author__name" itemprop="name">Arthur Alves</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Lead Principal Mobile Engineer - Expert Services</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <div class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  </div>
+</div>
+
+                
+              </aside>
+
+              
+              
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <time datetime="2023-09-29T00:00:00+00:00">September 29, 2023</time>
+      </span>
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+
+              
+            </header>
+          
+
+          <section class="page__content" itemprop="text">
+            <p><img src="/assets/images/post/ruby-gems/the_better_way_ruby_gems.png" alt="" /></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Working with an iOS project involves the usage of tools such as Cocoapods, Slather, SwiftLint, Fastlane and more. Ideally, all engineers working on a particular codebase - as well as the CI machine it runs on - should maintain the same versions of these tools.</p>
+
+<p>Some of these tools also use Ruby, and the version of Ruby installed in each one’s machine might lead to strange behaviours.</p>
+
+<p>Consider, for a moment, you’ve aligned the versions of all the tools above, including Ruby itself, between everyone working on <code class="language-plaintext highlighter-rouge">CodebaseA</code>. What if you need to also work on <code class="language-plaintext highlighter-rouge">CodebaseB</code>, owned by another team possibly in another department? The chances of them using the exact same versions for all this tooling is very minimal.</p>
+
+<h1 id="solution">Solution</h1>
+
+<p>A solution to maintain all these alignments, regardless of how many projects you’re working on, without changes to your global setup. A solution where, for every project, you can make use of different versions of Ruby, Cocoapods, Fastlane etc. Only by making use of:</p>
+
+<ul>
+  <li>Ruby Gems; and</li>
+  <li><a href="https://github.com/rbenv/rbenv">rbenv</a> - A Ruby version manager tool.</li>
+</ul>
+
+<h1 id="steps">Steps</h1>
+
+<p><strong><em>Versions specified here are illustrative. Choose your versions carefully in accordance with your team.</em></strong></p>
+
+<h3 id="1-multiple-ruby-versions"><strong>1.</strong> Multiple Ruby versions.</h3>
+
+<p><strong>1.1</strong> Install RBENV</p>
+
+<p>RBENV is a Ruby version manager tool that allows us to install multiple versions of Ruby and set a specific version to a particular folder/repo/codebase. This way multiple versions can exist and multiple projects can use their own version if necessary.</p>
+
+<p>If you don’t have RBENV installed, ensure the following:</p>
+
+<p><strong><em>We recommend using homebrew, as it’s a package manager commonly used.</em></strong></p>
+
+<p>Simply run the following command in your Terminal:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>rbenv
+</code></pre></div></div>
+
+<p>Once installed, we have to ensure it will be initiated properly. Add the following line to your <code class="language-plaintext highlighter-rouge">~/.zshrc</code> or <code class="language-plaintext highlighter-rouge">~/.bashrc</code> file:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="s2">"</span><span class="si">$(</span>rbenv init - <span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Save the file, restart your Terminal or run source <code class="language-plaintext highlighter-rouge">~/.zshrc</code> or source <code class="language-plaintext highlighter-rouge">~/.bashrc</code> (depending on which Shell you’re using).</p>
+
+<p>Once you first install <code class="language-plaintext highlighter-rouge">rbenv</code>, the only version of Ruby available is the <code class="language-plaintext highlighter-rouge">system</code> version, which is whatever Ruby has been installed as system default. You can see the currently installed and available versions by running:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv versions
+</code></pre></div></div>
+
+<p><strong>1.2</strong> Installing and Locking Ruby versions</p>
+
+<p>A Ruby version is locked for a particular folder/repository with the presence of a file named <code class="language-plaintext highlighter-rouge">.ruby-version</code>, which contains solely the version of Ruby expected to be used, as in:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2.7.6
+</code></pre></div></div>
+
+<p><strong><em>Simply stating a Ruby version in this file will require it to be installed, but won’t install it for you. Creating or updating this file doesn’t have to be done manually. The following steps will guide you on how to set it up.</em></strong></p>
+
+<p>As an example, we’ll lock the Ruby version for an iOS repository, called <code class="language-plaintext highlighter-rouge">PeachTreeBank-iOS</code>. Assume there is no current version lock for Ruby, and there is only the system <code class="language-plaintext highlighter-rouge">version</code> installed.</p>
+
+<p>You can check the versions available for install with:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv <span class="nb">install</span> <span class="nt">--list</span>
+</code></pre></div></div>
+
+<p>For me, the output of this command is:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2.6.10
+2.7.6
+3.0.4
+3.1.2
+jruby-9.3.6.0
+mruby-3.1.0
+picoruby-3.0.0
+rbx-5.0
+truffleruby-22.2.0
+truffleruby+graalvm-22.2.0
+
+Only latest stable releases <span class="k">for </span>each Ruby implementation are shown.
+Use <span class="s1">'rbenv install --list-all / -L'</span> to show all <span class="nb">local </span>versions.
+</code></pre></div></div>
+
+<p><strong><em>Notice the message at the bottom. These are stable releases and we recommend you choose one of them. For a bigger list, containing previews and unstable versions, use –list-all.</em></strong></p>
+
+<p>We can proceed to install version <code class="language-plaintext highlighter-rouge">2.7.6</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv <span class="nb">install </span>2.7.6
+</code></pre></div></div>
+
+<p><strong><em>Installing a Ruby version is only needed once. It is now available in your machine through rbenv, it will now appear when you run the command rbenv versions.</em></strong></p>
+
+<p>Now, with multiple versions available, you can specify which version this local folder/repository should use. Inside the folder, in Terminal, run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv <span class="nb">local</span> &lt;VERSION&gt;
+</code></pre></div></div>
+
+<p>In this case:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv <span class="nb">local </span>2.7.6
+</code></pre></div></div>
+
+<p>This will create the file <code class="language-plaintext highlighter-rouge">.ruby-version</code>. This file should be committed, so that it enforces this version for everyone else, including your CI machine.</p>
+
+<p><strong><em>Later, if you want to change the version, make sure it’s installed with <code class="language-plaintext highlighter-rouge">rbenv</code> and run the <code class="language-plaintext highlighter-rouge">local</code> command again, i.e: <code class="language-plaintext highlighter-rouge">rbenv local 3.1.2</code>.</em></strong></p>
+
+<h3 id="2-using-ruby-gems"><strong>2.</strong> Using Ruby Gems.</h3>
+
+<p>You’ve managed to have multiple versions of Ruby and set different versions for different repositories. Now, we’re set to use Ruby Gems.</p>
+
+<p>Ruby Gems is a package manager, responsible for distributing Ruby programs and libraries. Programs such as Cocoapods and Fastlane.</p>
+
+<p>It’ll facilitate our work by not relying on the versions of these tools we’ve installed in our machines directly, but have Ruby Gems handle it for us. This comes with the same benefit from the section above, the ability to maintain specific versions of it for different repositories.</p>
+
+<p><strong>2.1</strong> Your repository already has a <code class="language-plaintext highlighter-rouge">Gemfile</code>.</p>
+
+<p>If your repository already has a file named <code class="language-plaintext highlighter-rouge">Gemfile</code>, it already uses Ruby Gems. You can simply specify the Gems you want to use in this file.</p>
+
+<p><strong>2.2.</strong> Your repository doesn’t have a <code class="language-plaintext highlighter-rouge">Gemfile</code>.</p>
+
+<p>Your repository doesn’t currently have a file named <code class="language-plaintext highlighter-rouge">Gemfile</code>. We’ll create one and proceed to install these gems.</p>
+
+<p>It’s similar to a <code class="language-plaintext highlighter-rouge">Podfile</code>, where you’ll specify the dependencies and, optionally, their versions, with a certain constraint.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> <span class="s1">'https://rubygems.org'</span>
+
+gem <span class="s1">'cocoapods'</span>, <span class="s1">'1.11.3'</span>
+gem <span class="s1">'cocoapods-art'</span>
+gem <span class="s1">'fastlane'</span>
+</code></pre></div></div>
+
+<p>The following will install <code class="language-plaintext highlighter-rouge">cocoapods</code> version <code class="language-plaintext highlighter-rouge">1.11.3</code> and the latest version of <code class="language-plaintext highlighter-rouge">cocoapods-art</code> that is compatible with cocoapods.</p>
+
+<p>Save your file and run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">install</span>
+</code></pre></div></div>
+
+<p><strong><em>You might have troubles with this installation. If that happens, you can specify a local path for bundler to install with: <code class="language-plaintext highlighter-rouge">bundle config set --local path 'vendor/bundle'</code>
+Then proceed to run <code class="language-plaintext highlighter-rouge">bundle install</code> again.</em></strong></p>
+
+<p><strong><em>Once Ruby Gems are installed you’ll also have a <code class="language-plaintext highlighter-rouge">Gemfile.lock</code>, this file specifies the versions used during the latest installation/update and makes sure it locks to those versions for whoever is installing those dependencies, as long as they match the version constraints specified in the <code class="language-plaintext highlighter-rouge">Gemfile</code>.</em></strong></p>
+
+<p><strong><em><code class="language-plaintext highlighter-rouge">Gemfile.lock</code> should also be committed.</em></strong></p>
+
+<h4 id="3-running-your-tools"><strong>3.</strong> Running your tools.</h4>
+
+<p>By now your project has a locked version of Ruby, which everyone can install without conflicting with other setups/projects. And you have most of the tools you need, such as Cocoapods and Fastlane, installed in a similar manner, as Ruby Gems.</p>
+
+<p>You can run these tools, within the folder/repository of your project, with <code class="language-plaintext highlighter-rouge">bundle exec</code>.</p>
+
+<p>Instead of running:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pod <span class="nb">install
+</span>fastlane &lt;YOUR-LANE&gt;
+</code></pre></div></div>
+
+<p>Run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>pod <span class="nb">install
+</span>bundle <span class="nb">exec </span>fastlane &lt;YOUR-LANE&gt;
+</code></pre></div></div>
+
+<p>–</p>
+
+<p>You can make this easier by creating an alias in your <code class="language-plaintext highlighter-rouge">~/.zshrc</code> or <code class="language-plaintext highlighter-rouge">~/.bashrc</code> file:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">bx</span><span class="o">=</span><span class="s1">'bundle exec'</span>
+</code></pre></div></div>
+
+<p>From now on, the commands above could be used as:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bx pod <span class="nb">install
+</span>bx fastlane &lt;YOUR-LANE&gt;
+</code></pre></div></div>
+
+            
+          </section>
+
+          <footer class="page__meta">
+            
+            
+
+
+          </footer>
+
+          <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=The+Better+Way+with+Ruby+Gems%20https%3A%2F%2Fbackbase.github.io%2F2023%2F09%2F29%2Fthe-better-way-ruby-gems" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbackbase.github.io%2F2023%2F09%2F29%2Fthe-better-way-ruby-gems" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fbackbase.github.io%2F2023%2F09%2F29%2Fthe-better-way-ruby-gems" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+        </div>
+
+        
+      </article>
+    </div>
+
+    
+    
+      <div class="page__related col-md-8 offset-md-2">
+        
+        <div class="grid__wrapper row">
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/angular_microfrontends.png" alt="Micro Frontends" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/12/13/setup-microfrontend" rel="permalink">Angular &amp; Micro Frontends
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Harsh Julka
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Micro Frontends is a modern architectural approach for developing web applications.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/12/13/setup-microfrontend" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/azure-banner.png" alt="System Engineering" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink">A New Chapter: Exploring Azure Resources
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Sri Balaji, 
+      
+        Ashish Arora
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Azure’s limitless potential sets the stage for a promising journey, where opportunities abound on the horizon.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/visual-testing-banner.png" alt="Quality Assistance Approach" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/03/visual-testing-using-playwright" rel="permalink">Visual Testing using Playwright
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Venkata Ravi Majjari
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Visual testing helps to find issues that are important for end-users that cannot be caught by other types of testing
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/03/visual-testing-using-playwright" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="mt-auto page__footer">
+      <footer class="bg-primary text-white text-center py-5 small">
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <div class="footer-brand">
+    
+      <a class="site-logo text-decoration-none" href="/">
+        <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+      </a>
+    
+  </div>
+  <ul class="social-icons list-unstyled">
+    
+
+    
+      
+        
+          <li><a href="https://www.youtube.com/user/Backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i><span class="visually-hidden">YouTube</span></a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/company/backbase/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="visually-hidden">LinkedIn</span></a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/backbase_global/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a></li>
+        
+      
+        
+          <li><a href="https://www.glassdoor.nl/Overzicht/Werken-bij-Backbase-EI_IE117266.11,19.htm?countryRedirect=true" rel="nofollow noopener noreferrer" target="_blank"><i class="fab custom-glassdoor" aria-hidden="true"></i><span class="visually-hidden">Glassdoor</span></a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Backbase Engineering. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+
+      </footer>
+    </div>
+
+    <script src='/assets/global-17ef4fa84e17b9a550efbf687d8fa54b.js' type='text/javascript'></script>
+
+
+  </body>
+</html>

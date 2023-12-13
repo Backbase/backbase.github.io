@@ -1,0 +1,1004 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Angular &amp; Micro Frontends - Backbase Engineering</title>
+<meta name="description" content="Micro Frontends is a modern architectural approach for developing web applications.">
+
+
+  <meta name="author" content="Harsh Julka">
+  
+  <meta property="article:author" content="Harsh Julka">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Backbase Engineering">
+<meta property="og:title" content="Angular &amp; Micro Frontends">
+<meta property="og:url" content="https://backbase.github.io/2023/12/13/setup-microfrontend">
+
+
+  <meta property="og:description" content="Micro Frontends is a modern architectural approach for developing web applications.">
+
+
+
+  <meta property="og:image" content="https://backbase.github.io/assets/images/post/angular_microfrontends.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2023-12-13T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://backbase.github.io/2023/12/13/setup-microfrontend">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://backbase.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap" rel="stylesheet" data-optimized-fonts="true">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+  </head>
+
+  <body class="layout--single min-vh-100 d-flex flex-column">
+    <nav class="skip-links visually-hidden-focusable">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li class="list-group-item"><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li class="list-group-item"><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<nav id="site-nav" class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <div class="navbar-brand">
+      
+        <a class="site-logo text-decoration-none" href="/">
+          <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+        </a>
+      
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end me-4" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="https://workatbackbase.com/" target="_blank">
+                <span>Jobs</span>
+              </a>
+            </li>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about" >
+                <span>About</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+        <ul class="navbar-nav" style="text-align:right;">
+          <li class="nav-item">
+            <a class="nav-primarylink" href="/principles"  style="text-decoration:none;">
+              <span>Our Principles</span>
+            </a>
+          </li>
+        </ul>
+      
+  </div>
+</nav>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  <div class="container">
+    <div class="row">
+      <article class="page offset-md-2 col-md-8" itemscope itemtype="http://schema.org/CreativeWork">
+        <meta itemprop="headline" content="Angular &amp; Micro Frontends">
+        <meta itemprop="description" content="Micro Frontends is a modern architectural approach for developing web applications.">
+        <meta itemprop="datePublished" content="December 13, 2023">
+        
+
+        <div class="page__inner-wrap">
+          
+            <header>
+              <h1 class="page__title" itemprop="headline">Angular &amp; Micro Frontends
+</h1>
+
+              <aside class="author">
+                
+                  
+
+<div itemscope itemtype="https://schema.org/Person">
+  
+    <div class="author__avatar">
+      
+        <img class="rounded-circle" src="/assets/images/avatars/harsh_julka.JPG" alt="Harsh Julka" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content text-muted">
+    
+      <h3 class="author__name" itemprop="name">Harsh Julka</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Senior Frontend Engineer - Customer Success</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <div class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  </div>
+</div>
+
+                
+              </aside>
+
+              
+              
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <time datetime="2023-12-13T00:00:00+00:00">December 13, 2023</time>
+      </span>
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+
+              
+            </header>
+          
+
+          <section class="page__content" itemprop="text">
+            <p><img src="/assets/images/post/angular_microfrontends.png" alt="" /></p>
+
+<h1 id="introduction">Introduction</h1>
+<p>Micro Frontends is a modern architectural approach for developing web applications. Instead of creating a large, monolithic web application, it involves building multiple smaller frontend applications. Each of these small application has a specific feature, which can be independently deployed and scaled. These micro frontends interact with each other to create a seamless user interface. This approach allows for greater flexibility and easier maintenance of web applications.</p>
+
+<p>Micro Frontends Architecture is composed of two or more applications:</p>
+<ul>
+  <li>Shell/Host Application</li>
+  <li>Mutiple Remote applications</li>
+</ul>
+
+<p>You can transform your Angular application into a powerful micro frontend with ease. Add these essential dependencies to your project and start unlocking the full potential of micro frontends.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@angular-architects/module-federation:</code> This provides support for webpack module federation plugin.</li>
+  <li><code class="language-plaintext highlighter-rouge">@angular/elements:</code> Angular elements use <code class="language-plaintext highlighter-rouge">CustomElementRegistry</code> interface which provide methods for registering custom elements and querying registered elements.</li>
+</ul>
+
+<p><strong>Note</strong>: module federation support starts from Webpack 5 and Angular 11.</p>
+
+<p>Without delay let’s jump into a practical example.</p>
+
+<h3 id="break-monolithic-app-into-shell-and-remote-application">Break monolithic app into shell and remote application</h3>
+
+<p><img src="/assets/images/post/monolithic.png" alt="" /></p>
+
+<p><strong>Convert your existing project to a shell application</strong></p>
+
+<p>Use below command to add module federation dependency in shell application:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">ng add @angular-architects/module-federation@&lt;version&gt;</span><span class="w"> </span><span class="nt">--project</span> projectName <span class="nt">--port</span> shellPort <span class="nt">--type</span> host
+</code></pre></div></div>
+
+<p>Use relevant version of @angular-architects/module-federation.
+<a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">Check version compatibility here.</a></p>
+
+<p><strong>Note:</strong> the above command generates <code class="language-plaintext highlighter-rouge">webpack.config</code> and replaces <code class="language-plaintext highlighter-rouge">@angular-devkit/build-angular</code>
+with <code class="language-plaintext highlighter-rouge">ngx-build-plus</code> in <code class="language-plaintext highlighter-rouge">angular.json</code>, to use additional webpack config with angular-cli.</p>
+
+<p><img src="/assets/images/post/microfrontend.png" alt="" /></p>
+
+<p><strong>Create a slot to inject the remote application in the shell application, which is</strong> <code class="language-plaintext highlighter-rouge">&lt;div #vc&gt;&lt;/div&gt;</code></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">AfterContentInit</span><span class="p">,</span> <span class="nx">ChangeDetectorRef</span><span class="p">,</span> <span class="nx">Component</span><span class="p">,</span> <span class="nx">ElementRef</span><span class="p">,</span>
+<span class="nx">OnInit</span><span class="p">,</span> <span class="nx">ViewChild</span><span class="p">,</span> <span class="nx">ViewContainerRef</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">ActivatedRoute</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/router</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">registry</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./registry</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+  <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;div #vc&gt;&lt;/div&gt;</span><span class="dl">'</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">WrapperComponent</span> <span class="k">implements</span> <span class="nx">AfterContentInit</span> <span class="p">{</span>
+  <span class="p">@</span><span class="nd">ViewChild</span><span class="p">(</span><span class="dl">'</span><span class="s1">vc</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">read</span><span class="p">:</span> <span class="nx">ElementRef</span><span class="p">,</span> <span class="na">static</span><span class="p">:</span> <span class="kc">true</span><span class="p">})</span>
+  <span class="nx">vc</span><span class="p">:</span> <span class="nx">ElementRef</span><span class="p">;</span>
+  <span class="nl">module</span><span class="p">:</span> <span class="kr">any</span><span class="p">;</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">renderer2</span><span class="p">:</span> <span class="nx">Renderer2</span><span class="p">,</span> <span class="k">private</span> <span class="nx">route</span><span class="p">:</span> <span class="nx">ActivatedRoute</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+
+  <span class="nx">ngAfterContentInit</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">elementName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">route</span><span class="p">.</span><span class="nx">snapshot</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="dl">'</span><span class="s1">elementName</span><span class="dl">'</span><span class="p">];</span>
+    <span class="kd">const</span> <span class="nx">importName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">route</span><span class="p">.</span><span class="nx">snapshot</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="dl">'</span><span class="s1">importName</span><span class="dl">'</span><span class="p">];</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="kr">module</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">importFn</span> <span class="o">=</span> <span class="nx">registry</span><span class="p">[</span><span class="nx">importName</span><span class="p">];</span>
+      <span class="nx">importFn</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">m</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="s2">`element </span><span class="p">${</span><span class="nx">elementName</span><span class="p">}</span><span class="s2"> loaded!`</span><span class="p">)</span>
+          <span class="k">this</span><span class="p">.</span><span class="kr">module</span> <span class="o">=</span> <span class="nx">m</span><span class="p">;</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">`error loading </span><span class="p">${</span><span class="nx">elementName</span><span class="p">}</span><span class="s2">:`</span><span class="p">,</span> <span class="nx">err</span><span class="p">));</span>  
+    <span class="p">}</span>
+    <span class="kd">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">renderer2</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">elementName</span><span class="p">)</span> <span class="k">as</span> <span class="nx">HTMLElement</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">renderer</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">vc</span><span class="p">.</span><span class="nx">nativeElement</span><span class="p">,</span> <span class="nx">element</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Create a Registry for loading remote app inside shell application</strong></p>
+
+<p>By using <code class="language-plaintext highlighter-rouge">loadRemoteModule</code> from module federation, load the remote application in <code class="language-plaintext highlighter-rouge">WrapperComponent</code></p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">loadRemoteModule</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular-architects/module-federation</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">registry</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">remoteApp</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">loadRemoteModule</span><span class="p">({</span>
+        <span class="na">remoteEntry</span><span class="p">:</span> <span class="dl">'</span><span class="s1">http://localhost:4201/remoteEntry.js</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">remoteName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remote-app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">exposedModule</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./web-components</span><span class="dl">'</span>
+    <span class="p">})</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p><strong>Create Remote application</strong></p>
+
+<p>Bootstrap a new Angular project and run the following commands to add module federation and Angular elements dependencies in the project.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">ng new remote-app 
+</span><span class="gp">ng add @angular-architects/module-federation@&lt;version&gt;</span><span class="w"> </span><span class="nt">--project</span> remote-app  <span class="nt">--port</span> 4201 <span class="nt">--type</span> remote
+<span class="gp">npm install @angular/elements@&lt;version&gt;</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Use relevant version of @angular-architects/module-federation. <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">Check version compatibility here.</a></p>
+
+<p><strong>Define customElement</strong></p>
+
+<p>Angular elements are Angular components packaged as custom elements (also called Web Components), a web standard for defining new HTML elements in a framework-agnostic way.</p>
+
+<p>Angular provides the <code class="language-plaintext highlighter-rouge">createCustomElement()</code> function for converting an Angular component, together with its dependencies, to a custom element.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">class</span> <span class="nx">AppModule</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">injector</span><span class="p">:</span> <span class="nx">Injector</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">}</span>
+
+  <span class="nx">ngDoBootstrap</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">ce</span> <span class="o">=</span> <span class="nx">createCustomElement</span><span class="p">(</span><span class="nx">AppComponent</span><span class="p">,</span> <span class="p">{</span> <span class="na">injector</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">injector</span> <span class="p">});</span>
+    <span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">remote-element</span><span class="dl">'</span><span class="p">,</span> <span class="nx">ce</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Connect navigation b/w shell and remote application</strong></p>
+
+<p>To load the remote application, you can use <code class="language-plaintext highlighter-rouge">WrapperComponent</code> that was created in preceding steps.</p>
+
+<p><strong>Note:</strong> pass an extra data object which will be used to load the relevant module.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Shell application router</span>
+ <span class="p">{</span>
+    <span class="nl">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remote-app/{routeName}</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">component</span><span class="p">:</span> <span class="nx">WrapperComponent</span><span class="p">,</span>
+    <span class="nx">data</span><span class="p">:</span> <span class="p">{</span> <span class="nl">importName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remoteApp</span><span class="dl">'</span><span class="p">,</span> <span class="nx">elementName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remote-element</span><span class="dl">'</span> <span class="p">},</span>
+ <span class="p">},</span>
+</code></pre></div></div>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Remote application Router (Normal routing)</span>
+<span class="kd">const</span> <span class="nx">routes</span><span class="p">:</span> <span class="nx">Routes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remote-app</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">children</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">transactions</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">loadChildren</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span>
+            <span class="k">import</span><span class="p">(</span><span class="dl">'</span><span class="s1">./features/transactions.module</span><span class="dl">'</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">m</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">m</span><span class="p">.</span><span class="nx">TransactionsModule</span><span class="p">)</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">cards</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">loadChildren</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span>
+            <span class="k">import</span><span class="p">(</span><span class="dl">'</span><span class="s1">./features/card-management.module</span><span class="dl">'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+              <span class="p">(</span><span class="nx">m</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">m</span><span class="p">.</span><span class="nx">CardsManagementModule</span>
+          <span class="p">)</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p><strong>Handle Remote App Navigation</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">class</span> <span class="nx">AppComponent</span> <span class="k">implements</span> <span class="nx">OnInit</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span>
+    <span class="k">private</span> <span class="nx">router</span><span class="p">:</span> <span class="nx">Router</span><span class="p">,</span>
+    <span class="p">@</span><span class="nd">Inject</span><span class="p">(</span><span class="nx">APP_BASE_HREF</span><span class="p">)</span> <span class="k">public</span> <span class="nx">baseHref</span><span class="p">:</span><span class="kr">string</span>
+  <span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+
+
+  <span class="nx">ngOnInit</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">environment</span><span class="p">.</span><span class="nx">production</span> <span class="p">?</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">baseHref</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="p">:</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">navigateByUrl</span><span class="p">(</span><span class="nx">path</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><strong>Note</strong>: APP_BASE_HREF is base href of shell application.</p>
+
+<p><strong>Integrate Lerna</strong></p>
+
+<p>At present, we have two distinct workspaces that require a monorepo tool to efficiently run and cache them. To accomplish this, we have decided to utilize Lerna.</p>
+
+<p>It solves two of the biggest problems of JavaScript/TypeScript monorepos:</p>
+<ul>
+  <li>
+    <p>Lerna executes a command against any number of projects, and it does it in the most efficient way, in the right order, and with the possibility to distribute that on multiple machines.</p>
+  </li>
+  <li>
+    <p>Lerna manages your publishing process, from version management to publishing to NPM, and it provides a variety of options to make sure any workflow can be accommodated.</p>
+  </li>
+</ul>
+
+<pre><code class="language-JSON">// Run this command at root of project
+npx lerna init
+
+// Sample lerna.json
+{
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "useWorkspaces": false,
+  "version": "0.0.0",
+  "packages": [
+    "retail-remote-app",
+    "inm-retail-project"
+  ]
+}
+
+// root package.json
+{
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^6.5.1"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "start": "lerna run start --stream"
+  }
+}
+
+</code></pre>
+
+<p><strong>Challenges and Solutions in implementing Micro Frontends</strong></p>
+
+<p><strong>Theming</strong></p>
+
+<p><strong>Challenge</strong>: How to ensure consistent styling across shell and remote applications?</p>
+
+<p>Let’s see four different ways to share theming between shell and remote applications.</p>
+<ul>
+  <li>Shared global theme for shell and remote applications.</li>
+  <li>Theme in only shell application.</li>
+  <li>Standalone theme in both shell and remote applications.</li>
+  <li>Standalone theme in shell application and lazy load theme of remote application.</li>
+</ul>
+
+<p><img src="/assets/images/post/mf-theming.png" alt="" /></p>
+
+<p><strong>Solution</strong>: Based on above illustration, the most efficient approach for maintaining consistent CSS is to implement global shared theme.</p>
+
+<p>A shared global theme or at shell only is the only possible way to do styling in micro frontends. Also, we only considered <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">ITCSS architecture</a> for this POC and haven’t explored component-level styling.</p>
+
+<p><strong>Duplicate Source Code</strong></p>
+
+<p><strong>Challenge:</strong> How to prevent code duplicacy between shell and remote applications?</p>
+
+<p><strong>Example:</strong> Duplicate Interceptors between shell and remote application.</p>
+
+<p>An interceptor is a middleware component that intercepts incoming and outgoing HTTP requests and responses. It provides a way to modify or enhance these requests and responses before they are processed by the application or sent to the server. It can be used for a variety of purposes, such as logging, caching, authentication, and error handling.</p>
+
+<p><strong>Note:</strong> We can’t share instance of a class between applications. Thus, we can’t use same interceptor at both shell and remote level.</p>
+
+<p><strong>Solution:</strong></p>
+
+<ul>
+  <li>Create a shared library</li>
+  <li>Using shared key of module federation plugin, we can define the library which should be shared between
+all the federated modules.</li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">ModuleFederationPlugin</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">webpack</span><span class="dl">'</span><span class="p">).</span><span class="nx">container</span><span class="p">;</span>
+<span class="kr">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">plugins</span><span class="p">:</span> <span class="p">[</span>
+    <span class="k">new</span> <span class="nx">ModuleFederationPlugin</span><span class="p">({</span>
+      <span class="c1">// adds date-fns as shared module</span>
+      <span class="na">shared</span><span class="p">:</span> <span class="nx">share</span><span class="p">({</span>
+      <span class="dl">'</span><span class="s1">date-fns</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">singleton</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+          <span class="na">strictVersion</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+          <span class="na">requiredVersion</span><span class="p">:</span> <span class="dl">'</span><span class="s1">auto</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">eager</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+      <span class="p">})</span>
+    <span class="p">}),</span>
+  <span class="p">],</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>So in your application you could do something like:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">format</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">date-fns</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">format</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="dl">'</span><span class="s1">MM/dd/yyyy</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>and, webpack will automatically share <code class="language-plaintext highlighter-rouge">date-fns</code> between all your federated modules that define date-fns as a shared library. For more details,
+please refer <a href="https://www.npmjs.com/package/@angular-architects/module-federation#sharing-libs-of-a-monorepo" target="_blank">@angular-architects/module-federation#sharing-libs-of-a-monorepo</a> and <a href="https://webpack.js.org/plugins/module-federation-plugin/" target="_blank">webpack’s module federation plugin.</a></p>
+
+<p><strong>Deployment</strong></p>
+
+<p><strong>Challenge:</strong> Existing CI/CD pipelines are required to be modified.</p>
+
+<p><strong>Solution:</strong> Follow below steps to deploy micro frontends.</p>
+
+<p><strong>Shell App Changes</strong></p>
+
+<ul>
+  <li>Dynamic entry point for Remote app</li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">RemoteAppRegistry</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">remoteApp</span><span class="dl">'</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">loadRemoteModule</span><span class="p">({</span>
+        <span class="na">remoteEntry</span><span class="p">:</span> <span class="nx">getRemoteUrl</span><span class="p">(),</span>
+        <span class="na">remoteName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remoteApp</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">exposedModule</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./web-components</span><span class="dl">'</span>
+    <span class="p">})</span>
+<span class="p">};</span>
+
+<span class="kd">function</span> <span class="nx">getRemoteUrl</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">environment</span><span class="p">.</span><span class="nx">isProduction</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">`http://localhost:</span><span class="p">${</span><span class="nx">REMOTE_PORT</span><span class="p">}</span><span class="s2">/remoteEntry.js`</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// We need to configure REMOTE_BASE_PORT (optional) for local docker app testing.</span>
+        <span class="k">return</span> <span class="dl">'</span><span class="s1">${PROTOCOL}//${HOSTNAME}:${REMOTE_BASE_PORT}${REMOTE_BASE_HREF}remoteEntry.js</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Add BASE_HREF in shell and remote application</li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="dl">"</span><span class="s2">architect</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+  <span class="dl">"</span><span class="s2">build</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">configurations</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="dl">"</span><span class="s2">production</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">"</span><span class="s2">baseHref</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">${BASE_HREF}</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+ <span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Modify entry point in webpack.prod.config.js</li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">plugins</span><span class="p">:</span> <span class="p">[</span>
+  <span class="k">new</span> <span class="nx">ModuleFederationPlugin</span><span class="p">({</span>
+    <span class="na">remotes</span><span class="p">:</span> <span class="p">{</span>
+      <span class="dl">"</span><span class="s2">remoteApp</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">remoteApp@https://${HOSTNAME}${REMOTE_BASE_HREF}/remoteEntry.js</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">},</span>
+  <span class="p">})</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Sample <code class="language-plaintext highlighter-rouge">docker.yaml</code></li>
+</ul>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">web</span><span class="pi">:</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">.</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">target</span><span class="pi">:</span> <span class="m">8080</span>
+        <span class="na">published</span><span class="pi">:</span> <span class="m">8080</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="s">...</span>
+      <span class="s">PROTOCOL</span><span class="err">:</span> <span class="s1">'</span><span class="s">http:'</span>
+      <span class="na">HOSTNAME</span><span class="pi">:</span> <span class="s">localhost</span>
+      <span class="na">PORT</span><span class="pi">:</span> <span class="m">8080</span>
+      <span class="na">BASE_HREF</span><span class="pi">:</span> <span class="s">/retail-shell/</span>     
+      <span class="na">REMOTE_BASE_HREF</span><span class="pi">:</span> <span class="s">/retail-journeys/</span>
+      <span class="na">REMOTE_BASE_PORT</span><span class="pi">:</span> <span class="m">8081</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Sample Dockerfile</li>
+</ul>
+
+<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> {YOUR_BASE_IMAGE}:{Version}</span>
+<span class="k">COPY</span><span class="s"> ./retail-shell ./statics</span>
+
+</code></pre></div></div>
+
+<p><strong>Remote App Changes</strong></p>
+
+<ul>
+  <li>Modify webpack config to make public path dynamic</li>
+</ul>
+
+<p><strong>Note:</strong> TEST_PORT is required to run application on local docker env. However, for production it will be 443 and hence can be removed.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">uniqueName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">remoteApp</span><span class="dl">"</span><span class="p">,</span>
+    <span class="nx">publicPath</span><span class="p">:</span> <span class="dl">"</span><span class="s2">${PROTOCOL}//${HOSTNAME}:${TEST_PORT}${BASE_HREF}</span><span class="dl">"</span><span class="p">,</span>
+    <span class="kr">module</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="p">},</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Sample docker.yaml</li>
+</ul>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">journeys</span><span class="pi">:</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">.</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">target</span><span class="pi">:</span> <span class="m">8081</span>
+        <span class="na">published</span><span class="pi">:</span> <span class="m">8081</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="s">...</span>
+      <span class="s">PROTOCOL</span><span class="err">:</span> <span class="s1">'</span><span class="s">http:'</span>
+      <span class="na">HOSTNAME</span><span class="pi">:</span> <span class="s">localhost</span>
+      <span class="na">PORT</span><span class="pi">:</span> <span class="m">8081</span>
+      <span class="na">BASE_HREF</span><span class="pi">:</span> <span class="s">/retail-journeys/</span>
+      <span class="na">TEST_PORT</span><span class="pi">:</span> <span class="s1">'</span><span class="s">8081'</span>
+      <span class="na">SHEL_BASE_HREF</span><span class="pi">:</span> <span class="s">retail-shell/</span>
+</code></pre></div></div>
+
+<p><strong>Benefits &amp; Drawbacks of using Micro Frontends:</strong></p>
+
+<p><img src="/assets/images/post/mf-pros-cons.png" alt="" /></p>
+
+<h1 id="conclusion">Conclusion</h1>
+<p>Micro Frontends offer tremendous flexibility and scalability to developers and enterprise applications. With this architecture, individual teams can work and deploy features independently without affecting other features. However, the initial setup of Micro Frontends requires extra time to set up on developer machines as well as on pipelines. Despite this, the benefits of Micro Frontends architecture outweigh the drawbacks by a significant margin.</p>
+
+<h1 id="references-and-additional-resources">References and Additional Resources</h1>
+<ul>
+  <li><a href="https://www.angulararchitects.io/blog/the-microfrontend-revolution-module-federation-in-webpack-5/">The Micro Frontends revolution is here, thanks to module federation in Webpack 5</a></li>
+  <li><a href="https://www.angulararchitects.io/en/blog/consequences-of-micro-frontends-survey-results/">Consequences of Micro Frontends</a></li>
+</ul>
+
+            
+          </section>
+
+          <footer class="page__meta">
+            
+            
+
+
+          </footer>
+
+          <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Angular+%26+Micro+Frontends%20https%3A%2F%2Fbackbase.github.io%2F2023%2F12%2F13%2Fsetup-microfrontend" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbackbase.github.io%2F2023%2F12%2F13%2Fsetup-microfrontend" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fbackbase.github.io%2F2023%2F12%2F13%2Fsetup-microfrontend" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+        </div>
+
+        
+      </article>
+    </div>
+
+    
+    
+      <div class="page__related col-md-8 offset-md-2">
+        
+        <div class="grid__wrapper row">
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/azure-banner.png" alt="System Engineering" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink">A New Chapter: Exploring Azure Resources
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Sri Balaji, 
+      
+        Ashish Arora
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Azure’s limitless potential sets the stage for a promising journey, where opportunities abound on the horizon.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/visual-testing-banner.png" alt="Quality Assistance Approach" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/03/visual-testing-using-playwright" rel="permalink">Visual Testing using Playwright
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Venkata Ravi Majjari
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Visual testing helps to find issues that are important for end-users that cannot be caught by other types of testing
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/03/visual-testing-using-playwright" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/spectator-banner.png" alt="Spectator banner" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/10/25/angular-unit-testing-with-spectator" rel="permalink">Angular Unit Testing with Spectator
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Utku
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">A robust testing library for unit testing
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/10/25/angular-unit-testing-with-spectator" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="mt-auto page__footer">
+      <footer class="bg-primary text-white text-center py-5 small">
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <div class="footer-brand">
+    
+      <a class="site-logo text-decoration-none" href="/">
+        <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+      </a>
+    
+  </div>
+  <ul class="social-icons list-unstyled">
+    
+
+    
+      
+        
+          <li><a href="https://www.youtube.com/user/Backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i><span class="visually-hidden">YouTube</span></a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/company/backbase/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="visually-hidden">LinkedIn</span></a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/backbase_global/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a></li>
+        
+      
+        
+          <li><a href="https://www.glassdoor.nl/Overzicht/Werken-bij-Backbase-EI_IE117266.11,19.htm?countryRedirect=true" rel="nofollow noopener noreferrer" target="_blank"><i class="fab custom-glassdoor" aria-hidden="true"></i><span class="visually-hidden">Glassdoor</span></a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Backbase Engineering. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+
+      </footer>
+    </div>
+
+    <script src='/assets/global-17ef4fa84e17b9a550efbf687d8fa54b.js' type='text/javascript'></script>
+
+
+  </body>
+</html>

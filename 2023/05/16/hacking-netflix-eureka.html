@@ -1,0 +1,738 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Hacking Netflix Eureka - Backbase Engineering</title>
+<meta name="description" content="Found exposed Eureka server and don’t know what to do?">
+
+
+  <meta name="author" content="Maxim Tyukov">
+  
+  <meta property="article:author" content="Maxim Tyukov">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Backbase Engineering">
+<meta property="og:title" content="Hacking Netflix Eureka">
+<meta property="og:url" content="https://backbase.github.io/2023/05/16/hacking-netflix-eureka">
+
+
+  <meta property="og:description" content="Found exposed Eureka server and don’t know what to do?">
+
+
+
+  <meta property="og:image" content="https://backbase.github.io/assets/images/post/hacking-netflix-eureka/hacking-netflix-eureka.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2023-05-16T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://backbase.github.io/2023/05/16/hacking-netflix-eureka">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://backbase.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap" rel="stylesheet" data-optimized-fonts="true">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+  </head>
+
+  <body class="layout--single min-vh-100 d-flex flex-column">
+    <nav class="skip-links visually-hidden-focusable">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li class="list-group-item"><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li class="list-group-item"><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<nav id="site-nav" class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <div class="navbar-brand">
+      
+        <a class="site-logo text-decoration-none" href="/">
+          <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+        </a>
+      
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end me-4" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="https://workatbackbase.com/" target="_blank">
+                <span>Jobs</span>
+              </a>
+            </li>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about" >
+                <span>About</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+        <ul class="navbar-nav" style="text-align:right;">
+          <li class="nav-item">
+            <a class="nav-primarylink" href="/principles"  style="text-decoration:none;">
+              <span>Our Principles</span>
+            </a>
+          </li>
+        </ul>
+      
+  </div>
+</nav>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  <div class="container">
+    <div class="row">
+      <article class="page offset-md-2 col-md-8" itemscope itemtype="http://schema.org/CreativeWork">
+        <meta itemprop="headline" content="Hacking Netflix Eureka">
+        <meta itemprop="description" content="Found exposed Eureka server and don’t know what to do?">
+        <meta itemprop="datePublished" content="May 16, 2023">
+        
+
+        <div class="page__inner-wrap">
+          
+            <header>
+              <h1 class="page__title" itemprop="headline">Hacking Netflix Eureka
+</h1>
+
+              <aside class="author">
+                
+                  
+
+<div itemscope itemtype="https://schema.org/Person">
+  
+    <div class="author__avatar">
+      
+        <img class="rounded-circle" src="/assets/images/avatars/mt.jpg" alt="Maxim Tyukov" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content text-muted">
+    
+      <h3 class="author__name" itemprop="name">Maxim Tyukov</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Principal Application Security Engineer - R&amp;D</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <div class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  </div>
+</div>
+
+                
+              </aside>
+
+              
+              
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <time datetime="2023-05-16T00:00:00+00:00">May 16, 2023</time>
+      </span>
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+
+              
+            </header>
+          
+
+          <section class="page__content" itemprop="text">
+            <p><img src="/assets/images/post/hacking-netflix-eureka/hacking-netflix-eureka.png" alt="" /></p>
+
+<p>Eureka is a service registry used to make micro-services to find each other. What can go wrong if the registry server becomes available from the internet? What if a malicious user registers his new micro-service?</p>
+
+<p>It looks like the registry can become a point of failure from a security point of view. So that means we should properly secure it. But unfortunately, it is not always the case.</p>
+
+<p>In this short research, you will look at Eureka from the attacker’s perspective and learn how to exploit SSRF and hijack internal infra’s or victims’ traffic. Both attack vectors are performed on the application layer. That means we can easily mitigate it on network and transport layers. We will talk about defense at the end.</p>
+
+<h2 id="whose-registry-is-this"><em>Whose Registry is this?</em></h2>
+
+<p>The official description for Netflix Eureka, as per their <a href="https://github.com/Netflix/eureka">GitHub repository</a>:</p>
+
+<p><em>“Eureka is a RESTful (Representational State Transfer) service that is primarily used in the AWS cloud for the purpose of discovery, load balancing and failover of middle-tier servers. It plays a critical role in Netflix mid-tier infra.”</em></p>
+
+<h2 id="what-is-out-there">What is out there</h2>
+
+<p>Talking to the pentester’s community, it seems quite common to encounter the registry service “outside”, which is a common potential security misconfiguration.</p>
+
+<p>Now, checking how many Eureka servers can be found by Google (you probably can improve this dork):
+<img src="/assets/images/post/hacking-netflix-eureka/google-dork.png" alt="Google dork" /></p>
+
+<h2 id="find-me-a-microservice">Find me a microservice!</h2>
+
+<p>Let’s start with some basics to understand how it works based on test lab example:</p>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/find-me-microservice.png" alt="find me microservice" /></p>
+
+<p>Suppose we have the following:</p>
+
+<ol>
+  <li>Two services on the backend inside the local network, <strong>webservice</strong> and <strong>secretservice</strong></li>
+  <li>Spring Cloud Gateway (further referred to as <strong>gateway</strong>) configured to route all HTTP requests to <strong>webservice</strong></li>
+  <li>There is no HTTP route from the <strong>gateway</strong> to <strong>secretservice</strong></li>
+  <li>Registry <strong>eureka server</strong> is in DMZ (suppose that it is exposed by mistake)</li>
+  <li>and user/attacker is on the internet.</li>
+</ol>
+
+<p>On startup, each micro-service will send a REGISTER request to the Eureka server (and later will send a STATUS update every N seconds - 30s by default). Based on this information the <strong>registry</strong> knows how many instances of a particular micro-service are currently up and running and their addresses (address can be both DNS or IP).</p>
+
+<p>But the registry itself is not a proxy. It is “passive” storage and contains info about currently running instances of particular services. They call it a mid-layer proxy.</p>
+
+<p>To balance and proxy HTTP requests, we use <strong><a href="https://spring.io/projects/spring-cloud-gateway">Spring Cloud Gateway</a></strong>. Gateway collects the same information from the Eureka server to know where it should balance requests. In the test lab, the gateway handles only one route to <strong>webservice</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.route("webservice",
+    r -&gt; r.path("/**")
+        .uri("lb://WEBSERVICE"))
+</code></pre></div></div>
+
+<p>That means every path <code class="language-plaintext highlighter-rouge">"/\*\*"</code> (which is not registered on <strong>gateway</strong> separately) will be balanced ( <code class="language-plaintext highlighter-rouge">"lb://WEBSERVICE"</code> ) to the micro-service with the name <strong>webservice</strong>. There is no HTTP route to <strong>secretservice</strong>, so it is not supposed, by design, that the user will communicate with secretservice directly.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@RequestMapping(value = "/")
+public class InternalService {
+
+    @RequestMapping(value = "/flag")
+        public String available() {
+            return "FLAG{EUREKA_PWNED}";
+    }
+}
+</code></pre></div></div>
+
+<p>Here <strong>webservice</strong>, on its turn, communicates with <strong>secretservice</strong> internally with the following code:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Application application = eurekaClient.getApplication("secretservice");
+InstanceInfo instanceInfo = application.getInstances().get(0);
+String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/list/";
+Collection&lt;User&gt; users = restTemplate.getForObject(url, Collection.class);
+</code></pre></div></div>
+
+<p>Eureka client keeps all info collected from the Eureka server in memory and updates it once per N seconds (i.e.: 30s by default).</p>
+
+<h2 id="exploitation">Exploitation</h2>
+
+<p>The main idea for attack vectors is changing HTTP routing with some profit for exploitation.</p>
+
+<p>Getting access to the registry <strong>we can register fake service</strong> and try to access this service through <strong>Spring Cloud Gateway</strong>. After the fake service is registered, the <strong>gateway</strong> begins to balance requests to this service if we register the right service name.</p>
+
+<p>At this point, multiple security issues arise.</p>
+
+<ul>
+  <li>If an attacker registers a new instance of an existing micro-service and maps it to some internal micro-service, which doesn’t have a public HTTP route, the attacker can send HTTP requests to this service, which is about SSRF (Server Side Request Forgery)</li>
+  <li><strong>OR</strong>, if the attacker registers his malicious service outside, both gateway and internal services will send requests to fake service outside, which means it is possible to hijack victim’s traffic (+exploit XSS) or hijack internal services connections.</li>
+</ul>
+
+<h3 id="attack-vector-1-server-side-request-forgery">Attack Vector 1: Server Side Request Forgery</h3>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/attack-vector1.png" alt="Attack vector 1" /></p>
+
+<p>For successful exploitation, we need to find a service mapped to root URL <code class="language-plaintext highlighter-rouge">“/”</code> (which is not really a requirement but provides more freedom in path walking). For the lab environment, <em>Spring Cloud Gateway</em> already maps <code class="language-plaintext highlighter-rouge">“/”</code> to <em>webservice</em>.</p>
+
+<p>At first, find the address of the targeted micro-service to get access to (<strong>secretservice</strong>), you can find it on the registry:
+<img src="/assets/images/post/hacking-netflix-eureka/registry-before-attack.png" alt="regisrty before attack" /></p>
+
+<p>Then register new microservice with name <strong>webservice</strong> but with <code class="language-plaintext highlighter-rouge">_address:port_</code> of <strong>secretservice</strong> (to do this change <code class="language-plaintext highlighter-rouge">ipAddr</code>, <code class="language-plaintext highlighter-rouge">hostName</code> and port parameters in eureka registration request):</p>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/registry-after-ssrf-attack.png" alt="registry-after-ssrf-attack" /></p>
+
+<p>Now there are 2 instances of <strong>webservice</strong>. After <strong>gateway</strong> synced information from the <strong>registry</strong>, it begins to balance attacker requests between 2 instances of <strong>webservice</strong>. And due to one of the instances points to <strong>secretservice</strong> now, we bypass route restriction on HTTP layer and successfully perform SSRF attack.</p>
+
+<p>In case of a successful attack, you will see 2 different pages during multiple requests, 404 error (because there is no route for <code class="language-plaintext highlighter-rouge">_/flag_</code> on legit <strong>webservice</strong>) and <code class="language-plaintext highlighter-rouge">"FLAG{EUREKA_PWNED}"</code>:
+<img src="/assets/images/post/hacking-netflix-eureka/whitelabel-error.png" alt="white label error" /></p>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/flag-pwned.png" alt="flag pwned" /></p>
+
+<h3 id="attack-vector-2-traffic-hijack-and-xss">Attack Vector 2: Traffic Hijack and XSS</h3>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/attack-vector2.png" alt="attack vector 2" /></p>
+
+<p>In another scenario, what if an attacker will register an instance of <strong>webservice</strong> and point it to the malicious server? In this case, the <strong>gateway</strong> will begin to route HTTP traffic to the attacker-controlled server. This leads to secrets leakage (i.e.: <code class="language-plaintext highlighter-rouge">token</code> or <code class="language-plaintext highlighter-rouge">sessionId</code>) and XSS. For the browser, because the communication with the malicious server is performed in the backchannel, it looks like an official site (TLS on Gateway doesn’t help).</p>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/xss.png" alt="xss" /></p>
+
+<p>We can do the same trick by hijacking internal services calls, leading to information leaking or even more critical vulnerabilities.</p>
+
+<h2 id="how-to-communicate-with-eureka">How to Communicate with Eureka</h2>
+
+<p>We’ll attempt to communicate with Eureka with the following request</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /eureka/apps/WEBSERVICE HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip
+Content-Type: application/json
+User-Agent: Java/11.0.10
+Host: 127.0.0.1:8088
+Connection: keep-alive
+Content-Length: 1015
+
+{"instance":{"instanceId":"host.docker.internal:webservice:8082","app":"WEBSERVICE","appGroupName":null,"ipAddr":"192.168.2.1","sid":"na","homePageUrl":"http://host.docker.internal:8082/","statusPageUrl":"http://host.docker.internal:8082/actuator/info","healthCheckUrl":"http://host.docker.internal:8082/actuator/health","secureHealthCheckUrl":null,"vipAddress":"webservice","secureVipAddress":"webservice","countryId":1,"dataCenterInfo":{"@class":"com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo","name":"MyOwn"},"hostName":"host.docker.internal","status":"UP","overriddenStatus":"UNKNOWN","leaseInfo":{"renewalIntervalInSecs":30,"durationInSecs":90,"registrationTimestamp":0,"lastRenewalTimestamp":0,"evictionTimestamp":0,"serviceUpTimestamp":0},"isCoordinatingDiscoveryServer":false,"lastUpdatedTimestamp":1630906180645,"lastDirtyTimestamp":1630906182808,"actionType":null,"asgName":null,"port":{"$":8082,"@enabled":"true"},"securePort":{"$":443,"@enabled":"false"},"metadata":{"management.port":"8082"}}}
+</code></pre></div></div>
+
+<p><strong>However, this might fail.</strong> If the protocol has changed somehow since this publication, the easiest way to extract the correct request is to run simple eureka client+server locally and use <strong>Wireshark</strong> (which takes ~10mins).</p>
+
+<p>Check any tutorial about registry, e.g. <a href="https://spring.io/guides/gs/service-registration-and-discovery/">service-registration-and-discovery</a></p>
+
+<h2 id="defense-is-boring-but-we-have-to">Defense is boring, but we have to…</h2>
+
+<p>Bear in mind that keeping Eureka <strong>not</strong> exposed to the internet must not be considered the main defense because it happens.</p>
+
+<p>Security has to be implemented with a multi-layer approach, which guarantees that if one of the layers fails due to 0day or misconfiguration, other layers still keep you safe.</p>
+
+<h3 id="keep-it-safe-on-application-layer">Keep it safe on Application Layer</h3>
+
+<p>Eureka supports basic HTTP authentication; use it. Yes, basic authentication is not the best practice, and you have to share one password between multiple micro-services. But it still saves you some time after the attacker finds an exposed registry.</p>
+
+<h3 id="keep-it-safe-on-presentation-layer">Keep it safe on Presentation Layer</h3>
+
+<p><strong>mTLS</strong> between micro-services will help against registering malicious service outside (against traffic hijack).</p>
+
+<h3 id="keep-it-safe-on-transportnetwork-layers">Keep it safe on Transport/Network Layers</h3>
+
+<p>And, of course, micro-segmentation and strict firewall rules. There is no need to have network connectivity between the <strong>gateway</strong> and <strong>secretservice</strong> - it will safe from SSRF. As well as an uncontrolled outbound network connection to public networks must be prohibited - it will save from traffic hijacking (and from reverse shell :p).</p>
+
+<p>Thanks for reading and stay safe!</p>
+
+
+            
+          </section>
+
+          <footer class="page__meta">
+            
+            
+
+
+          </footer>
+
+          <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Hacking+Netflix+Eureka%20https%3A%2F%2Fbackbase.github.io%2F2023%2F05%2F16%2Fhacking-netflix-eureka" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbackbase.github.io%2F2023%2F05%2F16%2Fhacking-netflix-eureka" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fbackbase.github.io%2F2023%2F05%2F16%2Fhacking-netflix-eureka" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+        </div>
+
+        
+      </article>
+    </div>
+
+    
+    
+      <div class="page__related col-md-8 offset-md-2">
+        
+        <div class="grid__wrapper row">
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/angular_microfrontends.png" alt="Micro Frontends" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/12/13/setup-microfrontend" rel="permalink">Angular &amp; Micro Frontends
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Harsh Julka
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Micro Frontends is a modern architectural approach for developing web applications.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/12/13/setup-microfrontend" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/azure-banner.png" alt="System Engineering" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink">A New Chapter: Exploring Azure Resources
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Sri Balaji, 
+      
+        Ashish Arora
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Azure’s limitless potential sets the stage for a promising journey, where opportunities abound on the horizon.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/visual-testing-banner.png" alt="Quality Assistance Approach" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/03/visual-testing-using-playwright" rel="permalink">Visual Testing using Playwright
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Venkata Ravi Majjari
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Visual testing helps to find issues that are important for end-users that cannot be caught by other types of testing
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/03/visual-testing-using-playwright" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="mt-auto page__footer">
+      <footer class="bg-primary text-white text-center py-5 small">
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <div class="footer-brand">
+    
+      <a class="site-logo text-decoration-none" href="/">
+        <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+      </a>
+    
+  </div>
+  <ul class="social-icons list-unstyled">
+    
+
+    
+      
+        
+          <li><a href="https://www.youtube.com/user/Backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i><span class="visually-hidden">YouTube</span></a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/company/backbase/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="visually-hidden">LinkedIn</span></a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/backbase_global/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a></li>
+        
+      
+        
+          <li><a href="https://www.glassdoor.nl/Overzicht/Werken-bij-Backbase-EI_IE117266.11,19.htm?countryRedirect=true" rel="nofollow noopener noreferrer" target="_blank"><i class="fab custom-glassdoor" aria-hidden="true"></i><span class="visually-hidden">Glassdoor</span></a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Backbase Engineering. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+
+      </footer>
+    </div>
+
+    <script src='/assets/global-17ef4fa84e17b9a550efbf687d8fa54b.js' type='text/javascript'></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,770 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Hello, Blockchain! - Backbase Engineering</title>
+<meta name="description" content="Create a “Hello, world!”-style React app that reads and displays data from the Joystream blockchain">
+
+
+  <meta name="author" content="Alexey Buistov">
+  
+  <meta property="article:author" content="Alexey Buistov">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Backbase Engineering">
+<meta property="og:title" content="Hello, Blockchain!">
+<meta property="og:url" content="https://backbase.github.io/2021/09/10/intro-to-blockchain-react">
+
+
+  <meta property="og:description" content="Create a “Hello, world!”-style React app that reads and displays data from the Joystream blockchain">
+
+
+
+  <meta property="og:image" content="https://backbase.github.io/assets/images/post/blockchain_banner.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-09-10T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://backbase.github.io/2021/09/10/intro-to-blockchain-react">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://backbase.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap" rel="stylesheet" data-optimized-fonts="true">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+  </head>
+
+  <body class="layout--single min-vh-100 d-flex flex-column">
+    <nav class="skip-links visually-hidden-focusable">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li class="list-group-item"><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li class="list-group-item"><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<nav id="site-nav" class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <div class="navbar-brand">
+      
+        <a class="site-logo text-decoration-none" href="/">
+          <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+        </a>
+      
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end me-4" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="https://workatbackbase.com/" target="_blank">
+                <span>Jobs</span>
+              </a>
+            </li>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about" >
+                <span>About</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+        <ul class="navbar-nav" style="text-align:right;">
+          <li class="nav-item">
+            <a class="nav-primarylink" href="/principles"  style="text-decoration:none;">
+              <span>Our Principles</span>
+            </a>
+          </li>
+        </ul>
+      
+  </div>
+</nav>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  <div class="container">
+    <div class="row">
+      <article class="page offset-md-2 col-md-8" itemscope itemtype="http://schema.org/CreativeWork">
+        <meta itemprop="headline" content="Hello, Blockchain!">
+        <meta itemprop="description" content="Create a “Hello, world!”-style React app that reads and displays data from the Joystream blockchain">
+        <meta itemprop="datePublished" content="September 10, 2021">
+        
+
+        <div class="page__inner-wrap">
+          
+            <header>
+              <h1 class="page__title" itemprop="headline">Hello, Blockchain!
+</h1>
+
+              <aside class="author">
+                
+                  
+
+<div itemscope itemtype="https://schema.org/Person">
+  
+    <div class="author__avatar">
+      
+        <img class="rounded-circle" src="/assets/images/avatars/ab.jpeg" alt="Alexey Buistov" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content text-muted">
+    
+      <h3 class="author__name" itemprop="name">Alexey Buistov</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Solutions Architect, Crypto Enthusiast - R&amp;D</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <div class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  </div>
+</div>
+
+                
+              </aside>
+
+              
+              
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <time datetime="2021-09-10T00:00:00+00:00">September 10, 2021</time>
+      </span>
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+
+              
+            </header>
+          
+
+          <section class="page__content" itemprop="text">
+            <p><img src="/assets/images/post/blockchain_banner.png" alt="" /></p>
+
+<p>This tutorial walks you through the process of creating a very minimal “Hello, world!” - style React app that reads and displays data from the Joystream blockchain. Along the way, I comment a thing or two about scaffolding React applications, JSON-RPC APIs and about the blockhain itself.</p>
+
+<h1 id="blockchain-really">Blockchain? Really?</h1>
+
+<p>It might seem a bit silly to write an introduction into blockchain in 2021, but the fact is: it wasn’t before 2020, “the Corona year,” that this technology appealed to me.</p>
+
+<p>The highly centralized fintech world where I’m coming from is very very different to what blockchain is, and in way is much easier to grasp. A blockchain is a distributed software network that functions both as a digital ledger and a mechanism enabling the secure transfer of assets without an intermediary. In addition to such secure transfers, blockchain technology provides a permanent cryptographic record of transactions and a single version of the truth - a network state that is fully transparent and displayed in real time for the benefit of all participants.</p>
+
+<p>This transparency comes at a price, though. One thing I’ve realised about the blockchain is that it resembles a super slow database. Why? Without “The Central Server®” or “The Master Database™,” when nodes in your network are all the same, meaning structurally and architecturally there’s no hierarchy at play whatsoever, how would you achieve the concensus about even such simple things as knowing your account balance?</p>
+
+<p>If hierarchy is removed from the system design, that is, in decentralised systems, network consensus suddently becomes a very hard computer science problem known as Byzantine Consensus. I will not pretend I understand how blockchain architectures address this problem, but apparently they’re very good at it. And because they’re very good at it, they’re also typically much less convenient to use and performant than traditional centralized systems.</p>
+
+<p>With this intro in mind, let’s jump into the code.</p>
+
+<h1 id="hacking-time">Hacking Time</h1>
+
+<h3 id="environment-setup">Environment setup</h3>
+
+<p>If you haven’t got any Node, npm, yarn installed, or in case you’re a Java backend developer not knowing a thing about front-end stuff, don’t worry and read on. Installing these tools on Mac via <code class="language-plaintext highlighter-rouge">brew</code> is smooth and easy process.</p>
+
+<p>First, get npm if you haven’t got it already. In your Terminal app, run</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install npm
+</code></pre></div></div>
+<p>It happened to me that the above command crashed with the error: <code class="language-plaintext highlighter-rouge">Error: Interrupted system call @ rb_sysopen - /usr/local/Cellar/nghttp2/1.44.0/bin/nghttp</code>. This error is usually caused by your antivirus software. The good news is: you don’t even have to care about it. Simply go ahead and execute the exact same command several more times. After a few attempts, <code class="language-plaintext highlighter-rouge">npm</code> will install just fine.</p>
+
+<p>Instead of working from scratch, let us quickly scaffold a blank React application. For those of you who have, like me, never coded in Typescript or React, zero configuration scaffold tool called <a href="https://github.com/facebook/create-react-app">create-react-app</a> is a true life-saver. Simply execute</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx create-react-app hello-blockchain-react --template typescript
+</code></pre></div></div>
+
+<p>On first run, you will be prompted to add <code class="language-plaintext highlighter-rouge">create-react-app</code> and all its depencencies. Be patient, this process may take a while, but in the end it will give you a fully set-up runnable React application.</p>
+
+<p>Now go to the newly created application folder and run the app:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd hello-blockchain-react &amp;&amp; npm start
+</code></pre></div></div>
+
+<p>Your browser should show you the welcome page. You’re all set the for the most interesting part of the exercise now.</p>
+
+<h3 id="building-the-react-component">Building the React Component</h3>
+
+<p>The particular blockchain we will be connecting to and reading data from is called <a href="https://www.joystream.org/">Joystream</a>. Joystream is a decentralized video platform with big ambitions (think Youtube with no Google involved). Being built on <a href="https://polkadot.network/technology/">Polkadot</a>, it requires us to install some additonal Polkadot dependencies. Here’s how you do it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm add @polkadot/api@4.2.1
+</code></pre></div></div>
+<p>Validate that the package has been installed by inspecting the file <code class="language-plaintext highlighter-rouge">package.json</code>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>less package.json | grep polkadot
+    "@polkadot/api": "^4.2.1",
+</code></pre></div></div>
+
+<p>Lastly, let’s install custom Joystream type definitions that are used to describe data inside the blockchain.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm add @joystream/types
+</code></pre></div></div>
+<p>Validate that the package has been installed by inspecting the file <code class="language-plaintext highlighter-rouge">package.json</code>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>less package.json | grep joy
+    "@joystream/types": "^0.16.1",
+</code></pre></div></div>
+
+<p>Awesome. Now it’s the right time to add a custom React component to our app. We might do this from scratch, but scaffolding is way cooler, isn’t it? To generate a skeleton of our Joystream component, let’s run</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx generate-react-cli c Joystream
+</code></pre></div></div>
+<p>First time, the code generator tool asks you some questions to be able to self-configure itself. Keep pressing Enter to give the default answers, until the component file will get generated (plus some other stuff we are not going to use in this tutorial, like tests or styles).</p>
+
+<p>The function component code produced by the scaffolding tool looks like this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import React from 'react';
+import styles from './Joystream.module.css';
+
+const Joystream = () =&gt; (
+  &lt;div className={styles.Joystream} data-testid="Joystream"&gt;
+    Joystream Component
+  &lt;/div&gt;
+);
+
+export default Joystream;
+</code></pre></div></div>
+
+<p>In your browser what you’ll get out of this code is just an HTML &lt;div&gt; with a static text, and yet there’s something I’d like to highlight. What might look as an HTML snippet (lines 5-7), isn’t a real HTML, but a thing called JSX. JSX is simply a syntax extension of JavaScript. It allows us to directly write HTML in React (within JavaScript code). It is easy to create a template using JSX in React, but it is not a simple template language instead it comes with the full power of JavaScript. It is faster than normal JavaScript as it performs optimizations while translating to regular JavaScript. Instead of separating the markup and logic in separated files, React uses <em>components</em> for this purpose.</p>
+
+<p>To include our new function component into the app, we need to update the main file <code class="language-plaintext highlighter-rouge">App.tsx</code>:</p>
+
+<ul>
+  <li>Import the component</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import Joystream from './components/Joystream/Joystream';
+</code></pre></div></div>
+
+<ul>
+  <li>Place the component in the DOM by replacing the paragraph <code class="language-plaintext highlighter-rouge">&lt;p&gt;</code> element:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  &lt;code&gt;
+    &lt;Joystream/&gt;
+  &lt;/code&gt;
+</code></pre></div></div>
+
+<p>Save your edits and reload the browser. Your component text (Joystream Component) should be now visible.</p>
+
+<h3 id="accessing-the-blockchain-api">Accessing the blockchain API</h3>
+
+<p>Now let’s go back to the function component and start hacking. Import the API client from Polkadot and custom Joystream types:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import { WsProvider, ApiPromise } from "@polkadot/api";
+import { types } from "@joystream/types";
+</code></pre></div></div>
+<p>Then define the connection URL</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const wsLocation = 'wss://rome-rpc-endpoint.joystream.org:9944'
+const provider = new WsProvider(wsLocation)
+</code></pre></div></div>
+<p>For the sake of this tutorial, we’ll use the URL of a remote Joystream node located in Rome, Italy. Note: this doesn’t mean our app would read the data from some sort of “Central Server ®” As an alternative, we could have spin up our own Joystream node on local laptop, let it get up to speed with the rest of the nodes in the network (this process is called synchronisation and takes quite some time), and read the same data from it. But one tutorial can’t fit everything :) I’ll show you how to do it in future installments.</p>
+
+<p>Now let’s refactor the code of the component to allow further additions</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const Joystream = () =&gt; {
+  return (
+    &lt;div className={styles.Joystream} data-testid="Joystream"&gt;
+      Joystream Component
+    &lt;/div&gt;
+  )
+};
+</code></pre></div></div>
+<p>It’s just a refactoring, so functionally it stays the same. Double-check this by refreshing your browser page. What is allows us to do is to define our function components’ state like this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  const [lastBlock, updateLastBlock] = useState(0)
+  const [connected, updateConnected] = useState(false)
+</code></pre></div></div>
+<p>Note: <code class="language-plaintext highlighter-rouge">useState</code> needs to be imported, too:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import {useState, useEffect} from 'react';
+</code></pre></div></div>
+<p>And the main thing - a new React Effect that connects to the API:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  useEffect(() =&gt; {
+    ApiPromise.create({ provider, types }).then((api) =&gt;
+      api.isReady.then(() =&gt; {
+          console.log(`Connected to ${wsLocation}`);
+          api.derive.chain.bestNumber().then((finalizedHeadNumber) =&gt; {
+            updateLastBlock(finalizedHeadNumber.toNumber())
+            updateConnected(true)
+          }
+        )
+      })
+    );
+  }, [lastBlock, connected]);
+
+</code></pre></div></div>
+<p>A lot of things are going on here, but what’s essential for the purpose or our exercise is to understand only the basics. The <em>Effect Hook</em> lets you perform side effects in function components. Data fetching, setting up a subscription, and manually changing the DOM in React components are all examples of side effects.</p>
+
+<p>Our side effect does several things:</p>
+<ol>
+  <li>Instantiates the API client</li>
+  <li>Connects to the node URL using Websocket</li>
+  <li>Once the connection is established, it calls the API method and reads the data returned by it</li>
+  <li>Updates the internal component state</li>
+</ol>
+
+<p>All we have to do now is to take advantage of the internal state and include it in the JSX which the Joystream component produces:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  return (
+    &lt;div className={styles.Joystream} data-testid="Joystream"&gt;
+      {!connected? 'Connecting to blockchain...' : 
+      `Connected! Latest block is: ${lastBlock.toLocaleString()}`}
+    &lt;/div&gt;
+  )
+</code></pre></div></div>
+
+<p>Note how the front-end experience has changed. First, you see the text ‘Connecting to blockchain…’ because the component is busy establishing the connection (which may take a second or two), but then the text magically changes to a different one, showing the number of the last produced block that was sent by the Joystream API. Look at the code we’ve written so far and try to understand how does this conditional behavior work.</p>
+
+<h3 id="subscribing-to-updates-from-the-api">Subscribing to updates from the API</h3>
+
+<p>What we’ve built so far looks good, but let us breathe a little dynamism in our app by making the last block information updated <em>as the blockchain produces new blocks</em> (on Joystream, the average time to produce one block is <a href="https://testnet.joystream.org/#/explorer">six seconds</a>. What’s needed to achieve this is the subscription mechanism instead of a one-off API call:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  api.rpc.chain.subscribeNewHeads((header) =&gt; {
+    console.log(`Chain is at block: #${header.number}`);
+    
+    if(!connected) {
+      updateConnected(true);
+    }
+
+    if(header.number.toNumber() !== lastBlock) {
+     updateLastBlock(header.number.toNumber());
+    }
+  })
+</code></pre></div></div>
+
+<p>Since we are dealing with a subscription, we now pass a callback into the <code class="language-plaintext highlighter-rouge">subscribeNewHeads</code> function, and this callback shall be triggered on each block (header), as they are imported.</p>
+
+<p>That’s it, folks. If you’ve enjoyed this little journey, the best way of saying ‘thank you’ is sending some coins to my ETH address <code class="language-plaintext highlighter-rouge">0xe654F6D40e2b9eBFf62b02a23129E9C81ce26a88</code>. By the way, I’ve also prepared a <a href="https://github.com/singulart/hello-blockchain-react">Github repo</a> with all the code from this trail is nicely divided into several commits for easier usage. Consider checking out the <a href="https://github.com/singulart/hello-blockchain-react/tree/css-transition">branch</a> where you’ll find a simple CSS Transition to animate our “Hello, Blockchain!” app.</p>
+
+
+            
+          </section>
+
+          <footer class="page__meta">
+            
+            
+
+
+          </footer>
+
+          <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Hello%2C+Blockchain%21%20https%3A%2F%2Fbackbase.github.io%2F2021%2F09%2F10%2Fintro-to-blockchain-react" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbackbase.github.io%2F2021%2F09%2F10%2Fintro-to-blockchain-react" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fbackbase.github.io%2F2021%2F09%2F10%2Fintro-to-blockchain-react" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+        </div>
+
+        
+      </article>
+    </div>
+
+    
+    
+      <div class="page__related col-md-8 offset-md-2">
+        
+        <div class="grid__wrapper row">
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/angular_microfrontends.png" alt="Micro Frontends" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/12/13/setup-microfrontend" rel="permalink">Angular &amp; Micro Frontends
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Harsh Julka
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Micro Frontends is a modern architectural approach for developing web applications.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/12/13/setup-microfrontend" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/azure-banner.png" alt="System Engineering" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink">A New Chapter: Exploring Azure Resources
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Sri Balaji, 
+      
+        Ashish Arora
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Azure’s limitless potential sets the stage for a promising journey, where opportunities abound on the horizon.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/visual-testing-banner.png" alt="Quality Assistance Approach" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/03/visual-testing-using-playwright" rel="permalink">Visual Testing using Playwright
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Venkata Ravi Majjari
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Visual testing helps to find issues that are important for end-users that cannot be caught by other types of testing
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/03/visual-testing-using-playwright" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="mt-auto page__footer">
+      <footer class="bg-primary text-white text-center py-5 small">
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <div class="footer-brand">
+    
+      <a class="site-logo text-decoration-none" href="/">
+        <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+      </a>
+    
+  </div>
+  <ul class="social-icons list-unstyled">
+    
+
+    
+      
+        
+          <li><a href="https://www.youtube.com/user/Backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i><span class="visually-hidden">YouTube</span></a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/company/backbase/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="visually-hidden">LinkedIn</span></a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/backbase_global/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a></li>
+        
+      
+        
+          <li><a href="https://www.glassdoor.nl/Overzicht/Werken-bij-Backbase-EI_IE117266.11,19.htm?countryRedirect=true" rel="nofollow noopener noreferrer" target="_blank"><i class="fab custom-glassdoor" aria-hidden="true"></i><span class="visually-hidden">Glassdoor</span></a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Backbase Engineering. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+
+      </footer>
+    </div>
+
+    <script src='/assets/global-17ef4fa84e17b9a550efbf687d8fa54b.js' type='text/javascript'></script>
+
+
+  </body>
+</html>

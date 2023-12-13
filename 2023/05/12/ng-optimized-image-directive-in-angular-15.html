@@ -1,0 +1,803 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>NgOptimizedImage Directive in Angular 15 - Backbase Engineering</title>
+<meta name="description" content="Image optimisation techniques and performance improvements with the new NgOptimizedImage directive in Angular 15">
+
+
+  <meta name="author" content="Manisha Arya">
+  
+  <meta property="article:author" content="Manisha Arya">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Backbase Engineering">
+<meta property="og:title" content="NgOptimizedImage Directive in Angular 15">
+<meta property="og:url" content="https://backbase.github.io/2023/05/12/ng-optimized-image-directive-in-angular-15">
+
+
+  <meta property="og:description" content="Image optimisation techniques and performance improvements with the new NgOptimizedImage directive in Angular 15">
+
+
+
+  <meta property="og:image" content="https://backbase.github.io/assets/images/post/ng-optimized-image-directive-in-angular-banner.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2023-05-12T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://backbase.github.io/2023/05/12/ng-optimized-image-directive-in-angular-15">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://backbase.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap" rel="stylesheet" data-optimized-fonts="true">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+  </head>
+
+  <body class="layout--single min-vh-100 d-flex flex-column">
+    <nav class="skip-links visually-hidden-focusable">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li class="list-group-item"><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li class="list-group-item"><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<nav id="site-nav" class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <div class="navbar-brand">
+      
+        <a class="site-logo text-decoration-none" href="/">
+          <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+        </a>
+      
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end me-4" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="https://workatbackbase.com/" target="_blank">
+                <span>Jobs</span>
+              </a>
+            </li>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about" >
+                <span>About</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+        <ul class="navbar-nav" style="text-align:right;">
+          <li class="nav-item">
+            <a class="nav-primarylink" href="/principles"  style="text-decoration:none;">
+              <span>Our Principles</span>
+            </a>
+          </li>
+        </ul>
+      
+  </div>
+</nav>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  <div class="container">
+    <div class="row">
+      <article class="page offset-md-2 col-md-8" itemscope itemtype="http://schema.org/CreativeWork">
+        <meta itemprop="headline" content="NgOptimizedImage Directive in Angular 15">
+        <meta itemprop="description" content="Image optimisation techniques and performance improvements with the new NgOptimizedImage directive in Angular 15">
+        <meta itemprop="datePublished" content="May 12, 2023">
+        
+
+        <div class="page__inner-wrap">
+          
+            <header>
+              <h1 class="page__title" itemprop="headline">NgOptimizedImage Directive in Angular 15
+</h1>
+
+              <aside class="author">
+                
+                  
+
+<div itemscope itemtype="https://schema.org/Person">
+  
+    <div class="author__avatar">
+      
+        <img class="rounded-circle" src="/assets/images/avatars/manisha_arya.jpg" alt="Manisha Arya" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content text-muted">
+    
+      <h3 class="author__name" itemprop="name">Manisha Arya</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Senior Frontend Engineer - R&amp;D</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <div class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  </div>
+</div>
+
+                
+              </aside>
+
+              
+              
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <time datetime="2023-05-12T00:00:00+00:00">May 12, 2023</time>
+      </span>
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+
+              
+            </header>
+          
+
+          <section class="page__content" itemprop="text">
+            <p><img src="/assets/images/post/ng-optimized-image-directive-in-angular-banner.png" alt="" /></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Images constitute a major part of any web application. They heavily impact the page loading times and performance of the web page.</p>
+
+<p>They are one of the main contributors to the <a href="https://web.dev/vitals/#core-web-vitals&quot;"><strong>Core Web Vitals</strong></a>, identified by Google, to measure website performance.</p>
+
+<p>The metrics that make up the core web vitals are as follows:</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-0.png" alt="" />
+  <figcaption class="figure-caption">Core Web Vitals</figcaption>
+</figure>
+
+<p>To improve the Web Vitals metrics, loading times, and responsiveness of a single-page-application, Angular has introduced the <a href="https://angular.io/api/common/NgOptimizedImage">NgOptimizedImage</a> directive with Angular v15. This new directive improves image loading performance by providing image optimisation techniques and also enforcing best practices.</p>
+
+<h1 id="default-imgtag">Default <code class="language-plaintext highlighter-rouge">&lt;img&gt;</code>Tag</h1>
+
+<p>Before diving into the key features of the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive, let’s first examine how the default <code class="language-plaintext highlighter-rouge">&lt;img&gt;</code> tag functions and the extra optimisation techniques that can be implemented with it.</p>
+
+<p><strong>No default lazy loading:</strong> the following example includes 6 <code class="language-plaintext highlighter-rouge">img</code> tags which the browser requests and eagerly loads all of them.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-1.png" alt="" />
+  <figcaption class="figure-caption"> List of images in HTML</figcaption>
+</figure>
+
+<p>This can be costly on low-bandwidth devices when there are pages with huge number of images.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-2.png" alt="" />
+  <figcaption class="figure-caption">All images eagerly loaded with img directive</figcaption>
+</figure>
+
+<p>This problem can be mitigated by using the <code class="language-plaintext highlighter-rouge">loading="lazy"</code> attribute. It defers the loading of images until they are needed.</p>
+
+<p>Prioritising the loading of a critical image can also be done using the <code class="language-plaintext highlighter-rouge">fetchPriority</code> attribute. For example, by using <code class="language-plaintext highlighter-rouge">fetchpriority="low"</code> for images in a carousel.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-3.png" alt="" />
+  <figcaption class="figure-caption">Image optimisation with img tag</figcaption>
+</figure>
+
+<h1 id="ngoptimizedimage-directive"><code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive</h1>
+
+<p>This directive includes built-in image optimisation techniques and improves the website’s performance with minimal configuration.</p>
+
+<h2 id="integrating-ngoptimizedimage">Integrating <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code></h2>
+
+<p>To integrate the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive, follow these steps:</p>
+<ol>
+  <li>Import <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> into your standalone component or module.</li>
+  <li>Replace the <code class="language-plaintext highlighter-rouge">src</code> attribute of the image with <code class="language-plaintext highlighter-rouge">ngSrc</code>.</li>
+  <li>Specify the <code class="language-plaintext highlighter-rouge">width</code> and <code class="language-plaintext highlighter-rouge">height</code> attributes that must be specified for the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive in one of the following ways.</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//import in module
+import { NgModule } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+@NgModule({ imports: [CommonModule, NgOptimizedImage], })
+
+// use in component  
+import { Component } from '@angular/core'; 
+@Component({ 
+   selector: 'app-optimised-image-catalog',
+   template: `&lt;img ngSrc="blog-food-img.png" width="500" height="300" alt="Food Blog Image"/&gt; `, 
+})
+</code></pre></div></div>
+
+<p>Alternatively, you can add it directly in a standalone component.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import { Component } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+@Component({ 
+    selector: 'app-optimised-image-catalog', standalone: true, 
+    imports: [ CommonModule, NgOptimizedImage ], 
+    template: ` &lt;img ngSrc="blog-food-img.png" width="500" height="300" alt="Food Blog Image" /&gt; `, })
+</code></pre></div></div>
+
+<h2 id="key-features-of-ngoptimizedimage">Key features of <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code></h2>
+
+<p>The following are the main highlights of this directive:</p>
+
+<h3 id="intelligent-lazy-loading">Intelligent lazy loading</h3>
+
+<p>By default, the directive lazy loads non-critical images and only eagerly loads images marked with the <code class="language-plaintext highlighter-rouge">priority</code> attribute. This ensures that most images are loaded optimally.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-4.png" alt="" />
+  <figcaption class="figure-caption">Six img tags in HTML</figcaption>
+</figure>
+
+<p>The following shows that the browser only requests 4 images that are on the view port with the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-5.png" alt="" />
+  <figcaption class="figure-caption">Images loaded lazily</figcaption>
+</figure>
+
+<h3 id="serve-responsive-images">Serve responsive images</h3>
+
+<p>Before implementing responsive images using the directive, you must consider how the <code class="language-plaintext highlighter-rouge">ngSrcset</code> and <code class="language-plaintext highlighter-rouge">sizes</code> attributes work.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;img ngSrc="business.png" ngSrcset="100w, 200w, 300w" priority sizes="50vw"&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ngSrcset</code> specifies three different image sources with widths of 100w, 200w, and 300w. The directive supports both width descriptors for example, <code class="language-plaintext highlighter-rouge">100w</code>, and <a href="https://web.dev/codelab-density-descriptors/#use-density-descriptors-to-serve-multiple-images">density descriptors</a>, for example,<code class="language-plaintext highlighter-rouge">1x</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">sizes</code> specifies the width of the image container or layout in CSS units, with different sizes for different screen widths.</p>
+  </li>
+</ul>
+
+<h4 id="srcset">srcset</h4>
+
+<ul>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">srcset</code> attribute can be manually defined by providing your own <code class="language-plaintext highlighter-rouge">ngSrcset</code> attribute, as given in the example above.</p>
+  </li>
+  <li>
+    <p>For responsive images, to automatically generate the <code class="language-plaintext highlighter-rouge">srcset</code> attribute, you only have to define the sizes attribute. For example, if your image takes 50% of the viewport, set the the size to 50vw and the browser selects the image in the <code class="language-plaintext highlighter-rouge">srcset</code> that is closest to 50% of the viewport width.</p>
+  </li>
+  <li>
+    <p>If you have varying image widths for different sizes of screens you can use media queries. For example in a grid layout, you want image to be 100 percent of screen on devices under 768px wide, else it should be 50%. You can achieve this in the following way:</p>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;img ngSrc="business.png" width="400" height="200" priority sizes="(max-width: 768px) 100vw, 50vw"&gt;
+</code></pre></div></div>
+
+<h3 id="image-loader">Image loader</h3>
+
+<p>On a web page, most images are served without regard for the size of the image container. This means that even if you only need a 200 pixel x 100 pixel image, a 2000 pixel x 1000 pixel image is downloaded.</p>
+
+<p>This can be solved by providing an image loader function. This is a function that modifies the provided <code class="language-plaintext highlighter-rouge">src</code>, and generates multiple URLs to request the image in different sizes. These multiple URLs are used in the automatic <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset&quot;">srcset</a> generation, so that the images are served with respect to the viewport size.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-6.png" alt="" />
+  <figcaption class="figure-caption">NgOptimizedImage automatically sets srcset attribute based on width attribute</figcaption>
+</figure>
+
+<h4 id="ngoptimizedimage-loader-api"><code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> loader API</h4>
+
+<p>The Angular directive provides a built in loader API for third-party image services such as Imagekit, Cloudfare, Imgix. For more information see <a href="https://angular.io/guide/image-directive#configuring-an-image-loader-for-ngoptimizedimage">the Angular documentation</a>.</p>
+
+<p>In the following example, the directive creates two image URLs in <code class="language-plaintext highlighter-rouge">srcset</code> for the different widths and density of an image for an image of size 50*50.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> // in module providers add
+import { provideImageKitLoader } from '@angular/common';
+providers: provideImageKitLoader('https://ik.imagekit.io/Your-ID') 
+
+// in markup img tag
+&lt;img priority ngSrc="custom-img.webp" width="50" height="50" alt="custom image"/&gt; 
+
+//in DOM img tag is changed to this
+&lt;img _ngcontent-stl-c204="" priority="" ngsrc="custom-img.webp" width="50" height="50" 
+alt="custom image" ng-reflect-priority="" 
+ng-reflect-ng-src="custom-img.webp" ng-reflect-width="50" ng-reflect-height="50" 
+loading="eager" fetchpriority="high" ng-img="true" 
+src="https://ik.imagekit.io/ith29bzjr/tr:q-auto/custom-img.webp" 
+srcset="https://ik.imagekit.io/ith29bzjr/tr:q-auto,w-50/custom-img.webp 1x, https://ik.imagekit.io/ith29bzjr/tr:q-auto,w-100/custom-img.webp 2x"&gt;
+</code></pre></div></div>
+
+<h4 id="custom-loaders">Custom loaders</h4>
+
+<p>If your image service is not provided by the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> default loaders, you can create your custom loader as shown in the following example.</p>
+
+<blockquote>
+  <p><strong><em>NOTE:</em></strong> You must include a width check for creating the URL otherwise the provider generates the src with an undefined width.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// in module add to providers
+import { NgOptimizedImage, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common'; 
+[{ provide: IMAGE_LOADER,
+ useValue: (config: ImageLoaderConfig) =&gt; {
+    const url = config.src &amp;&amp; config.width ? `./assets/content/${config.src}-img-${config.width}.webp` : `./assets/content/${config.src}-img.webp`;
+    return url; } }], 
+ 
+// in markup 
+ &lt;img priority ngSrc="custom-img.png" width="50" height="50" alt="custom image"/&gt; 
+ 
+// in DOM the img tag is changed to this
+ &lt;img _ngcontent-btb-c158="" ng-reflect-ng-src="business" ng-reflect-width="400" ng-reflect-height="400" 
+ alt="business" width="400" height="400" loading="lazy" fetchpriority="auto" 
+ ng-img="true" src="./assets/content/business-img.webp" 
+ srcset="./assets/content/business-img-400.webp 1x, ./assets/content/business-img-800.webp 2x"&gt;
+</code></pre></div></div>
+
+<h3 id="preconnect-image-url">preconnect image URL</h3>
+
+<p><code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> throws a warning in browser console if there is no <code class="language-plaintext highlighter-rouge">preconnect</code> tag for the third-party image URLs in the head of the page in <code class="language-plaintext highlighter-rouge">index.html</code>. For more information on preconnect, please refer <a href="https://web.dev/preconnect-and-dns-prefetch/">here</a>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;link rel="preconnect" href="https://my.cdn.origin" /&gt;</code></p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-7.png" alt="" />
+  <figcaption class="figure-caption">Browser Warning without preconnect image url</figcaption>
+</figure>
+
+<h2 id="performance-results">Performance results</h2>
+
+<p>In the following example, an <a href="https://github.com/manisha-backbase/image-optimisation-angular">Angular App</a> was created with two pages: one using the Angular <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive, and one with the native image tag. The app was <a href="https://image-optimisation-angular.vercel.app/ngoptimized-img-list">Deployed</a> and the results compared using <a href="https://pagespeed.web.dev/">PageSpeed</a>.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-8.png" alt="" />
+  <figcaption class="figure-caption">Results with native image tag</figcaption>
+</figure>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-9.png" alt="" />
+  <figcaption class="figure-caption">Results with NgOptimizedImage directive</figcaption>
+</figure>
+
+<h2 id="in-conclusion--ngoptimizedimage-means-significant-improvements">In conclusion  <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> means significant improvements…</h2>
+<p>The PageSpeed results for the application using <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> show a significant reduction in time for the largest contentful paint. The intelligent lazy loading feature also improves the cumulative layout shift. In conclusion, the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive drastically improves the performance of your application by enforcing the best practices for image optimisation.</p>
+
+            
+          </section>
+
+          <footer class="page__meta">
+            
+            
+
+
+          </footer>
+
+          <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=NgOptimizedImage+Directive+in+Angular+15%20https%3A%2F%2Fbackbase.github.io%2F2023%2F05%2F12%2Fng-optimized-image-directive-in-angular-15" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbackbase.github.io%2F2023%2F05%2F12%2Fng-optimized-image-directive-in-angular-15" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fbackbase.github.io%2F2023%2F05%2F12%2Fng-optimized-image-directive-in-angular-15" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+        </div>
+
+        
+      </article>
+    </div>
+
+    
+    
+      <div class="page__related col-md-8 offset-md-2">
+        
+        <div class="grid__wrapper row">
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/angular_microfrontends.png" alt="Micro Frontends" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/12/13/setup-microfrontend" rel="permalink">Angular &amp; Micro Frontends
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Harsh Julka
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Micro Frontends is a modern architectural approach for developing web applications.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/12/13/setup-microfrontend" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/azure-banner.png" alt="System Engineering" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink">A New Chapter: Exploring Azure Resources
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Sri Balaji, 
+      
+        Ashish Arora
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Azure’s limitless potential sets the stage for a promising journey, where opportunities abound on the horizon.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/visual-testing-banner.png" alt="Quality Assistance Approach" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/03/visual-testing-using-playwright" rel="permalink">Visual Testing using Playwright
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Venkata Ravi Majjari
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Visual testing helps to find issues that are important for end-users that cannot be caught by other types of testing
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/03/visual-testing-using-playwright" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="mt-auto page__footer">
+      <footer class="bg-primary text-white text-center py-5 small">
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <div class="footer-brand">
+    
+      <a class="site-logo text-decoration-none" href="/">
+        <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+      </a>
+    
+  </div>
+  <ul class="social-icons list-unstyled">
+    
+
+    
+      
+        
+          <li><a href="https://www.youtube.com/user/Backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i><span class="visually-hidden">YouTube</span></a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/company/backbase/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="visually-hidden">LinkedIn</span></a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/backbase_global/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a></li>
+        
+      
+        
+          <li><a href="https://www.glassdoor.nl/Overzicht/Werken-bij-Backbase-EI_IE117266.11,19.htm?countryRedirect=true" rel="nofollow noopener noreferrer" target="_blank"><i class="fab custom-glassdoor" aria-hidden="true"></i><span class="visually-hidden">Glassdoor</span></a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Backbase Engineering. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+
+      </footer>
+    </div>
+
+    <script src='/assets/global-17ef4fa84e17b9a550efbf687d8fa54b.js' type='text/javascript'></script>
+
+
+  </body>
+</html>

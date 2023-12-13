@@ -1,0 +1,790 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Angular standalone components - Backbase Engineering</title>
+<meta name="description" content="A simplified way to build Angular applications">
+
+
+  <meta name="author" content="Ankit Pant">
+  
+  <meta property="article:author" content="Ankit Pant">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Backbase Engineering">
+<meta property="og:title" content="Angular standalone components">
+<meta property="og:url" content="https://backbase.github.io/2023/07/03/angular-standalone-components">
+
+
+  <meta property="og:description" content="A simplified way to build Angular applications">
+
+
+
+  <meta property="og:image" content="https://backbase.github.io/assets/images/post/angular-standalone-components.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2023-07-03T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://backbase.github.io/2023/07/03/angular-standalone-components">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://backbase.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap" rel="stylesheet" data-optimized-fonts="true">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+  </head>
+
+  <body class="layout--single min-vh-100 d-flex flex-column">
+    <nav class="skip-links visually-hidden-focusable">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li class="list-group-item"><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li class="list-group-item"><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<nav id="site-nav" class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <div class="navbar-brand">
+      
+        <a class="site-logo text-decoration-none" href="/">
+          <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+        </a>
+      
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end me-4" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="https://workatbackbase.com/" target="_blank">
+                <span>Jobs</span>
+              </a>
+            </li>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about" >
+                <span>About</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+        <ul class="navbar-nav" style="text-align:right;">
+          <li class="nav-item">
+            <a class="nav-primarylink" href="/principles"  style="text-decoration:none;">
+              <span>Our Principles</span>
+            </a>
+          </li>
+        </ul>
+      
+  </div>
+</nav>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  <div class="container">
+    <div class="row">
+      <article class="page offset-md-2 col-md-8" itemscope itemtype="http://schema.org/CreativeWork">
+        <meta itemprop="headline" content="Angular standalone components">
+        <meta itemprop="description" content="A simplified way to build Angular applications">
+        <meta itemprop="datePublished" content="July 03, 2023">
+        
+
+        <div class="page__inner-wrap">
+          
+            <header>
+              <h1 class="page__title" itemprop="headline">Angular standalone components
+</h1>
+
+              <aside class="author">
+                
+                  
+
+<div itemscope itemtype="https://schema.org/Person">
+  
+    <div class="author__avatar">
+      
+        <img class="rounded-circle" src="/assets/images/avatars/ankit_pant.png" alt="Ankit Pant" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content text-muted">
+    
+      <h3 class="author__name" itemprop="name">Ankit Pant</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Senior Frontend Engineer - R&amp;D</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <div class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  </div>
+</div>
+
+                
+              </aside>
+
+              
+              
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <time datetime="2023-07-03T00:00:00+00:00">July 3, 2023</time>
+      </span>
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+
+              
+            </header>
+          
+
+          <section class="page__content" itemprop="text">
+            <p><img src="/assets/images/post/angular-standalone-components.png" alt="" /></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Until now, developers have been using NgModules to specify the components, directives, pipes, etc that are available for use in templates, however, after the release of Angular <a href="https://angular.io/guide/standalone-components" title="https://angular.io/guide/standalone-components">standalone components</a>, you don’t need to do this anymore in the NgModules.
+Angular standalone feature was fully released with Angular v15. Angular <a href="https://angular.io/guide/standalone-components" title="https://angular.io/guide/standalone-components">standalone components</a> are independent and self-contained building blocks in an Angular app which can be used to independently import the dependencies required for its functionality.
+Although the standalone components are not mandatory, and there are no strict rules for using them, Angular architects recommend using the Standalone feature for the newly created Angular components.</p>
+
+<p>To designate a component, directive, or a pipe as a standalone component, you must mark it as <code class="language-plaintext highlighter-rouge">standalone: true</code>. The component does not have to be declared or imported in <code class="language-plaintext highlighter-rouge">NgModule</code>, and you can import all the dependencies directly in the component itself, thus eliminating the use of <code class="language-plaintext highlighter-rouge">NgModule</code> entirely.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+   <span class="na">selector</span><span class="p">:</span> <span class="dl">'</span><span class="s1">...</span><span class="dl">'</span><span class="p">,</span>
+   <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">...</span><span class="dl">'</span><span class="p">,</span>
+   <span class="na">styleUrls</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">...</span><span class="dl">'</span><span class="p">],</span>
+   <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+   <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
+     <span class="nx">NgIf</span><span class="p">,</span>
+     <span class="nx">NgFor</span><span class="p">,</span>
+     <span class="nx">AsyncPipe</span><span class="p">,</span>
+     <span class="p">...</span>
+   <span class="p">],</span>
+ <span class="p">})</span>
+ <span class="k">export</span> <span class="kd">class</span> <span class="nx">FooBarComponent</span> <span class="p">{</span>
+</code></pre></div></div>
+
+<h1 id="generate-a-standalone-component-via-the-angular-cli">Generate a standalone component via the Angular CLI</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ng generate component --standalone account-statements
+</code></pre></div></div>
+
+<p>A component generated with <code class="language-plaintext highlighter-rouge">--standalone</code> flag is not added to <code class="language-plaintext highlighter-rouge">NgModule</code> and contains default imports such as <code class="language-plaintext highlighter-rouge">CommonModule</code> to get started with the component right away.</p>
+
+<h1 id="adopt-standalone-components-incrementally">Adopt standalone components incrementally</h1>
+
+<p>Standalone components can be seamlessly combined with existing modules. They are easy to implement, and can be adopted incrementally into an app. A <code class="language-plaintext highlighter-rouge">standalone</code> component, pipe or directive can also be imported into an existing <code class="language-plaintext highlighter-rouge">NgModule</code> configuration, applied incrementally for complex apps, so that you can ensure that there are no breaking changes.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">@</span><span class="nd">NgModule</span><span class="p">({</span>
+   <span class="na">declarations</span><span class="p">:</span> <span class="p">[...],</span>
+   <span class="na">exports</span><span class="p">:</span> <span class="p">[...]</span>
+   <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
+     <span class="nx">AccountDetailsComponent</span><span class="p">,</span> <span class="c1">// This is a standalone component</span>
+     <span class="nx">CommonModule</span><span class="p">,</span>
+     <span class="nx">RouterModule</span><span class="p">.</span><span class="nx">forChild</span><span class="p">(</span><span class="nx">routes</span><span class="p">),</span>
+     <span class="p">.....</span>
+   <span class="p">],</span>
+ <span class="p">})</span>
+</code></pre></div></div>
+
+<h1 id="migrate-a-component-to-a-standalone">Migrate a component to a Standalone</h1>
+
+<p>You can convert a component in one of the following ways:</p>
+
+<ul>
+  <li>
+    <p>Using the <a href="https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone" title="https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone">schematics</a></p>
+  </li>
+  <li>
+    <p>Manually</p>
+  </li>
+</ul>
+
+<h2 id="migrate-to-standalone-via-schematics">Migrate to Standalone via schematics</h2>
+
+<p>To migrate standalone components, you must satisfy the <a href="https://angular.io/guide/standalone-migration#prerequisites">prerequisites from Angular</a>.
+Angular provides a <a href="https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone" title="https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone">schematic to migrate</a> existing Angular apps that use Angular <code class="language-plaintext highlighter-rouge">v15</code> or later, to use the standalone features.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ng generate @angular/core:standalone
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">ng generate @angular/core:standalone</code> should be executed at the root of the project.</p>
+
+<p>Use this as follows:</p>
+
+<ol>
+  <li>
+    <p>Run <code class="language-plaintext highlighter-rouge">ng generate @angular/core:standalone</code> to convert all components, directives and pipes to standalone. This will try to convert and migrate all the files to use standalone features.</p>
+  </li>
+  <li>
+    <p>Run <code class="language-plaintext highlighter-rouge">ng generate @angular/core:standalone</code> again to remove unnecessary NgModule classes. Empty <code class="language-plaintext highlighter-rouge">NgModules</code> are searched for removed them from the app.</p>
+  </li>
+  <li>
+    <p>Run <code class="language-plaintext highlighter-rouge">ng generate @angular/core:standalone</code> a third time to bootstrap the project using standalone APIs. The schematics change how the app is bootstrapped in the <code class="language-plaintext highlighter-rouge">main.ts</code> file.</p>
+  </li>
+</ol>
+
+<p><em><strong>Note:</strong></em></p>
+
+<ul>
+  <li>To avoid any breaking changes to an app with the standalone feature, in Angular, most of the <code class="language-plaintext highlighter-rouge">NgModule</code> or other files, so you might have to remove and migrated some of the files manually.</li>
+</ul>
+
+<h2 id="migrate-a-component-manually">Migrate a component manually</h2>
+<p>The steps below shows how to migrate an existing component to a standalone component</p>
+
+<ol>
+  <li>
+    <p>Mark the component as standalone by adding <code class="language-plaintext highlighter-rouge">standalone: true</code> as the meta data in the <code class="language-plaintext highlighter-rouge">@Component</code> directive.</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+    <span class="p">...</span>
+  <span class="o">+</span>  <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Import all the <code class="language-plaintext highlighter-rouge">dependencies</code> in the standalone component from <code class="language-plaintext highlighter-rouge">ngModules</code></p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+    <span class="p">...</span>
+    <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="o">+</span>  <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
+  <span class="o">+</span>   <span class="nx">TransactionsAccountSelectComponent</span><span class="p">,</span> <span class="c1">//another standalone component</span>
+  <span class="o">+</span>   <span class="nx">HeaderModule</span><span class="p">,</span> <span class="c1">// non-standalone component can be imported like this</span>
+  <span class="o">+</span>   <span class="nx">NgIf</span><span class="p">,</span>
+  <span class="o">+</span>   <span class="nx">NgFor</span><span class="p">,</span>
+  <span class="o">+</span>   <span class="nx">AsyncPipe</span><span class="p">,</span>
+  <span class="o">+</span>   <span class="nx">JsonPipe</span><span class="p">,</span>
+  <span class="o">+</span>  <span class="p">]</span>
+  <span class="p">})</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>If the component has <a href="https://angular.io/guide/standalone-components#providing-services-to-a-subset-of-routes" title="https://angular.io/guide/standalone-components#providing-services-to-a-subset-of-routes">child routes</a>, create and export <code class="language-plaintext highlighter-rouge">routing.ts</code>.</p>
+  </li>
+  <li>
+    <p>Delete the <code class="language-plaintext highlighter-rouge">NgModule</code> and the routing configurations.</p>
+  </li>
+</ol>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/angular-standalone-components-3.png" alt="" />
+  <figcaption class="figure-caption">Migrate a component to a Standalone</figcaption>
+</figure>
+
+<h1 id="differences-between-using-ngmodules-and-standalone-feature">Differences between using NgModules and Standalone feature</h1>
+
+<h2 id="bootstrapping-an-app">Bootstrapping an app</h2>
+
+<p>Once the <code class="language-plaintext highlighter-rouge">AppComponent</code> is standalone you can get rid of the <code class="language-plaintext highlighter-rouge">AppModules</code> completely and use<br />
+<a href="https://angular.io/api/platform-browser/bootstrapApplication" title="https://angular.io/api/platform-browser/bootstrapApplication">bootstrapApplication</a> API to bootstrap the application in <code class="language-plaintext highlighter-rouge">src/main.ts</code> file and import the dependencies directly in the <code class="language-plaintext highlighter-rouge">AppComponent</code>, for more information see <a href="https://angular.io/guide/standalone-components#bootstrapping-an-application-using-a-standalone-component" title="https://angular.io/guide/standalone-components#bootstrapping-an-application-using-a-standalone-component">here</a>.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/angular-standalone-components-1.png" alt="" />
+  <figcaption class="figure-caption">Bootstrapping an Application</figcaption>
+</figure>
+
+<h2 id="changes-in-the-routing-configuration">Changes in the Routing configuration</h2>
+
+<p>With standalone feature in place, <code class="language-plaintext highlighter-rouge">NgModule</code> is no long required for many lazy loading scenarios.
+You can simply lazy load a standalone component by exporting the routes and using <code class="language-plaintext highlighter-rouge">loadComponent</code> instead of <code class="language-plaintext highlighter-rouge">loadChildren</code> and include them in <code class="language-plaintext highlighter-rouge">src/main.ts</code> files using <code class="language-plaintext highlighter-rouge">provideRouter()</code> from <code class="language-plaintext highlighter-rouge">@angular/router</code> as follows.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/angular-standalone-components-2.png" alt="" />
+  <figcaption class="figure-caption">Changes in the Routing configuration</figcaption>
+</figure>
+
+<h2 id="specs-for-standalone-components">Specs for Standalone components</h2>
+
+<p>The TestBed configuration now doesn’t needs to import all the dependencies used by the component<br />
+you are testing and hence reduces the boilerplate code in the spec file.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/angular-standalone-components-4.png" alt="" />
+  <figcaption class="figure-caption">Specs for Standalone component</figcaption>
+</figure>
+
+<p><em><strong>NOTE:</strong></em> After the migration the specs might be broken and might need manual fixes</p>
+
+<h1 id="improvements-on-performance-using-standalone-feature">Improvements on performance using standalone feature</h1>
+
+<p>Here are a few ways in which Angular standalone components can contribute to performance improvements:</p>
+
+<ul>
+  <li>
+    <p><strong>Reduced bundle size:</strong> You can reduce the overall bundle size of your app by using Angular’s standalone feature and eliminating NgModules and the boilerplate code that comes with it.</p>
+  </li>
+  <li>
+    <p><strong>Isolation and lazy loading:</strong> You can enhance the performance by encapsulating functionality within standalone components which helps to load all the resource only when it is lazy loaded.</p>
+  </li>
+  <li>
+    <p><strong>Reusability:</strong> Angular standalone components are self-contained, independent, and can be re-utilized across the app.</p>
+  </li>
+</ul>
+
+<h1 id="bundle-size">Bundle size</h1>
+
+<p>The actual impact on bundle size will depend on the complexity and size of your Angular component as well as the specific dependencies it requires. The difference in bundle size was not that huge (about 8.5 kb) for a small app which is also mentioned in the table below, but it might make a big difference with the large apps. While using Angular standalone components can reduce bundle size, other factors such as code optimization, tree shaking, and lazy loading can also play a role in optimizing bundle size.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>App type</th>
+      <th>Bundle size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Non Standalone app</td>
+      <td>7648528 bytes</td>
+    </tr>
+    <tr>
+      <td>Standalone app</td>
+      <td>7640882 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+            
+          </section>
+
+          <footer class="page__meta">
+            
+            
+
+
+          </footer>
+
+          <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Angular+standalone+components%20https%3A%2F%2Fbackbase.github.io%2F2023%2F07%2F03%2Fangular-standalone-components" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbackbase.github.io%2F2023%2F07%2F03%2Fangular-standalone-components" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fbackbase.github.io%2F2023%2F07%2F03%2Fangular-standalone-components" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+        </div>
+
+        
+      </article>
+    </div>
+
+    
+    
+      <div class="page__related col-md-8 offset-md-2">
+        
+        <div class="grid__wrapper row">
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/angular_microfrontends.png" alt="Micro Frontends" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/12/13/setup-microfrontend" rel="permalink">Angular &amp; Micro Frontends
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Harsh Julka
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Micro Frontends is a modern architectural approach for developing web applications.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/12/13/setup-microfrontend" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/azure-banner.png" alt="System Engineering" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink">A New Chapter: Exploring Azure Resources
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Sri Balaji, 
+      
+        Ashish Arora
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Azure’s limitless potential sets the stage for a promising journey, where opportunities abound on the horizon.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/visual-testing-banner.png" alt="Quality Assistance Approach" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/03/visual-testing-using-playwright" rel="permalink">Visual Testing using Playwright
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Venkata Ravi Majjari
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Visual testing helps to find issues that are important for end-users that cannot be caught by other types of testing
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/03/visual-testing-using-playwright" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="mt-auto page__footer">
+      <footer class="bg-primary text-white text-center py-5 small">
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <div class="footer-brand">
+    
+      <a class="site-logo text-decoration-none" href="/">
+        <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+      </a>
+    
+  </div>
+  <ul class="social-icons list-unstyled">
+    
+
+    
+      
+        
+          <li><a href="https://www.youtube.com/user/Backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i><span class="visually-hidden">YouTube</span></a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/company/backbase/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="visually-hidden">LinkedIn</span></a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/backbase_global/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a></li>
+        
+      
+        
+          <li><a href="https://www.glassdoor.nl/Overzicht/Werken-bij-Backbase-EI_IE117266.11,19.htm?countryRedirect=true" rel="nofollow noopener noreferrer" target="_blank"><i class="fab custom-glassdoor" aria-hidden="true"></i><span class="visually-hidden">Glassdoor</span></a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Backbase Engineering. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+
+      </footer>
+    </div>
+
+    <script src='/assets/global-17ef4fa84e17b9a550efbf687d8fa54b.js' type='text/javascript'></script>
+
+
+  </body>
+</html>

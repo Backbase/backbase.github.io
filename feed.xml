@@ -1,0 +1,1967 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="https://backbase.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://backbase.github.io/" rel="alternate" type="text/html" /><updated>2023-12-13T09:03:50+00:00</updated><id>https://backbase.github.io/feed.xml</id><title type="html">Backbase Engineering</title><subtitle>Backbase is a global fintech company creating the best digital banking solutions on the planet. We are a young-spirited, diverse (45+ nationalities), fast-growing and leading company in our niche.</subtitle><entry><title type="html">Angular &amp;amp; Micro Frontends</title><link href="https://backbase.github.io/2023/12/13/setup-microfrontend" rel="alternate" type="text/html" title="Angular &amp;amp; Micro Frontends" /><published>2023-12-13T00:00:00+00:00</published><updated>2023-12-13T00:00:00+00:00</updated><id>https://backbase.github.io/2023/12/13/setup-microfrontend</id><content type="html" xml:base="https://backbase.github.io/2023/12/13/setup-microfrontend"><![CDATA[<p><img src="/assets/images/post/angular_microfrontends.png" alt="" /></p>
+
+<h1 id="introduction">Introduction</h1>
+<p>Micro Frontends is a modern architectural approach for developing web applications. Instead of creating a large, monolithic web application, it involves building multiple smaller frontend applications. Each of these small application has a specific feature, which can be independently deployed and scaled. These micro frontends interact with each other to create a seamless user interface. This approach allows for greater flexibility and easier maintenance of web applications.</p>
+
+<p>Micro Frontends Architecture is composed of two or more applications:</p>
+<ul>
+  <li>Shell/Host Application</li>
+  <li>Mutiple Remote applications</li>
+</ul>
+
+<p>You can transform your Angular application into a powerful micro frontend with ease. Add these essential dependencies to your project and start unlocking the full potential of micro frontends.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@angular-architects/module-federation:</code> This provides support for webpack module federation plugin.</li>
+  <li><code class="language-plaintext highlighter-rouge">@angular/elements:</code> Angular elements use <code class="language-plaintext highlighter-rouge">CustomElementRegistry</code> interface which provide methods for registering custom elements and querying registered elements.</li>
+</ul>
+
+<p><strong>Note</strong>: module federation support starts from Webpack 5 and Angular 11.</p>
+
+<p>Without delay let’s jump into a practical example.</p>
+
+<h3 id="break-monolithic-app-into-shell-and-remote-application">Break monolithic app into shell and remote application</h3>
+
+<p><img src="/assets/images/post/monolithic.png" alt="" /></p>
+
+<p><strong>Convert your existing project to a shell application</strong></p>
+
+<p>Use below command to add module federation dependency in shell application:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">ng add @angular-architects/module-federation@&lt;version&gt;</span><span class="w"> </span><span class="nt">--project</span> projectName <span class="nt">--port</span> shellPort <span class="nt">--type</span> host
+</code></pre></div></div>
+
+<p>Use relevant version of @angular-architects/module-federation.
+<a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">Check version compatibility here.</a></p>
+
+<p><strong>Note:</strong> the above command generates <code class="language-plaintext highlighter-rouge">webpack.config</code> and replaces <code class="language-plaintext highlighter-rouge">@angular-devkit/build-angular</code>
+with <code class="language-plaintext highlighter-rouge">ngx-build-plus</code> in <code class="language-plaintext highlighter-rouge">angular.json</code>, to use additional webpack config with angular-cli.</p>
+
+<p><img src="/assets/images/post/microfrontend.png" alt="" /></p>
+
+<p><strong>Create a slot to inject the remote application in the shell application, which is</strong> <code class="language-plaintext highlighter-rouge">&lt;div #vc&gt;&lt;/div&gt;</code></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">AfterContentInit</span><span class="p">,</span> <span class="nx">ChangeDetectorRef</span><span class="p">,</span> <span class="nx">Component</span><span class="p">,</span> <span class="nx">ElementRef</span><span class="p">,</span>
+<span class="nx">OnInit</span><span class="p">,</span> <span class="nx">ViewChild</span><span class="p">,</span> <span class="nx">ViewContainerRef</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">ActivatedRoute</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/router</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">registry</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./registry</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+  <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;div #vc&gt;&lt;/div&gt;</span><span class="dl">'</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">WrapperComponent</span> <span class="k">implements</span> <span class="nx">AfterContentInit</span> <span class="p">{</span>
+  <span class="p">@</span><span class="nd">ViewChild</span><span class="p">(</span><span class="dl">'</span><span class="s1">vc</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">read</span><span class="p">:</span> <span class="nx">ElementRef</span><span class="p">,</span> <span class="na">static</span><span class="p">:</span> <span class="kc">true</span><span class="p">})</span>
+  <span class="nx">vc</span><span class="p">:</span> <span class="nx">ElementRef</span><span class="p">;</span>
+  <span class="nl">module</span><span class="p">:</span> <span class="kr">any</span><span class="p">;</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">renderer2</span><span class="p">:</span> <span class="nx">Renderer2</span><span class="p">,</span> <span class="k">private</span> <span class="nx">route</span><span class="p">:</span> <span class="nx">ActivatedRoute</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+
+  <span class="nx">ngAfterContentInit</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">elementName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">route</span><span class="p">.</span><span class="nx">snapshot</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="dl">'</span><span class="s1">elementName</span><span class="dl">'</span><span class="p">];</span>
+    <span class="kd">const</span> <span class="nx">importName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">route</span><span class="p">.</span><span class="nx">snapshot</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="dl">'</span><span class="s1">importName</span><span class="dl">'</span><span class="p">];</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="kr">module</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">importFn</span> <span class="o">=</span> <span class="nx">registry</span><span class="p">[</span><span class="nx">importName</span><span class="p">];</span>
+      <span class="nx">importFn</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">m</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="s2">`element </span><span class="p">${</span><span class="nx">elementName</span><span class="p">}</span><span class="s2"> loaded!`</span><span class="p">)</span>
+          <span class="k">this</span><span class="p">.</span><span class="kr">module</span> <span class="o">=</span> <span class="nx">m</span><span class="p">;</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">`error loading </span><span class="p">${</span><span class="nx">elementName</span><span class="p">}</span><span class="s2">:`</span><span class="p">,</span> <span class="nx">err</span><span class="p">));</span>  
+    <span class="p">}</span>
+    <span class="kd">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">renderer2</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">elementName</span><span class="p">)</span> <span class="k">as</span> <span class="nx">HTMLElement</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">renderer</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">vc</span><span class="p">.</span><span class="nx">nativeElement</span><span class="p">,</span> <span class="nx">element</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Create a Registry for loading remote app inside shell application</strong></p>
+
+<p>By using <code class="language-plaintext highlighter-rouge">loadRemoteModule</code> from module federation, load the remote application in <code class="language-plaintext highlighter-rouge">WrapperComponent</code></p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">loadRemoteModule</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular-architects/module-federation</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">registry</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">remoteApp</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">loadRemoteModule</span><span class="p">({</span>
+        <span class="na">remoteEntry</span><span class="p">:</span> <span class="dl">'</span><span class="s1">http://localhost:4201/remoteEntry.js</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">remoteName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remote-app</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">exposedModule</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./web-components</span><span class="dl">'</span>
+    <span class="p">})</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p><strong>Create Remote application</strong></p>
+
+<p>Bootstrap a new Angular project and run the following commands to add module federation and Angular elements dependencies in the project.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">ng new remote-app 
+</span><span class="gp">ng add @angular-architects/module-federation@&lt;version&gt;</span><span class="w"> </span><span class="nt">--project</span> remote-app  <span class="nt">--port</span> 4201 <span class="nt">--type</span> remote
+<span class="gp">npm install @angular/elements@&lt;version&gt;</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Use relevant version of @angular-architects/module-federation. <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">Check version compatibility here.</a></p>
+
+<p><strong>Define customElement</strong></p>
+
+<p>Angular elements are Angular components packaged as custom elements (also called Web Components), a web standard for defining new HTML elements in a framework-agnostic way.</p>
+
+<p>Angular provides the <code class="language-plaintext highlighter-rouge">createCustomElement()</code> function for converting an Angular component, together with its dependencies, to a custom element.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">class</span> <span class="nx">AppModule</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">injector</span><span class="p">:</span> <span class="nx">Injector</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">}</span>
+
+  <span class="nx">ngDoBootstrap</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">ce</span> <span class="o">=</span> <span class="nx">createCustomElement</span><span class="p">(</span><span class="nx">AppComponent</span><span class="p">,</span> <span class="p">{</span> <span class="na">injector</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">injector</span> <span class="p">});</span>
+    <span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="dl">'</span><span class="s1">remote-element</span><span class="dl">'</span><span class="p">,</span> <span class="nx">ce</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Connect navigation b/w shell and remote application</strong></p>
+
+<p>To load the remote application, you can use <code class="language-plaintext highlighter-rouge">WrapperComponent</code> that was created in preceding steps.</p>
+
+<p><strong>Note:</strong> pass an extra data object which will be used to load the relevant module.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Shell application router</span>
+ <span class="p">{</span>
+    <span class="nl">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remote-app/{routeName}</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">component</span><span class="p">:</span> <span class="nx">WrapperComponent</span><span class="p">,</span>
+    <span class="nx">data</span><span class="p">:</span> <span class="p">{</span> <span class="nl">importName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remoteApp</span><span class="dl">'</span><span class="p">,</span> <span class="nx">elementName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remote-element</span><span class="dl">'</span> <span class="p">},</span>
+ <span class="p">},</span>
+</code></pre></div></div>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Remote application Router (Normal routing)</span>
+<span class="kd">const</span> <span class="nx">routes</span><span class="p">:</span> <span class="nx">Routes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remote-app</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">children</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">transactions</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">loadChildren</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span>
+            <span class="k">import</span><span class="p">(</span><span class="dl">'</span><span class="s1">./features/transactions.module</span><span class="dl">'</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">m</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">m</span><span class="p">.</span><span class="nx">TransactionsModule</span><span class="p">)</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">cards</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">loadChildren</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span>
+            <span class="k">import</span><span class="p">(</span><span class="dl">'</span><span class="s1">./features/card-management.module</span><span class="dl">'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+              <span class="p">(</span><span class="nx">m</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">m</span><span class="p">.</span><span class="nx">CardsManagementModule</span>
+          <span class="p">)</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p><strong>Handle Remote App Navigation</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">class</span> <span class="nx">AppComponent</span> <span class="k">implements</span> <span class="nx">OnInit</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span>
+    <span class="k">private</span> <span class="nx">router</span><span class="p">:</span> <span class="nx">Router</span><span class="p">,</span>
+    <span class="p">@</span><span class="nd">Inject</span><span class="p">(</span><span class="nx">APP_BASE_HREF</span><span class="p">)</span> <span class="k">public</span> <span class="nx">baseHref</span><span class="p">:</span><span class="kr">string</span>
+  <span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+
+
+  <span class="nx">ngOnInit</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">environment</span><span class="p">.</span><span class="nx">production</span> <span class="p">?</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">baseHref</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="p">:</span> <span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">navigateByUrl</span><span class="p">(</span><span class="nx">path</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><strong>Note</strong>: APP_BASE_HREF is base href of shell application.</p>
+
+<p><strong>Integrate Lerna</strong></p>
+
+<p>At present, we have two distinct workspaces that require a monorepo tool to efficiently run and cache them. To accomplish this, we have decided to utilize Lerna.</p>
+
+<p>It solves two of the biggest problems of JavaScript/TypeScript monorepos:</p>
+<ul>
+  <li>
+    <p>Lerna executes a command against any number of projects, and it does it in the most efficient way, in the right order, and with the possibility to distribute that on multiple machines.</p>
+  </li>
+  <li>
+    <p>Lerna manages your publishing process, from version management to publishing to NPM, and it provides a variety of options to make sure any workflow can be accommodated.</p>
+  </li>
+</ul>
+
+<pre><code class="language-JSON">// Run this command at root of project
+npx lerna init
+
+// Sample lerna.json
+{
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "useWorkspaces": false,
+  "version": "0.0.0",
+  "packages": [
+    "retail-remote-app",
+    "inm-retail-project"
+  ]
+}
+
+// root package.json
+{
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^6.5.1"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "start": "lerna run start --stream"
+  }
+}
+
+</code></pre>
+
+<p><strong>Challenges and Solutions in implementing Micro Frontends</strong></p>
+
+<p><strong>Theming</strong></p>
+
+<p><strong>Challenge</strong>: How to ensure consistent styling across shell and remote applications?</p>
+
+<p>Let’s see four different ways to share theming between shell and remote applications.</p>
+<ul>
+  <li>Shared global theme for shell and remote applications.</li>
+  <li>Theme in only shell application.</li>
+  <li>Standalone theme in both shell and remote applications.</li>
+  <li>Standalone theme in shell application and lazy load theme of remote application.</li>
+</ul>
+
+<p><img src="/assets/images/post/mf-theming.png" alt="" /></p>
+
+<p><strong>Solution</strong>: Based on above illustration, the most efficient approach for maintaining consistent CSS is to implement global shared theme.</p>
+
+<p>A shared global theme or at shell only is the only possible way to do styling in micro frontends. Also, we only considered <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">ITCSS architecture</a> for this POC and haven’t explored component-level styling.</p>
+
+<p><strong>Duplicate Source Code</strong></p>
+
+<p><strong>Challenge:</strong> How to prevent code duplicacy between shell and remote applications?</p>
+
+<p><strong>Example:</strong> Duplicate Interceptors between shell and remote application.</p>
+
+<p>An interceptor is a middleware component that intercepts incoming and outgoing HTTP requests and responses. It provides a way to modify or enhance these requests and responses before they are processed by the application or sent to the server. It can be used for a variety of purposes, such as logging, caching, authentication, and error handling.</p>
+
+<p><strong>Note:</strong> We can’t share instance of a class between applications. Thus, we can’t use same interceptor at both shell and remote level.</p>
+
+<p><strong>Solution:</strong></p>
+
+<ul>
+  <li>Create a shared library</li>
+  <li>Using shared key of module federation plugin, we can define the library which should be shared between
+all the federated modules.</li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">ModuleFederationPlugin</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">webpack</span><span class="dl">'</span><span class="p">).</span><span class="nx">container</span><span class="p">;</span>
+<span class="kr">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">plugins</span><span class="p">:</span> <span class="p">[</span>
+    <span class="k">new</span> <span class="nx">ModuleFederationPlugin</span><span class="p">({</span>
+      <span class="c1">// adds date-fns as shared module</span>
+      <span class="na">shared</span><span class="p">:</span> <span class="nx">share</span><span class="p">({</span>
+      <span class="dl">'</span><span class="s1">date-fns</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">singleton</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+          <span class="na">strictVersion</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+          <span class="na">requiredVersion</span><span class="p">:</span> <span class="dl">'</span><span class="s1">auto</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">eager</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+      <span class="p">})</span>
+    <span class="p">}),</span>
+  <span class="p">],</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>So in your application you could do something like:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">format</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">date-fns</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">format</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="dl">'</span><span class="s1">MM/dd/yyyy</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>and, webpack will automatically share <code class="language-plaintext highlighter-rouge">date-fns</code> between all your federated modules that define date-fns as a shared library. For more details,
+please refer <a href="https://www.npmjs.com/package/@angular-architects/module-federation#sharing-libs-of-a-monorepo" target="_blank">@angular-architects/module-federation#sharing-libs-of-a-monorepo</a> and <a href="https://webpack.js.org/plugins/module-federation-plugin/" target="_blank">webpack’s module federation plugin.</a></p>
+
+<p><strong>Deployment</strong></p>
+
+<p><strong>Challenge:</strong> Existing CI/CD pipelines are required to be modified.</p>
+
+<p><strong>Solution:</strong> Follow below steps to deploy micro frontends.</p>
+
+<p><strong>Shell App Changes</strong></p>
+
+<ul>
+  <li>Dynamic entry point for Remote app</li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">RemoteAppRegistry</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">remoteApp</span><span class="dl">'</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">loadRemoteModule</span><span class="p">({</span>
+        <span class="na">remoteEntry</span><span class="p">:</span> <span class="nx">getRemoteUrl</span><span class="p">(),</span>
+        <span class="na">remoteName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remoteApp</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">exposedModule</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./web-components</span><span class="dl">'</span>
+    <span class="p">})</span>
+<span class="p">};</span>
+
+<span class="kd">function</span> <span class="nx">getRemoteUrl</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">environment</span><span class="p">.</span><span class="nx">isProduction</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">`http://localhost:</span><span class="p">${</span><span class="nx">REMOTE_PORT</span><span class="p">}</span><span class="s2">/remoteEntry.js`</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// We need to configure REMOTE_BASE_PORT (optional) for local docker app testing.</span>
+        <span class="k">return</span> <span class="dl">'</span><span class="s1">${PROTOCOL}//${HOSTNAME}:${REMOTE_BASE_PORT}${REMOTE_BASE_HREF}remoteEntry.js</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Add BASE_HREF in shell and remote application</li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="dl">"</span><span class="s2">architect</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+  <span class="dl">"</span><span class="s2">build</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">configurations</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="dl">"</span><span class="s2">production</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">"</span><span class="s2">baseHref</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">${BASE_HREF}</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+ <span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Modify entry point in webpack.prod.config.js</li>
+</ul>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">plugins</span><span class="p">:</span> <span class="p">[</span>
+  <span class="k">new</span> <span class="nx">ModuleFederationPlugin</span><span class="p">({</span>
+    <span class="na">remotes</span><span class="p">:</span> <span class="p">{</span>
+      <span class="dl">"</span><span class="s2">remoteApp</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">remoteApp@https://${HOSTNAME}${REMOTE_BASE_HREF}/remoteEntry.js</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">},</span>
+  <span class="p">})</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Sample <code class="language-plaintext highlighter-rouge">docker.yaml</code></li>
+</ul>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">web</span><span class="pi">:</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">.</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">target</span><span class="pi">:</span> <span class="m">8080</span>
+        <span class="na">published</span><span class="pi">:</span> <span class="m">8080</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="s">...</span>
+      <span class="s">PROTOCOL</span><span class="err">:</span> <span class="s1">'</span><span class="s">http:'</span>
+      <span class="na">HOSTNAME</span><span class="pi">:</span> <span class="s">localhost</span>
+      <span class="na">PORT</span><span class="pi">:</span> <span class="m">8080</span>
+      <span class="na">BASE_HREF</span><span class="pi">:</span> <span class="s">/retail-shell/</span>     
+      <span class="na">REMOTE_BASE_HREF</span><span class="pi">:</span> <span class="s">/retail-journeys/</span>
+      <span class="na">REMOTE_BASE_PORT</span><span class="pi">:</span> <span class="m">8081</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Sample Dockerfile</li>
+</ul>
+
+<div class="language-Dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> {YOUR_BASE_IMAGE}:{Version}</span>
+<span class="k">COPY</span><span class="s"> ./retail-shell ./statics</span>
+
+</code></pre></div></div>
+
+<p><strong>Remote App Changes</strong></p>
+
+<ul>
+  <li>Modify webpack config to make public path dynamic</li>
+</ul>
+
+<p><strong>Note:</strong> TEST_PORT is required to run application on local docker env. However, for production it will be 443 and hence can be removed.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">uniqueName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">remoteApp</span><span class="dl">"</span><span class="p">,</span>
+    <span class="nx">publicPath</span><span class="p">:</span> <span class="dl">"</span><span class="s2">${PROTOCOL}//${HOSTNAME}:${TEST_PORT}${BASE_HREF}</span><span class="dl">"</span><span class="p">,</span>
+    <span class="kr">module</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="p">},</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Sample docker.yaml</li>
+</ul>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3"</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">journeys</span><span class="pi">:</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">.</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">target</span><span class="pi">:</span> <span class="m">8081</span>
+        <span class="na">published</span><span class="pi">:</span> <span class="m">8081</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="s">...</span>
+      <span class="s">PROTOCOL</span><span class="err">:</span> <span class="s1">'</span><span class="s">http:'</span>
+      <span class="na">HOSTNAME</span><span class="pi">:</span> <span class="s">localhost</span>
+      <span class="na">PORT</span><span class="pi">:</span> <span class="m">8081</span>
+      <span class="na">BASE_HREF</span><span class="pi">:</span> <span class="s">/retail-journeys/</span>
+      <span class="na">TEST_PORT</span><span class="pi">:</span> <span class="s1">'</span><span class="s">8081'</span>
+      <span class="na">SHEL_BASE_HREF</span><span class="pi">:</span> <span class="s">retail-shell/</span>
+</code></pre></div></div>
+
+<p><strong>Benefits &amp; Drawbacks of using Micro Frontends:</strong></p>
+
+<p><img src="/assets/images/post/mf-pros-cons.png" alt="" /></p>
+
+<h1 id="conclusion">Conclusion</h1>
+<p>Micro Frontends offer tremendous flexibility and scalability to developers and enterprise applications. With this architecture, individual teams can work and deploy features independently without affecting other features. However, the initial setup of Micro Frontends requires extra time to set up on developer machines as well as on pipelines. Despite this, the benefits of Micro Frontends architecture outweigh the drawbacks by a significant margin.</p>
+
+<h1 id="references-and-additional-resources">References and Additional Resources</h1>
+<ul>
+  <li><a href="https://www.angulararchitects.io/blog/the-microfrontend-revolution-module-federation-in-webpack-5/">The Micro Frontends revolution is here, thanks to module federation in Webpack 5</a></li>
+  <li><a href="https://www.angulararchitects.io/en/blog/consequences-of-micro-frontends-survey-results/">Consequences of Micro Frontends</a></li>
+</ul>]]></content><author><name>Harsh Julka</name></author><category term="Frontend" /><category term="Micro" /><category term="Frontends" /><summary type="html"><![CDATA[Micro Frontends is a modern architectural approach for developing web applications.]]></summary></entry><entry><title type="html">A New Chapter: Exploring Azure Resources</title><link href="https://backbase.github.io/2023/11/21/a-new-chapter-exploring-azure-resources" rel="alternate" type="text/html" title="A New Chapter: Exploring Azure Resources" /><published>2023-11-21T00:00:00+00:00</published><updated>2023-11-21T00:00:00+00:00</updated><id>https://backbase.github.io/2023/11/21/a-new-chapter-exploring-azure-resources</id><content type="html" xml:base="https://backbase.github.io/2023/11/21/a-new-chapter-exploring-azure-resources"><![CDATA[<p><img src="/assets/images/post/azure-banner.png" alt="" /></p>
+
+<h2 id="demystifying-cloud-computing-a-quick-introduction"><strong>Demystifying Cloud Computing: A Quick Introduction</strong></h2>
+
+<p><strong>Introduction to Cloud Computing</strong></p>
+<ul>
+  <li>Cloud computing is a transformative technology that delivers various services over the internet.</li>
+  <li>Instead of relying on local servers or computers, hosts these services remotely in data centers, commonly referred to as “the cloud.”</li>
+  <li>This model offers benefits like scalability, accessibility, and cost-efficiency.</li>
+</ul>
+
+<p><strong>What is Cloud Computing</strong></p>
+<ul>
+  <li>Cloud computing delivers on-demand computing services over the internet and enables you to pay for what you need.</li>
+  <li>It includes several different deployment types and service models so that you can find the solution that best meets your business needs.</li>
+</ul>
+
+<h2 id="types-of-cloud-services"><strong>Types of cloud services</strong></h2>
+<p><strong>Cloud computing has three main service models:</strong></p>
+
+<ul>
+  <li><strong>Infrastructure as a Service (IaaS):</strong> Virtualized computing resources, allowing users to build and manage their own IT infrastructure.
+<br />
+  Example: amazon web services, microsoft azure, and google compute engine</li>
+</ul>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/cloud-iaas.png" alt="" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<ul>
+  <li><strong>Platform as a Service (PaaS):</strong> A platform with development tools, databases, and runtime environments, simplifying application development and deployment.</li>
+</ul>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/cloud-paas.png" alt="" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<ul>
+  <li><strong>Software as a Service (SaaS):</strong> Ready-to-use software applications accessible via the internet, eliminating installation and maintenance hassles.</li>
+</ul>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/cloud-saas.png" alt="" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<p><strong>Benefits of Cloud Computing:</strong></p>
+<ul>
+  <li>Cloud computing offers cost efficiency, scalability, accessibility, and reliability.</li>
+  <li>It reduces IT costs, allows flexible resource scaling, promotes remote work, and ensures high uptime.</li>
+</ul>
+
+<h2 id="cloud-showdown-visualizing-aws-and-azure-resources"><strong>Cloud Showdown: Visualizing AWS and Azure Resources</strong></h2>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/aws-azure.png" alt="" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<h2 id="exploring-azure-services-a-journey-into-cloud-innovations"><strong>Exploring Azure Services: A Journey into Cloud Innovations</strong></h2>
+
+<p>In the dynamic landscape of Cloud Technology, the transition to Microsoft Azure has paved the way for enhanced performance, scalability, and innovation.</p>
+
+<p><strong>Azure Kubernetes Service (AKS)</strong></p>
+<ul>
+  <li>AKS is a managed Kubernetes service provided by Microsoft Azure.</li>
+  <li>
+    <p>AKS simplifies the process of deploying and managing containerized applications using Kubernetes.</p>
+
+    <p><strong>Key aspects of Azure Kubernetes Service:</strong></p>
+
+    <ul>
+      <li>
+        <p><strong>Managed Kubernetes:</strong> 
+  AKS provides a fully managed Kubernetes cluster, abstracting away the complexities of managing the underlying infrastructure.</p>
+      </li>
+      <li>
+        <p><strong>Scalability:</strong>
+  AKS supports the automatic scaling of applications based on demand.</p>
+      </li>
+      <li>
+        <p><strong>Integration with Azure Services:</strong> 
+  AKS allows you to easily connect your containerized applications to services such as Azure Active Directory, Azure Monitor, and Azure Container Registry.</p>
+      </li>
+      <li>
+        <p><strong>DevOps Integration:</strong> 
+  AKS integrates with popular DevOps tools, including Azure DevOps, Jenkins, and others, facilitating a streamlined continuous integration and continuous deployment (CI/CD) pipeline for containerized applications.</p>
+      </li>
+      <li>
+        <p><strong>Monitoring and Diagnostics:</strong> 
+  Azure Monitor provides monitoring and allows you to gain insights into the performance, health, and behavior of your containerized applications.</p>
+      </li>
+      <li>
+        <p><strong>Security:</strong>
+  AKS includes security features such as Azure Active Directory integration for identity and access management, network policies for controlling the flow of traffic between pods.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Azure Active Directory (Azure AD)</strong> is Microsoft’s cloud-based identity and access management service.</p>
+
+<p><strong>Azure SQL</strong> is Microsoft’s managed relational database service on Azure.</p>
+
+<p><strong>Azure Container Registry (ACR)</strong> is a secure, private Docker registry on Microsoft Azure.</p>
+
+<p><strong>Azure Service Bus</strong> is a fully managed message broker service in Microsoft Azure that enables applications to communicate asynchronously.</p>
+
+<p><strong>Azure Key Vault</strong> is a secure cloud service in Microsoft Azure for storing and managing sensitive information like secrets, encryption keys, and certificates.</p>
+
+<p><strong>Azure Storage</strong> is a scalable cloud storage service by Microsoft Azure, offering solutions for various data types.</p>
+
+<ul>
+  <li>Blob Storage - Storing unstructured data</li>
+  <li>File Storage - File sharing</li>
+  <li>Table Storage - NoSQL data</li>
+  <li>Queue Storage - Used for messaging</li>
+</ul>
+
+<p>Azure provides a range of network components that enable the creation of secure, scalable, and well-connected applications and services.</p>
+
+<p><strong>Azure network components:</strong></p>
+
+<ul>
+  <li>
+    <p><strong>Virtual Network (VNet)</strong> is the fundamental building block for your private network in Azure.</p>
+  </li>
+  <li>
+    <p><strong>Azure Virtual Network (VNet) Peering</strong> is a feature that enables connecting Azure virtual networks seamlessly.</p>
+  </li>
+  <li>
+    <p><strong>Subnet</strong> enables you to segment and organize resources within a VNet.</p>
+  </li>
+  <li>
+    <p><strong>Network Security Group (NSG)</strong> is a set of rules for controlling inbound and outbound network traffic to network interfaces, VMs, and subnets.</p>
+  </li>
+  <li>
+    <p><strong>Azure Firewall</strong> is a fully managed, scalable firewall service that provides network-level protection for resources within a virtual network.</p>
+  </li>
+  <li>
+    <p><strong>Azure Load Balancer</strong> distributes incoming network traffic across multiple servers to ensure no single server is overwhelmed, optimizing availability and reliability.</p>
+  </li>
+  <li>
+    <p><strong>Azure VPN Gateway</strong> connects your on-premises networks to Azure through site-to-site VPNs or point-to-site VPNs, creating a secure and private connection.</p>
+  </li>
+  <li>
+    <p><strong>Azure ExpressRoute</strong> provides dedicated, private connections from on-premises data centers to Azure, offering more reliability and lower latency than internet-based connections.</p>
+  </li>
+  <li>
+    <p><strong>Azure Application Gateway</strong> is a web traffic load balancer that enables you to manage and scale applications.</p>
+  </li>
+  <li>
+    <p><strong>Azure DNS</strong> is a scalable and reliable domain name system (DNS) hosting service.</p>
+  </li>
+  <li>
+    <p><strong>Azure Private Link</strong> allows secure and private access to Azure PaaS services and your own services by establishing connections within your Azure Virtual Network.</p>
+  </li>
+</ul>
+
+<p>These components collectively allow you to build and manage complex network architectures in Azure, ensuring high performance, security, and connectivity for your applications and services.</p>
+
+<h2 id="conclusion-navigating-azures-potential"><strong>Conclusion: Navigating Azure’s Potential</strong></h2>
+
+<p>Navigating Azure, we embark on a future defined by scalability, security, and optimized DevOps workflows. Azure’s flexibility, seamless integration, and collaborative ecosystem enhance efficiency, cost-effectiveness, and pave the way for continuous innovation. Azure’s limitless potential sets the stage for a promising journey, where opportunities abound on the horizon.</p>]]></content><author><name>Sri Balaji</name></author><category term="System Engineering" /><category term="DevOps," /><category term="System" /><category term="Engineering" /><summary type="html"><![CDATA[Azure’s limitless potential sets the stage for a promising journey, where opportunities abound on the horizon.]]></summary></entry><entry><title type="html">Visual Testing using Playwright</title><link href="https://backbase.github.io/2023/11/03/visual-testing-using-playwright" rel="alternate" type="text/html" title="Visual Testing using Playwright" /><published>2023-11-03T00:00:00+00:00</published><updated>2023-11-03T00:00:00+00:00</updated><id>https://backbase.github.io/2023/11/03/visual-testing-using-playwright</id><content type="html" xml:base="https://backbase.github.io/2023/11/03/visual-testing-using-playwright"><![CDATA[<p><img src="/assets/images/post/visual-testing-banner.png" alt="" /></p>
+
+<p>“<strong>Visual testing</strong>” is a software testing technique that evaluates the visible output of an app and compares that output against the results expected by a known-good source, such as a design mockup created in Photoshop or Figma, or a screenshot from a previous version of the same app.</p>
+
+<p>Visual testing also aims to verify that the app’s <strong>visual elements</strong> like <strong>colors, images, fonts, and layouts,</strong> are displayed correctly and consistently across different devices, operating systems, and browsers.</p>
+
+<h2 id="why-is-visual-testing-important"><strong>Why is visual testing important?</strong></h2>
+
+<ul>
+  <li>Visual testing captures defects that other types of UI tests cannot</li>
+  <li>Visual testing is essential for ensuring a positive user experience with your app</li>
+  <li>Maintaining a visually perfect UI is important for retaining customers</li>
+  <li>Visual testing is important to reduce the revenue impact</li>
+</ul>
+
+<p><strong>List of Visual Bugs:-</strong> below are the list of visual defects that may occur</p>
+<ul>
+  <li>Pixel-by-pixel differences</li>
+  <li>Alignment shifts</li>
+  <li>Page layout</li>
+  <li>Rendering problems</li>
+  <li>Element overlap</li>
+  <li>Responsive layout</li>
+  <li>Font differences</li>
+  <li>Color differences</li>
+</ul>
+
+<p><strong>Example 1:- Element Overlap Scenario</strong></p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/visual-testing1.png" alt="" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<p>Look at this UI, how did this happen in production?
+The text and advertisement are crammed together. If this was your advertisement, do you think there would be a revenue impact? Absolutely.</p>
+
+<p>These aren’t cosmetic issues. In each case, <strong>visual bugs are blocking revenue</strong>.</p>
+
+<p>Why do these visual bugs occur? Don’t they do functional testing? They do, but it’s not enough.</p>
+
+<p>Many believe that functional tests are enough to catch visual bugs, but that is not true. Functional tests validate only the functional behavior of the app.</p>
+
+<p>Visual bugs are rendering issues. And rendering validation is not what functional testing tools are designed to catch.</p>
+
+<p><strong>Example 2:- Different visual bugs on each case</strong></p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/visual-testing2.png" alt="" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<p>In the preceding example each snapshot has rendered with different visual error.</p>
+
+<h2 id="how-can-visual-testing-help"><strong>How can Visual Testing help?</strong></h2>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/visual-testing3.png" alt="" />
+  <figcaption class="figure-caption">Visual aspects of the quality</figcaption>
+</figure>
+
+<p><strong>Benefits of Visual Testing</strong></p>
+
+<ul>
+  <li>Provide Confidence for visual aspects of the product that can’t be covered by lower level validations (Even by E2E)</li>
+  <li>Easy to cover cases like RTL changes or Theming if already have original tests</li>
+  <li>For some functional tests it is <strong>faster to develop</strong> Visual tests than functional</li>
+  <li><strong>Maintenance of the visual tests can be cheaper than functional tests</strong> (All you need is just update baselines, you have no dependencies to test ids and html structure)
+<br />
+<br /></li>
+</ul>
+
+<h2 id="why-cant-functional-tests-cover-visual-issues"><strong>Why can’t functional tests cover visual issues?</strong></h2>
+
+<p>Functional test scripts can validate the size, position, and color scheme of visual elements. But if we follow this approach, then our test scripts will soon balloon in size due to checkpoint bloat.</p>
+
+<p>Let’s look at an Instagram advertisement screen that’s properly rendered:</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/visual-testing4.png" alt="" />
+  <figcaption class="figure-caption">Advertisement screen that has properly rendered</figcaption>
+</figure>
+
+<p>If we look at the advertisement, there are 21 visual elements, like various icons, text —this ignores iOS elements at the top like Wi-Fi signal and time, since those aren’t controlled by the Instagram app.</p>
+
+<p>Consider that each element has to be validated with all these 5 checkpoints:</p>
+
+<ul>
+  <li>Visible [true/false]</li>
+  <li>Upper-left x, y coordinates</li>
+  <li>Height</li>
+  <li>Width</li>
+  <li>Background color</li>
+</ul>
+
+<p>That means we need the following number of assertions in the test script:</p>
+
+<p><strong>21 visual elements x 5 assertions per element = 105 lines of assertion code</strong></p>
+
+<p>Even with all this assertion code, you wouldn’t be able to detect all visual bugs. Such as whether a visual element can’t be accessed because it’s being covered up in the DOM as hidden mode.</p>
+
+<p>For each combination of <strong>OS/browser/font size/screen size/screen orientation</strong>. You could end up with thousands of lines of assertion code to be added in the test script, which is not a best approach to be followed.</p>
+
+<p><strong>Hence, we need visual testing to catch all the visual errors and we cannot rely on functional tests to catch visual errors.</strong></p>
+
+<h2 id="what-is-manual-visual-testing"><strong>What is Manual Visual Testing?</strong></h2>
+
+<p>Manual visual testing means comparing two screenshots manually, one from your known good baseline image, and another from the latest version of your app. For each pair of images, you have to invest a lot of time to ensure you’ve caught all issues. Especially if the page is long, or has a lot of visual elements, in that case it is very difficult to identify all the visual issues.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/visual-testing5.png" alt="" />
+  <figcaption class="figure-caption">Manual Visual Identification of the elements</figcaption>
+</figure>
+
+<p><strong>Challenges of manual Visual Testing:-</strong>
+Imagine you need to test your app on:</p>
+
+<ul>
+  <li>5 operating systems: windows, MacOS, Android, iOS, and Chrome</li>
+  <li>5 popular browsers: chrome, Firefox, Internet Explorer (Windows only), Microsoft Edge (Windows Only), and Safari (Mac only)</li>
+  <li>2 screen orientations for mobile devices: portrait and landscape</li>
+  <li>10 standard mobile device display resolutions and 18 standard desktop/laptop display resolutions from XGA to 4G</li>
+</ul>
+
+<p><strong>1 Screen to test = 21 x (20+18) = 21 x 38 = 798 Unique Screen Configurations</strong></p>
+
+<p>Let’s say if your app has 100 pages to test:</p>
+
+<p><strong>798 Screen Configurations x 100 Screens in-app = 79,800 Screen Configurations to test</strong></p>
+
+<p>Wouldn’t it be great if there was a way to automate this crazy-tedious process?</p>
+
+<p>Well, yes there is… a process is in place to do the tedious process</p>
+
+<p>Here we are with the problem statement from Visual Testing:</p>
+
+<p><strong>🚨The problem</strong> - Visual bugs are blocking revenue and resulting in not retaining customers.</p>
+
+<p><strong>🎯The goal</strong> - Visual testing captures defects that other types of UI tests cannot [Functional, Manual &amp; Regression].</p>
+
+<p><strong>💡The solution</strong> - <strong>Automated Visual Testing is a solution</strong> and <strong>Playwright</strong> is one of the good option used in Backbase [<strong>Applitools</strong> or <strong>Percy</strong> are the other automated tools are available for visual testing].
+<br />
+<br /></p>
+
+<h2 id="automated-visual-testing-using-playwright"><strong>Automated Visual Testing using Playwright</strong></h2>
+
+<p>To address the preceding challenges, automated visual testing needs to be implemented in place of ‘function testing’/’manual visual testing’ to <strong>achieve efficient and reliable results in visual testing</strong>.</p>
+
+<ul>
+  <li><strong>Playwright</strong> is an open-source test automation framework that enables end-to-end testing for modern web-apps</li>
+  <li>It uses languages - JavaScript, TypeScript, Python, Java, and C#</li>
+  <li>It also supports Chromium, Firefox, and WebKit-based browsers and can also run tests against an emulated mobile browser</li>
+  <li>OS support - Windows, Linux, and macOS</li>
+</ul>
+
+<p><strong>Snapshot Comparison Workflow:</strong></p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/visual-testing6.png" alt="" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<p><strong>Simple Visual Snapshot Comparison Tests in Playwright:</strong></p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/visual-testing7.png" alt="" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<p>When the <strong>toHaveScreenshot()</strong> function executes, it performs the following:</p>
+
+<ul>
+  <li>It verifies if there is an existing screenshot file. If not present, it fails</li>
+  <li>It takes a new screenshot</li>
+  <li>It computes the difference between the two screenshots using the pixel match library</li>
+  <li>If there is any difference, take another screenshot</li>
+  <li>It computes the difference again</li>
+  <li>It writes an expected, actual, and diff file to the test-results folder</li>
+</ul>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/visual-testing8.png" alt="" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/visual-testing9.png" alt="" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<h2 id="key-benefitstake-aways-from-visual-testing-approach"><strong>Key benefits/take-aways from Visual Testing Approach</strong></h2>
+
+<ul>
+  <li><strong>Enhanced User Experience (UX):</strong> Visual testing is crucial for a seamless and visually pleasing user experience, positively impacting satisfaction, reducing bounce rates, and reinforcing brand image.</li>
+  <li><strong>Efficiency Through Automation:</strong> Automated visual testing accelerates the detection and resolution of visual discrepancies, enhancing efficiency and accuracy in software development.</li>
+  <li><strong>Cross-Platform Compatibility Assurance:</strong> Visual testing ensures consistency across browsers and devices, expanding user reach and maintaining a uniform brand image.</li>
+  <li><strong>Cost-Effective and Time-Efficient:</strong> Automation in visual testing leads to significant time and cost savings compared to manual methods, allowing teams to focus on complex development tasks.</li>
+  <li><strong>Integration with CI/CD:</strong> Visual testing seamlessly integrates into CI/CD pipelines, supporting rapid, high-quality software delivery by validating visual aspects with each code change.</li>
+</ul>]]></content><author><name>Venkata Ravi Majjari</name></author><category term="Software Quality Assurance" /><category term="Testing," /><category term="Quality" /><category term="Assurance" /><summary type="html"><![CDATA[Visual testing helps to find issues that are important for end-users that cannot be caught by other types of testing]]></summary></entry><entry><title type="html">Angular Unit Testing with Spectator</title><link href="https://backbase.github.io/2023/10/25/angular-unit-testing-with-spectator" rel="alternate" type="text/html" title="Angular Unit Testing with Spectator" /><published>2023-10-25T00:00:00+00:00</published><updated>2023-10-25T00:00:00+00:00</updated><id>https://backbase.github.io/2023/10/25/angular-unit-testing-with-spectator</id><content type="html" xml:base="https://backbase.github.io/2023/10/25/angular-unit-testing-with-spectator"><![CDATA[<p><img src="/assets/images/post/spectator-banner.png" alt="" /></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Spectator is a powerful testing tool designed to simplify Angular testing. It is built on top of the TestBed API and effectively reduces the boilerplate code associated with the built-in TestBed API. By doing so, Spectator delivers a more efficient and developer-friendly testing experience. In this article, we discuss Spectator test cases, installation, testing components and services, advantages, drawbacks, and migrating to Spectator.</p>
+
+<h1 id="understanding-spectator-test-cases">Understanding Spectator Test Cases</h1>
+
+<p>Spectator supports three main types of test cases:</p>
+
+<ol>
+  <li>
+    <p><strong>Isolated unit tests</strong>:
+Corresponding to <a href="https://angular.io/guide/testing-components-basics#component-class-testing"><strong>Component class testing</strong></a> mentioned in Angular.io.
+These tests focus on testing component, directive, pipe, and service classes in isolation. Additionally, Spectator supports writing tests for routing and HTTP communication. It is essential to mock dependencies to ensure tests are isolated.</p>
+  </li>
+  <li>
+    <p><strong>Shallow component tests</strong>:
+Corresponding to <a href="https://angular.io/guide/testing-components-basics#component-dom-testing"><strong>Component DOM testing</strong></a> mentioned in Angular.io.
+Shallow component tests focus on testing a component with a template, but ignoring the rendering of child components. By passing the ‘shallow: true’ option into the configuration, we can achieve this quite easily with Spectator.</p>
+  </li>
+  <li>
+    <p><strong>Integration tests</strong>:
+Corresponding to <a href="https://angular.io/guide/testing-components-basics#component-dom-testing"><strong>Component DOM testing</strong></a> mentioned in Angular.io.
+Integration tests focus on testing how two or more components work together. These tests are particularly useful when components depend on each other.</p>
+  </li>
+</ol>
+
+<p>In the following sections, we delve deeper into the installation process, testing components and services, and the advantages and drawbacks of using Spectator.</p>
+
+<h2 id="installing-spectator">Installing Spectator</h2>
+
+<p>To install Spectator, you can use either yarn or npm:</p>
+
+<p><code class="language-plaintext highlighter-rouge">yarn add @ngneat/spectator --dev</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">npm install @ngneat/spectator --save-dev</code></p>
+
+<p>Spectator uses <strong>Jasmine</strong> by default, but it supports <strong>Jest</strong> as well.
+To be able to use it with Jest, make sure to target your imports from <code class="language-plaintext highlighter-rouge">@ngneat/spectator/jest</code> instead of <code class="language-plaintext highlighter-rouge">@ngneat/spectator</code>.</p>
+
+<h1 id="testing-components-with-spectator">Testing Components with Spectator</h1>
+
+<p>When testing components with Spectator, the first step is to create a component factory using the <code class="language-plaintext highlighter-rouge">createComponentFactory</code> function and pass the component class you want to test. This factory function returns a new component for each test block. Spectator offers various options for the <code class="language-plaintext highlighter-rouge">createComponentFactory</code> function, allowing you to customize your testing environment.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Spectator</span><span class="p">,</span> <span class="nx">createComponentFactory</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ngneat/spectator</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">ButtonComponent</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./button.component</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="dl">"</span><span class="s2">ButtonComponent</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="na">spectator</span><span class="p">:</span> <span class="nx">Spectator</span><span class="o">&lt;</span><span class="nx">ButtonComponent</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">createComponent</span> <span class="o">=</span> <span class="nx">createComponentFactory</span><span class="p">(</span><span class="nx">ButtonComponent</span><span class="p">);</span>
+
+  <span class="nx">beforeEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">spectator</span> <span class="o">=</span> <span class="nx">createComponent</span><span class="p">()));</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">should have a success class by default</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="dl">"</span><span class="s2">button</span><span class="dl">"</span><span class="p">)).</span><span class="nx">toHaveClass</span><span class="p">(</span><span class="dl">"</span><span class="s2">success</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">should set the class name according to the [className] input</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">spectator</span><span class="p">.</span><span class="nx">setInput</span><span class="p">(</span><span class="dl">"</span><span class="s2">className</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">danger</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="dl">"</span><span class="s2">button</span><span class="dl">"</span><span class="p">)).</span><span class="nx">toHaveClass</span><span class="p">(</span><span class="dl">"</span><span class="s2">danger</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="dl">"</span><span class="s2">button</span><span class="dl">"</span><span class="p">)).</span><span class="nx">not</span><span class="p">.</span><span class="nx">toHaveClass</span><span class="p">(</span><span class="dl">"</span><span class="s2">success</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">createComponentFactory</code> function can optionally take the following options which extends the basic Angular Testing Module options:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">createComponent</span> <span class="o">=</span> <span class="nx">createComponentFactory</span><span class="p">({</span>
+  <span class="na">component</span><span class="p">:</span> <span class="nx">ButtonComponent</span><span class="p">,</span>
+  <span class="na">imports</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="na">providers</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="na">declarations</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="na">entryComponents</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="na">componentProviders</span><span class="p">:</span> <span class="p">[],</span> <span class="c1">// Override the component's providers</span>
+  <span class="na">componentViewProviders</span><span class="p">:</span> <span class="p">[],</span> <span class="c1">// Override the component's view providers</span>
+  <span class="na">overrideModules</span><span class="p">:</span> <span class="p">[],</span> <span class="c1">// Override modules</span>
+  <span class="na">mocks</span><span class="p">:</span> <span class="p">[],</span> <span class="c1">// Providers that will automatically be mocked</span>
+  <span class="na">componentMocks</span><span class="p">:</span> <span class="p">[],</span> <span class="c1">// Component providers that will automatically be mocked</span>
+  <span class="na">componentViewProvidersMocks</span><span class="p">:</span> <span class="p">[],</span> <span class="c1">// Component view providers that will be automatically mocked</span>
+  <span class="na">detectChanges</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// Defaults to true</span>
+  <span class="na">declareComponent</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// Defaults to true</span>
+  <span class="na">disableAnimations</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// Defaults to true</span>
+  <span class="na">shallow</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// Defaults to false</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>After creating the component factory, you can use the <code class="language-plaintext highlighter-rouge">createComponent</code> function to test different aspects of your component, such as setting inputs, testing outputs, or running detectChanges().</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">createComponent</code> function optionally takes the following options:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">should...</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">spectator</span> <span class="o">=</span> <span class="nx">createComponent</span><span class="p">({</span>
+    <span class="c1">// The component inputs</span>
+    <span class="na">props</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Click</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="c1">// Override the component's providers</span>
+    <span class="na">providers</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="c1">// Whether to run change detection (defaults to true)</span>
+    <span class="na">detectChanges</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="p">});</span>
+
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="dl">"</span><span class="s2">button</span><span class="dl">"</span><span class="p">)).</span><span class="nx">toHaveText</span><span class="p">(</span><span class="dl">"</span><span class="s2">Click</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">createComponent()</code> method returns an instance of <code class="language-plaintext highlighter-rouge">Spectator</code> which exposes the following properties:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">fixture</code> - The tested component’s fixture</li>
+  <li><code class="language-plaintext highlighter-rouge">component</code> - The tested component’s instance</li>
+  <li><code class="language-plaintext highlighter-rouge">element</code> - The tested component’s native element</li>
+  <li><code class="language-plaintext highlighter-rouge">debugElement</code> - The tested fixture’s debug element</li>
+</ul>
+
+<p>And the following methods:</p>
+
+<ul>
+  <li>
+    <p><strong>inject()</strong>
+<br />
+Provides a wrapper for Ivy’s <code class="language-plaintext highlighter-rouge">TestBed.inject()</code>:</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">service</span> <span class="o">=</span> <span class="nx">spectator</span><span class="p">.</span><span class="nx">inject</span><span class="p">(</span><span class="nx">QueryService</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">fromComponentInjector</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">service</span> <span class="o">=</span> <span class="nx">spectator</span><span class="p">.</span><span class="nx">inject</span><span class="p">(</span><span class="nx">QueryService</span><span class="p">,</span> <span class="nx">fromComponentInjector</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>detectChanges()</strong>
+<br />
+Runs <code class="language-plaintext highlighter-rouge">detectChanges</code> on the tested element/host:</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">spectator</span><span class="p">.</span><span class="nx">detectChanges</span><span class="p">();</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>setInput()</strong>
+<br />
+Changes the value of an <code class="language-plaintext highlighter-rouge">@Input()</code> of the tested component:</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">should...</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">spectator</span><span class="p">.</span><span class="nx">setInput</span><span class="p">(</span><span class="dl">"</span><span class="s2">className</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">danger</span><span class="dl">"</span><span class="p">);</span>
+
+  <span class="nx">spectator</span><span class="p">.</span><span class="nx">setInput</span><span class="p">({</span>
+    <span class="na">className</span><span class="p">:</span> <span class="dl">"</span><span class="s2">danger</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>output()</strong>
+<br />
+Returns an observable <code class="language-plaintext highlighter-rouge">@Output()</code> of the tested component:</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">should emit the $event on click</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">output</span><span class="p">;</span>
+  <span class="nx">spectator</span><span class="p">.</span><span class="nx">output</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">).</span><span class="nx">subscribe</span><span class="p">((</span><span class="nx">result</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">output</span> <span class="o">=</span> <span class="nx">result</span><span class="p">));</span>
+
+  <span class="nx">spectator</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">onClick</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">click</span><span class="dl">"</span> <span class="p">});</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">output</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">click</span><span class="dl">"</span> <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>tick(millis?: number)</strong>
+<br />
+Run the fakeAsync <code class="language-plaintext highlighter-rouge">tick</code> function and call <code class="language-plaintext highlighter-rouge">detectChanges()</code>:</p>
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">should work with tick</span><span class="dl">"</span><span class="p">,</span> <span class="nx">fakeAsync</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">spectator</span> <span class="o">=</span> <span class="nx">createComponent</span><span class="p">(</span><span class="nx">ZippyComponent</span><span class="p">);</span>
+  <span class="nx">spectator</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">updatedAsync</span><span class="p">).</span><span class="nx">toBeFalsy</span><span class="p">();</span>
+  <span class="nx">spectator</span><span class="p">.</span><span class="nx">tick</span><span class="p">(</span><span class="mi">6000</span><span class="p">);</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">component</span><span class="p">.</span><span class="nx">updatedAsync</span><span class="p">).</span><span class="nx">not</span><span class="p">.</span><span class="nx">toBeFalsy</span><span class="p">();</span>
+<span class="p">}));</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h1 id="testing-services-with-spectator">Testing Services with Spectator</h1>
+
+<p>To test services with Spectator, import the <code class="language-plaintext highlighter-rouge">createServiceFactory</code> and <code class="language-plaintext highlighter-rouge">SpectatorService</code> functions, and then create a service factory using the <code class="language-plaintext highlighter-rouge">createServiceFactory</code> function.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">createServiceFactory</span><span class="p">,</span> <span class="nx">SpectatorService</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ngneat/spectator</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">AuthService</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">auth.service.ts</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="dl">"</span><span class="s2">AuthService</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="na">spectator</span><span class="p">:</span> <span class="nx">SpectatorService</span><span class="o">&lt;</span><span class="nx">AuthService</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">createService</span> <span class="o">=</span> <span class="nx">createServiceFactory</span><span class="p">(</span><span class="nx">AuthService</span><span class="p">);</span>
+
+  <span class="nx">beforeEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">spectator</span> <span class="o">=</span> <span class="nx">createService</span><span class="p">()));</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">should not be logged in</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">spectator</span><span class="p">.</span><span class="nx">service</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">()).</span><span class="nx">toBeFalsy</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">createService</code> function returns <code class="language-plaintext highlighter-rouge">SpectatorService</code> with the following properties:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">service</code> - Get an instance of the service</li>
+  <li><code class="language-plaintext highlighter-rouge">inject()</code> - A proxy for Angular <code class="language-plaintext highlighter-rouge">TestBed.inject()</code></li>
+</ul>
+
+<p><strong>For detailed examples, further information and other use cases, please refer to the official Spectator documentation:</strong> <a href="https://github.com/ngneat/spectator/">https://github.com/ngneat/spectator</a></p>
+
+<h1 id="generating-spec-files-with-angular-cli-and-spectator-schematics">Generating Spec Files with Angular CLI and Spectator Schematics</h1>
+
+<p>Creating spec files with Spectator configuration is made simple with the provided schematics.</p>
+
+<p>To generate spec files:</p>
+
+<p>For a component spec, run: <code class="language-plaintext highlighter-rouge">ng g cs example-component</code></p>
+
+<p>For a service spec, run: <code class="language-plaintext highlighter-rouge">ng g ss example-service</code></p>
+
+<p>For a directive spec, run: <code class="language-plaintext highlighter-rouge">ng g ds example-directive</code></p>
+
+<h1 id="advantages-of-using-spectator">Advantages of Using Spectator</h1>
+
+<p>Testing can sometimes be more challenging and time-consuming than the actual implementation. Configuring TestBed correctly may even take longer than writing the tests themselves. Spectator significantly improves the developer experience by making it easier and faster to write tests. As a result, it helps overcome the tendency to skip writing tests. Spectator achieves this by:</p>
+
+<ul>
+  <li>Simplifying test spec configuration by providing readable and concise API which helps to reduce boilerplate code.</li>
+  <li>Improving readability and maintainability by providing a set of expressive and easier to understand custom matchers and assertions.</li>
+  <li>Making mocking and spying easier.</li>
+</ul>
+
+<h1 id="drawbacks-of-using-spectator">Drawbacks of Using Spectator</h1>
+
+<ul>
+  <li>Learning curve might be considered steep.</li>
+  <li>Official documentation might be considered relatively limited.</li>
+  <li>Compatibility issues may arise with newer Angular version even though it might be temporary.</li>
+</ul>
+
+<h1 id="migrating">Migrating</h1>
+
+<p>Spectator can be adopted gradually since it is not a complete replacement rather an enhancement. Whenever Spectator test suits are started to be written, these test suits can be kept in a separate file with <code class="language-plaintext highlighter-rouge">spectator</code> suffix. For example, <code class="language-plaintext highlighter-rouge">transactions.component.spectator.spec.ts</code>. Once the project is fully migrated to spectator, the <code class="language-plaintext highlighter-rouge">spectator</code> suffix can be omitted from all test file names.</p>
+
+<p>For integration tests, there is also an approach that to create a separate test file with <code class="language-plaintext highlighter-rouge">integration</code> suffix to keep integration tests separate from rest of the test suites. For example, <code class="language-plaintext highlighter-rouge">transactions.component.integration.spec.ts</code>.</p>
+
+<p>With a proper migration plan in place, developers can smoothly transition from their existing testing setup to Spectator without disrupting the project.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>By leveraging the power of Spectator, developers can enjoy a more efficient and user-friendly testing experience. With its simplified test spec configuration, improved readability, and enhanced mocking capabilities, Spectator is a valuable addition to any Angular project. Although it comes with a learning curve, the advantages it offers make it a worthwhile investment for improving your testing workflow. For developers looking to streamline their Angular testing process, Spectator is a powerful and versatile tool that can help you achieve your goals.</p>
+
+<h1 id="references-and-additional-resources">References and Additional Resources</h1>
+
+<ul>
+  <li><a href="https://github.com/ngneat/spectator">Spectator Documentation</a></li>
+  <li><a href="https://testing-angular.com/testing-components-with-spectator/#testing-components-with-spectator">testing-angular.com</a></li>
+  <li>An in depth comparison between regular test specs and spectator test specs can be found in this open-source project: <a href="https://github.com/9elements/angular-workshop">https://github.com/9elements/angular-workshop</a>. <br /> Each test spec in this project has a jasmine and a spectator alternative allowing to make comparison as well as serving as a reference for additional use cases.</li>
+</ul>]]></content><author><name>Utku</name></author><category term="Frontend" /><category term="Web" /><category term="Angular" /><category term="testing" /><summary type="html"><![CDATA[A robust testing library for unit testing]]></summary></entry><entry><title type="html">Code Coverage for Unit Tests</title><link href="https://backbase.github.io/2023/10/06/code-coverage" rel="alternate" type="text/html" title="Code Coverage for Unit Tests" /><published>2023-10-06T00:00:00+00:00</published><updated>2023-10-06T00:00:00+00:00</updated><id>https://backbase.github.io/2023/10/06/code-coverage</id><content type="html" xml:base="https://backbase.github.io/2023/10/06/code-coverage"><![CDATA[<p><img src="/assets/images/post/code-coverage/code_coverage.png" alt="" /></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Code coverage is the percentage of lines of your code that is being executed by your tests. This is an indicative of how safe your code is and how bug proof it can be while refactoring or adding new features. Code coverage helps in the easy maintenance of the codebase, exposure of bad code, and results in faster time to market.</p>
+
+<h1 id="how-do-we-measure-it">How do we measure it?</h1>
+
+<p>The formula to calculate code coverage can vary. <a href="https://www.sonarsource.com/">Sonar</a> does calculate it as:</p>
+
+<p><code class="language-plaintext highlighter-rouge">Coverage = (CT + CF + LC)/(2*B + EL)</code></p>
+
+<p>Where:</p>
+<ul>
+  <li>CT = conditions that have been evaluated to ‘true’ at least once</li>
+  <li>CF = conditions that have been evaluated to ‘false’ at least once</li>
+  <li>LC = covered lines = lines_to_cover - uncovered_lines</li>
+  <li>B = total number of conditions</li>
+  <li>EL = total number of executable lines (lines_to_cover)</li>
+</ul>
+
+<p>It can also be much simpler, such as:</p>
+
+<p><code class="language-plaintext highlighter-rouge">Coverage = (LC / EL) * 100</code></p>
+
+<h1 id="coverage-criteria">Coverage Criteria</h1>
+
+<p>To measure the lines of code that are actually exercised by test runs, various criteria are taken into consideration. We have outlined below a few critical coverage criteria that companies use.</p>
+
+<ol>
+  <li>
+    <p><strong>Function Coverage</strong>: The functions in the source code that are called and executed at least once.</p>
+  </li>
+  <li>
+    <p><strong>Statement Coverage</strong>: The number of statements that have been successfully validated in the source code.</p>
+  </li>
+  <li>
+    <p><strong>Path Coverage</strong>: The flows containing a sequence of controls and conditions that have worked well at least once.</p>
+  </li>
+  <li>
+    <p><strong>Branch or Decision Coverage</strong>: The decision control structures (loops, for example) that have executed fine.</p>
+  </li>
+  <li>
+    <p><strong>Condition Coverage</strong>: The Boolean expressions that are validated and that executes both TRUE and FALSE as per the test runs.</p>
+  </li>
+</ol>
+
+<h1 id="what-to-test">What to test?</h1>
+
+<p>When making your test strategy you should aim to set up your team for success by understanding what is important to test in your project and what is not. This should be discussed before undertaking any new feature work, and should be part of the DoD (definition of done) of a user story.</p>
+
+<p><strong>Keep in mind the following:</strong></p>
+
+<blockquote>
+  <p>You should write unit test to all the business logic of features developed by your team, such as view model methods, use cases and utility classes should be tested. Etc.</p>
+</blockquote>
+
+<h1 id="setting-a-code-coverage-target">Setting a code coverage target</h1>
+
+<p>It’s worth to start by mentioning that 100% of code coverage is most of times both an unrealistic and pointless goal. Often meeting this target would not be possible because of time constraints, as well as due to the fact that there are components that simply cannot be tested (private components or elements would be tested on UI test). And, spending time and effort on ways to achieve a 100% coverage would not add to the project quality. <strong>Having 100% covered code doesn’t mean you have 100% secure tested code.</strong> You should take in consideration the quality of the test being added.</p>
+
+<p>When setting a code coverage target it is important to take into account benefit vs effort. This means that you choose the target to improve the quality of the codebase, not to please a certain metric. Discuss with your team some of the following questions.</p>
+
+<ul>
+  <li><em>Is it worth the effort of aiming for a high code coverage?</em></li>
+  <li><em>Does the client have the time allocation for implementing those tests?</em></li>
+  <li><em>What code coverage criteria make sense to my team?</em></li>
+</ul>
+
+<p>With that in mind, we recommend you to follow a guideline rather than a specific number.</p>
+
+<table style="width:100%">
+  <tr>
+    <th class="coverage">Code coverarge (%)</th>
+    <th class="guideline">Guideline</th>
+  </tr>
+  <tr>
+    <td>0 - 20</td>
+    <td>Not acceptable</td>
+  </tr>
+  <tr>
+    <td>20-40</td>
+    <td>Bare minimum</td>
+  </tr>
+  <tr>
+    <td>40-60</td>
+    <td>Normal</td>
+  </tr>
+  <tr>
+    <td>60-80</td>
+    <td>Good</td>
+  </tr>
+  <tr>
+    <td>80-100</td>
+    <td>Outstanding</td>
+  </tr>
+</table>
+
+<style>
+table, th, td {
+  border:1px solid black;
+  width: 100%;
+  table-layout:fixed;
+}
+th.coverage {
+  width: 50%
+}
+</style>
+
+<p><br /><br /></p>]]></content><author><name>Rafael Nascimento</name></author><category term="QA" /><category term="QA" /><category term="Mobile" /><category term="Android" /><category term="iOS" /><category term="Tests" /><summary type="html"><![CDATA[Code coverage helps in the easy maintenance of the codebase, exposure of bad code, and results in faster time to market.]]></summary></entry><entry><title type="html">Installing HMS Core in Android Studio Emulator</title><link href="https://backbase.github.io/2023/09/30/installing-hms-core-in-as-emulator" rel="alternate" type="text/html" title="Installing HMS Core in Android Studio Emulator" /><published>2023-09-30T00:00:00+00:00</published><updated>2023-09-30T00:00:00+00:00</updated><id>https://backbase.github.io/2023/09/30/installing-hms-core-in-as-emulator</id><content type="html" xml:base="https://backbase.github.io/2023/09/30/installing-hms-core-in-as-emulator"><![CDATA[<p><img src="/assets/images/post/hms-core/hms_core_banner.png" alt="" /></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>This is a quick guide with few and simple instructions on installing HMS Core in Android Studio Emulator. If you want to test your HMS implementation and you do not have a Huawei device, this is your best option.</p>
+
+<h1 id="steps">Steps</h1>
+
+<p><strong>1.</strong> Create a new device with only Google APIs, no Play Store. For this example, a Pixel 4a with API 31 is being used.</p>
+
+<p>Choose a device without Play Store.</p>
+
+<p><img src="/assets/images/post/hms-core/hms_core_step_1.png" alt="" /></p>
+
+<p>Choose a version of Android with Google APIs.</p>
+
+<p><img src="/assets/images/post/hms-core/hms_core_step_1.1.png" alt="" /></p>
+
+<p><strong>2.</strong> Install the Huawei AppGallery APK</p>
+
+<p>You can either Google or install it from the <a href="http://consumer.huawei.com/en/mobileservices/appgallery/">Huawei Consumer website</a>.</p>
+
+<p>Download the AppGallery APK.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/hms-core/hms_core_step_2.png" alt="" style="max-height:600px" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<p>Allow installing unknown apps in Chrome browser and install the app.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/hms-core/hms_core_step_2.1.png" alt="" style="max-height:600px" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<p><strong>3.</strong> Install HMS Core.</p>
+
+<p>Open the AppGallery, you will be prompted to install HMS Core. Proceed with the installation.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/hms-core/hms_core_step_3.png" alt="" style="max-height:600px" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<p><strong>4.</strong> Allow the installation of unknown apps.</p>
+
+<p>Once the HMS Core has been downloaded, you need to allow installing unknown apps from AppGallery to install it.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/hms-core/hms_core_step_4.png" alt="" style="max-height:600px" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<p><strong>5.</strong> Verify it all went well.</p>
+
+<p>Press “Done”, then press the back button, you will see the AppGallery login screen.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/hms-core/hms_core_step_5.png" alt="" style="max-height:600px" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<p>Verify that the HMS Core app is installed.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/hms-core/hms_core_step_6.png" alt="" style="max-height:600px" />
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Installing HMS Core in Android Studio Emulator is straight forward and now you can use its rich array of open device and cloud capabilities.</p>]]></content><author><name>Edgar Garcia Barragan</name></author><category term="Android" /><category term="Mobile" /><category term="Android" /><category term="Huawei" /><category term="HMS" /><summary type="html"><![CDATA[If you want to test your HMS implementation and you do not have a Huawei device, it is easy to mock it and test these services in the Android Studio emulator.]]></summary></entry><entry><title type="html">The Better Way with Ruby Gems</title><link href="https://backbase.github.io/2023/09/29/the-better-way-ruby-gems" rel="alternate" type="text/html" title="The Better Way with Ruby Gems" /><published>2023-09-29T00:00:00+00:00</published><updated>2023-09-29T00:00:00+00:00</updated><id>https://backbase.github.io/2023/09/29/the-better-way-ruby-gems</id><content type="html" xml:base="https://backbase.github.io/2023/09/29/the-better-way-ruby-gems"><![CDATA[<p><img src="/assets/images/post/ruby-gems/the_better_way_ruby_gems.png" alt="" /></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Working with an iOS project involves the usage of tools such as Cocoapods, Slather, SwiftLint, Fastlane and more. Ideally, all engineers working on a particular codebase - as well as the CI machine it runs on - should maintain the same versions of these tools.</p>
+
+<p>Some of these tools also use Ruby, and the version of Ruby installed in each one’s machine might lead to strange behaviours.</p>
+
+<p>Consider, for a moment, you’ve aligned the versions of all the tools above, including Ruby itself, between everyone working on <code class="language-plaintext highlighter-rouge">CodebaseA</code>. What if you need to also work on <code class="language-plaintext highlighter-rouge">CodebaseB</code>, owned by another team possibly in another department? The chances of them using the exact same versions for all this tooling is very minimal.</p>
+
+<h1 id="solution">Solution</h1>
+
+<p>A solution to maintain all these alignments, regardless of how many projects you’re working on, without changes to your global setup. A solution where, for every project, you can make use of different versions of Ruby, Cocoapods, Fastlane etc. Only by making use of:</p>
+
+<ul>
+  <li>Ruby Gems; and</li>
+  <li><a href="https://github.com/rbenv/rbenv">rbenv</a> - A Ruby version manager tool.</li>
+</ul>
+
+<h1 id="steps">Steps</h1>
+
+<p><strong><em>Versions specified here are illustrative. Choose your versions carefully in accordance with your team.</em></strong></p>
+
+<h3 id="1-multiple-ruby-versions"><strong>1.</strong> Multiple Ruby versions.</h3>
+
+<p><strong>1.1</strong> Install RBENV</p>
+
+<p>RBENV is a Ruby version manager tool that allows us to install multiple versions of Ruby and set a specific version to a particular folder/repo/codebase. This way multiple versions can exist and multiple projects can use their own version if necessary.</p>
+
+<p>If you don’t have RBENV installed, ensure the following:</p>
+
+<p><strong><em>We recommend using homebrew, as it’s a package manager commonly used.</em></strong></p>
+
+<p>Simply run the following command in your Terminal:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>rbenv
+</code></pre></div></div>
+
+<p>Once installed, we have to ensure it will be initiated properly. Add the following line to your <code class="language-plaintext highlighter-rouge">~/.zshrc</code> or <code class="language-plaintext highlighter-rouge">~/.bashrc</code> file:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="s2">"</span><span class="si">$(</span>rbenv init - <span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Save the file, restart your Terminal or run source <code class="language-plaintext highlighter-rouge">~/.zshrc</code> or source <code class="language-plaintext highlighter-rouge">~/.bashrc</code> (depending on which Shell you’re using).</p>
+
+<p>Once you first install <code class="language-plaintext highlighter-rouge">rbenv</code>, the only version of Ruby available is the <code class="language-plaintext highlighter-rouge">system</code> version, which is whatever Ruby has been installed as system default. You can see the currently installed and available versions by running:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv versions
+</code></pre></div></div>
+
+<p><strong>1.2</strong> Installing and Locking Ruby versions</p>
+
+<p>A Ruby version is locked for a particular folder/repository with the presence of a file named <code class="language-plaintext highlighter-rouge">.ruby-version</code>, which contains solely the version of Ruby expected to be used, as in:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2.7.6
+</code></pre></div></div>
+
+<p><strong><em>Simply stating a Ruby version in this file will require it to be installed, but won’t install it for you. Creating or updating this file doesn’t have to be done manually. The following steps will guide you on how to set it up.</em></strong></p>
+
+<p>As an example, we’ll lock the Ruby version for an iOS repository, called <code class="language-plaintext highlighter-rouge">PeachTreeBank-iOS</code>. Assume there is no current version lock for Ruby, and there is only the system <code class="language-plaintext highlighter-rouge">version</code> installed.</p>
+
+<p>You can check the versions available for install with:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv <span class="nb">install</span> <span class="nt">--list</span>
+</code></pre></div></div>
+
+<p>For me, the output of this command is:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2.6.10
+2.7.6
+3.0.4
+3.1.2
+jruby-9.3.6.0
+mruby-3.1.0
+picoruby-3.0.0
+rbx-5.0
+truffleruby-22.2.0
+truffleruby+graalvm-22.2.0
+
+Only latest stable releases <span class="k">for </span>each Ruby implementation are shown.
+Use <span class="s1">'rbenv install --list-all / -L'</span> to show all <span class="nb">local </span>versions.
+</code></pre></div></div>
+
+<p><strong><em>Notice the message at the bottom. These are stable releases and we recommend you choose one of them. For a bigger list, containing previews and unstable versions, use –list-all.</em></strong></p>
+
+<p>We can proceed to install version <code class="language-plaintext highlighter-rouge">2.7.6</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv <span class="nb">install </span>2.7.6
+</code></pre></div></div>
+
+<p><strong><em>Installing a Ruby version is only needed once. It is now available in your machine through rbenv, it will now appear when you run the command rbenv versions.</em></strong></p>
+
+<p>Now, with multiple versions available, you can specify which version this local folder/repository should use. Inside the folder, in Terminal, run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv <span class="nb">local</span> &lt;VERSION&gt;
+</code></pre></div></div>
+
+<p>In this case:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rbenv <span class="nb">local </span>2.7.6
+</code></pre></div></div>
+
+<p>This will create the file <code class="language-plaintext highlighter-rouge">.ruby-version</code>. This file should be committed, so that it enforces this version for everyone else, including your CI machine.</p>
+
+<p><strong><em>Later, if you want to change the version, make sure it’s installed with <code class="language-plaintext highlighter-rouge">rbenv</code> and run the <code class="language-plaintext highlighter-rouge">local</code> command again, i.e: <code class="language-plaintext highlighter-rouge">rbenv local 3.1.2</code>.</em></strong></p>
+
+<h3 id="2-using-ruby-gems"><strong>2.</strong> Using Ruby Gems.</h3>
+
+<p>You’ve managed to have multiple versions of Ruby and set different versions for different repositories. Now, we’re set to use Ruby Gems.</p>
+
+<p>Ruby Gems is a package manager, responsible for distributing Ruby programs and libraries. Programs such as Cocoapods and Fastlane.</p>
+
+<p>It’ll facilitate our work by not relying on the versions of these tools we’ve installed in our machines directly, but have Ruby Gems handle it for us. This comes with the same benefit from the section above, the ability to maintain specific versions of it for different repositories.</p>
+
+<p><strong>2.1</strong> Your repository already has a <code class="language-plaintext highlighter-rouge">Gemfile</code>.</p>
+
+<p>If your repository already has a file named <code class="language-plaintext highlighter-rouge">Gemfile</code>, it already uses Ruby Gems. You can simply specify the Gems you want to use in this file.</p>
+
+<p><strong>2.2.</strong> Your repository doesn’t have a <code class="language-plaintext highlighter-rouge">Gemfile</code>.</p>
+
+<p>Your repository doesn’t currently have a file named <code class="language-plaintext highlighter-rouge">Gemfile</code>. We’ll create one and proceed to install these gems.</p>
+
+<p>It’s similar to a <code class="language-plaintext highlighter-rouge">Podfile</code>, where you’ll specify the dependencies and, optionally, their versions, with a certain constraint.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> <span class="s1">'https://rubygems.org'</span>
+
+gem <span class="s1">'cocoapods'</span>, <span class="s1">'1.11.3'</span>
+gem <span class="s1">'cocoapods-art'</span>
+gem <span class="s1">'fastlane'</span>
+</code></pre></div></div>
+
+<p>The following will install <code class="language-plaintext highlighter-rouge">cocoapods</code> version <code class="language-plaintext highlighter-rouge">1.11.3</code> and the latest version of <code class="language-plaintext highlighter-rouge">cocoapods-art</code> that is compatible with cocoapods.</p>
+
+<p>Save your file and run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">install</span>
+</code></pre></div></div>
+
+<p><strong><em>You might have troubles with this installation. If that happens, you can specify a local path for bundler to install with: <code class="language-plaintext highlighter-rouge">bundle config set --local path 'vendor/bundle'</code>
+Then proceed to run <code class="language-plaintext highlighter-rouge">bundle install</code> again.</em></strong></p>
+
+<p><strong><em>Once Ruby Gems are installed you’ll also have a <code class="language-plaintext highlighter-rouge">Gemfile.lock</code>, this file specifies the versions used during the latest installation/update and makes sure it locks to those versions for whoever is installing those dependencies, as long as they match the version constraints specified in the <code class="language-plaintext highlighter-rouge">Gemfile</code>.</em></strong></p>
+
+<p><strong><em><code class="language-plaintext highlighter-rouge">Gemfile.lock</code> should also be committed.</em></strong></p>
+
+<h4 id="3-running-your-tools"><strong>3.</strong> Running your tools.</h4>
+
+<p>By now your project has a locked version of Ruby, which everyone can install without conflicting with other setups/projects. And you have most of the tools you need, such as Cocoapods and Fastlane, installed in a similar manner, as Ruby Gems.</p>
+
+<p>You can run these tools, within the folder/repository of your project, with <code class="language-plaintext highlighter-rouge">bundle exec</code>.</p>
+
+<p>Instead of running:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pod <span class="nb">install
+</span>fastlane &lt;YOUR-LANE&gt;
+</code></pre></div></div>
+
+<p>Run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>pod <span class="nb">install
+</span>bundle <span class="nb">exec </span>fastlane &lt;YOUR-LANE&gt;
+</code></pre></div></div>
+
+<p>–</p>
+
+<p>You can make this easier by creating an alias in your <code class="language-plaintext highlighter-rouge">~/.zshrc</code> or <code class="language-plaintext highlighter-rouge">~/.bashrc</code> file:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">alias </span><span class="nv">bx</span><span class="o">=</span><span class="s1">'bundle exec'</span>
+</code></pre></div></div>
+
+<p>From now on, the commands above could be used as:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bx pod <span class="nb">install
+</span>bx fastlane &lt;YOUR-LANE&gt;
+</code></pre></div></div>]]></content><author><name>Arthur Alves</name></author><category term="mobile" /><category term="Mobile" /><category term="Android" /><category term="iOS" /><category term="Ruby" /><summary type="html"><![CDATA[Using Ruby Gems to ensure that everyone in the project shares the same setup.]]></summary></entry><entry><title type="html">Angular standalone components</title><link href="https://backbase.github.io/2023/07/03/angular-standalone-components" rel="alternate" type="text/html" title="Angular standalone components" /><published>2023-07-03T00:00:00+00:00</published><updated>2023-07-03T00:00:00+00:00</updated><id>https://backbase.github.io/2023/07/03/angular-standalone-components</id><content type="html" xml:base="https://backbase.github.io/2023/07/03/angular-standalone-components"><![CDATA[<p><img src="/assets/images/post/angular-standalone-components.png" alt="" /></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Until now, developers have been using NgModules to specify the components, directives, pipes, etc that are available for use in templates, however, after the release of Angular <a href="https://angular.io/guide/standalone-components" title="https://angular.io/guide/standalone-components">standalone components</a>, you don’t need to do this anymore in the NgModules.
+Angular standalone feature was fully released with Angular v15. Angular <a href="https://angular.io/guide/standalone-components" title="https://angular.io/guide/standalone-components">standalone components</a> are independent and self-contained building blocks in an Angular app which can be used to independently import the dependencies required for its functionality.
+Although the standalone components are not mandatory, and there are no strict rules for using them, Angular architects recommend using the Standalone feature for the newly created Angular components.</p>
+
+<p>To designate a component, directive, or a pipe as a standalone component, you must mark it as <code class="language-plaintext highlighter-rouge">standalone: true</code>. The component does not have to be declared or imported in <code class="language-plaintext highlighter-rouge">NgModule</code>, and you can import all the dependencies directly in the component itself, thus eliminating the use of <code class="language-plaintext highlighter-rouge">NgModule</code> entirely.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+   <span class="na">selector</span><span class="p">:</span> <span class="dl">'</span><span class="s1">...</span><span class="dl">'</span><span class="p">,</span>
+   <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">...</span><span class="dl">'</span><span class="p">,</span>
+   <span class="na">styleUrls</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">...</span><span class="dl">'</span><span class="p">],</span>
+   <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+   <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
+     <span class="nx">NgIf</span><span class="p">,</span>
+     <span class="nx">NgFor</span><span class="p">,</span>
+     <span class="nx">AsyncPipe</span><span class="p">,</span>
+     <span class="p">...</span>
+   <span class="p">],</span>
+ <span class="p">})</span>
+ <span class="k">export</span> <span class="kd">class</span> <span class="nx">FooBarComponent</span> <span class="p">{</span>
+</code></pre></div></div>
+
+<h1 id="generate-a-standalone-component-via-the-angular-cli">Generate a standalone component via the Angular CLI</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ng generate component --standalone account-statements
+</code></pre></div></div>
+
+<p>A component generated with <code class="language-plaintext highlighter-rouge">--standalone</code> flag is not added to <code class="language-plaintext highlighter-rouge">NgModule</code> and contains default imports such as <code class="language-plaintext highlighter-rouge">CommonModule</code> to get started with the component right away.</p>
+
+<h1 id="adopt-standalone-components-incrementally">Adopt standalone components incrementally</h1>
+
+<p>Standalone components can be seamlessly combined with existing modules. They are easy to implement, and can be adopted incrementally into an app. A <code class="language-plaintext highlighter-rouge">standalone</code> component, pipe or directive can also be imported into an existing <code class="language-plaintext highlighter-rouge">NgModule</code> configuration, applied incrementally for complex apps, so that you can ensure that there are no breaking changes.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">@</span><span class="nd">NgModule</span><span class="p">({</span>
+   <span class="na">declarations</span><span class="p">:</span> <span class="p">[...],</span>
+   <span class="na">exports</span><span class="p">:</span> <span class="p">[...]</span>
+   <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
+     <span class="nx">AccountDetailsComponent</span><span class="p">,</span> <span class="c1">// This is a standalone component</span>
+     <span class="nx">CommonModule</span><span class="p">,</span>
+     <span class="nx">RouterModule</span><span class="p">.</span><span class="nx">forChild</span><span class="p">(</span><span class="nx">routes</span><span class="p">),</span>
+     <span class="p">.....</span>
+   <span class="p">],</span>
+ <span class="p">})</span>
+</code></pre></div></div>
+
+<h1 id="migrate-a-component-to-a-standalone">Migrate a component to a Standalone</h1>
+
+<p>You can convert a component in one of the following ways:</p>
+
+<ul>
+  <li>
+    <p>Using the <a href="https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone" title="https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone">schematics</a></p>
+  </li>
+  <li>
+    <p>Manually</p>
+  </li>
+</ul>
+
+<h2 id="migrate-to-standalone-via-schematics">Migrate to Standalone via schematics</h2>
+
+<p>To migrate standalone components, you must satisfy the <a href="https://angular.io/guide/standalone-migration#prerequisites">prerequisites from Angular</a>.
+Angular provides a <a href="https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone" title="https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone">schematic to migrate</a> existing Angular apps that use Angular <code class="language-plaintext highlighter-rouge">v15</code> or later, to use the standalone features.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ng generate @angular/core:standalone
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">ng generate @angular/core:standalone</code> should be executed at the root of the project.</p>
+
+<p>Use this as follows:</p>
+
+<ol>
+  <li>
+    <p>Run <code class="language-plaintext highlighter-rouge">ng generate @angular/core:standalone</code> to convert all components, directives and pipes to standalone. This will try to convert and migrate all the files to use standalone features.</p>
+  </li>
+  <li>
+    <p>Run <code class="language-plaintext highlighter-rouge">ng generate @angular/core:standalone</code> again to remove unnecessary NgModule classes. Empty <code class="language-plaintext highlighter-rouge">NgModules</code> are searched for removed them from the app.</p>
+  </li>
+  <li>
+    <p>Run <code class="language-plaintext highlighter-rouge">ng generate @angular/core:standalone</code> a third time to bootstrap the project using standalone APIs. The schematics change how the app is bootstrapped in the <code class="language-plaintext highlighter-rouge">main.ts</code> file.</p>
+  </li>
+</ol>
+
+<p><em><strong>Note:</strong></em></p>
+
+<ul>
+  <li>To avoid any breaking changes to an app with the standalone feature, in Angular, most of the <code class="language-plaintext highlighter-rouge">NgModule</code> or other files, so you might have to remove and migrated some of the files manually.</li>
+</ul>
+
+<h2 id="migrate-a-component-manually">Migrate a component manually</h2>
+<p>The steps below shows how to migrate an existing component to a standalone component</p>
+
+<ol>
+  <li>
+    <p>Mark the component as standalone by adding <code class="language-plaintext highlighter-rouge">standalone: true</code> as the meta data in the <code class="language-plaintext highlighter-rouge">@Component</code> directive.</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+    <span class="p">...</span>
+  <span class="o">+</span>  <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Import all the <code class="language-plaintext highlighter-rouge">dependencies</code> in the standalone component from <code class="language-plaintext highlighter-rouge">ngModules</code></p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+    <span class="p">...</span>
+    <span class="na">standalone</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="o">+</span>  <span class="na">imports</span><span class="p">:</span> <span class="p">[</span>
+  <span class="o">+</span>   <span class="nx">TransactionsAccountSelectComponent</span><span class="p">,</span> <span class="c1">//another standalone component</span>
+  <span class="o">+</span>   <span class="nx">HeaderModule</span><span class="p">,</span> <span class="c1">// non-standalone component can be imported like this</span>
+  <span class="o">+</span>   <span class="nx">NgIf</span><span class="p">,</span>
+  <span class="o">+</span>   <span class="nx">NgFor</span><span class="p">,</span>
+  <span class="o">+</span>   <span class="nx">AsyncPipe</span><span class="p">,</span>
+  <span class="o">+</span>   <span class="nx">JsonPipe</span><span class="p">,</span>
+  <span class="o">+</span>  <span class="p">]</span>
+  <span class="p">})</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>If the component has <a href="https://angular.io/guide/standalone-components#providing-services-to-a-subset-of-routes" title="https://angular.io/guide/standalone-components#providing-services-to-a-subset-of-routes">child routes</a>, create and export <code class="language-plaintext highlighter-rouge">routing.ts</code>.</p>
+  </li>
+  <li>
+    <p>Delete the <code class="language-plaintext highlighter-rouge">NgModule</code> and the routing configurations.</p>
+  </li>
+</ol>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/angular-standalone-components-3.png" alt="" />
+  <figcaption class="figure-caption">Migrate a component to a Standalone</figcaption>
+</figure>
+
+<h1 id="differences-between-using-ngmodules-and-standalone-feature">Differences between using NgModules and Standalone feature</h1>
+
+<h2 id="bootstrapping-an-app">Bootstrapping an app</h2>
+
+<p>Once the <code class="language-plaintext highlighter-rouge">AppComponent</code> is standalone you can get rid of the <code class="language-plaintext highlighter-rouge">AppModules</code> completely and use<br />
+<a href="https://angular.io/api/platform-browser/bootstrapApplication" title="https://angular.io/api/platform-browser/bootstrapApplication">bootstrapApplication</a> API to bootstrap the application in <code class="language-plaintext highlighter-rouge">src/main.ts</code> file and import the dependencies directly in the <code class="language-plaintext highlighter-rouge">AppComponent</code>, for more information see <a href="https://angular.io/guide/standalone-components#bootstrapping-an-application-using-a-standalone-component" title="https://angular.io/guide/standalone-components#bootstrapping-an-application-using-a-standalone-component">here</a>.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/angular-standalone-components-1.png" alt="" />
+  <figcaption class="figure-caption">Bootstrapping an Application</figcaption>
+</figure>
+
+<h2 id="changes-in-the-routing-configuration">Changes in the Routing configuration</h2>
+
+<p>With standalone feature in place, <code class="language-plaintext highlighter-rouge">NgModule</code> is no long required for many lazy loading scenarios.
+You can simply lazy load a standalone component by exporting the routes and using <code class="language-plaintext highlighter-rouge">loadComponent</code> instead of <code class="language-plaintext highlighter-rouge">loadChildren</code> and include them in <code class="language-plaintext highlighter-rouge">src/main.ts</code> files using <code class="language-plaintext highlighter-rouge">provideRouter()</code> from <code class="language-plaintext highlighter-rouge">@angular/router</code> as follows.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/angular-standalone-components-2.png" alt="" />
+  <figcaption class="figure-caption">Changes in the Routing configuration</figcaption>
+</figure>
+
+<h2 id="specs-for-standalone-components">Specs for Standalone components</h2>
+
+<p>The TestBed configuration now doesn’t needs to import all the dependencies used by the component<br />
+you are testing and hence reduces the boilerplate code in the spec file.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/angular-standalone-components-4.png" alt="" />
+  <figcaption class="figure-caption">Specs for Standalone component</figcaption>
+</figure>
+
+<p><em><strong>NOTE:</strong></em> After the migration the specs might be broken and might need manual fixes</p>
+
+<h1 id="improvements-on-performance-using-standalone-feature">Improvements on performance using standalone feature</h1>
+
+<p>Here are a few ways in which Angular standalone components can contribute to performance improvements:</p>
+
+<ul>
+  <li>
+    <p><strong>Reduced bundle size:</strong> You can reduce the overall bundle size of your app by using Angular’s standalone feature and eliminating NgModules and the boilerplate code that comes with it.</p>
+  </li>
+  <li>
+    <p><strong>Isolation and lazy loading:</strong> You can enhance the performance by encapsulating functionality within standalone components which helps to load all the resource only when it is lazy loaded.</p>
+  </li>
+  <li>
+    <p><strong>Reusability:</strong> Angular standalone components are self-contained, independent, and can be re-utilized across the app.</p>
+  </li>
+</ul>
+
+<h1 id="bundle-size">Bundle size</h1>
+
+<p>The actual impact on bundle size will depend on the complexity and size of your Angular component as well as the specific dependencies it requires. The difference in bundle size was not that huge (about 8.5 kb) for a small app which is also mentioned in the table below, but it might make a big difference with the large apps. While using Angular standalone components can reduce bundle size, other factors such as code optimization, tree shaking, and lazy loading can also play a role in optimizing bundle size.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>App type</th>
+      <th>Bundle size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Non Standalone app</td>
+      <td>7648528 bytes</td>
+    </tr>
+    <tr>
+      <td>Standalone app</td>
+      <td>7640882 bytes</td>
+    </tr>
+  </tbody>
+</table>]]></content><author><name>Ankit Pant</name></author><category term="Frontend" /><category term="Web" /><category term="Angular" /><category term="standalone" /><summary type="html"><![CDATA[A simplified way to build Angular applications]]></summary></entry><entry><title type="html">Hacking Netflix Eureka</title><link href="https://backbase.github.io/2023/05/16/hacking-netflix-eureka" rel="alternate" type="text/html" title="Hacking Netflix Eureka" /><published>2023-05-16T00:00:00+00:00</published><updated>2023-05-16T00:00:00+00:00</updated><id>https://backbase.github.io/2023/05/16/hacking-netflix-eureka</id><content type="html" xml:base="https://backbase.github.io/2023/05/16/hacking-netflix-eureka"><![CDATA[<p><img src="/assets/images/post/hacking-netflix-eureka/hacking-netflix-eureka.png" alt="" /></p>
+
+<p>Eureka is a service registry used to make micro-services to find each other. What can go wrong if the registry server becomes available from the internet? What if a malicious user registers his new micro-service?</p>
+
+<p>It looks like the registry can become a point of failure from a security point of view. So that means we should properly secure it. But unfortunately, it is not always the case.</p>
+
+<p>In this short research, you will look at Eureka from the attacker’s perspective and learn how to exploit SSRF and hijack internal infra’s or victims’ traffic. Both attack vectors are performed on the application layer. That means we can easily mitigate it on network and transport layers. We will talk about defense at the end.</p>
+
+<h2 id="whose-registry-is-this"><em>Whose Registry is this?</em></h2>
+
+<p>The official description for Netflix Eureka, as per their <a href="https://github.com/Netflix/eureka">GitHub repository</a>:</p>
+
+<p><em>“Eureka is a RESTful (Representational State Transfer) service that is primarily used in the AWS cloud for the purpose of discovery, load balancing and failover of middle-tier servers. It plays a critical role in Netflix mid-tier infra.”</em></p>
+
+<h2 id="what-is-out-there">What is out there</h2>
+
+<p>Talking to the pentester’s community, it seems quite common to encounter the registry service “outside”, which is a common potential security misconfiguration.</p>
+
+<p>Now, checking how many Eureka servers can be found by Google (you probably can improve this dork):
+<img src="/assets/images/post/hacking-netflix-eureka/google-dork.png" alt="Google dork" /></p>
+
+<h2 id="find-me-a-microservice">Find me a microservice!</h2>
+
+<p>Let’s start with some basics to understand how it works based on test lab example:</p>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/find-me-microservice.png" alt="find me microservice" /></p>
+
+<p>Suppose we have the following:</p>
+
+<ol>
+  <li>Two services on the backend inside the local network, <strong>webservice</strong> and <strong>secretservice</strong></li>
+  <li>Spring Cloud Gateway (further referred to as <strong>gateway</strong>) configured to route all HTTP requests to <strong>webservice</strong></li>
+  <li>There is no HTTP route from the <strong>gateway</strong> to <strong>secretservice</strong></li>
+  <li>Registry <strong>eureka server</strong> is in DMZ (suppose that it is exposed by mistake)</li>
+  <li>and user/attacker is on the internet.</li>
+</ol>
+
+<p>On startup, each micro-service will send a REGISTER request to the Eureka server (and later will send a STATUS update every N seconds - 30s by default). Based on this information the <strong>registry</strong> knows how many instances of a particular micro-service are currently up and running and their addresses (address can be both DNS or IP).</p>
+
+<p>But the registry itself is not a proxy. It is “passive” storage and contains info about currently running instances of particular services. They call it a mid-layer proxy.</p>
+
+<p>To balance and proxy HTTP requests, we use <strong><a href="https://spring.io/projects/spring-cloud-gateway">Spring Cloud Gateway</a></strong>. Gateway collects the same information from the Eureka server to know where it should balance requests. In the test lab, the gateway handles only one route to <strong>webservice</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.route("webservice",
+    r -&gt; r.path("/**")
+        .uri("lb://WEBSERVICE"))
+</code></pre></div></div>
+
+<p>That means every path <code class="language-plaintext highlighter-rouge">"/\*\*"</code> (which is not registered on <strong>gateway</strong> separately) will be balanced ( <code class="language-plaintext highlighter-rouge">"lb://WEBSERVICE"</code> ) to the micro-service with the name <strong>webservice</strong>. There is no HTTP route to <strong>secretservice</strong>, so it is not supposed, by design, that the user will communicate with secretservice directly.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@RequestMapping(value = "/")
+public class InternalService {
+
+    @RequestMapping(value = "/flag")
+        public String available() {
+            return "FLAG{EUREKA_PWNED}";
+    }
+}
+</code></pre></div></div>
+
+<p>Here <strong>webservice</strong>, on its turn, communicates with <strong>secretservice</strong> internally with the following code:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Application application = eurekaClient.getApplication("secretservice");
+InstanceInfo instanceInfo = application.getInstances().get(0);
+String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/list/";
+Collection&lt;User&gt; users = restTemplate.getForObject(url, Collection.class);
+</code></pre></div></div>
+
+<p>Eureka client keeps all info collected from the Eureka server in memory and updates it once per N seconds (i.e.: 30s by default).</p>
+
+<h2 id="exploitation">Exploitation</h2>
+
+<p>The main idea for attack vectors is changing HTTP routing with some profit for exploitation.</p>
+
+<p>Getting access to the registry <strong>we can register fake service</strong> and try to access this service through <strong>Spring Cloud Gateway</strong>. After the fake service is registered, the <strong>gateway</strong> begins to balance requests to this service if we register the right service name.</p>
+
+<p>At this point, multiple security issues arise.</p>
+
+<ul>
+  <li>If an attacker registers a new instance of an existing micro-service and maps it to some internal micro-service, which doesn’t have a public HTTP route, the attacker can send HTTP requests to this service, which is about SSRF (Server Side Request Forgery)</li>
+  <li><strong>OR</strong>, if the attacker registers his malicious service outside, both gateway and internal services will send requests to fake service outside, which means it is possible to hijack victim’s traffic (+exploit XSS) or hijack internal services connections.</li>
+</ul>
+
+<h3 id="attack-vector-1-server-side-request-forgery">Attack Vector 1: Server Side Request Forgery</h3>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/attack-vector1.png" alt="Attack vector 1" /></p>
+
+<p>For successful exploitation, we need to find a service mapped to root URL <code class="language-plaintext highlighter-rouge">“/”</code> (which is not really a requirement but provides more freedom in path walking). For the lab environment, <em>Spring Cloud Gateway</em> already maps <code class="language-plaintext highlighter-rouge">“/”</code> to <em>webservice</em>.</p>
+
+<p>At first, find the address of the targeted micro-service to get access to (<strong>secretservice</strong>), you can find it on the registry:
+<img src="/assets/images/post/hacking-netflix-eureka/registry-before-attack.png" alt="regisrty before attack" /></p>
+
+<p>Then register new microservice with name <strong>webservice</strong> but with <code class="language-plaintext highlighter-rouge">_address:port_</code> of <strong>secretservice</strong> (to do this change <code class="language-plaintext highlighter-rouge">ipAddr</code>, <code class="language-plaintext highlighter-rouge">hostName</code> and port parameters in eureka registration request):</p>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/registry-after-ssrf-attack.png" alt="registry-after-ssrf-attack" /></p>
+
+<p>Now there are 2 instances of <strong>webservice</strong>. After <strong>gateway</strong> synced information from the <strong>registry</strong>, it begins to balance attacker requests between 2 instances of <strong>webservice</strong>. And due to one of the instances points to <strong>secretservice</strong> now, we bypass route restriction on HTTP layer and successfully perform SSRF attack.</p>
+
+<p>In case of a successful attack, you will see 2 different pages during multiple requests, 404 error (because there is no route for <code class="language-plaintext highlighter-rouge">_/flag_</code> on legit <strong>webservice</strong>) and <code class="language-plaintext highlighter-rouge">"FLAG{EUREKA_PWNED}"</code>:
+<img src="/assets/images/post/hacking-netflix-eureka/whitelabel-error.png" alt="white label error" /></p>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/flag-pwned.png" alt="flag pwned" /></p>
+
+<h3 id="attack-vector-2-traffic-hijack-and-xss">Attack Vector 2: Traffic Hijack and XSS</h3>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/attack-vector2.png" alt="attack vector 2" /></p>
+
+<p>In another scenario, what if an attacker will register an instance of <strong>webservice</strong> and point it to the malicious server? In this case, the <strong>gateway</strong> will begin to route HTTP traffic to the attacker-controlled server. This leads to secrets leakage (i.e.: <code class="language-plaintext highlighter-rouge">token</code> or <code class="language-plaintext highlighter-rouge">sessionId</code>) and XSS. For the browser, because the communication with the malicious server is performed in the backchannel, it looks like an official site (TLS on Gateway doesn’t help).</p>
+
+<p><img src="/assets/images/post/hacking-netflix-eureka/xss.png" alt="xss" /></p>
+
+<p>We can do the same trick by hijacking internal services calls, leading to information leaking or even more critical vulnerabilities.</p>
+
+<h2 id="how-to-communicate-with-eureka">How to Communicate with Eureka</h2>
+
+<p>We’ll attempt to communicate with Eureka with the following request</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /eureka/apps/WEBSERVICE HTTP/1.1
+Accept: application/json, application/*+json
+Accept-Encoding: gzip
+Content-Type: application/json
+User-Agent: Java/11.0.10
+Host: 127.0.0.1:8088
+Connection: keep-alive
+Content-Length: 1015
+
+{"instance":{"instanceId":"host.docker.internal:webservice:8082","app":"WEBSERVICE","appGroupName":null,"ipAddr":"192.168.2.1","sid":"na","homePageUrl":"http://host.docker.internal:8082/","statusPageUrl":"http://host.docker.internal:8082/actuator/info","healthCheckUrl":"http://host.docker.internal:8082/actuator/health","secureHealthCheckUrl":null,"vipAddress":"webservice","secureVipAddress":"webservice","countryId":1,"dataCenterInfo":{"@class":"com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo","name":"MyOwn"},"hostName":"host.docker.internal","status":"UP","overriddenStatus":"UNKNOWN","leaseInfo":{"renewalIntervalInSecs":30,"durationInSecs":90,"registrationTimestamp":0,"lastRenewalTimestamp":0,"evictionTimestamp":0,"serviceUpTimestamp":0},"isCoordinatingDiscoveryServer":false,"lastUpdatedTimestamp":1630906180645,"lastDirtyTimestamp":1630906182808,"actionType":null,"asgName":null,"port":{"$":8082,"@enabled":"true"},"securePort":{"$":443,"@enabled":"false"},"metadata":{"management.port":"8082"}}}
+</code></pre></div></div>
+
+<p><strong>However, this might fail.</strong> If the protocol has changed somehow since this publication, the easiest way to extract the correct request is to run simple eureka client+server locally and use <strong>Wireshark</strong> (which takes ~10mins).</p>
+
+<p>Check any tutorial about registry, e.g. <a href="https://spring.io/guides/gs/service-registration-and-discovery/">service-registration-and-discovery</a></p>
+
+<h2 id="defense-is-boring-but-we-have-to">Defense is boring, but we have to…</h2>
+
+<p>Bear in mind that keeping Eureka <strong>not</strong> exposed to the internet must not be considered the main defense because it happens.</p>
+
+<p>Security has to be implemented with a multi-layer approach, which guarantees that if one of the layers fails due to 0day or misconfiguration, other layers still keep you safe.</p>
+
+<h3 id="keep-it-safe-on-application-layer">Keep it safe on Application Layer</h3>
+
+<p>Eureka supports basic HTTP authentication; use it. Yes, basic authentication is not the best practice, and you have to share one password between multiple micro-services. But it still saves you some time after the attacker finds an exposed registry.</p>
+
+<h3 id="keep-it-safe-on-presentation-layer">Keep it safe on Presentation Layer</h3>
+
+<p><strong>mTLS</strong> between micro-services will help against registering malicious service outside (against traffic hijack).</p>
+
+<h3 id="keep-it-safe-on-transportnetwork-layers">Keep it safe on Transport/Network Layers</h3>
+
+<p>And, of course, micro-segmentation and strict firewall rules. There is no need to have network connectivity between the <strong>gateway</strong> and <strong>secretservice</strong> - it will safe from SSRF. As well as an uncontrolled outbound network connection to public networks must be prohibited - it will save from traffic hijacking (and from reverse shell :p).</p>
+
+<p>Thanks for reading and stay safe!</p>]]></content><author><name>Maxim Tyukov</name></author><category term="Security" /><category term="Eureka" /><category term="Security" /><summary type="html"><![CDATA[Found exposed Eureka server and don't know what to do?]]></summary></entry><entry><title type="html">NgOptimizedImage Directive in Angular 15</title><link href="https://backbase.github.io/2023/05/12/ng-optimized-image-directive-in-angular-15" rel="alternate" type="text/html" title="NgOptimizedImage Directive in Angular 15" /><published>2023-05-12T00:00:00+00:00</published><updated>2023-05-12T00:00:00+00:00</updated><id>https://backbase.github.io/2023/05/12/ng-optimized-image-directive-in-angular-15</id><content type="html" xml:base="https://backbase.github.io/2023/05/12/ng-optimized-image-directive-in-angular-15"><![CDATA[<p><img src="/assets/images/post/ng-optimized-image-directive-in-angular-banner.png" alt="" /></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Images constitute a major part of any web application. They heavily impact the page loading times and performance of the web page.</p>
+
+<p>They are one of the main contributors to the <a href="https://web.dev/vitals/#core-web-vitals&quot;"><strong>Core Web Vitals</strong></a>, identified by Google, to measure website performance.</p>
+
+<p>The metrics that make up the core web vitals are as follows:</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-0.png" alt="" />
+  <figcaption class="figure-caption">Core Web Vitals</figcaption>
+</figure>
+
+<p>To improve the Web Vitals metrics, loading times, and responsiveness of a single-page-application, Angular has introduced the <a href="https://angular.io/api/common/NgOptimizedImage">NgOptimizedImage</a> directive with Angular v15. This new directive improves image loading performance by providing image optimisation techniques and also enforcing best practices.</p>
+
+<h1 id="default-imgtag">Default <code class="language-plaintext highlighter-rouge">&lt;img&gt;</code>Tag</h1>
+
+<p>Before diving into the key features of the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive, let’s first examine how the default <code class="language-plaintext highlighter-rouge">&lt;img&gt;</code> tag functions and the extra optimisation techniques that can be implemented with it.</p>
+
+<p><strong>No default lazy loading:</strong> the following example includes 6 <code class="language-plaintext highlighter-rouge">img</code> tags which the browser requests and eagerly loads all of them.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-1.png" alt="" />
+  <figcaption class="figure-caption"> List of images in HTML</figcaption>
+</figure>
+
+<p>This can be costly on low-bandwidth devices when there are pages with huge number of images.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-2.png" alt="" />
+  <figcaption class="figure-caption">All images eagerly loaded with img directive</figcaption>
+</figure>
+
+<p>This problem can be mitigated by using the <code class="language-plaintext highlighter-rouge">loading="lazy"</code> attribute. It defers the loading of images until they are needed.</p>
+
+<p>Prioritising the loading of a critical image can also be done using the <code class="language-plaintext highlighter-rouge">fetchPriority</code> attribute. For example, by using <code class="language-plaintext highlighter-rouge">fetchpriority="low"</code> for images in a carousel.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-3.png" alt="" />
+  <figcaption class="figure-caption">Image optimisation with img tag</figcaption>
+</figure>
+
+<h1 id="ngoptimizedimage-directive"><code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive</h1>
+
+<p>This directive includes built-in image optimisation techniques and improves the website’s performance with minimal configuration.</p>
+
+<h2 id="integrating-ngoptimizedimage">Integrating <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code></h2>
+
+<p>To integrate the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive, follow these steps:</p>
+<ol>
+  <li>Import <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> into your standalone component or module.</li>
+  <li>Replace the <code class="language-plaintext highlighter-rouge">src</code> attribute of the image with <code class="language-plaintext highlighter-rouge">ngSrc</code>.</li>
+  <li>Specify the <code class="language-plaintext highlighter-rouge">width</code> and <code class="language-plaintext highlighter-rouge">height</code> attributes that must be specified for the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive in one of the following ways.</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>//import in module
+import { NgModule } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+@NgModule({ imports: [CommonModule, NgOptimizedImage], })
+
+// use in component  
+import { Component } from '@angular/core'; 
+@Component({ 
+   selector: 'app-optimised-image-catalog',
+   template: `&lt;img ngSrc="blog-food-img.png" width="500" height="300" alt="Food Blog Image"/&gt; `, 
+})
+</code></pre></div></div>
+
+<p>Alternatively, you can add it directly in a standalone component.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import { Component } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+@Component({ 
+    selector: 'app-optimised-image-catalog', standalone: true, 
+    imports: [ CommonModule, NgOptimizedImage ], 
+    template: ` &lt;img ngSrc="blog-food-img.png" width="500" height="300" alt="Food Blog Image" /&gt; `, })
+</code></pre></div></div>
+
+<h2 id="key-features-of-ngoptimizedimage">Key features of <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code></h2>
+
+<p>The following are the main highlights of this directive:</p>
+
+<h3 id="intelligent-lazy-loading">Intelligent lazy loading</h3>
+
+<p>By default, the directive lazy loads non-critical images and only eagerly loads images marked with the <code class="language-plaintext highlighter-rouge">priority</code> attribute. This ensures that most images are loaded optimally.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-4.png" alt="" />
+  <figcaption class="figure-caption">Six img tags in HTML</figcaption>
+</figure>
+
+<p>The following shows that the browser only requests 4 images that are on the view port with the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-5.png" alt="" />
+  <figcaption class="figure-caption">Images loaded lazily</figcaption>
+</figure>
+
+<h3 id="serve-responsive-images">Serve responsive images</h3>
+
+<p>Before implementing responsive images using the directive, you must consider how the <code class="language-plaintext highlighter-rouge">ngSrcset</code> and <code class="language-plaintext highlighter-rouge">sizes</code> attributes work.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;img ngSrc="business.png" ngSrcset="100w, 200w, 300w" priority sizes="50vw"&gt;
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">ngSrcset</code> specifies three different image sources with widths of 100w, 200w, and 300w. The directive supports both width descriptors for example, <code class="language-plaintext highlighter-rouge">100w</code>, and <a href="https://web.dev/codelab-density-descriptors/#use-density-descriptors-to-serve-multiple-images">density descriptors</a>, for example,<code class="language-plaintext highlighter-rouge">1x</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">sizes</code> specifies the width of the image container or layout in CSS units, with different sizes for different screen widths.</p>
+  </li>
+</ul>
+
+<h4 id="srcset">srcset</h4>
+
+<ul>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">srcset</code> attribute can be manually defined by providing your own <code class="language-plaintext highlighter-rouge">ngSrcset</code> attribute, as given in the example above.</p>
+  </li>
+  <li>
+    <p>For responsive images, to automatically generate the <code class="language-plaintext highlighter-rouge">srcset</code> attribute, you only have to define the sizes attribute. For example, if your image takes 50% of the viewport, set the the size to 50vw and the browser selects the image in the <code class="language-plaintext highlighter-rouge">srcset</code> that is closest to 50% of the viewport width.</p>
+  </li>
+  <li>
+    <p>If you have varying image widths for different sizes of screens you can use media queries. For example in a grid layout, you want image to be 100 percent of screen on devices under 768px wide, else it should be 50%. You can achieve this in the following way:</p>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;img ngSrc="business.png" width="400" height="200" priority sizes="(max-width: 768px) 100vw, 50vw"&gt;
+</code></pre></div></div>
+
+<h3 id="image-loader">Image loader</h3>
+
+<p>On a web page, most images are served without regard for the size of the image container. This means that even if you only need a 200 pixel x 100 pixel image, a 2000 pixel x 1000 pixel image is downloaded.</p>
+
+<p>This can be solved by providing an image loader function. This is a function that modifies the provided <code class="language-plaintext highlighter-rouge">src</code>, and generates multiple URLs to request the image in different sizes. These multiple URLs are used in the automatic <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset&quot;">srcset</a> generation, so that the images are served with respect to the viewport size.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-6.png" alt="" />
+  <figcaption class="figure-caption">NgOptimizedImage automatically sets srcset attribute based on width attribute</figcaption>
+</figure>
+
+<h4 id="ngoptimizedimage-loader-api"><code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> loader API</h4>
+
+<p>The Angular directive provides a built in loader API for third-party image services such as Imagekit, Cloudfare, Imgix. For more information see <a href="https://angular.io/guide/image-directive#configuring-an-image-loader-for-ngoptimizedimage">the Angular documentation</a>.</p>
+
+<p>In the following example, the directive creates two image URLs in <code class="language-plaintext highlighter-rouge">srcset</code> for the different widths and density of an image for an image of size 50*50.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> // in module providers add
+import { provideImageKitLoader } from '@angular/common';
+providers: provideImageKitLoader('https://ik.imagekit.io/Your-ID') 
+
+// in markup img tag
+&lt;img priority ngSrc="custom-img.webp" width="50" height="50" alt="custom image"/&gt; 
+
+//in DOM img tag is changed to this
+&lt;img _ngcontent-stl-c204="" priority="" ngsrc="custom-img.webp" width="50" height="50" 
+alt="custom image" ng-reflect-priority="" 
+ng-reflect-ng-src="custom-img.webp" ng-reflect-width="50" ng-reflect-height="50" 
+loading="eager" fetchpriority="high" ng-img="true" 
+src="https://ik.imagekit.io/ith29bzjr/tr:q-auto/custom-img.webp" 
+srcset="https://ik.imagekit.io/ith29bzjr/tr:q-auto,w-50/custom-img.webp 1x, https://ik.imagekit.io/ith29bzjr/tr:q-auto,w-100/custom-img.webp 2x"&gt;
+</code></pre></div></div>
+
+<h4 id="custom-loaders">Custom loaders</h4>
+
+<p>If your image service is not provided by the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> default loaders, you can create your custom loader as shown in the following example.</p>
+
+<blockquote>
+  <p><strong><em>NOTE:</em></strong> You must include a width check for creating the URL otherwise the provider generates the src with an undefined width.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// in module add to providers
+import { NgOptimizedImage, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common'; 
+[{ provide: IMAGE_LOADER,
+ useValue: (config: ImageLoaderConfig) =&gt; {
+    const url = config.src &amp;&amp; config.width ? `./assets/content/${config.src}-img-${config.width}.webp` : `./assets/content/${config.src}-img.webp`;
+    return url; } }], 
+ 
+// in markup 
+ &lt;img priority ngSrc="custom-img.png" width="50" height="50" alt="custom image"/&gt; 
+ 
+// in DOM the img tag is changed to this
+ &lt;img _ngcontent-btb-c158="" ng-reflect-ng-src="business" ng-reflect-width="400" ng-reflect-height="400" 
+ alt="business" width="400" height="400" loading="lazy" fetchpriority="auto" 
+ ng-img="true" src="./assets/content/business-img.webp" 
+ srcset="./assets/content/business-img-400.webp 1x, ./assets/content/business-img-800.webp 2x"&gt;
+</code></pre></div></div>
+
+<h3 id="preconnect-image-url">preconnect image URL</h3>
+
+<p><code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> throws a warning in browser console if there is no <code class="language-plaintext highlighter-rouge">preconnect</code> tag for the third-party image URLs in the head of the page in <code class="language-plaintext highlighter-rouge">index.html</code>. For more information on preconnect, please refer <a href="https://web.dev/preconnect-and-dns-prefetch/">here</a>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;link rel="preconnect" href="https://my.cdn.origin" /&gt;</code></p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-7.png" alt="" />
+  <figcaption class="figure-caption">Browser Warning without preconnect image url</figcaption>
+</figure>
+
+<h2 id="performance-results">Performance results</h2>
+
+<p>In the following example, an <a href="https://github.com/manisha-backbase/image-optimisation-angular">Angular App</a> was created with two pages: one using the Angular <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive, and one with the native image tag. The app was <a href="https://image-optimisation-angular.vercel.app/ngoptimized-img-list">Deployed</a> and the results compared using <a href="https://pagespeed.web.dev/">PageSpeed</a>.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-8.png" alt="" />
+  <figcaption class="figure-caption">Results with native image tag</figcaption>
+</figure>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/ng-optimized-image-directive-in-angular-15-9.png" alt="" />
+  <figcaption class="figure-caption">Results with NgOptimizedImage directive</figcaption>
+</figure>
+
+<h2 id="in-conclusion--ngoptimizedimage-means-significant-improvements">In conclusion  <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> means significant improvements…</h2>
+<p>The PageSpeed results for the application using <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> show a significant reduction in time for the largest contentful paint. The intelligent lazy loading feature also improves the cumulative layout shift. In conclusion, the <code class="language-plaintext highlighter-rouge">NgOptimizedImage</code> directive drastically improves the performance of your application by enforcing the best practices for image optimisation.</p>]]></content><author><name>Manisha Arya</name></author><category term="Frontend" /><category term="Web" /><category term="NgOptimizedImage" /><category term="Angular" /><summary type="html"><![CDATA[Image optimisation techniques and performance improvements with the new NgOptimizedImage directive in Angular 15]]></summary></entry></feed>

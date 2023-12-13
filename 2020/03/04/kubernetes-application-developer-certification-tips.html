@@ -1,0 +1,1044 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Kubernetes Application Developer Certification Tips - Backbase Engineering</title>
+<meta name="description" content="I just passed the CKAD exam: And I want to share my journey and some tips and recommendations on how to handle the exam itself.">
+
+
+  <meta name="author" content="Andrés Torres García">
+  
+  <meta property="article:author" content="Andrés Torres García">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Backbase Engineering">
+<meta property="og:title" content="Kubernetes Application Developer Certification Tips">
+<meta property="og:url" content="https://backbase.github.io/2020/03/04/kubernetes-application-developer-certification-tips">
+
+
+  <meta property="og:description" content="I just passed the CKAD exam: And I want to share my journey and some tips and recommendations on how to handle the exam itself.">
+
+
+
+  <meta property="og:image" content="https://backbase.github.io/assets/images/post/kubernetes-banner.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2020-03-04T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://backbase.github.io/2020/03/04/kubernetes-application-developer-certification-tips">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://backbase.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap" rel="stylesheet" data-optimized-fonts="true">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+  </head>
+
+  <body class="layout--single min-vh-100 d-flex flex-column">
+    <nav class="skip-links visually-hidden-focusable">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li class="list-group-item"><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li class="list-group-item"><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<nav id="site-nav" class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <div class="navbar-brand">
+      
+        <a class="site-logo text-decoration-none" href="/">
+          <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+        </a>
+      
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end me-4" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="https://workatbackbase.com/" target="_blank">
+                <span>Jobs</span>
+              </a>
+            </li>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about" >
+                <span>About</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+        <ul class="navbar-nav" style="text-align:right;">
+          <li class="nav-item">
+            <a class="nav-primarylink" href="/principles"  style="text-decoration:none;">
+              <span>Our Principles</span>
+            </a>
+          </li>
+        </ul>
+      
+  </div>
+</nav>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  <div class="container">
+    <div class="row">
+      <article class="page offset-md-2 col-md-8" itemscope itemtype="http://schema.org/CreativeWork">
+        <meta itemprop="headline" content="Kubernetes Application Developer Certification Tips">
+        <meta itemprop="description" content="I just passed the CKAD exam: And I want to share my journey and some tips and recommendations on how to handle the exam itself.">
+        <meta itemprop="datePublished" content="March 04, 2020">
+        
+
+        <div class="page__inner-wrap">
+          
+            <header>
+              <h1 class="page__title" itemprop="headline">Kubernetes Application Developer Certification Tips
+</h1>
+
+              <aside class="author">
+                
+                  
+
+<div itemscope itemtype="https://schema.org/Person">
+  
+    <div class="author__avatar">
+      
+        <img class="rounded-circle" src="/assets/images/avatars/2_5sAa9bhvo0AOjIvZ_oX-nA.jpeg" alt="Andrés Torres García" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content text-muted">
+    
+      <h3 class="author__name" itemprop="name">Andrés Torres García</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Director of Backend</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <div class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  </div>
+</div>
+
+                
+              </aside>
+
+              
+              
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <time datetime="2020-03-04T00:00:00+00:00">March 4, 2020</time>
+      </span>
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+
+              
+            </header>
+          
+
+          <section class="page__content" itemprop="text">
+            <p><img src="/assets/images/post/kubernetes-banner.png" alt="" /></p>
+
+<p>I just passed the Certified Kubernetes Application Developer (CKAD) exam: <a href="https://www.cncf.io/certification/ckad/">https://www.cncf.io/certification/ckad/</a></p>
+
+<p>And I want to share my journey and some tips on how to handle the CKAD preparation and the exam itself.</p>
+
+<h2 id="preparation">Preparation</h2>
+
+<h3 id="starting-point">Starting point</h3>
+
+<p>First, you need a base, if you have no work experience with production Kubernetes then I would recommend going through basics of Kubernetes first.</p>
+
+<p>Here some nice intros:</p>
+
+<figure class="mb-5">
+  <div class="w-100 ratio ratio-16x9">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/4ht22ReBjno" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+  </div>
+  <figcaption class="figure-caption text-center">The illustrated Children’s Guide to Kubernetes</figcaption>
+</figure>
+
+<figure class="mb-5">
+  <div class="w-100 ratio ratio-16x9">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/aSrqRSk43lY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+  </div>
+  <figcaption class="figure-caption text-center">Kubernetes explained</figcaption>
+</figure>
+
+<p>For something more academic I would recommend following the course:</p>
+
+<div class="card position position-relative mb-4">
+  <div class="row g-0 flex-md-row flex-column-reverse">
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5>Introduction to Kubernetes</h5>
+        <p>Want to learn Kubernetes? Get an in-depth primer on this powerful system for managing containerized applications.</p>
+        <a href="https://www.edx.org/course/introduction-to-kubernetes" target="_blank" class="small stretched-link text-muted">www.edx.org</a>
+      </div>
+    </div>
+    
+    <div class="col-md-4 d-flex">
+      <img class="w-100 fit-cover rounded-top rounded-start-md-0 rounded-end-md" src="/assets/images/post/0_XDOX4FxMG8-4iWZl.png" alt="" />
+    </div>
+    
+  </div>
+</div>
+
+<h3 id="study-the-curriculum">Study the curriculum</h3>
+
+<p>Next step with be to study all topics as proposed in the curriculum until you feel comfortable with all:</p>
+
+<ul>
+  <li><strong>13% — Core Concepts</strong>
+Understand Kubernetes API primitives
+Create and configure basic Pods</li>
+  <li><strong>18% — Configuration</strong>
+Understand ConfigMaps
+Understand SecurityContexts
+Define an application’s resource requirements
+Create &amp; consume Secrets
+Understand ServiceAccounts</li>
+  <li><strong>10% — Multi-Container Pods</strong>
+Understand Multi-Container Pod design patterns (e .g. ambassador, adapter, sidecar</li>
+  <li><strong>18% — Observability</strong>
+Understand LivenessProbes and ReadinessProbes
+Understand container logging
+Understand how to monitor applications in Kubernetes
+Understand debugging in Kubernetes</li>
+  <li><strong>20% — Pod Design</strong>
+Understand Deployments and how to perform rolling updates
+Understand Deployments and how to perform rollbacks
+Understand Jobs and CronJobs
+Understand how to use Labels, Selectors, and Annotations</li>
+  <li><strong>13% — Services &amp; Networking</strong>
+Understand Services
+Demonstrate a basic understanding of NetworkPolicies</li>
+  <li><strong>8% — State Persistence</strong>
+Understand PersistentVolumeClaims for storage</li>
+</ul>
+
+<p>You can use the official docs to prepare all those topics <a href="https://kubernetes.io/docs/home/">https://kubernetes.io/docs/home/</a></p>
+
+<p>In my experience, an online course helped me to prepare for the certification better, and that’s what I did when I obtained the Cloud Foundry Certified Developer (CFCD) certification:</p>
+
+<div class="card position position-relative mb-4">
+  <div class="row g-0 flex-md-row flex-column-reverse">
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5>CFCD: Cloud Foundry Certified Developer was issued by The Linux Foundation to Andres Torres Garcia.</h5>
+        <p>Earners of this designation demonstrated the skills and expertise to perform the responsibilities of a Cloud Foundry…</p>
+        <a href="https://www.youracclaim.com/badges/845a02b0-ba8a-4657-820b-5b833e46142d/linked_in_profile" target="_blank" class="small stretched-link text-muted">youracclaim.com</a>
+      </div>
+    </div>
+    
+    <div class="col-md-4 d-flex">
+      <img class="w-100 fit-cover rounded-top rounded-start-md-0 rounded-end-md" src="/assets/images/post/0_fFnZQ4ZmOeR6D9c7.png" alt="" />
+    </div>
+    
+  </div>
+</div>
+
+<p>And at that time before taking the exam I have followed an online course from The Linux Foundation:</p>
+
+<div class="card position position-relative mb-4">
+  <div class="row g-0 flex-md-row flex-column-reverse">
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5>Cloud Foundry for Developers (LFD232) - Linux Foundation - Training</h5>
+        <p>Businesses around the world need more skilled developers. Update your cloud-native skills with Cloud Foundry training…</p>
+        <a href="https://training.linuxfoundation.org/training/cloud-foundry-for-developers/" target="_blank" class="small stretched-link text-muted">training.linuxfoundation.org</a>
+      </div>
+    </div>
+    
+    <div class="col-md-4 d-flex">
+      <img class="w-100 fit-cover rounded-top rounded-start-md-0 rounded-end-md" src="/assets/images/post/0_4SN57mGsNxgDomXv.png" alt="" />
+    </div>
+    
+  </div>
+</div>
+
+<p>The training was ok and hands-on, with exercises to practice and documentation to study, slides-style, so I decided to do the same for the Kubernetes certification.</p>
+
+<p>I took advantage of a promotion they had during CyberMonday and got a bundle of Training + Example with a 60% discount:
+The Linux Foundation announces discounts every now and then so be alert!
+This is the training I’ve followed:</p>
+
+<div class="card position position-relative mb-4">
+  <div class="row g-0 flex-md-row flex-column-reverse">
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5>Kubernetes for Developers (LFD259) - Linux Foundation - Training</h5>
+        <p>Kubernetes is a high-velocity open source orchestration tool to deploy, scale, and update containerized applications…</p>
+        <a href="https://training.linuxfoundation.org/training/kubernetes-for-developers/" target="_blank" class="small stretched-link text-muted">training.linuxfoundation.org</a>
+      </div>
+    </div>
+    
+    <div class="col-md-4 d-flex">
+      <img class="w-100 fit-cover rounded-top rounded-start-md-0 rounded-end-md" src="/assets/images/post/0_cBOGVm0Bjk95liMH.png" alt="" />
+    </div>
+    
+  </div>
+</div>
+
+<p>It’s self-paced, contains videos, slides and hands-on labs, you have one year access to the content and you will obtain an official badge (never hurts). Here the course outline:</p>
+
+<ul>
+  <li><em>Chapter 1. Course Introduction</em></li>
+  <li><em>Chapter 2. Kubernetes Architecture</em></li>
+  <li><em>Chapter 3. Build</em></li>
+  <li><em>Chapter 4. Design</em></li>
+  <li><em>Chapter 5. Deployment Configuration</em></li>
+  <li><em>Chapter 6. Security</em></li>
+  <li><em>Chapter 7. Exposing Applications</em></li>
+  <li><em>Chapter 8. Troubleshooting</em></li>
+</ul>
+
+<hr />
+
+<h3 id="building-a-kubernetes-cluster">Building a Kubernetes cluster</h3>
+
+<p>After you are done with basics of Kubernetes you should try to create Kubernetes cluster from the scratch, for the Developer exam is not mandatory because is too deep, for the admin examen CKA I would say yes, but it’s good a learning exercise for everybody wanting to know how Kubernetes works.</p>
+
+<p>The classic example will be using Kelsey Hightower git repo: <a href="https://github.com/kelseyhightower/kubernetes-the-hard-way">https://github.com/kelseyhightower/kubernetes-the-hard-way</a></p>
+
+<p>There’s also an interesting one, more up to date and using new Kubernetes features, it’s divided into 5 parts: <a href="https://clusterise.com/articles/kbp-1-intro/">https://clusterise.com/articles/kbp-1-intro/</a></p>
+
+<p>Try to create a cluster on your own a couple of times, it’s a nice way to understand the whole picture and how the components you just learned work with each other.</p>
+
+<hr />
+
+<h3 id="practice-practice-practice">Practice, Practice, Practice</h3>
+
+<p>Reading and learning concepts is ok but not enough, you really need a lot of practice basically because of the time constraint of 2 hours for the CKAD exam, you don’t have time to search in the documentation for examples or read concepts, you need to go straight to the point.</p>
+
+<p>Some resources to help you be fast and breath <em>kubectl</em></p>
+
+<ul>
+  <li>Here you have 150 questions to practices, divided by topics: <a href="https://medium.com/bb-tutorials-and-thoughts/practice-enough-with-these-questions-for-the-ckad-exam-2f42d1228552">https://medium.com/bb-tutorials-and-thoughts/practice-enough-with-these-questions-for-the-ckad-exam-2f42d1228552</a></li>
+  <li>Do all of these, maybe 2–3 times: <a href="https://github.com/dgkanatsios/CKAD-exercises">https://github.com/dgkanatsios/CKAD-exercises</a></li>
+  <li><strong>Game of Pods</strong> a nice gamified set of exercises based on Game Of Thrones: <a href="https://kodekloud.com/p/game-of-pods">https://kodekloud.com/p/game-of-pods</a></li>
+  <li>Here a series with scenarios, try to do all of them and understand the alternatives to achieve the same result.</li>
+  <li>Read this and do all examples: <a href="https://kubernetes.io/docs/concepts/cluster-administration/logging/">https://kubernetes.io/docs/concepts/cluster-administration/logging/</a></li>
+  <li>Kubernetes docs also gives you some Tasks you can review and do yourself the ones that apply CKAD curriculum: <a href="https://github.com/twajr/ckad-prep-notes#tasks-from-kubernetes-doc">https://github.com/twajr/ckad-prep-notes#tasks-from-kubernetes-doc</a></li>
+  <li><strong>Killer.sh</strong> is a great page with an exam simulator that you can do 2 times, with a real cluster, alive for 24 hours, with real scenarios ready and even a timer so you get the feeling of the exam time pressure:</li>
+</ul>
+
+<div class="card position position-relative mb-4">
+  <div class="row g-0 flex-md-row flex-column-reverse">
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5>Kubernetes CKA CKAD Simulator</h5>
+        <p>Kubernetes CKA CKAD Simulator / Example Questions / Practice Exam</p>
+        <a href="https://killer.sh/ckad" target="_blank" class="small stretched-link text-muted">killer.sh</a>
+      </div>
+    </div>
+    
+    <div class="col-md-4 d-flex">
+      <img class="w-100 fit-cover rounded-top rounded-start-md-0 rounded-end-md" src="/assets/images/post/0_3Glp6AXn3hZlIDRD.png" alt="" />
+    </div>
+    
+  </div>
+</div>
+
+<p>It’s not free, but I definitely think is totally worth it.</p>
+
+<p>Do both test sessions with this CKAD Simulator, one after doing all the study and let the final one for the day before the real exam, to get into the exam mood.
+Understand the solutions and maybe try out other ways to achieve the same.</p>
+
+<h2 id="books">Books</h2>
+
+<p>I’ve used some books also during my preparation:</p>
+
+<ul>
+  <li><a href="http://shop.oreilly.com/product/0636920273219.do">Kubernetes Best Practices: Blueprints for Building Successful Applications on Kubernetes</a></li>
+  <li><a href="https://leanpub.com/erase-una-vez-kubernetes">Erase una vez Kubernetes (Spanish)</a></li>
+</ul>
+
+<h2 id="exam-day-preparation">Exam day Preparation</h2>
+
+<p><strong>Read the Curriculum:</strong> <a href="https://github.com/cncf/curriculum">https://github.com/cncf/curriculum</a></p>
+
+<p><strong>Read the Handbook:</strong> <a href="https://training.linuxfoundation.org/go/cka-ckad-candidate-handbook">https://training.linuxfoundation.org/go/cka-ckad-candidate-handbook</a></p>
+
+<p><strong>Read the important tips:</strong> <a href="http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD">http://training.linuxfoundation.org/go//Important-Tips-CKA-CKAD</a></p>
+
+<h2 id="kubernetes-documentation">Kubernetes documentation</h2>
+
+<p>Get familiar with the Kubernetes documentation and be able to use the search. You can have one browser tab open with one of the allowed links: <a href="https://kubernetes.io/docs">https://kubernetes.io/docs</a> <a href="https://github.com/kubernetes">https://github.com/kubernetes</a> <a href="https://kubernetes.io/blog">https://kubernetes.io/blog</a></p>
+
+<h2 id="the-test-environment--browser-terminal">The Test Environment / Browser Terminal</h2>
+
+<p>You’ll be provided with a browser terminal which uses Ubuntu 16. The standard shells included with a minimal install of Ubuntu 16 will be available, including bash.</p>
+
+<h3 id="laggin">Laggin</h3>
+
+<p>There could be some lagging, definitely make sure you are using a good internet connection because your webcam and screen are uploading all the time.</p>
+
+<h3 id="kubectl-autocompletion">Kubectl autocompletion</h3>
+
+<p>Autocompletion is not configured by default. Some wouldn’t recommend setting this up because of the lagging internet connection but you can check if it works for you. See further down for how to set up.</p>
+
+<h3 id="copy--paste">Copy &amp; Paste</h3>
+
+<p>There could be issues copying text (like pod names) from the left task information into the terminal. Some suggested to “hard” hit or long hold <code class="language-plaintext highlighter-rouge">Cmd/Ctrl+C</code> a few times to take action. Apart from that copy and paste should just work like in normal terminals.</p>
+
+<h3 id="percentages-and-score">Percentages and Score</h3>
+
+<p>There are 19 questions in the exam and you need a 66% percentage to reach. Each question shows the % it gives if you solve it. Your results will be automatically checked according to the handbook. If you don’t agree with the results you can request a review.</p>
+
+<h3 id="notepad--skipping-questions">Notepad &amp; Skipping Questions</h3>
+
+<p>You have access to a simple notepad in the browser which can be used for storing any kind of plain text. It makes sense to use this for saving skipped question numbers and their percentages. This way it’s possible to move some questions to the end. It might make sense to skip 2% or 3% questions and go directly to higher ones.</p>
+
+<h3 id="contexts-and-namespaces">Contexts and namespaces</h3>
+
+<p>You’ll receive access to 4 different clusters which multiple namespaces and various resources in each.</p>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/1__70CzlisT3rrbOprVs4wXQ.png" alt="" />
+  <figcaption class="figure-caption">CKAD Clusters</figcaption>
+</figure>
+
+<p>Each task on this exam must be completed on a designated cluster/configuration context. To minimize switching, the questions are grouped so that all questions on a given cluster appear consecutively. At the start of each task, you’ll be provided with the command to ensure you are on the correct cluster to complete the question. But you should be comfortable working in different namespaces with <code class="language-plaintext highlighter-rouge">kubectl</code>.</p>
+
+<h2 id="your-desktop">Your Desktop</h2>
+
+<p>You are allowed to have multiple monitors connected and have to share every monitor with the proctor. Having one large screen definitely helps as you’re only allowed <strong>one</strong> application open (Chrome Browser) with two tabs, one terminal and one k8s docs. The questions will be on the left (maybe ~30% space), the terminal on the right. The larger your desktop the larger the browser terminal.</p>
+
+<p>If you use a laptop you could work with lid closed, external mouse+keyboard+monitor attached. Make sure you also have a webcam+microphone working.</p>
+
+<p>You could also have both monitors, laptop screen and external, active. Though Chrome can only run on one screen. You might be asked that your webcam points straight into your face. So using an external screen and your laptop webcam could not be accepted. Just keep that in mind.</p>
+
+<p>You have to be able to move your webcam around in the beginning to show your whole room and desktop. Have a clean desk with only the necessary on it. You can have a glass/cup with water without anything printed on.
+In the end you should feel very comfortable with your setup.</p>
+
+<h2 id="browser-terminal-setup">Browser Terminal Setup</h2>
+
+<p>It should be considered to spend ~1 minute in the beginning to setup your terminal. In the real exam, the vast majority of questions will be done from the main terminal. For a few, you might need to ssh into another machine. Just be aware that configurations to your shell will not be transferred in this case.</p>
+
+<h3 id="minimal-setup">Minimal Setup</h3>
+
+<h4 id="alias">Alias</h4>
+
+<p>I suggest to any developer using Kubernetes to setup this alias:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">alias k=kubectl
+</span></code></pre></div></div>
+
+<p>which means you always run <code class="language-plaintext highlighter-rouge">kubectl</code> just with <code class="language-plaintext highlighter-rouge">k</code>.</p>
+
+<h4 id="kubectl-autocompletion-1">Kubectl autocompletion</h4>
+
+<p>Depending on how much is already pre-installed in the CKAD terminal it might be enough to do this:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">source &lt;(kubectl completion bash)
+
+</span><span class="gp">complete -F __start_kubectl k #</span><span class="w"> </span>to make it work with the <span class="nb">alias </span>k
+</code></pre></div></div>
+
+<p>You don’t need to remember all that, you can copy-paste from the official docs CheatSheet: <a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/">https://kubernetes.io/docs/reference/kubectl/cheatsheet/</a></p>
+
+<h4 id="optional-alias-namespace">Optional: Alias Namespace</h4>
+
+<p>In addition, you could define an alias like:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">alias kn='kubectl config set-context --current --namespace '
+</span></code></pre></div></div>
+
+<p>Which allows you to define the default namespace of the current context. Then once you switch a context or namespace you can just run:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">kn another-namespace #</span><span class="w"> </span><span class="nb">set </span>default to another-namespace
+</code></pre></div></div>
+
+<p>But again, only do this if you used it before and are comfortable doing so. You can always specify the namespace for every call, which is also fine:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">k -n another-namespace get services
+k -n another-namespace get pod
+</span><span class="c">...
+</span></code></pre></div></div>
+
+<h4 id="persist-bash-settings">Persist bash settings</h4>
+
+<p>You can store aliases and other setups in <code class="language-plaintext highlighter-rouge">~/.bashrc</code> if you’re planning on using different shells or <code class="language-plaintext highlighter-rouge">tmux</code>.</p>
+
+<h2 id="vim">Vim</h2>
+
+<p>Be great with vim.</p>
+
+<p>At the beginning of the exam, create the file <code class="language-plaintext highlighter-rouge">~/.vimrc</code> with the following content:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">set tabstop=2
+set expandtab
+</span></code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">expandtab</code> make sure to use spaces for tabs. You will need to memorize these and just type them down because you can search internet have any commands note on your desktop, etc.</p>
+
+<h3 id="optional-vim">Optional: Vim</h3>
+
+<p>You can also add the following to <code class="language-plaintext highlighter-rouge">~/.vimrc</code> to be able to apply tab on multiple selected lines.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">set shiftwidth=2
+</span></code></pre></div></div>
+
+<p>More further down in the <code class="language-plaintext highlighter-rouge">vim</code> section.</p>
+
+<h3 id="toggle-vim-line-numbers">toggle vim line numbers</h3>
+
+<p>When in vim you can press <strong>Esc</strong> and type <code class="language-plaintext highlighter-rouge">:set</code> number or <code class="language-plaintext highlighter-rouge">:set</code> nonumber followed by <strong>Enter</strong> to toggle line numbers. This can be useful when finding syntax errors based on the line number- but can be bad when wanting to mark&amp;copy by mouse. You can also just jump to a line number with <strong>Esc</strong> <code class="language-plaintext highlighter-rouge">:22</code> + <strong>Enter</strong>.</p>
+
+<h3 id="copypaste">copy&amp;paste</h3>
+
+<p>Get used to copy/paste/cut with vim:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mark lines: Esc+V (then arrow keys)
+Copy marked lines: y
+Cut marked lines: d
+Past lines: p or P
+</code></pre></div></div>
+
+<h3 id="indent-multiple-lines">Indent multiple lines</h3>
+
+<p>To indent multiple lines press <strong>Esc</strong> and type <code class="language-plaintext highlighter-rouge">:set shiftwidth=2</code>. First, mark multiple lines using <code class="language-plaintext highlighter-rouge">Shift v</code> and the up/down keys. Then to indent the marked lines press <code class="language-plaintext highlighter-rouge">Shift .</code> or <code class="language-plaintext highlighter-rouge">Shift ,</code>.</p>
+
+<h2 id="time-is-precious-be-fast">Time is precious, Be fast</h2>
+
+<p>2 hours, 120 minutes, 19 questions, that’s less than 7 minutes per question, keep that mind, most of the people failing the test is not because of a lack of knowledge is just a time management issue.</p>
+
+<p>Each question has the % you get if you solve it, if any question looks too complex or too difficult or even too long to accomplish, please write down the number in the Notebook and move to the next one.</p>
+
+<p>There’s always quick wins in the exam, questions like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>“List all the namespaces and save the output in a file in \exam01\folder\namespaces.txt” 
+</code></pre></div></div>
+
+<p>So go for those first.</p>
+
+<p>Also in most of the questions, you can validate the answer is right, check the Pod is running, check if the Deployment is running, check the number of executions, check the logs in the containers, etc.</p>
+
+<blockquote>
+  <p>Solving a challenge and knowing how to verify a solution is critical</p>
+</blockquote>
+
+<p>you don’t have to get 100% to pass the exam, try to attempt as much as you can, cross verify to make sure all questions attempted are correct.</p>
+
+<h2 id="avoid-yaml-do-dry-run">Avoid YAML, do dry-run</h2>
+
+<figure class="figure d-block text-center mb-4">
+  <img class="figure-img img-fluid" src="/assets/images/post/1_MT6vRvUwZxbIsCsgOeMidQ.png" alt="" />
+  <figcaption class="figure-caption">High tech tooling to debug YAML issues</figcaption>
+</figure>
+
+<p>It’s a waste of time, it’s annoying and nobody on this planet like to type YAML files and find it enjoying.</p>
+
+<p class="lead text-center text-primary">AVOID writing YAML manifests at all cost</p>
+
+<p><strong>Use <code class="language-plaintext highlighter-rouge">--dry-run</code> and <code class="language-plaintext highlighter-rouge">-o yaml</code> flags, ALWAYS</strong></p>
+
+<p>These flags are incredibly useful to redirect the YAML configuration to a file by using <code class="language-plaintext highlighter-rouge">&gt;</code> sign</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml &gt;</span><span class="w"> </span>nginx.yaml
+</code></pre></div></div>
+
+<p>With the file, you can verify the config and make small changes if needed.</p>
+
+<h2 id="run-command-and-restart-flag">Run command and restart flag</h2>
+
+<p><code class="language-plaintext highlighter-rouge">kubectl run</code> command is a convenient and useful way to quickly create kubernetes resources without dealing with yaml files. Since kubernetes v1.12, creation acknowledgement (“object created”) is preceded by a message noting that this creation command is deprecated and will no longer be available in future <code class="language-plaintext highlighter-rouge">kubectl</code> releases.</p>
+
+<p>It can save you a lot of time, but keep in mind it’ll eventually be removed by the kubectl command line because it’s deprecated. (kubectl create is the new proposed way)</p>
+
+<p>You’ll use kubectl run command all the time. It basically creates different workloads/objects based on what you pass to this flag.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">+----------------------------------------+----------------------+
+|             Command &amp; Flag             |  Generated Resource  |
++----------------------------------------+----------------------+
+| k run (without flag)                   | Creates a deployment |
+| k run --restart=Never                  | Creates a Pod        |
+| k run --restart=OnFailure              | Creates a Job        |
+| k run --restart=OnFailure --schedule=  | Creates a Cronjob    |
++----------------------------------------+----------------------+
+
+</span></code></pre></div></div>
+
+<h2 id="be-smart-using-documentation-examples">Be smart using documentation examples</h2>
+
+<p>You can wget those files and make small changes, faster than creating the file from the scratch:</p>
+
+<ul>
+  <li><strong>Pod with InitContainer:</strong> <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-initialization/#create-a-pod-that-has-an-init-container">https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-initialization/#create-a-pod-that-has-an-init-container</a></li>
+  <li><strong>Persistent Volume:</strong> <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume">https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume</a></li>
+  <li><strong>Persistent Volume Claim:</strong> <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim">https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim</a></li>
+  <li><strong>Job:</strong> <a href="https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#running-an-example-job">https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#running-an-example-job</a></li>
+  <li><strong>CronJob:</strong> <a href="https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#creating-a-cron-job">https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#creating-a-cron-job</a> e.g:
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">wget https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/job/cronjob.yaml
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="reuse">Reuse</h2>
+
+<p>Use the <code class="language-plaintext highlighter-rouge">history</code> command to reuse already entered commands or use even faster history search through <strong>Ctrl r</strong>.</p>
+
+<p>If a command takes some time to execute, like sometimes <code class="language-plaintext highlighter-rouge">kubectl delete pod x</code>. You can put a task in the background using <strong>Ctrl z</strong> and pull it back into foreground running command <code class="language-plaintext highlighter-rouge">fg</code>.</p>
+
+<p>You can delete pods fast with:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>k delete pod x --grace-period 0 --force
+</code></pre></div></div>
+
+<h2 id="the-result">The Result</h2>
+
+<p>Preparing and passing the CKAD examination was fun but also a little bit stressing, in the real world you have plenty of access to documentation and plenty of time to search for solutions, edit YAML (but try to avoid!) and use vim ;-)</p>
+
+<p>In my opinion, the above resources are a good help to pass the exam without issues. I am hopeful that these resources can be helpful to everybody trying to get their Kubernetes CKAD certification.</p>
+
+<p>Good luck with your exam and if you pass it, come back and share your badge!</p>
+
+<p><img src="/assets/images/post/1_KjxjnnQLnPaQWtAiPmG1uw.png" alt="" /></p>
+
+
+            
+          </section>
+
+          <footer class="page__meta">
+            
+            
+
+
+          </footer>
+
+          <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Kubernetes+Application+Developer+Certification+Tips%20https%3A%2F%2Fbackbase.github.io%2F2020%2F03%2F04%2Fkubernetes-application-developer-certification-tips" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbackbase.github.io%2F2020%2F03%2F04%2Fkubernetes-application-developer-certification-tips" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fbackbase.github.io%2F2020%2F03%2F04%2Fkubernetes-application-developer-certification-tips" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+        </div>
+
+        
+      </article>
+    </div>
+
+    
+    
+      <div class="page__related col-md-8 offset-md-2">
+        
+        <div class="grid__wrapper row">
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/angular_microfrontends.png" alt="Micro Frontends" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/12/13/setup-microfrontend" rel="permalink">Angular &amp; Micro Frontends
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Harsh Julka
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Micro Frontends is a modern architectural approach for developing web applications.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/12/13/setup-microfrontend" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/azure-banner.png" alt="System Engineering" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink">A New Chapter: Exploring Azure Resources
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Sri Balaji, 
+      
+        Ashish Arora
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Azure’s limitless potential sets the stage for a promising journey, where opportunities abound on the horizon.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/visual-testing-banner.png" alt="Quality Assistance Approach" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/03/visual-testing-using-playwright" rel="permalink">Visual Testing using Playwright
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Venkata Ravi Majjari
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Visual testing helps to find issues that are important for end-users that cannot be caught by other types of testing
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/03/visual-testing-using-playwright" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="mt-auto page__footer">
+      <footer class="bg-primary text-white text-center py-5 small">
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <div class="footer-brand">
+    
+      <a class="site-logo text-decoration-none" href="/">
+        <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+      </a>
+    
+  </div>
+  <ul class="social-icons list-unstyled">
+    
+
+    
+      
+        
+          <li><a href="https://www.youtube.com/user/Backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i><span class="visually-hidden">YouTube</span></a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/company/backbase/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="visually-hidden">LinkedIn</span></a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/backbase_global/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a></li>
+        
+      
+        
+          <li><a href="https://www.glassdoor.nl/Overzicht/Werken-bij-Backbase-EI_IE117266.11,19.htm?countryRedirect=true" rel="nofollow noopener noreferrer" target="_blank"><i class="fab custom-glassdoor" aria-hidden="true"></i><span class="visually-hidden">Glassdoor</span></a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Backbase Engineering. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+
+      </footer>
+    </div>
+
+    <script src='/assets/global-17ef4fa84e17b9a550efbf687d8fa54b.js' type='text/javascript'></script>
+
+
+  </body>
+</html>

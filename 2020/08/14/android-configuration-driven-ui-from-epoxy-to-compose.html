@@ -1,0 +1,764 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Configuration Driven UI from Epoxy to Compose - Backbase Engineering</title>
+<meta name="description" content="This is a story of how we came up with the solution for Configuration driven UI (a level below server-driven UI) in Android at Backbase.">
+
+
+  <meta name="author" content="Hari Vignesh Jayapalan">
+  
+  <meta property="article:author" content="Hari Vignesh Jayapalan">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Backbase Engineering">
+<meta property="og:title" content="Configuration Driven UI from Epoxy to Compose">
+<meta property="og:url" content="https://backbase.github.io/2020/08/14/android-configuration-driven-ui-from-epoxy-to-compose">
+
+
+  <meta property="og:description" content="This is a story of how we came up with the solution for Configuration driven UI (a level below server-driven UI) in Android at Backbase.">
+
+
+
+  <meta property="og:image" content="https://backbase.github.io/assets/images/post/epoxy-compose-banner.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2020-08-14T00:00:00+00:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://backbase.github.io/2020/08/14/android-configuration-driven-ui-from-epoxy-to-compose">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://backbase.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap" rel="stylesheet" data-optimized-fonts="true">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+  </head>
+
+  <body class="layout--single min-vh-100 d-flex flex-column">
+    <nav class="skip-links visually-hidden-focusable">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li class="list-group-item"><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li class="list-group-item"><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<nav id="site-nav" class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <div class="navbar-brand">
+      
+        <a class="site-logo text-decoration-none" href="/">
+          <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+        </a>
+      
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end me-4" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="https://workatbackbase.com/" target="_blank">
+                <span>Jobs</span>
+              </a>
+            </li>
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about" >
+                <span>About</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+        <ul class="navbar-nav" style="text-align:right;">
+          <li class="nav-item">
+            <a class="nav-primarylink" href="/principles"  style="text-decoration:none;">
+              <span>Our Principles</span>
+            </a>
+          </li>
+        </ul>
+      
+  </div>
+</nav>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  <div class="container">
+    <div class="row">
+      <article class="page offset-md-2 col-md-8" itemscope itemtype="http://schema.org/CreativeWork">
+        <meta itemprop="headline" content="Configuration Driven UI from Epoxy to Compose">
+        <meta itemprop="description" content="This is a story of how we came up with the solution for Configuration driven UI (a level below server-driven UI) in Android at Backbase.">
+        <meta itemprop="datePublished" content="August 14, 2020">
+        
+
+        <div class="page__inner-wrap">
+          
+            <header>
+              <h1 class="page__title" itemprop="headline">Configuration Driven UI from Epoxy to Compose
+</h1>
+
+              <aside class="author">
+                
+                  
+
+<div itemscope itemtype="https://schema.org/Person">
+  
+    <div class="author__avatar">
+      
+        <img class="rounded-circle" src="/assets/images/avatars/hari.vignesh.jpg" alt="Hari Vignesh Jayapalan" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content text-muted">
+    
+      <h3 class="author__name" itemprop="name">Hari Vignesh Jayapalan</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Senior Mobile Engineer - R&amp;D</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <div class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+    </div>
+  </div>
+</div>
+
+                
+              </aside>
+
+              
+              
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <time datetime="2020-08-14T00:00:00+00:00">August 14, 2020</time>
+      </span>
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+
+              
+            </header>
+          
+
+          <section class="page__content" itemprop="text">
+            <p><img src="/assets/images/post/epoxy-compose-banner.png" alt="" /></p>
+
+<p>This is a story of how we came up with the solution for Configuration driven UI (a level below server-driven UI) in Android at Backbase. It’s not a super perfect system or not highly reactive as Jetpack compose, but it absolutely solves the use-case: to create a framework or library, where developers can create or replace view components via configurations.</p>
+
+<h2 id="who-should-read"><strong>Who should read?</strong></h2>
+
+<p>This is about a special Android library. This solution might not be useful for all the devs who write apps every day. But I guarantee that this is an interesting problem to think and solve.</p>
+
+<h2 id="background--requirements"><strong>Background &amp; Requirements</strong></h2>
+
+<p>We need to deliver a library, where customers can build or configure UI components into our OOTB (out of the box) screen or collection of screens. They should also be able to do the following</p>
+
+<ol>
+  <li>Add new screens</li>
+  <li>Configure OOTB UI components - Create quickly and add new UI components.</li>
+</ol>
+
+<p>All above should be possible via <strong>the configurations</strong></p>
+
+<h2 id="which-configurations"><strong>Which configurations?</strong></h2>
+
+<p>Configurations can mean anything. It can be a simple class with properties, JSON object (local or remote). Here, we’ll be working with Kotlin DSLs.</p>
+
+<p>Why? they are type-safe, IDE intelli-sense support, manageable in terms of upgrading and maintaining the source and binary compatibility (how? more below). Even if we need to do it remotely (Server driven UI), we can receive a JSON object and map them to DSL.</p>
+
+<h2 id="the-big-picture"><strong>The big picture</strong></h2>
+
+<p><img src="/assets/images/post/2_XHya6aMkqGtYUjSAD.png" alt="" /></p>
+
+<p>Not really that big, but here’s how this is achieved:</p>
+
+<ul>
+  <li>
+    <p>A Screen is nothing but a fragment and it just contains the list, here RecyclerView. I believe that this is what <strong>Airbnb</strong> app consists of - each screen is a RecyclerView with different views.</p>
+  </li>
+  <li>
+    <p>The screen gets the configuration injected via DI or Service locators such as Koin.</p>
+  </li>
+  <li>
+    <p>Using this DSL configuration, the <a href="https://github.com/airbnb/epoxy">Epoxy</a> populates all the views in our RecyclerView.</p>
+  </li>
+  <li>
+    <p>We are also using <strong>Navigation Component</strong> here, to use the same screen with multiple instances working together to solve this (a) task.</p>
+  </li>
+</ul>
+
+<h1 id="why-epoxy"><strong>Why Epoxy?</strong></h1>
+
+<p>As per the requirements, we need to provide an accelerator solution, where developers should be able to create view components quickly. Using traditional methods might burn a bit more time. Epoxy, on the other hand, manages this complexity very well with a very little learning curve and with DSLs as output, it makes the configuration seamless.</p>
+
+<h1 id="configuration-driven-ui-with-epoxy"><strong>Configuration-driven UI with Epoxy</strong></h1>
+
+<p><img src="/assets/images/post/2_TGUBANjniuayIUTIYOPahJN.png" alt="" /></p>
+
+<p>For a better explanation, why not show code? Let’s build a simple payment transfer screen, which will allow users to choose an account, a contact, enter the amount and hit pay!</p>
+
+<p>In this screen, there are 2 configurable/customizable/replaceable components - and room for more!</p>
+
+<ul>
+  <li>
+    <p><strong>Account selector</strong>: Allows users to select the originator account and a destination account which opens up a bottom sheet and gets the result back.</p>
+  </li>
+  <li>
+    <p><strong>Amount view</strong>: Allows users to enter the amount.</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p><strong>Note</strong>: Here, the button is part of the screen for a reason, not important to know 😛</p>
+</blockquote>
+
+<h2 id="the-configuration"><strong>The Configuration</strong></h2>
+
+<p>To better explain, let’s take a look at the actual configuration that brings out this screen to life.</p>
+
+<script src="https://gist.github.com/arthurpalves/cc93e720a57a896b0186dceb177f3886.js"></script>
+
+<ol>
+  <li>
+    <p><strong>Navigation Graph</strong>: In this example, we are dealing with one screen. If there is an use-case for multiple screens, navigation graph would be a good choice (optional).</p>
+  </li>
+  <li>
+    <p><strong>Step</strong>: This represents a screen. Multiple steps mean many screens, which can be wrapped using a list of steps (bad naming?).</p>
+  </li>
+  <li>
+    <p><strong>Layout</strong>: A sealed class entity, that supports different layouts. Here, a stack of views. Purely business-case oriented (<code class="language-plaintext highlighter-rouge">FormLayout</code>, <code class="language-plaintext highlighter-rouge">ListLayout</code> etc.).</p>
+  </li>
+  <li>
+    <p><strong>Stack</strong>: Here, to stack up the views takes in a list of Epoxy Views.</p>
+  </li>
+  <li>
+    <p><strong>Epoxy View</strong>: View components created using epoxy.</p>
+  </li>
+</ol>
+
+<p><strong>AccountSelectorView</strong> uses a few interesting functional callbacks to open up a bottom-sheet dialog and get the result back.</p>
+
+<p>For a more detailed implementation, please refer the <a href="https://github.com/Hariofspades/configuration-driven-ui">Configuration Driven UI</a> repository.</p>
+
+<h1 id="moving-from-epoxy-to-composable-functions"><strong>Moving from Epoxy to Composable functions</strong></h1>
+
+<p>Let’s try this interesting experiment. If you wonder why epoxy was the first choice is that the API was very stable, it provided a very quick way to create UI components with DSL wrapper - <strong>which was seamless with the whole configuration-driven UI concept</strong>.</p>
+
+<p>I happened to try Jetpack compose and it was quite promising. It was very close to the Flutter experience. But let’s check the reality on this date (Oct 2020):</p>
+
+<ul>
+  <li>
+    <p>Still in alpha</p>
+  </li>
+  <li>
+    <p>A lot of breaking changes</p>
+  </li>
+  <li>
+    <p>Not super good with existing projects (Adding compose to existing Kotlin synthetic binding projects causes build failure, probably be fixed at the time of stable release)</p>
+  </li>
+  <li>
+    <p>More features to come</p>
+  </li>
+</ul>
+
+<p>Considering all these, epoxy is still a stable option for the above-mentioned date. But I’m curious about the migration strategy to this promising library.</p>
+
+<p>What if Compose becomes the default way to create UI components in Android? (Maybe!) and it’s already a part of <strong>Modern Android Development (MAD)</strong> marketing tag! So, this library should be able to cater or move to the new solution.</p>
+
+<h2 id="configuration-driven-ui-with-jetpack-compose"><strong>Configuration-driven UI with Jetpack Compose</strong></h2>
+
+<p><img src="/assets/images/post/2_YbhKAUOMxx5167A.png" alt="" /></p>
+
+<ul>
+  <li>
+    <p>To migrate from epoxy, our Sealed class implementation of the layout is the key. Instead of using <code class="language-plaintext highlighter-rouge">StackLayout</code> we add a new implementation in place - <code class="language-plaintext highlighter-rouge">ComposeLayout</code>.</p>
+  </li>
+  <li>
+    <p>Also, we replace <code class="language-plaintext highlighter-rouge">RecyclerView</code> with <code class="language-plaintext highlighter-rouge">ComposeView</code>.</p>
+  </li>
+</ul>
+
+<p>Here’s the full configuration:</p>
+
+<script src="https://gist.github.com/arthurpalves/e5e9c375e4550dbb8f7ca0dc32e0e86b.js"></script>
+<p><br /></p>
+
+<h2 id="adding-composelayout-to-steplayout"><strong>Adding ComposeLayout to StepLayout</strong></h2>
+
+<p>A New class gets to be a part of the Step layout - <code class="language-plaintext highlighter-rouge">ComposeLayout</code>.</p>
+
+<p><strong>Note</strong>: We are creating DSLs this way - to cater for binary compatibility. You can generate DSLs that are binary-safe way + support Java interoperability using this Android Studio plugin - <a href="https://plugins.jetbrains.com/plugin/14386-dsl-api-generator">DSL API Generator - Plugins | JetBrains</a>.</p>
+
+<script src="https://gist.github.com/arthurpalves/1fa853f9b4c3239a7909578a91b34ba5.js"></script>
+<p><br /></p>
+
+<h2 id="implementation-of-account-selector"><strong>Implementation of Account selector</strong></h2>
+
+<p>Compose version: <code class="language-plaintext highlighter-rouge">1.0.0-alpha04</code><br />
+Refer to this code on <a href="https://github.com/Hariofspades/configuration-driven-ui/blob/compose/app/src/main/java/dev/harivignesh/configuration/ui/compose/ComposeAccountSelector.kt">Github</a>.</p>
+
+<script src="https://gist.github.com/arthurpalves/8bb673bcde450456a28786f58a89e016.js"></script>
+
+<p>For the full implementation of compose components and layout, please refer to the <a href="https://github.com/Hariofspades/configuration-driven-ui/tree/compose">“compose” branch</a>.</p>
+
+<h2 id="challenges-faced"><strong>Challenges faced</strong></h2>
+
+<p>We did not migrate the actual repository yet. But here are some of the challenges that I faced working on this small repo:</p>
+
+<ol>
+  <li>
+    <p>Compose hates Kotlin Synthetic binding? when I added all the necessary dependencies, I faced build errors around Kotlin synthetic view binding. Folks in Stackoverflow have suggested moving to <code class="language-plaintext highlighter-rouge">ViewBinding</code> or simply use the <code class="language-plaintext highlighter-rouge">findViewById</code> approach - may be fixed in the future?</p>
+  </li>
+  <li>
+    <p>A bit of learning curve for the new state management around Compose - which was expected. My little Flutter knowledge made it better (considering that the above repo was created in 3 hours).</p>
+  </li>
+</ol>
+
+<h2 id="final-thoughts"><strong>Final thoughts</strong></h2>
+
+<p>If you have reached till here, I’d appreciate your time for reading this post. Configuration driven UI might not be for everyone, it’s simply one of the business case and a very interesting problem to solve in terms of the architecture and public APIs. Hope you are taking something home :)</p>
+
+<p>Thank you and see you on another post!</p>
+
+
+            
+          </section>
+
+          <footer class="page__meta">
+            
+            
+
+
+          </footer>
+
+          <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Configuration+Driven+UI+from+Epoxy+to+Compose%20https%3A%2F%2Fbackbase.github.io%2F2020%2F08%2F14%2Fandroid-configuration-driven-ui-from-epoxy-to-compose" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbackbase.github.io%2F2020%2F08%2F14%2Fandroid-configuration-driven-ui-from-epoxy-to-compose" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fbackbase.github.io%2F2020%2F08%2F14%2Fandroid-configuration-driven-ui-from-epoxy-to-compose" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+        </div>
+
+        
+      </article>
+    </div>
+
+    
+    
+      <div class="page__related col-md-8 offset-md-2">
+        
+        <div class="grid__wrapper row">
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/angular_microfrontends.png" alt="Micro Frontends" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/12/13/setup-microfrontend" rel="permalink">Angular &amp; Micro Frontends
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Harsh Julka
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Micro Frontends is a modern architectural approach for developing web applications.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/12/13/setup-microfrontend" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/azure-banner.png" alt="System Engineering" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink">A New Chapter: Exploring Azure Resources
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Sri Balaji, 
+      
+        Ashish Arora
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Azure’s limitless potential sets the stage for a promising journey, where opportunities abound on the horizon.
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/21/a-new-chapter-exploring-azure-resources" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+            
+
+
+
+<div class="grid__item col-12 col-md-6 mb-4">
+  <article class="archive__item card" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser ">
+        <img src="/assets/images/post/visual-testing-banner.png" alt="Quality Assistance Approach" class="rounded-top">
+      </div>
+    
+    <div class="card-body d-flex flex-column">
+      <h2 class="archive__item-title no_toc">
+        
+          <a class="text-decoration-none" href="/2023/11/03/visual-testing-using-playwright" rel="permalink">Visual Testing using Playwright
+</a>
+        
+      </h2>
+      
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-readtime small text-muted">
+      By
+      
+        Venkata Ravi Majjari
+      
+      </span>
+      
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime small text-muted">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+
+  </p>
+
+
+      <p class="archive__item-excerpt" itemprop="description">Visual testing helps to find issues that are important for end-users that cannot be caught by other types of testing
+</p>
+      <div class="d-flex mt-auto justify-content-end">
+        <a href="/2023/11/03/visual-testing-using-playwright" rel="permalink" class="btn btn-sm btn-link stretched-link">Read more</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+          
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="mt-auto page__footer">
+      <footer class="bg-primary text-white text-center py-5 small">
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <div class="footer-brand">
+    
+      <a class="site-logo text-decoration-none" href="/">
+        <span class="bb-engineering-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.09 66.09">
+    <g>
+      <polygon
+        points="9.49 20.83 18.98 20.83 18.98 11.34 18.98 1.85 9.49 1.85 0 1.85 0 11.34 9.49 11.34 9.49 20.83" />
+      <path
+        d="M38.98,32.76v-1.49c9.3-1.3,11.72-7.45,11.72-13.5,0-7.48-5.12-15.59-17.78-15.89h-7.61V11.34h7.61c6.69,.11,8.11,4.45,8,7.87-.23,7.66-3.67,7.88-9.59,8.05H9.49v37.96h22.69c15.26,0,20.38-8.65,20.38-17.68,0-7.72-2.7-13.39-13.58-14.79Zm-6.52,22.9h-13.31v-19.17h13.31c8.04,0,10.63,1.52,10.63,9.74,0,6.91-2.59,9.42-10.63,9.42Z" />
+    </g>
+  </svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="60.09 0 330.12 66.09" class="d-none d-lg-block">
+    <g>
+      <path
+        d="M60.04,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M108.72,41.89c0-14.61,7.17-24.2,20.85-24.2,12.19,0,19.36,7.54,19.36,18.62h-9.31c-.37-5.77-2.33-10.24-9.59-10.24-8.66,0-12.01,3.72-12.01,15.82s3.35,15.82,12.01,15.82c7.26,0,9.22-4.47,9.59-10.24h9.31c0,11.08-7.17,18.62-19.36,18.62-13.68,0-20.85-9.59-20.85-24.2Z" />
+      <path
+        d="M167.08,46.17v18.99h-9.31V0h9.31V37.79h7.26l13.03-19.18h11.26l-15.92,23.36,15.92,23.18h-11.26l-13.03-18.99h-7.26Z" />
+      <path
+        d="M249.18,41.89c0,13.68-5.31,24.2-20.39,24.2-6.52,0-11.08-2.51-13.87-6.52v5.59h-9.31V0h9.31V24.2c2.79-4,7.35-6.52,13.87-6.52,15.08,0,20.39,10.52,20.39,24.2Zm-9.31,0c0-11.17-3.35-15.82-12.47-15.82s-12.47,4.65-12.47,15.82,3.35,15.82,12.47,15.82,12.47-4.65,12.47-15.82Z" />
+      <path
+        d="M255.24,49.8c0-8.1,5.31-16.29,16.66-16.29,6.52,0,10.15,1.86,12.94,5.59v-12.1h-24.2v-8.38h33.51V55.85h5.59v9.31h-14.89v-4.65c-2.79,3.72-6.42,5.59-12.94,5.59-11.36,0-16.66-8.19-16.66-16.29Zm29.6,0c0-4.65-3.35-7.91-10.15-7.91s-10.15,3.26-10.15,7.91,3.35,7.91,10.15,7.91,10.15-3.26,10.15-7.91Z" />
+      <path
+        d="M306.71,60.13v-9.4c8.47,5.31,12.85,6.98,19.73,6.98,6.05,0,8.19-2.61,8.19-5.49,0-3.26-2.42-5.03-10.98-6.89-13.31-2.89-16.94-7.26-16.94-14.61,0-7.73,6.61-13.03,16.57-13.03,6.24,0,12.38,1.68,16.94,4.84v8.38c-6.8-3.35-12.75-4.84-17.87-4.84-4.75,0-6.33,2.05-6.33,4.37,0,2.61,1.21,4.37,9.12,6.52,13.78,3.72,18.8,6.61,18.8,15.17,0,7.91-6.61,13.96-17.5,13.96-7.26,0-12.94-1.4-19.73-5.96Z" />
+      <path
+        d="M350,41.89c0-14.61,5.77-24.2,20.11-24.2s20.11,8.66,20.11,23.27v5.12h-30.72c.65,6.52,3.26,11.64,14.15,11.64,3.72,0,7.35,0,13.4-1.68v8.19c-7.26,1.86-9.87,1.86-13.4,1.86-21.04,0-23.64-14.99-23.64-24.2Zm30.9-4.19c-.19-8.1-3.26-11.64-10.8-11.64s-10.33,4.1-10.8,11.64h21.6Z" />
+    </g>
+  </svg>
+  <span class="visually-hidden">Backbase Engineering</span>
+</span>
+
+      </a>
+    
+  </div>
+  <ul class="social-icons list-unstyled">
+    
+
+    
+      
+        
+          <li><a href="https://www.youtube.com/user/Backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i><span class="visually-hidden">YouTube</span></a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/company/backbase/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="visually-hidden">LinkedIn</span></a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/backbase_global/" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a></li>
+        
+      
+        
+          <li><a href="https://www.glassdoor.nl/Overzicht/Werken-bij-Backbase-EI_IE117266.11,19.htm?countryRedirect=true" rel="nofollow noopener noreferrer" target="_blank"><i class="fab custom-glassdoor" aria-hidden="true"></i><span class="visually-hidden">Glassdoor</span></a></li>
+        
+      
+        
+          <li><a href="https://www.facebook.com/backbase" rel="nofollow noopener noreferrer" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a></li>
+        
+      
+    
+
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Backbase Engineering. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+
+      </footer>
+    </div>
+
+    <script src='/assets/global-17ef4fa84e17b9a550efbf687d8fa54b.js' type='text/javascript'></script>
+
+
+  </body>
+</html>
