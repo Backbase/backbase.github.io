@@ -13,23 +13,23 @@ category: Frontend
 ![](/assets/images/post/angular_microfrontends.png)
 
 # Introduction
-Micro Frontends is a modern architectural approach for developing web applications. Instead of creating a large, monolithic web application, it involves building multiple smaller frontend applications. Each of these small application is responsible for a specific feature, which can be independently deployed and scaled. These micro frontends interact with each other to create a seamless user interface. This approach allows for greater flexibility and easier maintenance of web applications.
+Micro Frontends is a modern architectural approach for developing web applications. Instead of creating a large, monolithic web application, it involves building multiple smaller frontend applications. Each of these small application has a specific feature, which can be independently deployed and scaled. These micro frontends interact with each other to create a seamless user interface. This approach allows for greater flexibility and easier maintenance of web applications.
 
 Micro Frontends Architecture is composed of two or more applications:
 - Shell/Host Application
 - Mutiple Remote applications
 
-You can transform your Angular application into a powerful micro frontend with ease. Simply add these essential dependencies to your project and start unlocking the full potential of micro frontends.
+You can transform your Angular application into a powerful micro frontend with ease. Add these essential dependencies to your project and start unlocking the full potential of micro frontends.
 - `@angular-architects/module-federation:` This provides support for webpack module federation plugin.
 - `@angular/elements:` Angular elements use `CustomElementRegistry` interface which provide methods for registering custom elements and querying registered elements.
 
 
-**Note**: Module federation support starts from Webpack 5 and Angular 11.
+**Note**: module federation support starts from Webpack 5 and Angular 11.
 
 
 Without delay let's jump into a practical example.
 
-### Break monolithic app into Shell and Remote application
+### Break monolithic app into shell and remote application
 
 ![](/assets/images/post/monolithic.png)
 
@@ -45,12 +45,12 @@ Use relevant version of @angular-architects/module-federation.
 <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">Check version compatibility here.</a>
 
 
-**Note:** Above command will generate `webpack.config` and will replace `@angular-devkit/build-angular`
+**Note:** the above command generates `webpack.config` and replaces `@angular-devkit/build-angular`
 with `ngx-build-plus` in `angular.json`, to use additional webpack config with angular-cli.
 
 ![](/assets/images/post/microfrontend.png)
 
-**Create a slot to inject Remote application in the shell application, i.e.** `<div #vc></div>`
+**Create a slot to inject remote application in the shell application, that is** `<div #vc></div>`
 
 ```typescript
 import { AfterContentInit, ChangeDetectorRef, Component, ElementRef,
@@ -102,7 +102,8 @@ export const registry = {
 
 **Create Remote application**
 
-Bootstrap a new Angular project and run the following commands to add module federation dependencies. Additionally, we need to add the Angular Elements package to the project.
+Bootstrap a new Angular project and run the following commands to add module federation and Angular elements dependencies in the project.
+
 ```console
 ng new remote-app 
 ng add @angular-architects/module-federation@<version> --project remote-app  --port 4201 --type remote
@@ -131,9 +132,9 @@ export class AppModule {
 
 **Connect navigation b/w shell and remote application**
 
-To load the remote application, you can use `WrapperComponent` that was created in above steps.
+To load the remote application, you can use `WrapperComponent` that was created in preceding steps.
 
-**Note:** Also, pass an extra data object which will be used to load the relevant module.
+**Note:** pass an extra data object which will be used to load the relevant module.
 
 ```typescript
 // Shell application router
@@ -187,7 +188,7 @@ export class AppComponent implements OnInit {
 
 **Integrate Lerna**
 
-Currently, we have two separate workspaces and require a monorepo tool to efficiently run and cache them. To accomplish this, we have decided to utilize Lerna.
+At present, we have two distinct workspaces that require a monorepo tool to efficiently run and cache them. To accomplish this, we have decided to utilize Lerna.
 
 It solves two of the biggest problems of JavaScript/TypeScript monorepos:
 - Lerna executes a command against any number of projects, and it does it in the most efficient way, in the right order, and with the possibility to distribute that on multiple machines.
@@ -422,3 +423,7 @@ services:
 
 # Conclusion
 Micro Frontends offer tremendous flexibility and scalability to developers and enterprise applications. With this architecture, individual teams can work and deploy features independently without affecting other features. However, the initial setup of Micro Frontends requires extra time to set up on developer machines as well as on pipelines. Despite this, the benefits of Micro Frontends architecture outweigh the drawbacks by a significant margin.
+
+# References and Additional Resources
+- [The Micro Frontends revolution is here, thanks to module federation in Webpack 5](https://www.angulararchitects.io/blog/the-microfrontend-revolution-module-federation-in-webpack-5/)
+- [Consequences of Micro Frontends](https://www.angulararchitects.io/en/blog/consequences-of-micro-frontends-survey-results/)
