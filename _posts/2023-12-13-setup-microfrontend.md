@@ -50,7 +50,7 @@ with `ngx-build-plus` in `angular.json`, to use additional webpack config with a
 
 ![](/assets/images/post/microfrontend.png)
 
-**Create a slot to inject remote application in the shell application, that is** `<div #vc></div>`
+**Create a slot to inject the remote application in the shell application, which is** `<div #vc></div>`
 
 ```typescript
 import { AfterContentInit, ChangeDetectorRef, Component, ElementRef,
