@@ -15,7 +15,7 @@ category: Productivity
 Being a working mother is challenging, but with effective strategies, To boost productivity and find a balance between work and family life.
 Productivity refers to efficiently and effectively utilizing resources to achieve desired results by exploring emerging trends. Productivity is a measure of how well challenges and opportunities can achieve within a given time frame. Productivity can refer to individuals, teams, or entire organizations and is often associated with the idea of getting more done with the same or fewer resources and highlighting efficiency.
 
-## 🏃‍♂️ What is productivity, Efficiency and Effectiveness?:
+## 🏃‍♂️ What is productivity, efficiency, and effectiveness?:
 - **Productivity:** productivity is a measure of the output or results achieved in relation to the resources utilized. It involves minimal input overhead with striving for peak output.
 - **Efficiency:** efficiency is the ratio of output to input. It focuses on minimizing waste and optimizing processes to achieve the desired results with the least amount of resources.
 - **Effectiveness:** effectiveness is the extent to which individuals, teams, or organizations achieve their goals. It emphasizes achieving the right outcomes and goals rather than just maximizing output.
