@@ -90,6 +90,11 @@ Utku:
   avatar      : "assets/images/avatars/utku.jpeg"
   bio         : "Frontend Engineer - Customer Success"
 
+Harsh Julka:
+  name        : "Harsh Julka"
+  avatar      : "assets/images/avatars/harsh_julka.JPG"
+  bio         : "Senior Frontend Engineer - Customer Success"
+
 Venkata Ravi Majjari:
   name        : "Venkata Ravi Majjari"
   avatar      : "assets/images/avatars/venkataravi_majjari.jpg"
@@ -109,3 +114,4 @@ Shweta Rathi:
   name        : "Shweta Rathi"
   avatar      : "assets/images/avatars/shweta_rathi.jpg"
   bio         : "Senior Android Engineer - Customer Success"
+
