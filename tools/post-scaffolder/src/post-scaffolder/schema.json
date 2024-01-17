@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "postSchema",
+  "title": "Creates a simple schematic.",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "x-prompt": "What's the title of the post?"
+    },
+    "excerpt": {
+      "type": "string",
+      "x-prompt": "Enter a short description to display on the landing page"
+    },
+    "authors": {
+      "type": "string",
+      "x-prompt": "Who are the authors of the post? (comma-separated)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "frontend",
+        "qa",
+        "backend",
+        "devops",
+        "career",
+        "sdlc",
+        "tech-life",
+        "mobile"
+      ],
+      "x-prompt": "In which of these categories your post fits best?"
+    },
+    "tags": {
+      "type": "string",
+      "x-prompt": "Enter some keywords related to your post (comma-separated)"
+    },
+    "date": {
+      "type": "string",
+      "x-prompt": "Enter a date *if* you want to publish under a specific date (yyyy-mm-dd)"
+    }
+  },
+  "required": [
+    "title",
+    "excerpt",
+    "authors",
+    "category",
+    "tags"
+  ],
+  "additionalProperties": false
+}

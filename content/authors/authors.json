@@ -1,0 +1,90 @@
+{
+  "William Shakes": {
+    "avatar": "assets/undraw_Drink_coffee_v3au.png",
+    "role": "Principal Frontend Engineer @ CS"
+  },
+  "Craig Walker": {
+    "avatar": "craig_walker.jpeg",
+    "role": "Product Director Developer Enablement"
+  },
+  "Marco Santarelli": {
+    "avatar": "marco.jpeg",
+    "role": "Director of Frontend & Mobile"
+  },
+  "Harsh Julka": {
+    "avatar": "harsh_julka.JPG",
+    "role": "Senior Frontend Engineer - Customer Success"
+  },
+  "Arthur Alves": {
+    "avatar": "arthur.jpg",
+    "role": "Lead Principal Mobile Engineer - Expert Services"
+  },
+  "Andrés Torres": {
+    "avatar": "2_5sAa9bhvo0AOjIvZ_oX-nA.jpeg",
+    "role": "Director of Backend"
+  },
+  "Hari Vignesh Jayapalan": {
+    "avatar": "hari.vignesh.jpg",
+    "role": "Senior Mobile Engineer - R&D"
+  },
+  "Drew Hamilton": {
+    "avatar": "drew.jpg",
+    "role": "(Former) Principal Mobile Engineer - R&D"
+  },
+  "Alexey Buistov": {
+    "avatar": "ab.jpeg",
+    "role": "Solutions Architect, Crypto Enthusiast - R&D"
+  },
+  "Rafael Nascimento": {
+    "avatar": "rn.png",
+    "role": "Engineering Manager - Customer Success"
+  },
+  "Dilshan Fernando": {
+    "avatar": "dilshan_fernando.jpeg",
+    "role": "Senior QA Engineer - Customer Success"
+  },
+  "Raman Koushyk": {
+    "avatar": "raman_koushyk.png",
+    "role": "Senior QA Engineer - Customer Success"
+  },
+  "Yash Kapila": {
+    "avatar": "yash.jpeg",
+    "role": "Principal Frontend Engineer - Expert Services"
+  },
+  "Anjali Goyal": {
+    "avatar": "anjali_goyal.jpg",
+    "role": "Senior QA Engineer - Customer Success"
+  },
+  "Manisha Arya": {
+    "avatar": "manisha_arya.jpg",
+    "role": "Senior Frontend Engineer - R&D"
+  },
+  "Maxim Tyukov": {
+    "avatar": "mt.jpg",
+    "role": "Principal Application Security Engineer - R&D"
+  },
+  "Ankit Pant": {
+    "avatar": "ankit_pant.png",
+    "role": "Senior Frontend Engineer - R&D"
+  },
+  "Edgar Garcia Barragan": {
+    "avatar": "edgar_barragan.png",
+    "role": "Senior Android Engineer - Customer Success"
+  },
+  "Utku": {
+    "avatar": "utku.jpeg",
+    "role": "Frontend Engineer - Customer Success"
+  },
+  "Venkata Ravi Majjari": {
+    "avatar": "venkataravi_majjari.jpg",
+    "role": "Senior QA Engineer - Customer Success"
+  },
+  "Sri Balaji": {
+    "avatar": "sribalaji.jpeg",
+    "role": "System Engineer - Customer Success"
+  },
+  "Ashish Arora": {
+    "avatar": "ashish.jpg",
+    "role": "DevOps Consultant - Customer Success"
+  }
+}

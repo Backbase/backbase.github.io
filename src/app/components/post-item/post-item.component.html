@@ -1,0 +1,29 @@
+<mat-card matRipple data-role="button" class="item-card" (click)="navigate()">
+  <mat-card-header class="item-card__header">
+    <img mat-card-image [src]="post | postUrl : post.teaser" alt="">
+  </mat-card-header>
+  
+  <mat-card-content>
+    <mat-chip-set>
+      <mat-chip data-role="button">{{ Category[post.category] }}</mat-chip>
+    </mat-chip-set>
+    <mat-card-title>{{ post.title }}</mat-card-title>
+    <span class="muted">
+      @if (post.date) {
+        {{ post.date | date : 'longDate' }} |
+      }
+      {{ post.readingTime }}
+    </span>
+    <p>
+      {{ post.excerpt }}
+    </p>
+    <div class="item-card__authors">
+      @for (author of post.authors; track $index) {
+        <blog-author [author]="author" [muted]="true"></blog-author>
+      }
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="item-card__actions">
+    <blog-read-more-button [link]="post | postUrl"></blog-read-more-button>
+  </mat-card-actions>
+</mat-card>

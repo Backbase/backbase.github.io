@@ -1,0 +1,17 @@
+<div class="featured center-container">
+  <div class="featured__image">
+    <img mat-card-image [src]="post | postUrl : post.teaser" alt="">
+  </div>
+  
+  <div class="featured__content">
+    <div class="post-content">
+      <h1 class="featured__title">{{ post.title }}</h1>
+      <p>
+        {{ post.excerpt }}
+      </p>
+      <div class="cta-container">
+        <blog-read-more-button [link]="post | postUrl" [cta]="true"></blog-read-more-button>
+      </div>
+    </div>
+  </div>
+</div>

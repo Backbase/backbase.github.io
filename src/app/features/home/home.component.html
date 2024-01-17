@@ -1,0 +1,41 @@
+<blog-gradient></blog-gradient>
+<div class="home">
+  @if (featured$ | async; as featured) {
+    <blog-post-featured [post]="featured"></blog-post-featured>
+  }
+
+  <div class="spacer"></div>
+
+  <blog-categories-tab></blog-categories-tab>
+
+  @if (posts$ | async; as posts) {
+    <div class="home__grid-container center-container" id="list">
+      <blog-posts-list [posts]="posts.posts"></blog-posts-list>
+    </div>
+
+    <div class="center-container">
+      <mat-paginator
+        [length]="posts.total"
+        [pageSize]="posts.perPage"
+        [showFirstLastButtons]="true"
+        [pageIndex]="currentPage$ | async"
+        (page)="navigate($event)"
+        aria-label="Select page">
+      </mat-paginator>
+    </div>
+  }
+
+  @defer (on viewport) {
+    <blog-divider></blog-divider>
+    <blog-engineering-content></blog-engineering-content>
+  
+    <blog-transition colorFrom="background" colorTo="secondary"></blog-transition>
+    <blog-jobs></blog-jobs>
+    <blog-transition colorFrom="secondary" colorTo="neutral"></blog-transition>
+  } @placeholder {
+    <div class="placeholder">
+      <mat-spinner role="progressbar"></mat-spinner>
+      <blog-transition colorFrom="background" colorTo="neutral"></blog-transition>
+    </div>
+  }
+</div>

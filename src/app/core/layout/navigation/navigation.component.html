@@ -1,0 +1,49 @@
+<div class="nav">
+  <a class="nav__logo-link" routerLink="/">
+    <blog-logo></blog-logo>
+  </a>
+
+  @defer (when !isMobile) {
+    @if (!isMobile) {
+      <nav class="nav__menu-container--horizontal" aria-label="Menu Items">
+        <ng-container *ngTemplateOutlet="menu"></ng-container>
+      </nav>
+    }
+  }
+  @defer (when isMobile) {
+    @if (isMobile) {
+      <div class="nav__menu-container---mobile">
+        <blog-button>
+          <button mat-fab color="primary" (click)="toggleMenu()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </blog-button>
+    
+        <mat-drawer-container class="">
+          <mat-drawer mode="over" [opened]="menuOpen" position="end" class="nav__mobile-menu">
+            <div class="close-button-container">
+              <button mat-icon-button class="close-button" (click)="menuOpen = false">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+    
+            <nav aria-label="Menu Items"  (click)="menuOpen = false">
+              <ng-container *ngTemplateOutlet="menu"></ng-container>
+            </nav>
+          </mat-drawer>
+        </mat-drawer-container>
+      </div>
+    }
+  }
+</div>
+
+<ng-template #menu>
+  <mat-list>
+    <mat-list-item><blog-button><a mat-button routerLink="/" blogIsActive>Blog</a></blog-button></mat-list-item>
+    <mat-list-item><blog-button><a mat-button routerLink="/principles" blogIsActive>Priciples</a></blog-button></mat-list-item>
+    <mat-list-item><blog-button><a mat-button href="https://www.backbase.com/careers" target="_blank">Jobs <mat-icon iconPositionEnd fontIcon="open_in_new"></mat-icon></a></blog-button></mat-list-item>
+    <mat-list-item class="search"><blog-search></blog-search></mat-list-item>
+    <mat-list-item class="push-right"><blog-dark-mode-toggle></blog-dark-mode-toggle></mat-list-item>
+    <mat-list-item><blog-button><a mat-stroked-button href="https://backbase.io" target="blank"><span>Backbase.io</span> <mat-icon iconPositionEnd fontIcon="open_in_new"></mat-icon></a></blog-button></mat-list-item>
+  </mat-list>
+</ng-template>

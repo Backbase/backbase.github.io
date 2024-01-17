@@ -1,0 +1,26 @@
+.transition {
+  height: 5rem;
+  position: relative;
+  background-color: var(--transition-to);
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: var(--transition-from);
+  }
+
+  &__right {
+    &:after {
+      border-radius: 0 0 6rem 0;
+    }
+  }
+
+  &__left {
+    &:after {
+      border-radius: 0 0 0 6rem;
+    }
+  }
+}

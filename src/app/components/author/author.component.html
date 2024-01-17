@@ -1,0 +1,11 @@
+@if (author) {
+  <div class="author" [ngClass]="{ sm: size === 'sm', md: size === 'md', lg: size === 'lg', muted: muted }">
+    <div class="author__avatar" [ngStyle]="{ 'background-image': 'url(' + imagePath + ')' }"></div>
+    <div class="author__details">
+      <div class="author__fullname">{{ author.fullname }}</div>
+      @if (size === 'lg') {
+        <div class="author__role">{{ author.role }}</div>
+      }
+    </div>
+  </div>
+}

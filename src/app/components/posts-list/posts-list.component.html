@@ -1,0 +1,11 @@
+<div class="posts-list">
+  <div class="posts-list__grid">
+    @if (posts?.length) {
+      @for(post of posts; track post) {
+        <blog-post-item [post]="post"></blog-post-item>
+      }
+    } @else {
+      Not found
+    }
+  </div>
+</div>

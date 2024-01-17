@@ -1,0 +1,10 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "post-scaffolder": {
+      "description": "A blank schematic.",
+      "factory": "./post-scaffolder/index#postScaffolder",
+      "schema": "./post-scaffolder/schema.json"
+    }
+  }
+}

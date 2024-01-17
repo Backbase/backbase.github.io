@@ -1,0 +1,13 @@
+<blog-gradient></blog-gradient>
+
+<blog-principles-header></blog-principles-header>
+
+<blog-divider></blog-divider>
+
+@if (articles$ | async; as articles) {
+  <div class="center-container">
+    <blog-posts-list
+      [posts]="articles.posts"
+    ></blog-posts-list>
+  </div>
+}
