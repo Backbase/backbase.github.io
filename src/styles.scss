@@ -142,8 +142,7 @@ $backbase-theme-dark: mat.define-dark-theme((
 @include mat.typography-hierarchy($backbase-typography);
 
 .light-theme {
-  @include mat.core-theme($backbase-theme-light);
-  @include mat.all-component-themes($backbase-theme-light);
+  @include mat.all-component-colors($backbase-theme-light);
 
   --blog-palette-primary: #{mat.get-theme-color($backbase-theme-light, primary)};
   --blog-palette-secondary: #{map-get($backbase-secondary-light, default)};
@@ -170,8 +169,7 @@ $backbase-theme-dark: mat.define-dark-theme((
 }
 
 .dark-theme {
-  @include mat.core-theme($backbase-theme-dark);
-  @include mat.all-component-themes($backbase-theme-dark);
+  @include mat.all-component-colors($backbase-theme-dark);
 
   --blog-palette-primary: #{mat.get-theme-color($backbase-theme-dark, primary)};
   --blog-palette-secondary: #{map-get($backbase-secondary-dark, default)};
