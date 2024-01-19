@@ -209,6 +209,8 @@ html, body { height: 100%; margin: 0; }
 body {
   color: var(--blog-palette-text);
   background-color: var(--blog-palette-background);
+  width: fit-content;
+  position: relative;
 }
 
 .center-container {
