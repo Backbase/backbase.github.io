@@ -31,4 +31,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/post/post.component').then(m => m.PostComponent),
   },
+  {path: '**',
+    loadComponent: () => import('./features/not-found/not-found.component').then(m => m.NotFoundComponent)}
 ];
