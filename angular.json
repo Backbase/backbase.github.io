@@ -53,7 +53,9 @@
             "scripts": [
               "node_modules/prismjs/prism.js",
               "node_modules/prismjs/components/prism-typescript.min.js",
-              "node_modules/prismjs/components/prism-json.min.js"
+              "node_modules/prismjs/components/prism-json.min.js",
+              "node_modules/prismjs/components/prism-bash.min.js",
+              "node_modules/prismjs/components/prism-kotlin.min.js"
             ],
             "server": "src/main.server.ts"
           },

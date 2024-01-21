@@ -48,8 +48,8 @@
   &__related-posts {
     display: grid;
     @media screen and (min-width: 480px) {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
     }
   }
 
@@ -92,10 +92,19 @@
     }
   }
 
-  .image-link {
+  figure {
     padding: 1rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+
+    @media screen and (min-width: 768px) {
+      img {
+        max-height: 70vh;
+      } 
+    }
+  }
+
+  .image-link {
     position: relative;
-    box-shadow: 0 0 15px rgba(0, 0, 0, .1);
     a {
       text-align: left;
       display: flex;
@@ -114,6 +123,11 @@
         bottom: .2rem;
       }
     }
+  }
+
+  a {
+    text-decoration-color: var(--blog-palette-accent);
+    text-decoration-thickness: 3px;
   }
 
   table {

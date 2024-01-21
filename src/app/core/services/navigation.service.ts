@@ -21,9 +21,9 @@ export class NavigationService {
     }
   }
 
-  navigate(pageIndex: number) {
+  async navigate(pageIndex: number) {
     this.currentPage$$.next(pageIndex);
-    this.router.navigate(
+    await this.router.navigate(
       [], 
       {
         relativeTo: this.activatedRoute,
@@ -31,8 +31,8 @@ export class NavigationService {
           p: pageIndex + 1,
         }, 
         queryParamsHandling: 'merge',
-        fragment: 'list'
       }
     );
+    await this.router.navigate([], { fragment: 'list', skipLocationChange: true, queryParamsHandling: 'merge' });
   }
 }

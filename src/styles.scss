@@ -154,7 +154,7 @@ $backbase-theme-dark: mat.define-dark-theme((
   --blog-palette-gradient-3: rgba(73,164,255,1);
   --blog-palette-gradient-4: rgba(105,254,255,1);
   --blog-palette-background: #ffffff;
-  --blog-palette-text: #000000;
+  --blog-palette-text: #{map-get($backbase-secondary-light, default)};
   --blog-palette-neutral: #f3f6f9;
   --blog-palette-tangerine: #ff6047;
   --blog-palette-electric: #69ffff;

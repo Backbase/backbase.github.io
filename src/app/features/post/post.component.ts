@@ -51,7 +51,7 @@ export class PostComponent {
   relatedPosts$: Observable<Post[]> = this.post$.pipe(
     filter(Boolean),
     switchMap(post =>
-      this.postsService.getPosts(0, 3, false, (_post: Post) =>
+      this.postsService.getPosts(0, 2, false, (_post: Post) =>
         post.title !== _post.title && (post.category === _post.category || post.tags.some((tag) => _post.tags.includes(tag))))),
     map(({ posts }) => posts),
   );
