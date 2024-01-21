@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
+import { postRedirects } from './app.routes.map';
 
 export const routes: Routes = [
+  ...postRedirects,
   {
     path: '',
     loadComponent: () =>
@@ -28,5 +30,5 @@ export const routes: Routes = [
     path: 'principles/:permalink',
     loadComponent: () =>
       import('./features/post/post.component').then(m => m.PostComponent),
-  }
+  },
 ];
