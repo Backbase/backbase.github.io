@@ -67,25 +67,11 @@ You can use the official docs to prepare all those topics [https://kubernetes.io
 
 In my experience, an online course helped me to prepare for the certification better, and that’s what I did when I obtained the Cloud Foundry Certified Developer (CFCD) certification:
 
-{% include
-  components/link-card.html
-  heading="CFCD: Cloud Foundry Certified Developer was issued by The Linux Foundation to Andres Torres Garcia."
-  body="Earners of this designation demonstrated the skills and expertise to perform the responsibilities of a Cloud Foundry…"
-  link="https://www.youracclaim.com/badges/845a02b0-ba8a-4657-820b-5b833e46142d/linked_in_profile"
-  linkLabel="youracclaim.com"
-  image="assets/0_fFnZQ4ZmOeR6D9c7.png"
-%}
+[![**CFCD: Cloud Foundry Certified Developer was issued by The Linux Foundation to Andres Torres Garcia.** Earners of this designation demonstrated the skills and expertise to perform the responsibilities of a Cloud Foundry…](assets/0_fFnZQ4ZmOeR6D9c7.png)](https://www.youracclaim.com/badges/845a02b0-ba8a-4657-820b-5b833e46142d/linked_in_profile)
 
 And at that time before taking the exam I have followed an online course from The Linux Foundation:
 
-{% include
-  components/link-card.html
-  heading="Cloud Foundry for Developers (LFD232) - Linux Foundation - Training"
-  body="Businesses around the world need more skilled developers. Update your cloud-native skills with Cloud Foundry training…"
-  link="https://training.linuxfoundation.org/training/cloud-foundry-for-developers/"
-  linkLabel="training.linuxfoundation.org"
-  image="assets/0_4SN57mGsNxgDomXv.png"
-%}
+[![**Cloud Foundry for Developers (LFD232) - Linux Foundation - Training** Businesses around the world need more skilled developers. Update your cloud-native skills with Cloud Foundry training…](assets/0_4SN57mGsNxgDomXv.png)](https://training.linuxfoundation.org/training/cloud-foundry-for-developers/)
 
 The training was ok and hands-on, with exercises to practice and documentation to study, slides-style, so I decided to do the same for the Kubernetes certification.
 
@@ -93,14 +79,7 @@ I took advantage of a promotion they had during CyberMonday and got a bundle of 
 The Linux Foundation announces discounts every now and then so be alert!
 This is the training I’ve followed:
 
-{% include
-  components/link-card.html
-  heading="Kubernetes for Developers (LFD259) - Linux Foundation - Training"
-  body="Kubernetes is a high-velocity open source orchestration tool to deploy, scale, and update containerized applications…"
-  link="https://training.linuxfoundation.org/training/kubernetes-for-developers/"
-  linkLabel="training.linuxfoundation.org"
-  image="assets/0_cBOGVm0Bjk95liMH.png"
-%}
+[![**Kubernetes for Developers (LFD259) - Linux Foundation - Training** Kubernetes is a high-velocity open source orchestration tool to deploy, scale, and update containerized applications…](assets/0_cBOGVm0Bjk95liMH.png)](https://training.linuxfoundation.org/training/kubernetes-for-developers/)
 
 It’s self-paced, contains videos, slides and hands-on labs, you have one year access to the content and you will obtain an official badge (never hurts). Here the course outline:
 
@@ -141,14 +120,7 @@ Some resources to help you be fast and breath *kubectl*
 - Kubernetes docs also gives you some Tasks you can review and do yourself the ones that apply CKAD curriculum: [https://github.com/twajr/ckad-prep-notes#tasks-from-kubernetes-doc](https://github.com/twajr/ckad-prep-notes#tasks-from-kubernetes-doc)
 - **Killer.sh** is a great page with an exam simulator that you can do 2 times, with a real cluster, alive for 24 hours, with real scenarios ready and even a timer so you get the feeling of the exam time pressure:
 
-{% include
-  components/link-card.html
-  heading="Kubernetes CKA CKAD Simulator"
-  body="Kubernetes CKA CKAD Simulator / Example Questions / Practice Exam"
-  link="https://killer.sh/ckad"
-  linkLabel="killer.sh"
-  image="assets/0_3Glp6AXn3hZlIDRD.png"
-%}
+[![**Kubernetes CKA CKAD Simulator** Kubernetes CKA CKAD Simulator / Example Questions / Practice Exam](assets/0_3Glp6AXn3hZlIDRD.png)](https://killer.sh/ckad)
 
 It’s not free, but I definitely think is totally worth it.
 

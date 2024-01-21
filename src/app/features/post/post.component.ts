@@ -12,6 +12,8 @@ import { DividerComponent } from '../../components/divider/divider.component';
 import { Category } from '../../core/model/categories.model';
 import { TableOfContentComponent } from '../../components/table-of-content/table-of-content.component';
 import { HeaderNode } from '../../core/model/content.model';
+import { PostUrlPipe } from '../../core/utils/post-url.pipe';
+import { GradientComponent } from '../../components/gradient/gradient.component';
 
 @Component({
   selector: 'blog-post',
@@ -26,6 +28,8 @@ import { HeaderNode } from '../../core/model/content.model';
     PostItemComponent,
     MarkdownModule,
     TableOfContentComponent,
+    PostUrlPipe,
+    GradientComponent,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',

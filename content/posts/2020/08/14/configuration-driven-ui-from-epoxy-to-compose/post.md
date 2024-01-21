@@ -4,7 +4,7 @@ This is a story of how we came up with the solution for Configuration driven UI 
 
 ![](assets/epoxy-compose-banner.png)
 
-Authors: Hari Vignesh
+Authors: Hari Vignesh Jayapalan
 Date: 2020-08-14
 Category: mobile
 

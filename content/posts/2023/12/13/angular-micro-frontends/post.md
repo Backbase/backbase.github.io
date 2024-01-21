@@ -113,7 +113,7 @@ ng add @angular-architects/module-federation@<version> --project remote-app  --p
 npm install @angular/elements@<version>
 ```
 
-Use relevant version of @angular-architects/module-federation. <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">Check version compatibility here.</a>
+Use relevant version of @angular-architects/module-federation. [Check version compatibility here](https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use).
 
 **Define customElement**
 
@@ -244,7 +244,7 @@ Let's see four different ways to share theming between shell and remote applicat
 
 **Solution**: Based on above illustration, the most efficient approach for maintaining consistent CSS is to implement global shared theme.
 
-A shared global theme or at shell only is the only possible way to do styling in micro frontends. Also, we only considered <a href="https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use" target="_blank">ITCSS architecture</a> for this POC and haven't explored component-level styling.
+A shared global theme or at shell only is the only possible way to do styling in micro frontends. Also, we only considered [ITCSS architecture](https://www.npmjs.com/package/@angular-architects/module-federation#which-version-to-use) for this POC and haven't explored component-level styling.
 
 
 **Duplicate Source Code**
@@ -292,7 +292,7 @@ format(new Date(2014, 1, 11), 'MM/dd/yyyy');
 ```
 
 and, webpack will automatically share `date-fns` between all your federated modules that define date-fns as a shared library. For more details,
-please refer <a href="https://www.npmjs.com/package/@angular-architects/module-federation#sharing-libs-of-a-monorepo" target="_blank">@angular-architects/module-federation#sharing-libs-of-a-monorepo</a> and <a href="https://webpack.js.org/plugins/module-federation-plugin/" target="_blank">webpack's module federation plugin.</a>
+please refer [@angular-architects/module-federation#sharing-libs-of-a-monorepo](https://www.npmjs.com/package/@angular-architects/module-federation#sharing-libs-of-a-monorepo) and [webpack's module federation plugin](https://webpack.js.org/plugins/module-federation-plugin/).
 
 
 **Deployment**

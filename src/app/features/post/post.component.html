@@ -1,4 +1,5 @@
-<div class="post">
+<blog-gradient></blog-gradient>
+<section class="post">
   @if (post$ | async; as post) {
     <header id="post-header" class="post__header">
       <div class="post__header-content">
@@ -20,28 +21,28 @@
         </div>
       </div>
       <div class="post__header-image">
-        <img [src]="post.teaser" alt="">
+        <img [src]="post | postUrl : post.teaser" alt="">
       </div>
     </header>
     <div class="post__content">
-      <div class="post__content-table">
+      <aside class="post__content-table">
         <blog-table-of-content
           class="sticky"
           [headers]="(headers$ | async) || []"
         ></blog-table-of-content>
-      </div>
-      <div class="post__content-text">
+      </aside>
+      <article class="post__content-text center-container">
         <markdown
           [data]="markdown$ | async"
         ></markdown>
-      </div>
+      </article>
     </div>
   }
 
   @if (relatedPosts$ | async; as relatedPosts) {
     @if (relatedPosts.length) {
-      <blog-divider></blog-divider>
-      <div class="center-container">
+      <blog-divider class="extra-spacing"></blog-divider>
+      <div class="center-container post__related-container">
         <h3>Continue the Journey: Explore Related Posts</h3>
         <div class="post__related-posts">
           @for (relatedPost of relatedPosts; track $index) {
@@ -51,4 +52,4 @@
       </div>
     }
   }
-</div>
+</section>
