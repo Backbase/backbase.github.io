@@ -3,17 +3,20 @@
 
   &__image {
     max-width: 560px;
-    border-radius: 0 0 0 10rem;
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      border: 1px solid var(--blog-palette-tangerine);
-      border-radius: 0 10rem 0 10rem;
-      top: 1rem;
-      right: 1rem;
+
+    @media screen and (min-width: 480px) {
+      border-radius: 0 0 0 10rem;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border: 1px solid var(--blog-palette-tangerine);
+        border-radius: 0 10rem 0 10rem;
+        top: 1rem;
+        right: 1rem;
+      }
     }
     img {
       width: 100%;

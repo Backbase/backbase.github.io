@@ -4,16 +4,12 @@ const path = require('path');
 function updateMetaDate(filePath) {
     try {
         const fileContent = fs.readFileSync(filePath, 'utf8');
-        const jsonObject = JSON.parse(fileContent);
-
-        if (jsonObject.date) { return; }
 
         // Update the "date" field with the current date
-        const currentDate = new Date();
-        jsonObject.date = currentDate.toISOString();
+        const currentDate = new Date().toISOString();
 
         // Write the updated content back to the file
-        fs.writeFileSync(filePath, JSON.stringify(jsonObject, null, 2), 'utf8');
+        fs.writeFileSync(filePath, fileContent.replace('Date: unpublished', `Date: ${currentDate}`), 'utf8');
     } catch (error) {
         console.error(`Error updating meta.json file: ${error.message}`);
     }
@@ -24,22 +20,26 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
 
     unpublished.forEach(async (articlePath) => {
         const unpublishedPath = path.join(sourcePath, articlePath);
-        const metaFilePath = path.join(unpublishedPath, 'meta.json');
+        const filePath = path.join(unpublishedPath, 'post.md');
 
         const utils = await loadEsmModule('../../dist/utils/esm2022/lib/permalink.mjs');
 
-        if (fs.existsSync(metaFilePath)) {
-            updateMetaDate(metaFilePath);
+        if (fs.existsSync(filePath)) {
+            updateMetaDate(filePath);
     
-            const metaFileContent = fs.readFileSync(metaFilePath, 'utf8');
-            const metaJsonObject = JSON.parse(metaFileContent);
+            const fileContent = fs.readFileSync(filePath, 'utf8');
+            const metaJsonObject = {
+                title: fileContent.match(/^#\s(.+)/m)[1],
+                category: fileContent.match(/^Category:\s(.+)/im)[1],
+                date: fileContent.match(/^Date:\s(.+)/im)?.[1],
+            };
     
             const destinationPath = path.join(destinationRoot, utils.getPermalink(
                 metaJsonObject.title,
-                new Date(metaJsonObject.date),
-                metaJsonObject.category,
-                metaJsonObject.article,
+                metaJsonObject.date,
+                metaJsonObject.category
             ));
+
     
             // Create the destination directory if it doesn't exist
             if (!fs.existsSync(destinationPath)) {

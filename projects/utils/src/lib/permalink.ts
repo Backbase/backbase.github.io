@@ -1,13 +1,14 @@
-export function getPermalink(title: string, date?: Date | undefined, category?: string, article?: boolean): string {
+export function getPermalink(title: string, date?: string, category?: string): string {
   let base;
-  if (article) {
+  if (!date) {
     base = category;
   } else {
-    base = date ?
-      `${date.getFullYear()}/${(date.getMonth() + 1)
+    const parsedDate = new Date(date);
+    base = Number.isNaN(parsedDate.getTime()) ?
+      'unpublished' :
+      `${parsedDate.getFullYear()}/${(parsedDate.getMonth() + 1)
         .toString()
-        .padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}` :
-      'unpublished';
+        .padStart(2, '0')}/${parsedDate.getDate().toString().padStart(2, '0')}`;
   }
 
   const titleDirectoryName = title

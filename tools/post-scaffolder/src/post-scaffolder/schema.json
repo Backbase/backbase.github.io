@@ -26,17 +26,14 @@
         "career",
         "sdlc",
         "tech-life",
-        "mobile"
+        "mobile",
+        "principles"
       ],
       "x-prompt": "In which of these categories your post fits best?"
     },
     "tags": {
       "type": "string",
       "x-prompt": "Enter some keywords related to your post (comma-separated)"
-    },
-    "date": {
-      "type": "string",
-      "x-prompt": "Enter a date *if* you want to publish under a specific date (yyyy-mm-dd)"
     }
   },
   "required": [

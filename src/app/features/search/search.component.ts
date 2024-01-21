@@ -48,7 +48,7 @@ export class SearchComponent implements OnInit {
 
   goToPost(event: MatAutocompleteSelectedEvent) {
     const post: Post = event.option.value;
-    this.router.navigateByUrl(getPermalink(post.title, post.date ? new Date(post.date) : undefined, post.category, post.article));
+    this.router.navigateByUrl(getPermalink(post.title, post.date, post.category));
     this.control.setValue('');
   }
 

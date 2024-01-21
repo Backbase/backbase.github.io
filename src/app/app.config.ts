@@ -8,7 +8,7 @@ import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import markdownConfig from './markdown.config';
 import { DOCUMENT } from '@angular/common';
-import { AUTHORS_AVATAR_PATH_TOKEN, STANDALONE_CATEGORIES_TOKEN } from './core/config/configuration-tokens';
+import { AUTHORS_AVATAR_PATH_TOKEN } from './core/config/configuration-tokens';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,10 +31,6 @@ export const appConfig: ApplicationConfig = {
     {
       provide: AUTHORS_AVATAR_PATH_TOKEN,
       useValue: 'authors'
-    },
-    {
-      provide: STANDALONE_CATEGORIES_TOKEN,
-      useValue: ['principles']
     }
   ],
 };

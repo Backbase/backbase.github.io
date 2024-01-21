@@ -1,11 +1,10 @@
-import { Inject, Injectable } from '@angular/core';
-import { Observable, map, shareReplay, tap, withLatestFrom } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, map, shareReplay, withLatestFrom } from 'rxjs';
 import { Post, Posts } from '../model/post.model';
 import { HttpClient } from '@angular/common/http';
 import { getPermalink } from '@blog/utils';
 import { AuthorsService } from './authors.service';
 import { Category } from '../model/categories.model';
-import { STANDALONE_CATEGORIES_TOKEN } from '../config/configuration-tokens';
 
 const POSTS_PER_PAGE = 8;
 
@@ -18,7 +17,6 @@ export class PostsService {
   constructor(
     private httpClient: HttpClient,
     private authorsService: AuthorsService,
-    @Inject(STANDALONE_CATEGORIES_TOKEN) private standaloneCategories: string[],
   ) {}
 
   getAllPosts(): Observable<Post[]> {
@@ -27,7 +25,7 @@ export class PostsService {
 
   getHighlightedPost(): Observable<Post | undefined> {
     return this.getAllPosts().pipe(
-      map((posts) => posts.find(({ featured }) => featured) || posts.find(({ category }) => !this.standaloneCategories.includes(category)))
+      map((posts) => posts.find(({ featured }) => featured) ?? posts.find(({ date }) => !!date))
     );
   }
 
@@ -66,7 +64,7 @@ export class PostsService {
   }
 
   getPost(permalink: string | null): Observable<Post | undefined> {
-    const filterByPermalink = (post: Post) => getPermalink(post.title, post.date ? new Date(post.date) : undefined, post.category, this.standaloneCategories.includes(post.category)) === permalink;
+    const filterByPermalink = (post: Post) => getPermalink(post.title, post.date, post.category) === permalink;
     return this.getPosts(0, 1, false, (post: Post) => filterByPermalink(post)).pipe(map(({ posts }) => posts[0]));
   }
 

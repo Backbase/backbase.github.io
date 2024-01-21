@@ -18,13 +18,13 @@ function scanDirectory(directoryPath, filesArray, routesArray) {
             
             const metaData = fileContent.split('---')[0];
             filesArray.push({
-                title: metaData.match(/^#\s(.+)/m)[1],
-                excerpt: metaData.match(/^#[^\n]+\n+([^\n]+)/s)[1],
-                teaser: metaData.match(/^\!\[[^\(]+\(([^\)]+)/im)[1],
-                authors: metaData.match(/^Authors:\s(.+)/im)[1].split(',').map(n => n.trim()),
-                category: metaData.match(/^Category:\s(.+)/im)[1],
-                tags: metaData.match(/^Tags:\s(.+)/im)[1].split(',').map(n => n.trim()),
-                date: metaData.match(/^Date:\s(.+)/im)?.[1],
+                title: metaData.match(/^# ([^\n]+)/m)?.[1],
+                excerpt: metaData.match(/^#[^\n]+\n+([^\n]+)/s)?.[1],
+                teaser: metaData.match(/^\!\[[^\(]+\(([^\)]+)/im)?.[1],
+                authors: metaData.match(/^Authors: ([^\n]+)/im)?.[1]?.split(',').map(n => n.trim()),
+                category: metaData.match(/^Category: ([^\n]+)/im)?.[1],
+                tags: metaData.match(/^Tags: ([^\n]+)/im)?.[1]?.split(',').map(n => n.trim()),
+                date: metaData.match(/^Date: ([^\n]+)/im)?.[1],
                 readingTime: readingTime(fileContent, 238).text
             });
             routesArray.push(directoryPath.replace('content/posts', ''));
@@ -32,7 +32,7 @@ function scanDirectory(directoryPath, filesArray, routesArray) {
     });
 
     // Sort the array based on the "date" field
-    filesArray.sort((a, b) => a.date ? new Date(b.date) - new Date(a.date) : -1);
+    filesArray.sort((a, b) => a.date && a.date !== 'unpublished' ? new Date(b.date) - new Date(a.date) : -1);
 }
 
 function main() {

@@ -2,7 +2,6 @@ import { Author } from "./author.model";
 import { Category } from "./categories.model";
 
 export interface Post {
-  path: string;
   title: string;
   excerpt: string;
   teaser: string;
@@ -12,7 +11,6 @@ export interface Post {
   category: Category;
   tags: string[];
   readingTime: string;
-  article: boolean;
 }
 
 export interface Posts {

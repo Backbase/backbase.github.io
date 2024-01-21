@@ -1,12 +1,12 @@
 # <%= title %>
 
+<%= excerpt %>
+
 ![](assets/placeholder.png)
 
 Authors: <%= authors %>
-Date: <%= date %>
+Date: <%= date || 'unpublished' %>
 Category: <%= category %>
-
-<%= excerpt %>
 
 tags: <%= tags %>
 
