@@ -6,7 +6,7 @@ import { Component, Inject, Input } from '@angular/core';
   standalone: true,
   imports: [NgStyle, NgClass],
   templateUrl: './transition.component.html',
-  styleUrl: './transition.component.scss'
+  styleUrl: './transition.component.scss',
 })
 export class TransitionComponent {
   colorFrom!: string | undefined;
@@ -14,10 +14,10 @@ export class TransitionComponent {
   @Input() type: 'right' | 'left' = 'right';
   @Input('colorFrom') set _colorFrom(value: string) {
     this.colorFrom = `var(--blog-palette-${value})`;
-  };
+  }
   @Input('colorTo') set _colorTo(value: string) {
     this.colorTo = `var(--blog-palette-${value})`;
-  };
+  }
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
 }

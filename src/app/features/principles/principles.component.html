@@ -6,8 +6,6 @@
 
 @if (articles$ | async; as articles) {
   <div class="center-container">
-    <blog-posts-list
-      [posts]="articles.posts"
-    ></blog-posts-list>
+    <blog-posts-list [posts]="articles.posts"></blog-posts-list>
   </div>
 }

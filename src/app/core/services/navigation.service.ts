@@ -24,12 +24,12 @@ export class NavigationService {
   async navigate(pageIndex: number) {
     this.currentPage$$.next(pageIndex);
     await this.router.navigate(
-      [], 
+      [],
       {
         relativeTo: this.activatedRoute,
         queryParams: {
           p: pageIndex + 1,
-        }, 
+        },
         queryParamsHandling: 'merge',
       }
     );

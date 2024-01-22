@@ -18,7 +18,7 @@
       flex-wrap: wrap;
       align-items: center;
     }
-  
+
     .mat-mdc-list-item {
       width: auto;
     }
@@ -30,7 +30,7 @@
     height: 100vh;
     top: 0;
     left: 0;
-  
+
     .close-button-container {
       display: flex;
       justify-content: flex-end;
@@ -40,12 +40,12 @@
   &__logo-link {
     text-decoration: none;
     color: #000000;
-    font-size: .85em;
+    font-size: 0.85em;
   }
 
   .mdc-button {
     &:after {
-      content: "";
+      content: '';
       height: 5px;
       width: 0;
       background: var(--mat-badge-background-color);
@@ -56,7 +56,7 @@
     &:hover {
       position: relative;
       &:after {
-        transition: width .15s ease-out;
+        transition: width 0.15s ease-out;
         width: 100%;
       }
     }
@@ -74,4 +74,3 @@
 .mdc-list-item.mdc-list-item--with-one-line.search {
   height: auto;
 }
-

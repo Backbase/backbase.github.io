@@ -6,7 +6,7 @@ import { Category } from '../../core/model/categories.model';
   standalone: true,
   imports: [],
   templateUrl: './category-title.component.html',
-  styleUrl: './category-title.component.scss'
+  styleUrl: './category-title.component.scss',
 })
 export class CategoryTitleComponent {
   @Input() section!: string | null;

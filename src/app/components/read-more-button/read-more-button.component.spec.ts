@@ -8,10 +8,9 @@ describe('ReadMoreButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReadMoreButtonComponent]
-    })
-    .compileComponents();
-    
+      imports: [ReadMoreButtonComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ReadMoreButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

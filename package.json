@@ -54,6 +54,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "marked": "^9.0.0",
     "ng-packagr": "^17.0.0",
+    "prettier": "^3.2.4",
     "reading-time-estimator": "^1.9.2",
     "typescript": "~5.2.2"
   }

@@ -9,8 +9,6 @@ import { ButtonComponent } from '../button/button.component';
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatIconModule, ButtonComponent],
   templateUrl: './jobs.component.html',
-  styleUrl: './jobs.component.scss'
+  styleUrl: './jobs.component.scss',
 })
-export class JobsComponent {
-
-}
+export class JobsComponent {}

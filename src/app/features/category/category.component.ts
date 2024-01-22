@@ -32,16 +32,27 @@ import { CategoriesTabComponent } from '../../core/layout/categories-tab/categor
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',
-  providers: [NavigationService]
+  providers: [NavigationService],
 })
 export class CategoryComponent {
-  category$ = this.activatedRoute.paramMap.pipe(map(params => params.get('cat')));
+  category$ = this.activatedRoute.paramMap.pipe(
+    map(params => params.get('cat'))
+  );
 
   currentPage$ = this.navigationService.currentPage$;
-  posts$: Observable<Posts> = combineLatest([this.currentPage$, this.category$])
-    .pipe(switchMap(([page, category]) => this.postsService.getPosts(
-      page, undefined, false, (post: Post) => post.category === category,
-    )));
+  posts$: Observable<Posts> = combineLatest([
+    this.currentPage$,
+    this.category$,
+  ]).pipe(
+    switchMap(([page, category]) =>
+      this.postsService.getPosts(
+        page,
+        undefined,
+        false,
+        (post: Post) => post.category === category
+      )
+    )
+  );
   authors$: Observable<AuthorsList> = this.authorsService.getAuthors();
   categories$: Observable<string[]> = this.postsService.getCategories();
 
@@ -49,7 +60,7 @@ export class CategoryComponent {
     private postsService: PostsService,
     private authorsService: AuthorsService,
     private navigationService: NavigationService,
-    private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   navigate(page: PageEvent) {

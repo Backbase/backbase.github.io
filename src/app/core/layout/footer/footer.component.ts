@@ -7,8 +7,6 @@ import { LogoComponent } from '../../../components/logo/logo.component';
   standalone: true,
   imports: [CommonModule, LogoComponent],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+  styleUrl: './footer.component.scss',
 })
-export class FooterComponent {
-
-}
+export class FooterComponent {}

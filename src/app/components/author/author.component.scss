@@ -1,11 +1,11 @@
 .author {
   display: flex;
   align-items: center;
-  gap: .5em;
+  gap: 0.5em;
 
   &.muted {
     color: var(--blog-palette-muted);
-    font-size: .85em;
+    font-size: 0.85em;
   }
 
   &__avatar {
@@ -26,7 +26,7 @@
 
   &__role {
     font-weight: 300;
-    font-size: .85em;
+    font-size: 0.85em;
   }
 
   &.lg {

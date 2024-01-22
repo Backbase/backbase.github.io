@@ -46,3 +46,6 @@ Thumbs.db
 .vscode
 /content/posts/posts.json
 /content/authors/avatars/dist
+*.md
+.editorconfig
+.prettierrc.json

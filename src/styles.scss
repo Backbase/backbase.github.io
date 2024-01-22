@@ -4,17 +4,17 @@
 @include mat.core();
 
 $backbase-primary: (
- 50: #e8eaff,
- 100: #c4c9fe,
- 200: #99a6fe,
- 300: #6683ff,
- 400: #3366ff,
- 500: #0048fc,
- 600: #0040f0,
- 700: #0034e3,
- 800: #0027d9,
- 900: #000bc0,
- contrast: (
+  50: #e8eaff,
+  100: #c4c9fe,
+  200: #99a6fe,
+  300: #6683ff,
+  400: #3366ff,
+  500: #0048fc,
+  600: #0040f0,
+  700: #0034e3,
+  800: #0027d9,
+  900: #000bc0,
+  contrast: (
     50: #000000,
     100: #000000,
     200: #000000,
@@ -25,21 +25,21 @@ $backbase-primary: (
     700: #ffffff,
     800: #ffffff,
     900: #ffffff,
- )
+  ),
 );
 
 $backbase-secondary: (
- 50: #e4eaff,
- 100: #beceeb,
- 200: #9eadce,
- 300: #7b8cb1,
- 400: #63759c,
- 500: #4a5f88,
- 600: #3c5378,
- 700: #2c4162,
- 800: #1d2f4c,
- 900: #091c35,
- contrast: (
+  50: #e4eaff,
+  100: #beceeb,
+  200: #9eadce,
+  300: #7b8cb1,
+  400: #63759c,
+  500: #4a5f88,
+  600: #3c5378,
+  700: #2c4162,
+  800: #1d2f4c,
+  900: #091c35,
+  contrast: (
     50: #000000,
     100: #000000,
     200: #000000,
@@ -50,21 +50,21 @@ $backbase-secondary: (
     700: #ffffff,
     800: #ffffff,
     900: #ffffff,
- )
+  ),
 );
 
 $backbase-electric: (
- 50: #dffffe,
- 100: #adfffd,
- 200: #69ffff,
- 300: #00fcff,
- 400: #00f7fe,
- 500: #00f2ff,
- 600: #00e1eb,
- 700: #00c9cf,
- 800: #00b4b6,
- 900: #008e86,
- contrast: (
+  50: #dffffe,
+  100: #adfffd,
+  200: #69ffff,
+  300: #00fcff,
+  400: #00f7fe,
+  500: #00f2ff,
+  600: #00e1eb,
+  700: #00c9cf,
+  800: #00b4b6,
+  900: #008e86,
+  contrast: (
     50: #000000,
     100: #000000,
     200: #000000,
@@ -75,21 +75,21 @@ $backbase-electric: (
     700: #ffffff,
     800: #ffffff,
     900: #ffffff,
- )
+  ),
 );
 
 $backbase-accent: (
- 50: #fbe8e7,
- 100: #ffc8bc,
- 200: #ffa392,
- 300: #ff7e67,
- 400: #ff6047,
- 500: #ff3e2a,
- 600: #f43826,
- 700: #e63121,
- 800: #d8291c,
- 900: #bf1a13,
- contrast: (
+  50: #fbe8e7,
+  100: #ffc8bc,
+  200: #ffa392,
+  300: #ff7e67,
+  400: #ff6047,
+  500: #ff3e2a,
+  600: #f43826,
+  700: #e63121,
+  800: #d8291c,
+  900: #bf1a13,
+  contrast: (
     50: #000000,
     100: #000000,
     200: #000000,
@@ -100,7 +100,7 @@ $backbase-accent: (
     700: #ffffff,
     800: #ffffff,
     900: #ffffff,
- )
+  ),
 );
 
 $backbase-primary-light: mat.define-palette($backbase-primary, 500);
@@ -119,23 +119,27 @@ $backbase-typography: mat.define-typography-config(
   $body-2: mat.define-typography-level(16px, 1.5, 400),
 );
 
-$backbase-theme-light: mat.define-light-theme((
-  color: (
-    primary: $backbase-primary-light,
-    accent: $backbase-accent-light,
-  ),
-  typography: $backbase-typography,
-  density: 0,
-));
+$backbase-theme-light: mat.define-light-theme(
+  (
+    color: (
+      primary: $backbase-primary-light,
+      accent: $backbase-accent-light,
+    ),
+    typography: $backbase-typography,
+    density: 0,
+  )
+);
 
-$backbase-theme-dark: mat.define-dark-theme((
-  color: (
-    primary: $backbase-primary-dark,
-    accent: $backbase-accent-dark,
-  ),
-  typography: $backbase-typography,
-  density: 0,
-));
+$backbase-theme-dark: mat.define-dark-theme(
+  (
+    color: (
+      primary: $backbase-primary-dark,
+      accent: $backbase-accent-dark,
+    ),
+    typography: $backbase-typography,
+    density: 0,
+  )
+);
 
 // end of configuration
 
@@ -178,7 +182,11 @@ $backbase-theme-dark: mat.define-dark-theme((
   --blog-palette-gradient-2: #ff6047;
   --blog-palette-gradient-3: #69feff;
   --blog-palette-gradient-4: #ff6047;
-  --blog-palette-background: #{color.mix(#000000, map-get($backbase-secondary, 700), 75%)};
+  --blog-palette-background: #{color.mix(
+      #000000,
+      map-get($backbase-secondary, 700),
+      75%
+    )};
   --mdc-elevated-card-container-color: var(--blog-palette-background);
   --blog-palette-text: #ffffff;
   --blog-palette-neutral: #000000;
@@ -193,7 +201,7 @@ $backbase-theme-dark: mat.define-dark-theme((
   --mdc-elevated-card-container-elevation: none;
   --mdc-elevated-card-container-shape: 0;
   --mdc-outlined-button-container-height: 50px;
-  --mdc-typography-button-letter-spacing: .03em;
+  --mdc-typography-button-letter-spacing: 0.03em;
 
   .mat-mdc-card {
     --mdc-elevated-card-container-elevation: 0;
@@ -204,7 +212,11 @@ $backbase-theme-dark: mat.define-dark-theme((
   --blog-breakpoint-lg: 1128px;
 }
 
-html, body { height: 100%; margin: 0; }
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
 
 body {
   color: var(--blog-palette-text);
@@ -219,7 +231,7 @@ body {
   margin: 0 auto;
 }
 
-[data-role="button"] {
+[data-role='button'] {
   cursor: pointer;
 }
 

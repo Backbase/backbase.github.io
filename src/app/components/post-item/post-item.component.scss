@@ -8,23 +8,23 @@
   .mdc-card {
     height: 100%;
   }
-  
+
   .mdc-card__media {
     width: 100%;
   }
-  
+
   &__actions {
     display: flex;
     margin-top: auto;
   }
-  
+
   .mat-mdc-chip.mat-mdc-standard-chip {
-    --mdc-chip-label-text-size: .8em;
+    --mdc-chip-label-text-size: 0.8em;
     --mdc-chip-container-height: 22px;
   }
-  
+
   .muted {
-    font-size: .85em;
+    font-size: 0.85em;
     color: var(--blog-palette-muted);
   }
 

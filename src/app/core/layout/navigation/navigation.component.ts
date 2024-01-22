@@ -12,7 +12,6 @@ import { ButtonComponent } from '../../../components/button/button.component';
 import { SearchComponent } from '../../../features/search/search.component';
 import { DarkModeToggleComponent } from '../dark-mode-toggle/dark-mode-toggle.component';
 
-
 @Component({
   selector: 'blog-navigation',
   standalone: true,
@@ -31,7 +30,7 @@ import { DarkModeToggleComponent } from '../dark-mode-toggle/dark-mode-toggle.co
     DarkModeToggleComponent,
   ],
   templateUrl: './navigation.component.html',
-  styleUrl: './navigation.component.scss'
+  styleUrl: './navigation.component.scss',
 })
 export class NavigationComponent implements OnInit {
   menuOpen = false;
@@ -55,10 +54,13 @@ export class NavigationComponent implements OnInit {
   }
 
   private defineView() {
-    if (!this.window) { return; }
-    const mobileBreakpoint =
-      this.window.getComputedStyle(this.document.documentElement)
-        .getPropertyValue('--blog-breakpoint-md').replace('px', '');
+    if (!this.window) {
+      return;
+    }
+    const mobileBreakpoint = this.window
+      .getComputedStyle(this.document.documentElement)
+      .getPropertyValue('--blog-breakpoint-md')
+      .replace('px', '');
     const viewSize = this.window.innerWidth;
     if (Number(viewSize) < Number(mobileBreakpoint)) {
       this.isMobile = true;

@@ -8,10 +8,9 @@ describe('DarkModeToggleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DarkModeToggleComponent]
-    })
-    .compileComponents();
-    
+      imports: [DarkModeToggleComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DarkModeToggleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

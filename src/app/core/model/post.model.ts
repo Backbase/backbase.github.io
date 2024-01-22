@@ -1,5 +1,5 @@
-import { Author } from "./author.model";
-import { Category } from "./categories.model";
+import { Author } from './author.model';
+import { Category } from './categories.model';
 
 export interface Post {
   title: string;

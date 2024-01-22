@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, MatCardModule, MatRippleModule],
   templateUrl: './engineering-content.component.html',
-  styleUrl: './engineering-content.component.scss'
+  styleUrl: './engineering-content.component.scss',
 })
 export class EngineeringContentComponent {
   constructor(private router: Router) {}

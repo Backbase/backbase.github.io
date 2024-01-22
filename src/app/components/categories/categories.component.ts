@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { Category } from '../../core/model/categories.model';
 
-
 @Component({
   selector: 'blog-categories',
   standalone: true,
   imports: [CommonModule, MatTabsModule],
   templateUrl: './categories.component.html',
-  styleUrl: './categories.component.scss'
+  styleUrl: './categories.component.scss',
 })
 export class CategoriesComponent {
   @Input() categories!: Category[];

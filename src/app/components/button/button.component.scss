@@ -7,6 +7,8 @@ blog-button {
   }
 
   .mdc-button.mat-mdc-outlined-button.mat-accent {
-    --mdc-outlined-button-outline-color: var(--mdc-outlined-button-label-text-color);
+    --mdc-outlined-button-outline-color: var(
+      --mdc-outlined-button-label-text-color
+    );
   }
 }

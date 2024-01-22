@@ -1,4 +1,9 @@
-import { APP_INITIALIZER, ApplicationConfig, SecurityContext, importProvidersFrom } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  ApplicationConfig,
+  SecurityContext,
+  importProvidersFrom,
+} from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -12,17 +17,22 @@ import { AUTHORS_AVATAR_PATH_TOKEN } from './core/config/configuration-tokens';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withInMemoryScrolling({
-      scrollPositionRestoration: 'enabled',
-      anchorScrolling: 'enabled'
-    })),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled',
+      })
+    ),
     provideClientHydration(),
     provideAnimations(),
     provideHttpClient(withFetch()),
-    importProvidersFrom(MarkdownModule.forRoot({
-      loader: HttpClient,
-      sanitize: SecurityContext.NONE,
-    })),
+    importProvidersFrom(
+      MarkdownModule.forRoot({
+        loader: HttpClient,
+        sanitize: SecurityContext.NONE,
+      })
+    ),
     {
       provide: APP_INITIALIZER,
       useFactory: markdownConfig,

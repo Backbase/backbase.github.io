@@ -31,7 +31,7 @@ export class SearchComponent implements OnInit {
 
   posts$ = this.postsService.getAllPosts();
   filteredOptions!: Observable<Post[]>;
-  
+
   constructor(private postsService: PostsService, private router: Router) {}
 
   ngOnInit() {

@@ -1,11 +1,11 @@
 .search-form {
-  line-height:32px;
+  line-height: 32px;
   &__field {
     --mdc-filled-text-field-container-color: transparent;
     --mat-form-field-state-layer-color: transparent;
 
     .mdc-floating-label .mat-icon {
-      height: .9em;
+      height: 0.9em;
     }
   }
 

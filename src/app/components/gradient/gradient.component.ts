@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './gradient.component.html',
-  styleUrl: './gradient.component.scss'
+  styleUrl: './gradient.component.scss',
 })
-export class GradientComponent {
-
-}
+export class GradientComponent {}
