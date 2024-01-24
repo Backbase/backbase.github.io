@@ -9,10 +9,16 @@ import { ReadMoreButtonComponent } from '../read-more-button/read-more-button.co
 @Component({
   selector: 'blog-post-featured',
   standalone: true,
-  imports: [CommonModule, MatCardModule, RouterModule, ReadMoreButtonComponent, PostUrlPipe],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    RouterModule,
+    ReadMoreButtonComponent,
+    PostUrlPipe,
+  ],
   templateUrl: './post-featured.component.html',
-  styleUrl: './post-featured.component.scss'
+  styleUrl: './post-featured.component.scss',
 })
 export class PostFeaturedComponent {
-  @Input({ required:true }) post!: Post;
+  @Input({ required: true }) post!: Post;
 }

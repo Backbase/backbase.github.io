@@ -41,20 +41,29 @@ import { TransitionComponent } from '../../components/transition/transition.comp
   ],
   providers: [NavigationService],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent {
   currentPage$ = this.navigationService.currentPage$;
-  featured$: Observable<Post | undefined> = this.postsService.getHighlightedPost();
-  posts$: Observable<Posts> = this.currentPage$
-    .pipe(switchMap((page) => this.postsService.getPosts(page, undefined, undefined, this.filterSpecialPosts.bind(this))));
+  featured$: Observable<Post | undefined> =
+    this.postsService.getHighlightedPost();
+  posts$: Observable<Posts> = this.currentPage$.pipe(
+    switchMap(page =>
+      this.postsService.getPosts(
+        page,
+        undefined,
+        undefined,
+        this.filterSpecialPosts.bind(this)
+      )
+    )
+  );
   authors$: Observable<AuthorsList> = this.authorsService.getAuthors();
   categories$: Observable<string[]> = this.postsService.getCategories();
 
   constructor(
     private postsService: PostsService,
     private authorsService: AuthorsService,
-    private navigationService: NavigationService,
+    private navigationService: NavigationService
   ) {}
 
   navigate(page: PageEvent) {

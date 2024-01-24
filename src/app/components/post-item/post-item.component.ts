@@ -11,7 +11,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { PostUrlPipe } from '../../core/utils/post-url.pipe';
 import { Category } from '../../core/model/categories.model';
 
-
 @Component({
   selector: 'blog-post-item',
   standalone: true,
@@ -27,14 +26,17 @@ import { Category } from '../../core/model/categories.model';
   ],
   providers: [PostUrlPipe],
   templateUrl: './post-item.component.html',
-  styleUrl: './post-item.component.scss'
+  styleUrl: './post-item.component.scss',
 })
 export class PostItemComponent {
   @Input() post!: Post;
 
   Category = Object.fromEntries(Object.entries(Category));
 
-  constructor(private router: Router, private postUrl: PostUrlPipe) {}
+  constructor(
+    private router: Router,
+    private postUrl: PostUrlPipe
+  ) {}
 
   navigate() {
     this.router.navigateByUrl(this.postUrl.transform(this.post));

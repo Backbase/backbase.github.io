@@ -3,11 +3,11 @@ const path = require('path');
 const { readingTime } = require('reading-time-estimator');
 
 function scanDirectory(directoryPath, filesArray, routesArray) {
-    const files = fs.readdirSync(directoryPath);
+  const files = fs.readdirSync(directoryPath);
 
-    files.forEach(async (file) => {
-        const filePath = path.join(directoryPath, file);
-        const stat = fs.statSync(filePath);
+  files.forEach(async file => {
+    const filePath = path.join(directoryPath, file);
+    const stat = fs.statSync(filePath);
 
         if (stat.isDirectory()) {
             // Recursively scan subdirectories
@@ -15,7 +15,7 @@ function scanDirectory(directoryPath, filesArray, routesArray) {
         } else if (file === 'post.md') {
             // If the file is named "meta.json", read its content and add it to the array
             const fileContent = fs.readFileSync(filePath, 'utf8');
-            
+
             const metaData = fileContent.split('---')[0];
             filesArray.push({
                 title: metaData.match(/^# ([^\n]+)/m)?.[1],
@@ -36,32 +36,32 @@ function scanDirectory(directoryPath, filesArray, routesArray) {
 }
 
 function main() {
-    const startDirectory = 'content/posts'; // Change this to the starting directory path
-    const outputFilePath = 'content/posts/posts.json'; // Change this to the desired output file path
+  const startDirectory = 'content/posts'; // Change this to the starting directory path
+  const outputFilePath = 'content/posts/posts.json'; // Change this to the desired output file path
 
-    if (fs.existsSync(outputFilePath)) {
-      fs.unlinkSync(outputFilePath);
-    }
+  if (fs.existsSync(outputFilePath)) {
+    fs.unlinkSync(outputFilePath);
+  }
 
-    const filesArray = [];
-    const routesArray = [];
-    scanDirectory(startDirectory, filesArray, routesArray);
+  const filesArray = [];
+  const routesArray = [];
+  scanDirectory(startDirectory, filesArray, routesArray);
 
-    // Write the sorted array to the output file
-    const outputContent = JSON.stringify(filesArray);
-    fs.writeFileSync(outputFilePath, outputContent, 'utf8');
+  // Write the sorted array to the output file
+  const outputContent = JSON.stringify(filesArray);
+  fs.writeFileSync(outputFilePath, outputContent, 'utf8');
 
-    routesArray.push(
-        '/category/tech-life',
-        '/category/devops',
-        '/category/backend',
-        '/category/career',
-        '/category/frontend',
-        '/category/sdlc',
-    )
-    fs.writeFileSync('routes.txt', routesArray.join('\r\n'), 'utf8');
+  routesArray.push(
+    '/category/tech-life',
+    '/category/devops',
+    '/category/backend',
+    '/category/career',
+    '/category/frontend',
+    '/category/sdlc'
+  );
+  fs.writeFileSync('routes.txt', routesArray.join('\r\n'), 'utf8');
 
-    console.log(`Scanning completed. Output written to ${outputFilePath}`);
+  console.log(`Scanning completed. Output written to ${outputFilePath}`);
 }
 
 main();

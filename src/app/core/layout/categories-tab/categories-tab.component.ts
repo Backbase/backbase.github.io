@@ -11,17 +11,24 @@ import { PostsService } from '../../services/posts.service';
   standalone: true,
   imports: [AsyncPipe, CategoriesComponent],
   templateUrl: './categories-tab.component.html',
-  styleUrl: './categories-tab.component.scss'
+  styleUrl: './categories-tab.component.scss',
 })
 export class CategoriesTabComponent {
-  categories$: Observable<Category[]> = this.postsService.getCategories()
-    .pipe(map((categories) => categories.filter((category) => !['principles'].includes(category))));
-  selectedCategory$ = this.activatedRoute.paramMap.pipe(map((params) => params.get('cat') as Category));
+  categories$: Observable<Category[]> = this.postsService
+    .getCategories()
+    .pipe(
+      map(categories =>
+        categories.filter(category => !['principles'].includes(category))
+      )
+    );
+  selectedCategory$ = this.activatedRoute.paramMap.pipe(
+    map(params => params.get('cat') as Category)
+  );
 
   constructor(
     private postsService: PostsService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   navigate(selected: string | string[]) {

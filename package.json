@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "prestart": "npm run posts:update && npm run images:authors",
+    "prestart": "npm run posts:update && npm run images:authors && npm run build:utils",
     "start": "ng serve",
     "prebuild": "npm run posts:update && npm run images:authors",
     "build": "ng build",
@@ -15,7 +15,8 @@
     "posts:update": "node tools/concat",
     "posts:new": "ng generate ./tools/post-scaffolder:post-scaffolder",
     "preposts:new": "cd tools/post-scaffolder && npm i && npm run build",
-    "images:authors": "node tools/process-images content/authors/avatars content/authors/avatars/dist/sm 30 30 && node tools/process-images content/authors/avatars content/authors/avatars/dist/md 80 80 && node tools/process-images content/authors/avatars content/authors/avatars/dist/lg 120 120"
+    "images:authors": "node tools/process-images content/authors/avatars content/authors/avatars/dist/sm 30 30 && node tools/process-images content/authors/avatars content/authors/avatars/dist/md 80 80 && node tools/process-images content/authors/avatars content/authors/avatars/dist/lg 120 120",
+    "prettier": "prettier --write"
   },
   "private": true,
   "dependencies": {
@@ -45,6 +46,7 @@
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "husky": "^8.0.3",
     "jasmine-core": "~5.1.0",
     "jimp": "^0.22.10",
     "karma": "~6.4.0",
@@ -52,9 +54,22 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "lint-staged": "^15.2.0",
     "marked": "^9.0.0",
     "ng-packagr": "^17.0.0",
+    "prettier": "^3.2.4",
     "reading-time-estimator": "^1.9.2",
     "typescript": "~5.2.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,html,md}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

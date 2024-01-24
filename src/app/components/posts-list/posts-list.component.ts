@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
     MatPaginatorModule,
   ],
   templateUrl: './posts-list.component.html',
-  styleUrl: './posts-list.component.scss'
+  styleUrl: './posts-list.component.scss',
 })
 export class PostsListComponent {
   @Input() posts!: Post[] | undefined;

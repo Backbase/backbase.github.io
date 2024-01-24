@@ -26,36 +26,36 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
 
         if (fs.existsSync(filePath)) {
             updateMetaDate(filePath);
-    
+
             const fileContent = fs.readFileSync(filePath, 'utf8');
             const metaJsonObject = {
                 title: fileContent.match(/^#\s(.+)/m)[1],
                 category: fileContent.match(/^Category:\s(.+)/im)[1],
                 date: fileContent.match(/^Date:\s(.+)/im)?.[1],
             };
-    
+
             const destinationPath = path.join(destinationRoot, utils.getPermalink(
                 metaJsonObject.title,
                 metaJsonObject.date,
                 metaJsonObject.category
             ));
 
-    
+
             // Create the destination directory if it doesn't exist
             if (!fs.existsSync(destinationPath)) {
                 fs.mkdirSync(destinationPath, { recursive: true });
             }
-    
+
             // Move the content of "unpublished" to the new destination
             const contents = fs.readdirSync(unpublishedPath);
             contents.forEach(file => {
                 const sourceFilePath = path.join(unpublishedPath, file);
                 const destinationFilePath = path.join(destinationPath, file);
-    
+
                 fs.renameSync(sourceFilePath, destinationFilePath);
                 console.log(`Moved: ${file}`);
             });
-    
+
             // Remove the "unpublished" directory
             fs.rmdirSync(unpublishedPath);
             console.log('Unpublished directory removed.');
@@ -66,16 +66,16 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
 }
 
 function main() {
-    const sourceDirectory = 'content/posts/unpublished';
-    const destinationRoot = 'content/posts';
+  const sourceDirectory = 'content/posts/unpublished';
+  const destinationRoot = 'content/posts';
 
-    moveUnpublishedDirectory(sourceDirectory, destinationRoot);
+  moveUnpublishedDirectory(sourceDirectory, destinationRoot);
 
-    console.log('Process completed.');
+  console.log('Process completed.');
 }
 
 main();
 
 function loadEsmModule(modulePath) {
-    return new Function('modulePath', `return import(modulePath);`)(modulePath);
+  return new Function('modulePath', `return import(modulePath);`)(modulePath);
 }

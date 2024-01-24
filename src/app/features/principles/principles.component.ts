@@ -18,14 +18,19 @@ import { AsyncPipe } from '@angular/common';
     AsyncPipe,
   ],
   templateUrl: './principles.component.html',
-  styleUrl: './principles.component.scss'
+  styleUrl: './principles.component.scss',
 })
 export class PrinciplesComponent {
-  articles$ = this.postsService.getPosts(undefined, undefined, false, this.filterPrinciplesArticles.bind(this));
+  articles$ = this.postsService.getPosts(
+    undefined,
+    undefined,
+    false,
+    this.filterPrinciplesArticles.bind(this)
+  );
 
   constructor(private postsService: PostsService) {}
 
   private filterPrinciplesArticles(post: Post) {
-    return post.category as string === 'principles';
+    return (post.category as string) === 'principles';
   }
 }

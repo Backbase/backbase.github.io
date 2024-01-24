@@ -6,8 +6,6 @@ import { MatDividerModule } from '@angular/material/divider';
   standalone: true,
   imports: [MatDividerModule],
   templateUrl: './divider.component.html',
-  styleUrl: './divider.component.scss'
+  styleUrl: './divider.component.scss',
 })
-export class DividerComponent {
-
-}
+export class DividerComponent {}

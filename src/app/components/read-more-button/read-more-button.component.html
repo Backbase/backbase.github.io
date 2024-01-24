@@ -5,13 +5,15 @@
       <mat-icon iconPositionEnd>arrow_forward</mat-icon>
     </a>
   </blog-button>
-}
-@else {
+} @else {
   <blog-button>
     <a mat-button color="primary" [routerLink]="link">
       Read more
       <span class="arrow">
-        <mat-icon class="icon" iconPositionEnd fontIcon="arrow_forward"></mat-icon>
+        <mat-icon
+          class="icon"
+          iconPositionEnd
+          fontIcon="arrow_forward"></mat-icon>
       </span>
     </a>
   </blog-button>

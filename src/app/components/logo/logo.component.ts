@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './logo.component.html',
-  styleUrl: './logo.component.scss'
+  styleUrl: './logo.component.scss',
 })
 export class LogoComponent {
   private _size = 2.5;
@@ -15,7 +15,7 @@ export class LogoComponent {
     if (value) {
       this._size = value;
     }
-  };
+  }
 
   get size(): string {
     return `${this._size}em`;

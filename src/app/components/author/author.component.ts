@@ -8,7 +8,7 @@ import { AUTHORS_AVATAR_PATH_TOKEN } from '../../core/config/configuration-token
   standalone: true,
   imports: [NgStyle, NgClass],
   templateUrl: './author.component.html',
-  styleUrl: './author.component.scss'
+  styleUrl: './author.component.scss',
 })
 export class AuthorComponent {
   @Input('author') set _author(value: Author | string) {
@@ -16,12 +16,12 @@ export class AuthorComponent {
       this.author = {
         fullname: value,
         avatar: '',
-        role: ''
-      }
+        role: '',
+      };
     } else {
       this.author = value;
     }
-  };
+  }
   @Input() size: string = 'sm';
   @Input() muted = false;
 
@@ -32,5 +32,4 @@ export class AuthorComponent {
   }
 
   constructor(@Inject(AUTHORS_AVATAR_PATH_TOKEN) protected basePath: string) {}
-
 }

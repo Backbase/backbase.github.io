@@ -20,7 +20,7 @@ export class PostsService {
   ) {}
 
   getAllPosts(): Observable<Post[]> {
-    return this.cached; 
+    return this.cached;
   }
 
   getHighlightedPost(): Observable<Post | undefined> {

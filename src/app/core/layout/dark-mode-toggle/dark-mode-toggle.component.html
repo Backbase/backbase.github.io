@@ -1,5 +1,10 @@
 @if (dark$ | async; as dark) {
   <mat-slide-toggle [checked]="dark.enabled" (change)="onChange($event)">
-    <mat-icon aria-hidden="false" aria-label="Toggle dark mode" [fontIcon]="dark.enabled ? 'dark_mode_outlined' : 'light_mode_outlined'"></mat-icon>
+    <mat-icon
+      aria-hidden="false"
+      aria-label="Toggle dark mode"
+      [fontIcon]="
+        dark.enabled ? 'dark_mode_outlined' : 'light_mode_outlined'
+      "></mat-icon>
   </mat-slide-toggle>
 }

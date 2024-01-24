@@ -41,6 +41,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# App
 .angular
 .vscode
 /content/posts/posts.json

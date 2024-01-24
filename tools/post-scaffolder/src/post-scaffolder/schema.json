@@ -36,12 +36,6 @@
       "x-prompt": "Enter some keywords related to your post (comma-separated)"
     }
   },
-  "required": [
-    "title",
-    "excerpt",
-    "authors",
-    "category",
-    "tags"
-  ],
+  "required": ["title", "excerpt", "authors", "category", "tags"],
   "additionalProperties": false
 }

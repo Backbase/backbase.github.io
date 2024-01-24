@@ -1,4 +1,4 @@
-import { MarkdownService } from "ngx-markdown";
+import { MarkdownService } from 'ngx-markdown';
 
 export default function(markdownService: MarkdownService, document: Document) {
   markdownService.renderer.link = (href: string, title: string | null | undefined, text: string) => {
@@ -44,6 +44,7 @@ export default function(markdownService: MarkdownService, document: Document) {
     `;
   }
 }
+
 
 function parseFigCaption(text: string) {
   return text.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');

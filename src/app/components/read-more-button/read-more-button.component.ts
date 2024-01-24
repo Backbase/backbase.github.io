@@ -8,9 +8,15 @@ import { ButtonComponent } from '../button/button.component';
 @Component({
   selector: 'blog-read-more-button',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule, RouterModule, ButtonComponent],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterModule,
+    ButtonComponent,
+  ],
   templateUrl: './read-more-button.component.html',
-  styleUrl: './read-more-button.component.scss'
+  styleUrl: './read-more-button.component.scss',
 })
 export class ReadMoreButtonComponent {
   @Input() link!: string;
