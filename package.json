@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "prestart": "npm run posts:update && npm run images:authors",
+    "prestart": "npm run posts:update && npm run images:authors && npm run build:utils",
     "start": "ng serve",
     "prebuild": "npm run posts:update && npm run images:authors",
     "build": "ng build",
@@ -67,7 +67,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,css,md}": [
+    "*.{js,css,html,md}": [
       "prettier --write",
       "git add"
     ]

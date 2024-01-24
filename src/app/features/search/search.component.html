@@ -17,7 +17,15 @@
       panelWidth="500"
       (optionSelected)="goToPost($event)">
       @for (option of filteredOptions | async; track option) {
-        <mat-option [value]="option">{{ option.title }}</mat-option>
+        <mat-option [value]="option">
+          <p [blogHighlight]="control.value" class="search-form__option">
+            <span>
+              {{ option.title }}
+            </span>
+            <small><b>Category</b>: {{ option.category }} </small>
+            <small><b>Tags</b>: {{ option.tags.join(', ') }} </small>
+          </p>
+        </mat-option>
       }
     </mat-autocomplete>
   </mat-form-field>
