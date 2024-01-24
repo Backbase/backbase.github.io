@@ -1,9 +1,20 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  ViewEncapsulation,
+} from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Observable, filter, map, switchMap, withLatestFrom } from 'rxjs';
 import { Post } from '../../core/model/post.model';
 import { PostsService } from '../../core/services/posts.service';
-import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterModule,
+} from '@angular/router';
 import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { AuthorComponent } from '../../components/author/author.component';
 import { MatChipsModule } from '@angular/material/chips';
@@ -43,29 +54,37 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 })
 export class PostComponent {
   post$: Observable<Post | undefined> = this.activatedRoute.url.pipe(
-    map((segments) => segments.map(({ path }) => path).join('/')),
-    switchMap((permalink) => this.postsService.getPost(permalink)),
+    map(segments => segments.map(({ path }) => path).join('/')),
+    switchMap(permalink => this.postsService.getPost(permalink))
   );
 
   markdown$: Observable<string> = this.activatedRoute.url.pipe(
-    map((segments) => `${segments.map(({ path }) => path).join('/')}/post.md`),
-    switchMap((link) => this.markdownService.getSource(link)),
-    map(this.removeMarkdownMetadataHeader),
+    map(segments => `${segments.map(({ path }) => path).join('/')}/post.md`),
+    switchMap(link => this.markdownService.getSource(link)),
+    map(this.removeMarkdownMetadataHeader)
   );
 
   relatedPosts$: Observable<Post[]> = this.post$.pipe(
     filter(Boolean),
     switchMap(post =>
-      this.postsService.getPosts(0, 2, false, (_post: Post) =>
-        post.title !== _post.title && (post.category === _post.category || post.tags.some((tag) => _post.tags.includes(tag))))),
-    map(({ posts }) => posts),
+      this.postsService.getPosts(
+        0,
+        2,
+        false,
+        (_post: Post) =>
+          post.title !== _post.title &&
+          (post.category === _post.category ||
+            post.tags.some(tag => _post.tags.includes(tag)))
+      )
+    ),
+    map(({ posts }) => posts)
   );
 
   Category = Object.fromEntries(Object.entries(Category));
 
   headers$: Observable<HeaderNode[]> = this.markdown$.pipe(
     withLatestFrom(this.post$),
-    map(([markdown, post]) => this.createTree(markdown, post?.title)),
+    map(([markdown, post]) => this.createTree(markdown, post?.title))
   );
 
   constructor(
@@ -74,9 +93,9 @@ export class PostComponent {
     private router: Router,
     private markdownService: MarkdownService,
     @Inject(DOCUMENT) private document: Document,
-    private cd: ChangeDetectorRef,
+    private cd: ChangeDetectorRef
   ) {
-    this.markdownService.getSource
+    this.markdownService.getSource;
   }
 
   navigate(path: string) {
@@ -85,36 +104,45 @@ export class PostComponent {
 
   private createTree(markdown: string, rootTitle: string = '') {
     const regExp = new RegExp(/<h\d(.*?)<\/h\d>/gm);
-    const matches = this.markdownService.parse(markdown).toString().match(regExp);
+    const matches = this.markdownService
+      .parse(markdown)
+      .toString()
+      .match(regExp);
 
-    const nodes: Element[] = matches?.map((raw) => {
-      const node = this.document.createElement('div');
-      node.innerHTML = raw;
-      return node.firstElementChild as Element;
-    }) ?? [];
+    const nodes: Element[] =
+      matches?.map(raw => {
+        const node = this.document.createElement('div');
+        node.innerHTML = raw;
+        return node.firstElementChild as Element;
+      }) ?? [];
 
-    const headings = nodes.map((node) => ({
+    const headings = nodes.map(node => ({
       id: node.getAttribute('id') as string,
       heading: node.textContent as string,
       level: Number(node.tagName.replace(/\D/g, '')),
       children: [],
     }));
 
-    return headings.reduce((hierarchy: HeaderNode[], node: HeaderNode) => {
-      while(hierarchy[hierarchy.length - 1].level >= node.level) {
-        hierarchy.pop();
-      }
-      hierarchy[hierarchy.length - 1].children.push(node);
-      hierarchy.push(node);
+    return headings
+      .reduce(
+        (hierarchy: HeaderNode[], node: HeaderNode) => {
+          while (hierarchy[hierarchy.length - 1].level >= node.level) {
+            hierarchy.pop();
+          }
+          hierarchy[hierarchy.length - 1].children.push(node);
+          hierarchy.push(node);
 
-      return hierarchy;
-    }, [{ id: 'post-header', heading: rootTitle, level: 1, children: [] }]).splice(0, 1);
+          return hierarchy;
+        },
+        [{ id: 'post-header', heading: rootTitle, level: 1, children: [] }]
+      )
+      .splice(0, 1);
   }
 
   private removeMarkdownMetadataHeader(markdown: string) {
     try {
       return markdown.split(/---(.+)/s)[1];
-    } catch(e) {
+    } catch (e) {
       throw new Error('Markdown not with right format');
     }
   }

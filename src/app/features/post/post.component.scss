@@ -1,4 +1,4 @@
-@import "prismjs/themes/prism-tomorrow.css";
+@import 'prismjs/themes/prism-tomorrow.css';
 
 .post {
   &__header {
@@ -20,7 +20,7 @@
       max-width: 720px;
       position: relative;
       &::before {
-        content: "";
+        content: '';
         background: repeating-linear-gradient(
           55deg,
           var(--blog-palette-accent),
@@ -117,7 +117,7 @@
 
   figure {
     padding: 1rem;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 
     @media screen and (min-width: 768px) {
       img {
@@ -137,13 +137,13 @@
 
       strong {
         display: block;
-        margin-bottom: .5rem
+        margin-bottom: 0.5rem;
       }
 
       .external {
         position: absolute;
-        right: .2rem;
-        bottom: .2rem;
+        right: 0.2rem;
+        bottom: 0.2rem;
       }
     }
   }
@@ -164,7 +164,8 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    td, th {
+    td,
+    th {
       padding: 0 1rem 0 1rem;
       border-bottom-style: solid;
       line-height: inherit;
@@ -179,7 +180,10 @@
       font-weight: var(--mat-table-header-headline-weight, 500);
 
       th {
-        border-bottom-color: var(--mat-table-row-item-outline-color, rgba(0, 0, 0, 0.12));
+        border-bottom-color: var(
+          --mat-table-row-item-outline-color,
+          rgba(0, 0, 0, 0.12)
+        );
         border-bottom-width: var(--mat-table-row-item-outline-width, 1px);
         letter-spacing: var(--mat-table-header-headline-tracking);
         font-weight: inherit;
@@ -188,7 +192,11 @@
     }
 
     tbody tr {
-      font-family: var(--mat-table-row-item-label-text-font, Roboto, sans-serif);
+      font-family: var(
+        --mat-table-row-item-label-text-font,
+        Roboto,
+        sans-serif
+      );
       line-height: var(--mat-table-row-item-label-text-line-height);
       font-size: var(--mat-table-row-item-label-text-size, 14px);
       font-weight: var(--mat-table-row-item-label-text-weight);
@@ -196,18 +204,20 @@
       color: var(--mat-table-row-item-label-text-color, rgba(0, 0, 0, 0.87));
 
       td {
-        border-bottom-color: var(--mat-table-row-item-outline-color, rgba(0, 0, 0, 0.12));
+        border-bottom-color: var(
+          --mat-table-row-item-outline-color,
+          rgba(0, 0, 0, 0.12)
+        );
         border-bottom-width: var(--mat-table-row-item-outline-width, 1px);
         letter-spacing: var(--mat-table-row-item-label-text-tracking);
       }
     }
   }
 
-  code:not([class^="language-"]) {
+  code:not([class^='language-']) {
     background: var(--blog-palette-neutral);
     border: var(--blog-palette-muted) solid 1px;
-    border-radius: .2em;
-    padding: 0 .2em;
+    border-radius: 0.2em;
+    padding: 0 0.2em;
   }
 }
-

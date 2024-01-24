@@ -5,34 +5,36 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class NavigationService {
-
-  private currentPage$$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  private currentPage$$: BehaviorSubject<number> = new BehaviorSubject<number>(
+    0
+  );
 
   public currentPage$ = this.currentPage$$.asObservable();
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    @Inject(DOCUMENT) private document: Document,
+    @Inject(DOCUMENT) private document: Document
   ) {
     const page = this.activatedRoute.snapshot.queryParamMap.get('p');
     if (page && typeof Number(page) === 'number') {
-      this.currentPage$$.next(Number(page) - 1)
+      this.currentPage$$.next(Number(page) - 1);
     }
   }
 
   async navigate(pageIndex: number) {
     this.currentPage$$.next(pageIndex);
-    await this.router.navigate(
-      [],
-      {
-        relativeTo: this.activatedRoute,
-        queryParams: {
-          p: pageIndex + 1,
-        },
-        queryParamsHandling: 'merge',
-      }
-    );
-    await this.router.navigate([], { fragment: 'list', skipLocationChange: true, queryParamsHandling: 'merge' });
+    await this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: {
+        p: pageIndex + 1,
+      },
+      queryParamsHandling: 'merge',
+    });
+    await this.router.navigate([], {
+      fragment: 'list',
+      skipLocationChange: true,
+      queryParamsHandling: 'merge',
+    });
   }
 }

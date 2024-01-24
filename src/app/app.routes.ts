@@ -10,7 +10,8 @@ export const routes: Routes = [
   },
   {
     path: 'people/:author',
-    loadComponent: () => import('./features/author/author.component').then(m => m.AuthorComponent),
+    loadComponent: () =>
+      import('./features/author/author.component').then(m => m.AuthorComponent),
   },
   {
     path: ':year/:month/:day/:permalink',

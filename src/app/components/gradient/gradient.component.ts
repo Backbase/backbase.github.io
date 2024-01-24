@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <div class="gradient-container" [ngStyle]="{ height: this.height }"></div>
   `,
-  styleUrl: './gradient.component.scss'
+  styleUrl: './gradient.component.scss',
 })
 export class GradientComponent {
   height = '600px';

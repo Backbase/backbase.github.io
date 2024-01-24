@@ -22,32 +22,43 @@ import { TransitionComponent } from '../../components/transition/transition.comp
     MatChipsModule,
     GradientComponent,
     TransitionComponent,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './author.component.html',
-  styleUrl: './author.component.scss'
+  styleUrl: './author.component.scss',
 })
 export class AuthorComponent {
   author$: Observable<Author | undefined> = this.activatedRoute.paramMap.pipe(
-    map((params) => params.get('author')),
+    map(params => params.get('author')),
     withLatestFrom(this.authorsService.getAuthors()),
-    map(([param, authors]) =>
-      Object.entries(authors).find(([key]) =>
-        key.replace(/\W/g, '').toLowerCase() === param?.toLowerCase().replace(/\W/g, ''))?.[1]),
+    map(
+      ([param, authors]) =>
+        Object.entries(authors).find(
+          ([key]) =>
+            key.replace(/\W/g, '').toLowerCase() ===
+            param?.toLowerCase().replace(/\W/g, '')
+        )?.[1]
+    )
   );
   posts$: Observable<Post[] | undefined> = this.author$.pipe(
-    switchMap((author) =>
-      this.postsService.getPosts(undefined, undefined, false, (post: Post) => post.authors.includes(author?.fullname ?? ''))),
-    map(({ posts }) => posts),
+    switchMap(author =>
+      this.postsService.getPosts(undefined, undefined, false, (post: Post) =>
+        post.authors.includes(author?.fullname ?? '')
+      )
+    ),
+    map(({ posts }) => posts)
   );
-  categories$: Observable<Category[] | undefined> =
-    this.posts$.pipe(map((posts) => posts ? [ ...new Set(posts.map(({ category }) => category))] : undefined));
+  categories$: Observable<Category[] | undefined> = this.posts$.pipe(
+    map(posts =>
+      posts ? [...new Set(posts.map(({ category }) => category))] : undefined
+    )
+  );
 
-  Category = Object.fromEntries(Object.entries(Category));;
+  Category = Object.fromEntries(Object.entries(Category));
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private authorsService: AuthorsService,
-    private postsService: PostsService,
+    private postsService: PostsService
   ) {}
 }

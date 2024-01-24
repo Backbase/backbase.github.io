@@ -5,14 +5,16 @@
       <div class="post__header-content">
         <mat-chip-set aria-label="Category selection">
           <mat-chip>
-            <a [routerLink]="'/category/' + post.category">{{ Category[post.category] }}</a>
+            <a [routerLink]="'/category/' + post.category">{{
+              Category[post.category]
+            }}</a>
           </mat-chip>
         </mat-chip-set>
         <h1>{{ post.title }}</h1>
         <h2>{{ post.excerpt }}</h2>
         <span class="post__header-info">
           @if (post.date) {
-            {{ post.date | date : 'longDate' }} |
+            {{ post.date | date: 'longDate' }} |
           }
           {{ post.readingTime }}
         </span>
@@ -23,20 +25,17 @@
         </div>
       </div>
       <div class="post__header-image">
-        <img [src]="post | postUrl : post.teaser" alt="">
+        <img [src]="post | postUrl: post.teaser" alt="" />
       </div>
     </header>
     <div class="post__content">
       <aside class="post__content-table">
         <blog-table-of-content
           class="sticky"
-          [headers]="(headers$ | async) || []"
-        ></blog-table-of-content>
+          [headers]="(headers$ | async) || []"></blog-table-of-content>
       </aside>
       <article class="post__content-text center-container">
-        <markdown
-          [data]="markdown$ | async"
-        ></markdown>
+        <markdown [data]="markdown$ | async"></markdown>
       </article>
     </div>
   }

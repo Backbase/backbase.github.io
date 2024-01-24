@@ -9,30 +9,40 @@ function scanDirectory(directoryPath, filesArray, routesArray) {
     const filePath = path.join(directoryPath, file);
     const stat = fs.statSync(filePath);
 
-        if (stat.isDirectory()) {
-            // Recursively scan subdirectories
-            scanDirectory(filePath, filesArray, routesArray);
-        } else if (file === 'post.md') {
-            // If the file is named "meta.json", read its content and add it to the array
-            const fileContent = fs.readFileSync(filePath, 'utf8');
+    if (stat.isDirectory()) {
+      // Recursively scan subdirectories
+      scanDirectory(filePath, filesArray, routesArray);
+    } else if (file === 'post.md') {
+      // If the file is named "meta.json", read its content and add it to the array
+      const fileContent = fs.readFileSync(filePath, 'utf8');
 
-            const metaData = fileContent.split('---')[0];
-            filesArray.push({
-                title: metaData.match(/^# ([^\n]+)/m)?.[1],
-                excerpt: metaData.match(/^#[^\n]+\n+([^\n]+)/s)?.[1],
-                teaser: metaData.match(/^\!\[[^\(]+\(([^\)]+)/im)?.[1],
-                authors: metaData.match(/^Authors: ([^\n]+)/im)?.[1]?.split(',').map(n => n.trim()),
-                category: metaData.match(/^Category: ([^\n]+)/im)?.[1],
-                tags: metaData.match(/^Tags: ([^\n]+)/im)?.[1]?.split(',').map(n => n.trim()),
-                date: metaData.match(/^Date: ([^\n]+)/im)?.[1],
-                readingTime: readingTime(fileContent, 238).text
-            });
-            routesArray.push(directoryPath.replace('content/posts', ''));
-        }
-    });
+      const metaData = fileContent.split('---')[0];
+      filesArray.push({
+        title: metaData.match(/^# ([^\n]+)/m)?.[1],
+        excerpt: metaData.match(/^#[^\n]+\n+([^\n]+)/s)?.[1],
+        teaser: metaData.match(/^\!\[[^\(]+\(([^\)]+)/im)?.[1],
+        authors: metaData
+          .match(/^Authors: ([^\n]+)/im)?.[1]
+          ?.split(',')
+          .map(n => n.trim()),
+        category: metaData.match(/^Category: ([^\n]+)/im)?.[1],
+        tags: metaData
+          .match(/^Tags: ([^\n]+)/im)?.[1]
+          ?.split(',')
+          .map(n => n.trim()),
+        date: metaData.match(/^Date: ([^\n]+)/im)?.[1],
+        readingTime: readingTime(fileContent, 238).text,
+      });
+      routesArray.push(directoryPath.replace('content/posts', ''));
+    }
+  });
 
-    // Sort the array based on the "date" field
-    filesArray.sort((a, b) => a.date && a.date !== 'unpublished' ? new Date(b.date) - new Date(a.date) : -1);
+  // Sort the array based on the "date" field
+  filesArray.sort((a, b) =>
+    a.date && a.date !== 'unpublished'
+      ? new Date(b.date) - new Date(a.date)
+      : -1
+  );
 }
 
 function main() {

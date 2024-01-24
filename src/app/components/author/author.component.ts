@@ -37,11 +37,10 @@ export class AuthorComponent {
 
   constructor(
     @Inject(AUTHORS_AVATAR_PATH_TOKEN) protected basePath: string,
-    private router: Router,
+    private router: Router
   ) {}
 
   navigate(url: string) {
     this.router.navigate([url]);
   }
-
 }

@@ -16,7 +16,7 @@
     "posts:new": "ng generate ./tools/post-scaffolder:post-scaffolder",
     "preposts:new": "cd tools/post-scaffolder && npm i && npm run build",
     "images:authors": "node tools/process-images content/authors/avatars content/authors/avatars/dist/sm 30 30 && node tools/process-images content/authors/avatars content/authors/avatars/dist/md 80 80 && node tools/process-images content/authors/avatars content/authors/avatars/dist/lg 120 120",
-    "prettier": "prettier --write"
+    "prettier": "prettier --write ."
   },
   "private": true,
   "dependencies": {

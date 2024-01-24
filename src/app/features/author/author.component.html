@@ -7,7 +7,7 @@
         <h2>{{ author.role }}</h2>
       </div>
       <div class="author__header-avatar">
-        <img [src]="'authors/lg/' + author.avatar" alt="">
+        <img [src]="'authors/lg/' + author.avatar" alt="" />
       </div>
     </header>
     <aside>
@@ -23,9 +23,13 @@
       </div>
     </aside>
     <div class="center-container">
-      <blog-posts-list [posts]="(posts$ | async) || undefined"></blog-posts-list>
+      <blog-posts-list
+        [posts]="(posts$ | async) || undefined"></blog-posts-list>
     </div>
   }
 </div>
 
-<blog-transition colorFrom="background" colorTo="neutral" type="left"></blog-transition>
+<blog-transition
+  colorFrom="background"
+  colorTo="neutral"
+  type="left"></blog-transition>

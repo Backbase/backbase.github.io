@@ -30,7 +30,7 @@
       line-height: 1;
 
       &::before {
-        content: "";
+        content: '';
         background: repeating-linear-gradient(
           55deg,
           var(--blog-palette-accent),
@@ -58,7 +58,7 @@
     background-color: var(--blog-palette-neutral);
     mat-chip-set {
       display: inline-flex;
-      margin-left: .5rem;
+      margin-left: 0.5rem;
     }
   }
 }

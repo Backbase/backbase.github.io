@@ -151,11 +151,14 @@ $backbase-theme-dark: mat.define-dark-theme(
   --blog-palette-primary: #{mat.get-theme-color($backbase-theme-light, primary)};
   --blog-palette-secondary: #{map-get($backbase-secondary-light, default)};
   --blog-palette-accent: #{mat.get-theme-color($backbase-theme-light, accent)};
-  --blog-palette-secondary-contrast: #{map-get($backbase-secondary-light, default-contrast)};
-  --blog-palette-gradient-1: rgba(51,102,255,1);
-  --blog-palette-gradient-2: rgba(255,96,71,1);;
-  --blog-palette-gradient-3: rgba(73,164,255,1);
-  --blog-palette-gradient-4: rgba(105,254,255,1);
+  --blog-palette-secondary-contrast: #{map-get(
+      $backbase-secondary-light,
+      default-contrast
+    )};
+  --blog-palette-gradient-1: rgba(51, 102, 255, 1);
+  --blog-palette-gradient-2: rgba(255, 96, 71, 1);
+  --blog-palette-gradient-3: rgba(73, 164, 255, 1);
+  --blog-palette-gradient-4: rgba(105, 254, 255, 1);
   --blog-palette-background: #ffffff;
   --blog-palette-text: #{map-get($backbase-secondary-light, default)};
   --blog-palette-neutral: #f3f6f9;
@@ -167,8 +170,14 @@ $backbase-theme-dark: mat.define-dark-theme(
     --mdc-chip-elevated-container-color: #{map-get($backbase-primary, 100)};
   }
   .mat-mdc-slide-toggle {
-    --mdc-switch-unselected-track-color: #{map-get($backbase-secondary-light, 100)};
-    --mdc-switch-unselected-focus-track-color: #{map-get($backbase-secondary-light, 50)};
+    --mdc-switch-unselected-track-color: #{map-get(
+        $backbase-secondary-light,
+        100
+      )};
+    --mdc-switch-unselected-focus-track-color: #{map-get(
+        $backbase-secondary-light,
+        50
+      )};
   }
 }
 
@@ -252,7 +261,7 @@ blog-root {
 
 a {
   .external {
-    font-size: .8em;
+    font-size: 0.8em;
     display: inline;
   }
 

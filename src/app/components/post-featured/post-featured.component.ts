@@ -16,19 +16,19 @@ import { ReadMoreButtonComponent } from '../read-more-button/read-more-button.co
     ReadMoreButtonComponent,
     PostUrlPipe,
   ],
-  providers: [
-    PostUrlPipe,
-  ],
+  providers: [PostUrlPipe],
   templateUrl: './post-featured.component.html',
   styleUrl: './post-featured.component.scss',
 })
 export class PostFeaturedComponent {
   @Input({ required: true }) post!: Post;
 
-  constructor(private router: Router, private postUrlPipe: PostUrlPipe) {}
+  constructor(
+    private router: Router,
+    private postUrlPipe: PostUrlPipe
+  ) {}
 
   navigate() {
-
     this.router.navigate([this.postUrlPipe.transform(this.post)]);
   }
 }

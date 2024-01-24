@@ -4,7 +4,7 @@ import { getPermalink } from '@blog/utils';
 
 @Pipe({
   name: 'postUrl',
-  standalone: true
+  standalone: true,
 })
 export class PostUrlPipe implements PipeTransform {
   transform(post: Post, content?: string): string {
@@ -13,6 +13,6 @@ export class PostUrlPipe implements PipeTransform {
     if (content) {
       return `${postUrl}/${content}`;
     }
-  return postUrl;
+    return postUrl;
   }
 }

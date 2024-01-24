@@ -5,7 +5,7 @@
     max-width: 560px;
     position: relative;
     &::before {
-      content: "";
+      content: '';
       background: repeating-linear-gradient(
         55deg,
         var(--blog-palette-accent),
@@ -43,7 +43,7 @@
 
       .post-content {
         width: 100%;
-        padding: 0 16px
+        padding: 0 16px;
       }
     }
   }
