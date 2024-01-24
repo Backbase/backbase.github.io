@@ -3,7 +3,7 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { Observable, filter, map, switchMap, withLatestFrom } from 'rxjs';
 import { Post } from '../../core/model/post.model';
 import { PostsService } from '../../core/services/posts.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { AuthorComponent } from '../../components/author/author.component';
 import { MatChipsModule } from '@angular/material/chips';
@@ -14,6 +14,8 @@ import { TableOfContentComponent } from '../../components/table-of-content/table
 import { HeaderNode } from '../../core/model/content.model';
 import { PostUrlPipe } from '../../core/utils/post-url.pipe';
 import { GradientComponent } from '../../components/gradient/gradient.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
   selector: 'blog-post',
@@ -30,6 +32,9 @@ import { GradientComponent } from '../../components/gradient/gradient.component'
     TableOfContentComponent,
     PostUrlPipe,
     GradientComponent,
+    RouterLink,
+    MatButtonModule,
+    MatSidenavModule,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',

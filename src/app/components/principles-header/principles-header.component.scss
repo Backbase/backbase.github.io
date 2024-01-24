@@ -1,18 +1,27 @@
 .principles-header {
-  display: flex;
-  gap: 32px;
-  align-items: center;
-
+  margin: 2rem 10px;
   &__image {
-    padding: 0 10%;
-    width: 20%;
-    img {
-      max-width: 100%;
+    width: 50%;
+  }
+
+  @media screen and (min-width: 768px) {
+    margin: 2rem 0;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+
+    &__image {
+      padding: 0 10%;
+      width: 20%;
+    }
+
+    &__introduction {
+      flex-grow: 2;
     }
   }
 
-  &__introduction {
-    flex-grow: 2;
+  img {
+    width: 100%;
   }
 
   h2 {

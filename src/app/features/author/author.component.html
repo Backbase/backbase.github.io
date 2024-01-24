@@ -1,0 +1,31 @@
+<blog-gradient [height]="250"></blog-gradient>
+<div class="author">
+  @if (author$ | async; as author) {
+    <header class="author__header center-container">
+      <div class="author__header-title">
+        <h1>{{ author.fullname }}</h1>
+        <h2>{{ author.role }}</h2>
+      </div>
+      <div class="author__header-avatar">
+        <img [src]="'authors/lg/' + author.avatar" alt="">
+      </div>
+    </header>
+    <aside>
+      <div class="center-container">
+        Here we talk about
+        <mat-chip-set>
+          @for (item of categories$ | async; track $index) {
+            <mat-chip data-role="button">
+              <a [routerLink]="'/category/' + item">{{ Category[item] }}</a>
+            </mat-chip>
+          }
+        </mat-chip-set>
+      </div>
+    </aside>
+    <div class="center-container">
+      <blog-posts-list [posts]="(posts$ | async) || undefined"></blog-posts-list>
+    </div>
+  }
+</div>
+
+<blog-transition colorFrom="background" colorTo="neutral" type="left"></blog-transition>

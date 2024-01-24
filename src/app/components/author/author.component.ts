@@ -2,6 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { Author } from '../../core/model/author.model';
 import { NgClass, NgStyle } from '@angular/common';
 import { AUTHORS_AVATAR_PATH_TOKEN } from '../../core/config/configuration-tokens';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'blog-author',
@@ -17,19 +18,30 @@ export class AuthorComponent {
         fullname: value,
         avatar: '',
         role: '',
+        url: '',
       };
     } else {
       this.author = value;
+      this.profileUrl = this.author.url;
     }
   }
   @Input() size: string = 'sm';
   @Input() muted = false;
 
   author!: Author;
+  profileUrl: string | undefined;
 
   get imagePath() {
     return `${this.basePath}/${this.size}/${this.author.avatar}`;
   }
 
-  constructor(@Inject(AUTHORS_AVATAR_PATH_TOKEN) protected basePath: string) {}
+  constructor(
+    @Inject(AUTHORS_AVATAR_PATH_TOKEN) protected basePath: string,
+    private router: Router,
+  ) {}
+
+  navigate(url: string) {
+    this.router.navigate([url]);
+  }
+
 }

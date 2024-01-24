@@ -22,6 +22,7 @@ export class AuthorsService {
             [curr]: {
               ...authors[curr],
               fullname: curr,
+              url: `people/${curr.toLowerCase().replace(/\W/g, '-')}`,
             },
           }),
           {}

@@ -40,7 +40,6 @@ export class HighlightDirective implements OnChanges, AfterViewInit {
     }
 
     const element = this.el.nativeElement as HTMLElement;
-    console.log('addHighlight', this.el.nativeElement);
     const html = element.innerHTML;
     const regex = new RegExp(search, this.caseSensitive ? 'g' : 'gi');
 
@@ -55,8 +54,6 @@ export class HighlightDirective implements OnChanges, AfterViewInit {
         element.innerHTML = newContent;
       }
     }
-
-    // this.content = this.sanitizer.sanitize(SecurityContext.HTML, newText);
   }
 
   ngAfterViewInit() {

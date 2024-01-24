@@ -221,7 +221,6 @@ body {
 body {
   color: var(--blog-palette-text);
   background-color: var(--blog-palette-background);
-  width: fit-content;
   position: relative;
 }
 
@@ -229,6 +228,8 @@ body {
   max-width: 1108px;
   padding: 0 10px;
   margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 [data-role='button'] {
@@ -282,4 +283,8 @@ figure {
   figcaption {
     color: var(--blog-palette-muted);
   }
+}
+
+mat-chip a {
+  text-decoration: none;
 }

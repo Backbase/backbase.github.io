@@ -9,6 +9,10 @@ export const routes: Routes = [
       import('./features/home/home.component').then(mod => mod.HomeComponent),
   },
   {
+    path: 'people/:author',
+    loadComponent: () => import('./features/author/author.component').then(m => m.AuthorComponent),
+  },
+  {
     path: ':year/:month/:day/:permalink',
     loadComponent: () =>
       import('./features/post/post.component').then(m => m.PostComponent),

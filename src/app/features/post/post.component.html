@@ -1,10 +1,12 @@
-<blog-gradient></blog-gradient>
+<blog-gradient [height]="300"></blog-gradient>
 <section class="post">
   @if (post$ | async; as post) {
     <header id="post-header" class="post__header">
       <div class="post__header-content">
         <mat-chip-set aria-label="Category selection">
-          <mat-chip data-role="button" (click)="navigate('category/' + post.category)">{{ Category[post.category] }}</mat-chip>
+          <mat-chip>
+            <a [routerLink]="'/category/' + post.category">{{ Category[post.category] }}</a>
+          </mat-chip>
         </mat-chip-set>
         <h1>{{ post.title }}</h1>
         <h2>{{ post.excerpt }}</h2>

@@ -1,23 +1,24 @@
 .featured {
-  padding: 2rem 0;
+  padding: 2rem 10px;
 
   &__image {
-    margin: 2rem;
     max-width: 560px;
-
-    @media screen and (min-width: 480px) {
-      border-radius: 0 0 0 10rem;
-      position: relative;
-      &::after {
-        content: '';
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        border: 1px solid var(--blog-palette-tangerine);
-        border-radius: 0 10rem 0 10rem;
-        top: 1rem;
-        right: 1rem;
-      }
+    position: relative;
+    &::before {
+      content: "";
+      background: repeating-linear-gradient(
+        55deg,
+        var(--blog-palette-accent),
+        var(--blog-palette-accent) 5px,
+        transparent 5px,
+        transparent 10px
+      );
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      transform: translate(10px, 10px);
     }
     img {
       width: 100%;
@@ -26,12 +27,14 @@
 
   &__title {
     font-size: 3em;
+    position: relative;
   }
 
   @media screen and (min-width: 480px) {
     display: flex;
     flex-direction: row-reverse;
     background-color: transparent;
+    padding: 2rem 0;
 
     &__content {
       flex-grow: 1;

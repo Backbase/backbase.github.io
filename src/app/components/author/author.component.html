@@ -6,7 +6,9 @@
       md: size === 'md',
       lg: size === 'lg',
       muted: muted
-    }">
+    }"
+    [attr.data-role]="profileUrl ? 'button' : ''"
+    (click)="profileUrl ? navigate(profileUrl) : {}">
     <div
       class="author__avatar"
       [ngStyle]="{ 'background-image': 'url(' + imagePath + ')' }"></div>

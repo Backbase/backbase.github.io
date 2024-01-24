@@ -2,9 +2,10 @@
 
 .post {
   &__header {
-    margin: 3rem 0 3rem;
+    margin: 3rem 10px;
     @media screen and (min-width: 768px) {
       display: flex;
+      margin: 3rem 0 3rem;
       gap: 2rem;
 
       &-content {
@@ -17,8 +18,26 @@
     }
     &-image {
       max-width: 720px;
+      position: relative;
+      &::before {
+        content: "";
+        background: repeating-linear-gradient(
+          55deg,
+          var(--blog-palette-accent),
+          var(--blog-palette-accent) 5px,
+          transparent 5px,
+          transparent 10px
+        );
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        transform: translate(-10px, 10px);
+      }
       img {
         width: 100%;
+        position: relative;
       }
     }
   }
@@ -38,6 +57,10 @@
 
   &__content {
     display: flex;
+    markdown {
+      max-width: 100%;
+      display: block;
+    }
     @media screen and (min-width: 768px) {
       flex-direction: row-reverse;
       justify-content: space-between;
