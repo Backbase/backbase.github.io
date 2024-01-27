@@ -38,6 +38,8 @@
         <markdown [data]="markdown$ | async"></markdown>
       </article>
     </div>
+  } @else {
+    <blog-not-found></blog-not-found>
   }
 
   @if (relatedPosts$ | async; as relatedPosts) {

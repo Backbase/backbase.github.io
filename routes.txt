@@ -26,3 +26,4 @@
 /category/career
 /category/frontend
 /category/sdlc
+/404

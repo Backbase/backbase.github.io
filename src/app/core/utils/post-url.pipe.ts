@@ -11,8 +11,8 @@ export class PostUrlPipe implements PipeTransform {
     const postUrl = getPermalink(post.title, post.date, post.category);
 
     if (content) {
-      return `${postUrl}/${content}`;
+      return `/${postUrl}/${content}`;
     }
-    return postUrl;
+    return `/${postUrl}`;
   }
 }

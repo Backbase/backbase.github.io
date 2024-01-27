@@ -5,8 +5,8 @@ import {
   Inject,
   ViewEncapsulation,
 } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
-import { Observable, filter, map, switchMap, withLatestFrom } from 'rxjs';
+import { AsyncPipe, DOCUMENT, DatePipe } from '@angular/common';
+import { Observable, catchError, filter, map, switchMap, tap, throwError, withLatestFrom } from 'rxjs';
 import { Post } from '../../core/model/post.model';
 import { PostsService } from '../../core/services/posts.service';
 import {
@@ -27,12 +27,14 @@ import { PostUrlPipe } from '../../core/utils/post-url.pipe';
 import { GradientComponent } from '../../components/gradient/gradient.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { NotFoundComponent } from '../not-found/not-found.component';
 
 @Component({
   selector: 'blog-post',
   standalone: true,
   imports: [
-    CommonModule,
+    AsyncPipe,
+    DatePipe,
     MarkdownModule,
     AuthorComponent,
     MatChipsModule,
@@ -46,6 +48,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     RouterLink,
     MatButtonModule,
     MatSidenavModule,
+    NotFoundComponent,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
@@ -61,7 +64,11 @@ export class PostComponent {
   markdown$: Observable<string> = this.activatedRoute.url.pipe(
     map(segments => `${segments.map(({ path }) => path).join('/')}/post.md`),
     switchMap(link => this.markdownService.getSource(link)),
-    map(this.removeMarkdownMetadataHeader)
+    map(this.removeMarkdownMetadataHeader),
+    catchError(() => {
+      this.notFound = true;
+      return throwError(() => 'not found');
+    }),
   );
 
   relatedPosts$: Observable<Post[]> = this.post$.pipe(
@@ -86,6 +93,8 @@ export class PostComponent {
     withLatestFrom(this.post$),
     map(([markdown, post]) => this.createTree(markdown, post?.title))
   );
+
+  notFound = false;
 
   constructor(
     private postsService: PostsService,

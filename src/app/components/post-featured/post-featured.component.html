@@ -1,4 +1,4 @@
-<div class="featured center-container" data-role="button" (click)="navigate()">
+<div class="featured center-container" data-role="button" [routerLink]="post | postUrl">
   <div class="featured__image">
     <img mat-card-image [src]="post | postUrl: post.teaser" alt="" />
   </div>

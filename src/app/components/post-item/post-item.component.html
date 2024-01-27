@@ -1,4 +1,4 @@
-<mat-card matRipple data-role="button" class="item-card" (click)="navigate()">
+<mat-card matRipple data-role="button" class="item-card" [routerLink]="post | postUrl">
   <mat-card-header class="item-card__header">
     <img mat-card-image [src]="post | postUrl: post.teaser" alt="" />
   </mat-card-header>

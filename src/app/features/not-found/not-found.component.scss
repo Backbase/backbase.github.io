@@ -1,3 +1,12 @@
-:host {
-  margin: 2rem;
+.not-found {
+  text-align: center;
+
+  &__image {
+    margin: 3rem 0;
+    img {
+      max-width: 350px;
+      width: 100%;
+    }
+  }
 }
+

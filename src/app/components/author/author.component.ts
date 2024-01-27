@@ -2,12 +2,12 @@ import { Component, Inject, Input } from '@angular/core';
 import { Author } from '../../core/model/author.model';
 import { NgClass, NgStyle } from '@angular/common';
 import { AUTHORS_AVATAR_PATH_TOKEN } from '../../core/config/configuration-tokens';
-import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'blog-author',
   standalone: true,
-  imports: [NgStyle, NgClass],
+  imports: [NgStyle, NgClass, RouterLink],
   templateUrl: './author.component.html',
   styleUrl: './author.component.scss',
 })
@@ -37,10 +37,5 @@ export class AuthorComponent {
 
   constructor(
     @Inject(AUTHORS_AVATAR_PATH_TOKEN) protected basePath: string,
-    private router: Router
   ) {}
-
-  navigate(url: string) {
-    this.router.navigate([url]);
-  }
 }

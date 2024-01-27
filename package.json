@@ -12,10 +12,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "posts:publish": "node --experimental-specifier-resolution=node tools/publish",
-    "posts:update": "node tools/concat",
+    "posts:update": "node tools/build-posts",
     "posts:new": "ng generate ./tools/post-scaffolder:post-scaffolder",
     "preposts:new": "cd tools/post-scaffolder && npm i && npm run build",
-    "images:authors": "node tools/process-images content/authors/avatars content/authors/avatars/dist/sm 30 30 && node tools/process-images content/authors/avatars content/authors/avatars/dist/md 80 80 && node tools/process-images content/authors/avatars content/authors/avatars/dist/lg 120 120",
+    "images:authors": "node tools/process-images content/authors/avatars content/authors/avatars/dist --lg 200,200",
     "prettier": "prettier --write ."
   },
   "private": true,

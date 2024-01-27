@@ -67,7 +67,8 @@ function main() {
     '/category/backend',
     '/category/career',
     '/category/frontend',
-    '/category/sdlc'
+    '/category/sdlc',
+    '/404'
   );
   fs.writeFileSync('routes.txt', routesArray.join('\r\n'), 'utf8');
 
