@@ -4,9 +4,10 @@ import {
   Component,
   Inject,
   ViewEncapsulation,
+  signal,
 } from '@angular/core';
 import { AsyncPipe, DOCUMENT, DatePipe } from '@angular/common';
-import { Observable, catchError, filter, map, switchMap, tap, throwError, withLatestFrom } from 'rxjs';
+import { Observable, catchError, filter, finalize, map, switchMap, tap, throwError, withLatestFrom } from 'rxjs';
 import { Post } from '../../core/model/post.model';
 import { PostsService } from '../../core/services/posts.service';
 import {
@@ -58,17 +59,17 @@ import { NotFoundComponent } from '../not-found/not-found.component';
 export class PostComponent {
   post$: Observable<Post | undefined> = this.activatedRoute.url.pipe(
     map(segments => segments.map(({ path }) => path).join('/')),
-    switchMap(permalink => this.postsService.getPost(permalink))
+    switchMap(permalink => this.postsService.getPost(permalink)),
+    tap((post) => {
+      if (post) return;
+      this.notFound = true;
+    }),
   );
 
   markdown$: Observable<string> = this.activatedRoute.url.pipe(
     map(segments => `${segments.map(({ path }) => path).join('/')}/post.md`),
     switchMap(link => this.markdownService.getSource(link)),
     map(this.removeMarkdownMetadataHeader),
-    catchError(() => {
-      this.notFound = true;
-      return throwError(() => 'not found');
-    }),
   );
 
   relatedPosts$: Observable<Post[]> = this.post$.pipe(

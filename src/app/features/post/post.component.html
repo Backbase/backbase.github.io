@@ -38,7 +38,9 @@
         <markdown [data]="markdown$ | async"></markdown>
       </article>
     </div>
-  } @else {
+  }
+
+  @if (notFound) {
     <blog-not-found></blog-not-found>
   }
 

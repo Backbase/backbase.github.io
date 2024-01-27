@@ -77,7 +77,7 @@ export class PostsService {
 
   getPost(permalink: string | null): Observable<Post | undefined> {
     const filterByPermalink = (post: Post) =>
-      getPermalink(post.title, post.date, post.category).includes(`${permalink}`);
+      getPermalink(post.title, post.date, post.category) === permalink;
     return this.getPosts(0, 1, false, (post: Post) =>
       filterByPermalink(post)
     ).pipe(map(({ posts }) => posts[0]));
