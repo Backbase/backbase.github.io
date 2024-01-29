@@ -7,7 +7,6 @@
       display: flex;
       margin: 3rem 0 3rem;
       gap: 3rem;
-      padding-left: 2rem;
       justify-content: flex-end;
 
       &-content {
@@ -44,6 +43,18 @@
         width: 100%;
         position: relative;
       }
+    }
+    
+    &-filling {
+      background: repeating-linear-gradient(
+        55deg,
+        var(--blog-palette-neutral),
+        var(--blog-palette-neutral) 5px,
+        transparent 5px,
+        transparent 1rem
+      );
+      flex-grow: 1;
+      min-width: 2rem;
     }
   }
 

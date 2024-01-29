@@ -1,10 +1,16 @@
 @if (dark$ | async; as dark) {
-  <mat-slide-toggle [checked]="dark.enabled" (change)="onChange($event)">
-    <mat-icon
-      aria-hidden="false"
-      aria-label="Toggle dark mode"
-      [fontIcon]="
-        dark.enabled ? 'dark_mode_outlined' : 'light_mode_outlined'
-      "></mat-icon>
-  </mat-slide-toggle>
+  <mat-slide-toggle
+    #darkModeSwitch
+    [checked]="dark.enabled"
+    (change)="onChange($event)"
+  ></mat-slide-toggle>
 }
+
+<ng-template #customIcons>
+  <div class="mdc-switch__icon mdc-switch__icon--on">
+    <mat-icon fontIcon="dark_mode"></mat-icon>
+  </div>
+  <div class="mdc-switch__icon mdc-switch__icon--off">
+    <mat-icon fontIcon="light_mode"></mat-icon>
+  </div>
+</ng-template>
