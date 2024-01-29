@@ -1,21 +1,27 @@
 <blog-categories-tab></blog-categories-tab>
 
 @if (posts$ | async; as posts) {
-  <div class="center-container">
-    <blog-category-title [section]="category$ | async"></blog-category-title>
-    <blog-posts-list [posts]="posts.posts"></blog-posts-list>
-  </div>
-
-  <div class="center-container">
-    <mat-paginator
-      [length]="posts.total"
-      [pageSize]="posts.perPage"
-      [showFirstLastButtons]="true"
-      [pageIndex]="currentPage$ | async"
-      (page)="navigate($event)"
-      aria-label="Select page">
-    </mat-paginator>
-  </div>
+  @if (posts.posts.length) {
+    <div class="center-container">
+      <blog-category-title [section]="category$ | async"></blog-category-title>
+      <blog-posts-list [posts]="posts.posts"></blog-posts-list>
+    </div>
+  
+    <div class="center-container">
+      <mat-paginator
+        [length]="posts.total"
+        [pageSize]="posts.perPage"
+        [showFirstLastButtons]="true"
+        [pageIndex]="currentPage$ | async"
+        (page)="navigate($event)"
+        aria-label="Select page">
+      </mat-paginator>
+    </div>
+  } @else {
+    <div class="center-container">
+      <blog-not-found></blog-not-found>
+    </div>
+  }
 }
 
 @defer (on viewport) {

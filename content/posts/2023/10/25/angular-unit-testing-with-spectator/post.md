@@ -170,8 +170,8 @@ And the following methods:
   ```
 
 - **tick(millis?: number)**
-  <br>
   Run the fakeAsync `tick` function and call `detectChanges()`:
+
   ```typescript
   it("should work with tick", fakeAsync(() => {
     spectator = createComponent(ZippyComponent);

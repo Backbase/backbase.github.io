@@ -4,10 +4,9 @@ import {
   Component,
   Inject,
   ViewEncapsulation,
-  signal,
 } from '@angular/core';
 import { AsyncPipe, DOCUMENT, DatePipe } from '@angular/common';
-import { Observable, catchError, filter, finalize, map, switchMap, tap, throwError, withLatestFrom } from 'rxjs';
+import { Observable, filter, map, switchMap, tap, withLatestFrom } from 'rxjs';
 import { Post } from '../../core/model/post.model';
 import { PostsService } from '../../core/services/posts.service';
 import {
@@ -104,9 +103,7 @@ export class PostComponent {
     private markdownService: MarkdownService,
     @Inject(DOCUMENT) private document: Document,
     private cd: ChangeDetectorRef
-  ) {
-    this.markdownService.getSource;
-  }
+  ) {}
 
   navigate(path: string) {
     this.router.navigate([path]);

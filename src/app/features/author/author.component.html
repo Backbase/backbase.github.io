@@ -26,10 +26,9 @@
       <blog-posts-list
         [posts]="(posts$ | async) || undefined"></blog-posts-list>
     </div>
+  } @else {
+    <div class="center-container">
+      <blog-not-found></blog-not-found>
+    </div>
   }
 </div>
-
-<blog-transition
-  colorFrom="background"
-  colorTo="neutral"
-  type="left"></blog-transition>

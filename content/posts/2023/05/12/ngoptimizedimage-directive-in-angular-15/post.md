@@ -53,7 +53,7 @@ To integrate the `NgOptimizedImage` directive, follow these steps:
 2.  Replace the `src` attribute of the image with `ngSrc`.   
 3.  Specify the `width` and `height` attributes that must be specified for the `NgOptimizedImage` directive in one of the following ways.
    
-```
+```typescript
 //import in module
 import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
@@ -69,7 +69,7 @@ import { Component } from '@angular/core';
 
 Alternatively, you can add it directly in a standalone component.
 
-```
+```typescript
 import { Component } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 @Component({ 
@@ -96,7 +96,7 @@ The following shows that the browser only requests 4 images that are on the view
 
 Before implementing responsive images using the directive, you must consider how the `ngSrcset` and `sizes` attributes work.
 
-```
+```markup
 <img ngSrc="business.png" ngSrcset="100w, 200w, 300w" priority sizes="50vw">
 ```
 
@@ -113,7 +113,7 @@ Before implementing responsive images using the directive, you must consider how
     
 *   If you have varying image widths for different sizes of screens you can use media queries. For example in a grid layout, you want image to be 100 percent of screen on devices under 768px wide, else it should be 50%. You can achieve this in the following way:   
 
-```
+```markup
 <img ngSrc="business.png" width="400" height="200" priority sizes="(max-width: 768px) 100vw, 50vw">
 ```
 
@@ -131,7 +131,7 @@ The Angular directive provides a built in loader API for third-party image servi
 
 In the following example, the directive creates two image URLs in `srcset` for the different widths and density of an image for an image of size 50\*50.
 
-```
+```typescript
  // in module providers add
 import { provideImageKitLoader } from '@angular/common';
 providers: provideImageKitLoader('https://ik.imagekit.io/Your-ID') 
@@ -154,7 +154,7 @@ If your image service is not provided by the `NgOptimizedImage` default loaders,
 
 > **_NOTE:_** You must include a width check for creating the URL otherwise the provider generates the src with an undefined width.
 
-```
+```typescript
 // in module add to providers
 import { NgOptimizedImage, IMAGE_LOADER, ImageLoaderConfig } from '@angular/common'; 
 [{ provide: IMAGE_LOADER,

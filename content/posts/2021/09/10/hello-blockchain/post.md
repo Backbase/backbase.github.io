@@ -35,14 +35,14 @@ If you haven't got any Node, npm, yarn installed, or in case you're a Java backe
 
 
 First, get npm if you haven't got it already. In your Terminal app, run 
-```
+```bash
 brew install npm
 ``` 
 It happened to me that the above command crashed with the error: `Error: Interrupted system call @ rb_sysopen - /usr/local/Cellar/nghttp2/1.44.0/bin/nghttp`. This error is usually caused by your antivirus software. The good news is: you don't even have to care about it. Simply go ahead and execute the exact same command several more times. After a few attempts, `npm` will install just fine. 
 
 
 Instead of working from scratch, let us quickly scaffold a blank React application. For those of you who have, like me, never coded in Typescript or React, zero configuration scaffold tool called [create-react-app](https://github.com/facebook/create-react-app) is a true life-saver. Simply execute
-```
+```bash
 npx create-react-app hello-blockchain-react --template typescript
 ```
 
@@ -50,7 +50,7 @@ On first run, you will be prompted to add `create-react-app` and all its depence
 
 Now go to the newly created application folder and run the app:
 
-```
+```bash
 cd hello-blockchain-react && npm start
 ```
 
@@ -60,33 +60,33 @@ Your browser should show you the welcome page. You're all set the for the most i
 
 The particular blockchain we will be connecting to and reading data from is called [Joystream](https://www.joystream.org/). Joystream is a decentralized video platform with big ambitions (think Youtube with no Google involved). Being built on [Polkadot](https://polkadot.network/technology/), it requires us to install some additonal Polkadot dependencies. Here's how you do it:
 
-```
+```bash
 npm add @polkadot/api@4.2.1
 ```
 Validate that the package has been installed by inspecting the file `package.json`:
-```
+```bash
 less package.json | grep polkadot
     "@polkadot/api": "^4.2.1",
 ```
 
 Lastly, let's install custom Joystream type definitions that are used to describe data inside the blockchain.
-```
+```bash
 npm add @joystream/types
 ```
 Validate that the package has been installed by inspecting the file `package.json`:
-```
+```bash
 less package.json | grep joy
     "@joystream/types": "^0.16.1",
 ```
 
 Awesome. Now it's the right time to add a custom React component to our app. We might do this from scratch, but scaffolding is way cooler, isn't it? To generate a skeleton of our Joystream component, let's run
-```
+```bash
 npx generate-react-cli c Joystream
 ```
 First time, the code generator tool asks you some questions to be able to self-configure itself. Keep pressing Enter to give the default answers, until the component file will get generated (plus some other stuff we are not going to use in this tutorial, like tests or styles). 
 
 The function component code produced by the scaffolding tool looks like this:
-```
+```javascript
 import React from 'react';
 import styles from './Joystream.module.css';
 
@@ -105,13 +105,13 @@ To include our new function component into the app, we need to update the main f
 
 * Import the component 
 
-```
+```javascript
 import Joystream from './components/Joystream/Joystream';
 ```
 
 * Place the component in the DOM by replacing the paragraph `<p>` element:
 
-```
+```markup
   <code>
     <Joystream/>
   </code>
@@ -123,19 +123,19 @@ Save your edits and reload the browser. Your component text (Joystream Component
 
 Now let's go back to the function component and start hacking. Import the API client from Polkadot and custom Joystream types:
 
-```
+```javascript
 import { WsProvider, ApiPromise } from "@polkadot/api";
 import { types } from "@joystream/types";
 ```
 Then define the connection URL
-```
+```javascript
 const wsLocation = 'wss://rome-rpc-endpoint.joystream.org:9944'
 const provider = new WsProvider(wsLocation)
 ```
 For the sake of this tutorial, we'll use the URL of a remote Joystream node located in Rome, Italy. Note: this doesn't mean our app would read the data from some sort of "Central Server ®" As an alternative, we could have spin up our own Joystream node on local laptop, let it get up to speed with the rest of the nodes in the network (this process is called synchronisation and takes quite some time), and read the same data from it. But one tutorial can't fit everything :) I'll show you how to do it in future installments.
 
 Now let's refactor the code of the component to allow further additions
-```
+```javascript
 const Joystream = () => {
   return (
     <div className={styles.Joystream} data-testid="Joystream">
@@ -145,16 +145,16 @@ const Joystream = () => {
 };
 ```
 It's just a refactoring, so functionally it stays the same. Double-check this by refreshing your browser page. What is allows us to do is to define our function components' state like this:
-```
+```javascript
   const [lastBlock, updateLastBlock] = useState(0)
   const [connected, updateConnected] = useState(false)
 ```
 Note: `useState` needs to be imported, too:
-```
+```javascript
 import {useState, useEffect} from 'react';
 ```
 And the main thing - a new React Effect that connects to the API:
-```
+```javascript
   useEffect(() => {
     ApiPromise.create({ provider, types }).then((api) =>
       api.isReady.then(() => {
@@ -178,7 +178,7 @@ Our side effect does several things:
 4. Updates the internal component state
 
 All we have to do now is to take advantage of the internal state and include it in the JSX which the Joystream component produces:
-```
+```javascript
   return (
     <div className={styles.Joystream} data-testid="Joystream">
       {!connected? 'Connecting to blockchain...' : 
@@ -193,7 +193,7 @@ Note how the front-end experience has changed. First, you see the text 'Connecti
 
 What we've built so far looks good, but let us breathe a little dynamism in our app by making the last block information updated *as the blockchain produces new blocks* (on Joystream, the average time to produce one block is [six seconds](https://testnet.joystream.org/#/explorer). What's needed to achieve this is the subscription mechanism instead of a one-off API call: 
 
-```
+```javascript
   api.rpc.chain.subscribeNewHeads((header) => {
     console.log(`Chain is at block: #${header.number}`);
     

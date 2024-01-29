@@ -38,6 +38,16 @@ export class NavigationComponent implements OnInit {
 
   private window: Window | undefined = this.document.defaultView?.window;
 
+  protected readonly navigationItems = [
+    { link: '/', label: 'Blog' },
+    { link: '/principles', label: 'Principles' },
+    {
+      link: 'https://www.backbase.com/careers',
+      label: 'Careers',
+      external: true,
+    },
+  ];
+
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
   @HostListener('window:resize', ['$event'])
@@ -59,11 +69,9 @@ export class NavigationComponent implements OnInit {
     }
     const mobileBreakpoint = this.window
       .getComputedStyle(this.document.documentElement)
-      .getPropertyValue('--blog-breakpoint-md')
+      .getPropertyValue('--blog-breakpoint-lg')
       .replace('px', '');
     const viewSize = this.window.innerWidth;
-    if (Number(viewSize) < Number(mobileBreakpoint)) {
-      this.isMobile = true;
-    }
+    this.isMobile = Number(viewSize) < Number(mobileBreakpoint);
   }
 }

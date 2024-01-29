@@ -2,18 +2,22 @@
 
 .post {
   &__header {
-    margin: 3rem 10px;
-    @media screen and (min-width: 768px) {
+    margin: 3rem 1rem;
+    @media screen and (min-width: 1024px) {
       display: flex;
       margin: 3rem 0 3rem;
-      gap: 2rem;
+      gap: 3rem;
+      padding-left: 2rem;
+      justify-content: flex-end;
 
       &-content {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding-left: 2rem;
-        flex-grow: 2;
+
+        h2 {
+          max-width: 60ch;
+        }
       }
     }
     &-image {
@@ -27,14 +31,14 @@
           var(--blog-palette-accent),
           var(--blog-palette-accent) 5px,
           transparent 5px,
-          transparent 10px
+          transparent 1rem
         );
         position: absolute;
         height: 100%;
         width: 100%;
         top: 0;
         left: 0;
-        transform: translate(-10px, 10px);
+        transform: translate(-1rem, 1rem);
       }
       img {
         width: 100%;
@@ -50,7 +54,7 @@
 
   &__header-authors {
     padding: 1rem 0;
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 1024px) {
       display: flex;
       gap: 2rem;
     }
@@ -58,11 +62,12 @@
 
   &__content {
     display: flex;
-    markdown {
+
+    .markdown-container {
       max-width: 100%;
       display: block;
     }
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 1024px) {
       flex-direction: row-reverse;
       justify-content: space-between;
       flex-grow: 2;
@@ -78,7 +83,9 @@
   }
 
   &__content-text {
-    font-size: 1.2em;
+    @media screen and (min-width: 480px) {
+      font-size: 1.2em; 
+    }
     line-height: 2;
 
     p {
@@ -130,9 +137,11 @@
   .image-link {
     position: relative;
     a {
-      text-align: left;
-      display: flex;
-      gap: 1rem;
+      @media screen and (min-width: 480px) {
+        text-align: left;
+        display: flex;
+        gap: 1rem;
+      }
       text-decoration: none;
       line-height: 1.2;
 
@@ -220,5 +229,12 @@
     border: var(--blog-palette-muted) solid 1px;
     border-radius: 0.2em;
     padding: 0 0.2em;
+  }
+
+  @media screen and (max-width: 768px) {
+    code:not([class^='language-']),
+    a {
+      word-break: break-word;
+    }
   }
 }

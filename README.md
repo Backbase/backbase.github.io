@@ -43,9 +43,10 @@ The blog is served at http://localhost:4200
 
 ## Publishing an article
 
-* Ensure you're part of the list of authors in [content/authors/authors.json](content/authors/authors.json). Add your profile image to folder [content/authors/avatars/](content/authors/avatars/).
-* Commit your changes to a new branch created out of `main`
-* Check the result of your newly created post [running it locally](#build-locally)
+* Ensure you're part of the list of authors in [content/authors/authors.json](content/authors/authors.json). Add your profile image to folder [content/authors/avatars/](content/authors/avatars/);
+* Commit your changes to a new branch created out of `main`;
+* Check the result of your newly created post [running it locally](#build-locally);
+* Create a PR against `main` branch and request the necessary reviews.
 
 ## Content
 

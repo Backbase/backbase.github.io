@@ -34,7 +34,7 @@
               </button>
             </div>
 
-            <nav aria-label="Menu Items" (click)="menuOpen = false">
+            <nav class="nav__mobile-menu--navigation" aria-label="Menu Items">
               <ng-container *ngTemplateOutlet="menu"></ng-container>
             </nav>
           </mat-drawer>
@@ -46,27 +46,25 @@
 
 <ng-template #menu>
   <mat-list>
-    <mat-list-item
-      ><blog-button
-        ><a mat-button routerLink="/" blogIsActive>Blog</a></blog-button
-      ></mat-list-item
-    >
-    <mat-list-item
-      ><blog-button
-        ><a mat-button routerLink="/principles" blogIsActive
-          >Priciples</a
-        ></blog-button
-      ></mat-list-item
-    >
-    <mat-list-item
-      ><blog-button
-        ><a mat-button href="https://www.backbase.com/careers" target="_blank"
-          >Jobs
-          <mat-icon
-            iconPositionEnd
-            fontIcon="open_in_new"></mat-icon></a></blog-button
-    ></mat-list-item>
-    <mat-list-item class="search"><blog-search></blog-search></mat-list-item>
+    @for (item of navigationItems; track $index) {
+      <mat-list-item class="nav-item">
+        <blog-button>
+          <a
+            mat-button
+            [routerLink]="item.external ? null : item.link"
+            [target]="item.external ? '_blank' : '_self'"
+            (click)="toggleMenu()"
+            blogIsActive
+          >
+            {{ item.label }}
+            @if (item.external) {
+              <mat-icon iconPositionEnd fontIcon="open_in_new"></mat-icon>
+            }
+          </a>
+        </blog-button>
+      </mat-list-item>
+    }
+    <mat-list-item class="search"><blog-search (complete)="toggleMenu()"></blog-search></mat-list-item>
     <mat-list-item class="push-right"
       ><blog-dark-mode-toggle></blog-dark-mode-toggle
     ></mat-list-item>
@@ -80,3 +78,4 @@
     ></mat-list-item>
   </mat-list>
 </ng-template>
+

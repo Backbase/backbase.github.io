@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -32,6 +32,8 @@ import { HighlightDirective } from './highlight.directive';
   styleUrl: './search.component.scss',
 })
 export class SearchComponent implements OnInit {
+  @Output() complete = new EventEmitter<void>();
+
   control = new FormControl<string>('');
 
   posts$ = this.postsService.getAllPosts();
@@ -62,6 +64,7 @@ export class SearchComponent implements OnInit {
       getPermalink(post.title, post.date, post.category)
     );
     this.control.setValue('');
+    this.complete.emit();
   }
 
   private filter(post: Post) {

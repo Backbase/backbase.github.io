@@ -15,6 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryTitleComponent } from '../../components/category-title/category-title.component';
 import { CategoriesTabComponent } from '../../core/layout/categories-tab/categories-tab.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 
 @Component({
   selector: 'blog-category',
@@ -29,6 +30,7 @@ import { CategoriesTabComponent } from '../../core/layout/categories-tab/categor
     JobsComponent,
     MatProgressSpinnerModule,
     CategoryTitleComponent,
+    NotFoundComponent,
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthorsService } from '../../core/services/authors.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Observable, filter, map, switchMap, withLatestFrom } from 'rxjs';
+import { Observable, map, switchMap, withLatestFrom } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Author } from '../../core/model/author.model';
 import { PostsListComponent } from '../../components/posts-list/posts-list.component';
@@ -10,7 +10,7 @@ import { Post } from '../../core/model/post.model';
 import { Category } from '../../core/model/categories.model';
 import { MatChipsModule } from '@angular/material/chips';
 import { GradientComponent } from '../../components/gradient/gradient.component';
-import { TransitionComponent } from '../../components/transition/transition.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 
 @Component({
   selector: 'blog-author',
@@ -21,8 +21,8 @@ import { TransitionComponent } from '../../components/transition/transition.comp
     PostsListComponent,
     MatChipsModule,
     GradientComponent,
-    TransitionComponent,
     RouterLink,
+    NotFoundComponent
   ],
   templateUrl: './author.component.html',
   styleUrl: './author.component.scss',

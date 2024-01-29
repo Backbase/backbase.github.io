@@ -6,12 +6,12 @@
 .nav {
   display: flex;
   justify-content: space-between;
-  padding: 16px;
+  padding: 1rem;
   align-items: center;
 
   &__menu-container--horizontal {
     flex-grow: 2;
-    margin-left: 5%;
+    margin-left: 2rem;
 
     .mat-mdc-list {
       display: flex;
@@ -26,14 +26,28 @@
 
   &__mobile-menu {
     position: fixed;
-    width: 100vw;
+    max-width: 100vw;
+    width: 480px;
     height: 100vh;
     top: 0;
-    left: 0;
 
     .close-button-container {
       display: flex;
       justify-content: flex-end;
+    }
+
+    &--navigation {
+      display: flex;
+      min-height: 90vh;
+
+      .mat-mdc-list {
+        display: flex;
+        flex-direction: column;
+
+        .nav-item + :not(.nav-item) {
+          margin-top: auto;
+        }
+      }
     }
   }
 
@@ -73,4 +87,10 @@
 
 .mdc-list-item.mdc-list-item--with-one-line.search {
   height: auto;
+}
+
+@media screen and (max-width: 768px) {
+  blog-button .mdc-button {
+    min-width: initial;
+  }
 }

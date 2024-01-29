@@ -1,5 +1,5 @@
 .featured {
-  padding: 2rem 10px;
+  padding: 2rem 1rem;
 
   &__image {
     max-width: 560px;
@@ -11,14 +11,14 @@
         var(--blog-palette-accent),
         var(--blog-palette-accent) 5px,
         transparent 5px,
-        transparent 10px
+        transparent 1rem
       );
       position: absolute;
       height: 100%;
       width: 100%;
       top: 0;
       left: 0;
-      transform: translate(10px, 10px);
+      transform: translate(1rem, 1rem);
     }
     img {
       width: 100%;
@@ -34,7 +34,8 @@
     display: flex;
     flex-direction: row-reverse;
     background-color: transparent;
-    padding: 2rem 0;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 
     &__content {
       flex-grow: 1;
@@ -43,7 +44,7 @@
 
       .post-content {
         width: 100%;
-        padding: 0 16px;
+        padding: 0 1rem;
       }
     }
   }

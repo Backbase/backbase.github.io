@@ -39,8 +39,8 @@ To designate a component, directive, or a pipe as a standalone component, you mu
 
 ## Generate a standalone component via the Angular CLI
 
- ```
- ng generate component --standalone account-statements
+```bash
+ng generate component --standalone account-statements
 ```
 
 A component generated with `--standalone` flag is not added to `NgModule` and contains default imports such as `CommonModule` to get started with the component right away.
@@ -76,7 +76,7 @@ To migrate standalone components, you must satisfy the [prerequisites from Angul
 Angular provides a [schematic to migrate](https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone "https://angular.io/guide/standalone-migration#migrate-an-existing-angular-project-to-standalone") existing Angular apps that use Angular `v15` or later, to use the standalone features.
 
 
-```
+```bash
 ng generate @angular/core:standalone
 ```
 

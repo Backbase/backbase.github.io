@@ -200,7 +200,7 @@ It should be considered to spend ~1 minute in the beginning to setup your termin
 
 I suggest to any developer using Kubernetes to setup this alias:
 
-```console
+```bash
 alias k=kubectl
 ```
 
@@ -210,7 +210,7 @@ which means you always run `kubectl` just with `k`.
 
 Depending on how much is already pre-installed in the CKAD terminal it might be enough to do this:
 
-```console
+```bash
 source <(kubectl completion bash)
 
 complete -F __start_kubectl k # to make it work with the alias k
@@ -222,19 +222,19 @@ You don’t need to remember all that, you can copy-paste from the official docs
 
 In addition, you could define an alias like:
 
-```console
+```bash
 alias kn='kubectl config set-context --current --namespace '
 ```
 
 Which allows you to define the default namespace of the current context. Then once you switch a context or namespace you can just run:
 
-```console
+```bash
 kn another-namespace # set default to another-namespace
 ```
 
 But again, only do this if you used it before and are comfortable doing so. You can always specify the namespace for every call, which is also fine:
 
-```console
+```bash
 k -n another-namespace get services
 k -n another-namespace get pod
 ...
@@ -250,7 +250,7 @@ Be great with vim.
 
 At the beginning of the exam, create the file `~/.vimrc` with the following content:
 
-```console
+```bash
 set tabstop=2
 set expandtab
 ```
@@ -261,7 +261,7 @@ The `expandtab` make sure to use spaces for tabs. You will need to memorize thes
 
 You can also add the following to `~/.vimrc` to be able to apply tab on multiple selected lines.
 
-```console
+```bash
 set shiftwidth=2
 ```
 
@@ -319,7 +319,7 @@ It’s a waste of time, it’s annoying and nobody on this planet like to type Y
 
 These flags are incredibly useful to redirect the YAML configuration to a file by using `>` sign
 
-```console
+```bash
 kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml > nginx.yaml
 ```
 
@@ -333,7 +333,7 @@ It can save you a lot of time, but keep in mind it’ll eventually be removed by
 
 You’ll use kubectl run command all the time. It basically creates different workloads/objects based on what you pass to this flag.
 
-```console
+```bash
 +----------------------------------------+----------------------+
 |             Command & Flag             |  Generated Resource  |
 +----------------------------------------+----------------------+
@@ -354,7 +354,7 @@ You can wget those files and make small changes, faster than creating the file f
 - **Persistent Volume Claim:** [https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim)
 - **Job:** [https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#running-an-example-job](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#running-an-example-job)
 - **CronJob:** [https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#creating-a-cron-job](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/#creating-a-cron-job) e.g:
-  ```console
+  ```bash
   wget https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/application/job/cronjob.yaml
   ```
 

@@ -16,7 +16,7 @@ const ACTIVE_CLASS = 'active';
   standalone: true,
 })
 export class IsActiveDirective implements OnInit {
-  private route = this.linkButton.nativeElement.getAttribute('routerLink');
+  private route!: string | null;
   private classList = this.linkButton.nativeElement.classList;
 
   constructor(
@@ -26,6 +26,7 @@ export class IsActiveDirective implements OnInit {
 
   ngOnInit(): void {
     this.toggleClass(this.router.url);
+    this.route = this.linkButton.nativeElement.getAttribute('href');
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),

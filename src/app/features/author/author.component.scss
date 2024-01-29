@@ -6,7 +6,7 @@
     justify-content: flex-end;
     align-items: flex-start;
     gap: 2rem;
-    padding: 3rem 10px;
+    padding: 3rem 1rem;
 
     @media screen and (min-width: 768px) {
       padding: 3rem 0;
@@ -36,14 +36,14 @@
           var(--blog-palette-accent),
           var(--blog-palette-accent) 5px,
           transparent 5px,
-          transparent 10px
+          transparent 1rem
         );
         position: absolute;
         height: 100%;
         width: 100%;
         top: 0;
         left: 0;
-        transform: translate(10px, 10px);
+        transform: translate(1rem, 1rem);
       }
 
       img {

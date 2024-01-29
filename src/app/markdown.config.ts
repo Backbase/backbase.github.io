@@ -56,7 +56,7 @@ export default function (markdownService: MarkdownService, document: Document) {
     level: number,
     raw: string
   ) => {
-    var auxDiv = document.createElement('div');
+    const auxDiv = document.createElement('div');
     auxDiv.innerHTML = text;
     const id = auxDiv.textContent?.toLocaleLowerCase().replace(/\W/gm, '-');
     return `

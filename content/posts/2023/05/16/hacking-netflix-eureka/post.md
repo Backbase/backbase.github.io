@@ -52,7 +52,7 @@ But the registry itself is not a proxy. It is “passive” storage and contains
 
 To balance and proxy HTTP requests, we use **[Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)**. Gateway collects the same information from the Eureka server to know where it should balance requests. In the test lab, the gateway handles only one route to **webservice**:
 
-```
+```java
 .route("webservice",
     r -> r.path("/**")
         .uri("lb://WEBSERVICE"))
@@ -60,7 +60,7 @@ To balance and proxy HTTP requests, we use **[Spring Cloud Gateway](https://spri
 
 That means every path `"/\*\*"` (which is not registered on **gateway** separately) will be balanced ( `"lb://WEBSERVICE"` ) to the micro-service with the name **webservice**. There is no HTTP route to **secretservice**, so it is not supposed, by design, that the user will communicate with secretservice directly.
 
-```
+```java
 @RequestMapping(value = "/")
 public class InternalService {
 
@@ -73,7 +73,7 @@ public class InternalService {
 
 Here **webservice**, on its turn, communicates with **secretservice** internally with the following code:
 
-```
+```java
 Application application = eurekaClient.getApplication("secretservice");
 InstanceInfo instanceInfo = application.getInstances().get(0);
 String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/list/";
