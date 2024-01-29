@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Renderer2, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import {
   MatSlideToggleChange,
@@ -15,6 +15,7 @@ import { map } from 'rxjs';
   templateUrl: './dark-mode-toggle.component.html',
   styleUrl: './dark-mode-toggle.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class DarkModeToggleComponent implements AfterViewInit {
   @ViewChild('darkModeSwitch', { read: ViewContainerRef }) toggler!: ViewContainerRef;
@@ -22,7 +23,7 @@ export class DarkModeToggleComponent implements AfterViewInit {
 
   dark$ = this.themeModeService.dark$.pipe(map(enabled => ({ enabled })));
 
-  constructor(private themeModeService: ThemeModeService, private renderer: Renderer2) {}
+  constructor(private themeModeService: ThemeModeService) {}
 
   ngAfterViewInit(): void {
     const original = this.toggler.element.nativeElement.querySelector('.mdc-switch__icons') as HTMLElement;

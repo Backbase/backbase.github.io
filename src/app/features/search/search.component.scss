@@ -1,6 +1,10 @@
 .search-form {
   line-height: 32px;
 
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+
   &__field {
     --mdc-filled-text-field-container-color: transparent;
     --mat-form-field-state-layer-color: transparent;
