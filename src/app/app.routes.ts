@@ -43,6 +43,13 @@ export const routes: Routes = [
       import('./features/post/post.component').then(m => m.PostComponent),
   },
   {
+    path: 'authors',
+    loadComponent: () =>
+      import('./features/authors/authors.component').then(
+        m => m.AuthorsComponent
+      ),
+  },
+  {
     path: '**',
     loadComponent: () =>
       import('./features/not-found/not-found.component').then(

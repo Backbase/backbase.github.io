@@ -1,0 +1,10 @@
+<blog-gradient [height]="250"></blog-gradient>
+<main class="authors">
+  @for (author of authors$ | async; track $index) {
+    <div class="authors__item" [routerLink]="'../' + author.url">
+      <blog-avatar [url]="author.avatar"></blog-avatar>
+      <h3>{{ author.fullname }}</h3>
+      <h4>{{ author.role }}</h4>
+    </div>
+  }
+</main>
