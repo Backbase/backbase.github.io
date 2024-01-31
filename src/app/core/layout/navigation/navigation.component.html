@@ -54,8 +54,7 @@
             [routerLink]="item.external ? null : item.link"
             [target]="item.external ? '_blank' : '_self'"
             (click)="toggleMenu()"
-            blogIsActive
-          >
+            blogIsActive>
             {{ item.label }}
             @if (item.external) {
               <mat-icon iconPositionEnd fontIcon="open_in_new"></mat-icon>
@@ -64,18 +63,19 @@
         </blog-button>
       </mat-list-item>
     }
-    <mat-list-item class="search"><blog-search (complete)="toggleMenu()"></blog-search></mat-list-item>
-    <mat-list-item class="push-right push-down"
-      ><blog-dark-mode-toggle></blog-dark-mode-toggle
-    ></mat-list-item>
-    <mat-list-item
-      ><blog-button
-        ><a mat-stroked-button href="https://backbase.io" target="blank"
-          ><span>Backbase.io</span>
-          <mat-icon
-            iconPositionEnd
-            fontIcon="open_in_new"></mat-icon></a></blog-button
-    ></mat-list-item>
+    <mat-list-item class="search">
+      <blog-search (complete)="toggleMenu()"></blog-search>
+    </mat-list-item>
+    <mat-list-item class="push-right push-down">
+      <blog-dark-mode-toggle></blog-dark-mode-toggle>
+    </mat-list-item>
+    <mat-list-item>
+      <blog-button>
+        <a mat-stroked-button href="https://backbase.io" target="blank">
+          <span>Backbase.io</span>
+          <mat-icon iconPositionEnd fontIcon="open_in_new"></mat-icon>
+        </a>
+      </blog-button>
+    </mat-list-item>
   </mat-list>
 </ng-template>
-

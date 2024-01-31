@@ -15,14 +15,20 @@ export class ThemeModeService {
   public dark$ = this.dark$$.asObservable();
 
   constructor(@Inject(DOCUMENT) private document: Document) {
-    const initialState =
-      document.defaultView?.window.localStorage?.getItem(STORAGE_KEY) ===
-      'true';
+    let initialState =
+      document.defaultView?.window.matchMedia('(prefers-color-scheme: dark)')
+        .matches || false;
+    const storage =
+      document.defaultView?.window.sessionStorage?.getItem(STORAGE_KEY);
+
+    if (storage) {
+      initialState = storage === 'true';
+    }
     this.setDarkMode(initialState);
   }
 
   public setDarkMode(state: boolean) {
-    this.document.defaultView?.window.localStorage?.setItem(
+    this.document.defaultView?.window.sessionStorage?.setItem(
       STORAGE_KEY,
       `${state}`
     );

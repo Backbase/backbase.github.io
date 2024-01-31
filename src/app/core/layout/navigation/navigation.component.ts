@@ -39,8 +39,8 @@ export class NavigationComponent implements OnInit {
   private window: Window | undefined = this.document.defaultView?.window;
 
   protected readonly navigationItems = [
-    { link: '/', label: 'Blog' },
-    { link: '/principles', label: 'Principles' },
+    { link: '/', label: 'Blog', external: false },
+    { link: '/principles', label: 'Principles', external: false },
     {
       link: 'https://www.backbase.com/careers',
       label: 'Careers',
