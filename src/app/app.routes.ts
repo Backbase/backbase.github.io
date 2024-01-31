@@ -43,7 +43,7 @@ export const routes: Routes = [
       import('./features/post/post.component').then(m => m.PostComponent),
   },
   {
-    path: 'authors',
+    path: 'people',
     loadComponent: () =>
       import('./features/authors/authors.component').then(
         m => m.AuthorsComponent
