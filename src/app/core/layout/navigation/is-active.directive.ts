@@ -1,3 +1,4 @@
+import { LocationStrategy } from '@angular/common';
 import {
   Directive,
   ElementRef,
@@ -21,7 +22,8 @@ export class IsActiveDirective implements OnInit {
 
   constructor(
     @Host() @Self() @Optional() private linkButton: ElementRef,
-    private router: Router
+    private router: Router,
+    private locationStrategy: LocationStrategy
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +35,7 @@ export class IsActiveDirective implements OnInit {
         map((event: any) => event.url.split('?')[0])
       )
       .subscribe((url: string) => {
-        this.toggleClass(url);
+        this.toggleClass(url.replace(/^\//, this.locationStrategy.getBaseHref()));
       });
   }
 

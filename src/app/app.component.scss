@@ -1,9 +1,9 @@
-:host {
+.app-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
 
-blog-footer {
-  margin-top: auto;
+  blog-footer {
+    margin-top: auto;
+  }
 }
