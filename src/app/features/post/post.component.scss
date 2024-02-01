@@ -1,9 +1,11 @@
+@use 'breakpoints' as responsive;
+
 @import 'prismjs/themes/prism-tomorrow.css';
 
 .post {
   &__header {
     margin: 3rem 1rem;
-    @media screen and (min-width: 1024px) {
+    @include responsive.up('lg') {
       display: flex;
       margin: 3rem 0 3rem;
       gap: 3rem;
@@ -65,7 +67,7 @@
 
   &__header-authors {
     padding: 1rem 0;
-    @media screen and (min-width: 1024px) {
+    @include responsive.up('lg') {
       display: flex;
       gap: 2rem;
     }
@@ -78,7 +80,7 @@
       max-width: 100%;
       display: block;
     }
-    @media screen and (min-width: 1024px) {
+    @include responsive.up('lg') {
       flex-direction: row-reverse;
       justify-content: space-between;
       flex-grow: 2;
@@ -87,14 +89,14 @@
 
   &__related-posts {
     display: grid;
-    @media screen and (min-width: 480px) {
+    @include responsive.up('sm') {
       grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
     }
   }
 
   &__content-text {
-    @media screen and (min-width: 480px) {
+    @include responsive.up('sm') {
       font-size: 1.2em; 
     }
     line-height: 2;
@@ -119,7 +121,7 @@
 
   &__content-table {
     display: none;
-    @media screen and (min-width: 1280px) {
+    @include responsive.up('xl') {
       display: block;
       width: 0;
 
@@ -138,7 +140,7 @@
     padding: 1rem;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 
-    @media screen and (min-width: 768px) {
+    @include responsive.up('md') {
       img {
         max-height: 70vh;
       }
@@ -148,7 +150,7 @@
   .image-link {
     position: relative;
     a {
-      @media screen and (min-width: 480px) {
+      @include responsive.up('sm') {
         text-align: left;
         display: flex;
         gap: 1rem;
@@ -242,7 +244,7 @@
     padding: 0 0.2em;
   }
 
-  @media screen and (max-width: 768px) {
+  @include responsive.down('md') {
     code:not([class^='language-']),
     a {
       word-break: break-word;

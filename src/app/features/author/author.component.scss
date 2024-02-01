@@ -1,3 +1,5 @@
+@use 'breakpoints' as responsive;
+
 .author {
   &__header {
     display: flex;
@@ -8,7 +10,7 @@
     gap: 2rem;
     padding: 3rem 1rem;
 
-    @media screen and (min-width: 768px) {
+    @include responsive.down('md') {
       padding: 3rem 0;
       flex-direction: row-reverse;
     }

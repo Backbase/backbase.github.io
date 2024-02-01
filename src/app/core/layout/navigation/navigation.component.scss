@@ -1,3 +1,5 @@
+@use 'breakpoints' as responsive;
+
 :host {
   position: relative;
   z-index: 4;
@@ -83,7 +85,7 @@
 
 .push-right {
   margin-left: auto;
-  @media screen and (max-width: 768px) {
+  @include responsive.down('md') {
     margin-top: auto;
   }
 }
@@ -96,7 +98,7 @@
   width: 100%;
 }
 
-@media screen and (max-width: 768px) {
+@include responsive.down('md') {
   blog-button .mdc-button {
     min-width: initial;
   }

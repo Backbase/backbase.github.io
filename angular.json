@@ -42,7 +42,10 @@
                 "output": "/"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["styles"]
+            },
+            "styles": ["styles/styles.scss"],
             "prerender": {
               "routesFile": "routes.txt"
             },
