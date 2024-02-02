@@ -9,8 +9,9 @@
     align-items: flex-start;
     gap: 2rem;
     padding: 3rem 1rem;
+    align-items: center;
 
-    @include responsive.down('md') {
+    @include responsive.up('md') {
       padding: 3rem 0;
       flex-direction: row-reverse;
     }
