@@ -12,6 +12,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { GradientComponent } from '../../components/gradient/gradient.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { AvatarComponent } from '../../components/avatar/avatar.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'blog-author',
@@ -24,6 +25,7 @@ import { AvatarComponent } from '../../components/avatar/avatar.component';
     RouterLink,
     NotFoundComponent,
     AvatarComponent,
+    MatButtonModule,
   ],
   templateUrl: './author.component.html',
   styleUrl: './author.component.scss',

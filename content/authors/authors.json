@@ -1,8 +1,4 @@
 {
-  "William Shakes": {
-    "avatar": "assets/undraw_Drink_coffee_v3au.png",
-    "role": "Principal Frontend Engineer @ CS"
-  },
   "Craig Walker": {
     "avatar": "craig_walker.jpeg",
     "role": "Product Director Developer Enablement"
@@ -19,22 +15,6 @@
     "avatar": "arthur.jpg",
     "role": "Lead Principal Mobile Engineer - Expert Services"
   },
-  "Andrés Torres": {
-    "avatar": "2_5sAa9bhvo0AOjIvZ_oX-nA.jpeg",
-    "role": "(Former) Director of Backend"
-  },
-  "Hari Vignesh Jayapalan": {
-    "avatar": "hari_vignesh.jpg",
-    "role": "Senior Mobile Engineer - R&D"
-  },
-  "Drew Hamilton": {
-    "avatar": "drew.jpg",
-    "role": "(Former) Principal Mobile Engineer - R&D"
-  },
-  "Alexey Buistov": {
-    "avatar": "ab.jpeg",
-    "role": "Solutions Architect, Crypto Enthusiast - R&D"
-  },
   "Rafael Nascimento": {
     "avatar": "rn.png",
     "role": "Engineering Manager - Customer Success"
@@ -50,10 +30,6 @@
   "Yash Kapila": {
     "avatar": "yash.jpeg",
     "role": "Principal Frontend Engineer - Expert Services"
-  },
-  "Anjali Goyal": {
-    "avatar": "anjali_goyal.jpg",
-    "role": "Senior QA Engineer - Customer Success"
   },
   "Manisha Arya": {
     "avatar": "manisha_arya.jpg",
@@ -86,5 +62,25 @@
   "Ashish Arora": {
     "avatar": "ashish.jpg",
     "role": "DevOps Consultant - Customer Success"
+  },
+  "Andrés Torres": {
+    "avatar": "2_5sAa9bhvo0AOjIvZ_oX-nA.jpeg",
+    "role": "(Former) Director of Backend"
+  },
+  "Drew Hamilton": {
+    "avatar": "drew.jpg",
+    "role": "(Former) Principal Mobile Engineer - R&D"
+  },
+  "Hari Vignesh Jayapalan": {
+    "avatar": "hari_vignesh.jpg",
+    "role": "Senior Mobile Engineer - R&D"
+  },
+  "Alexey Buistov": {
+    "avatar": "ab.jpeg",
+    "role": "Solutions Architect, Crypto Enthusiast - R&D"
+  },
+  "Anjali Goyal": {
+    "avatar": "anjali_goyal.jpg",
+    "role": "Senior QA Engineer - Customer Success"
   }
 }
