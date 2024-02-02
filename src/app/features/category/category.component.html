@@ -28,7 +28,16 @@
   <blog-divider></blog-divider>
   <blog-engineering-content></blog-engineering-content>
 
-  <blog-jobs></blog-jobs>
+  <blog-transition
+    colorFrom="background"
+    colorTo="secondary"></blog-transition>
+  <blog-jobs></blog-jobs>  
+  <blog-transition colorFrom="secondary" colorTo="neutral"></blog-transition>
 } @placeholder {
-  <mat-spinner></mat-spinner>
+  <div class="placeholder">
+    <mat-spinner role="progressbar"></mat-spinner>
+    <blog-transition
+      colorFrom="background"
+      colorTo="neutral"></blog-transition>
+  </div>
 }

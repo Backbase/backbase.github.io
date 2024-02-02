@@ -25,22 +25,6 @@
       max-width: 720px;
       position: relative;
       align-self: flex-start;
-      &::before {
-        content: '';
-        background: repeating-linear-gradient(
-          55deg,
-          var(--blog-palette-accent),
-          var(--blog-palette-accent) 5px,
-          transparent 5px,
-          transparent 1rem
-        );
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        top: 0;
-        left: 0;
-        transform: translate(-1rem, 1rem);
-      }
       img {
         width: 100%;
         position: relative;
@@ -139,6 +123,7 @@
   figure {
     padding: 1rem;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
 
     @include responsive.up('md') {
       img {
