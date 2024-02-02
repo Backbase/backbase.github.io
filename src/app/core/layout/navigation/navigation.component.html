@@ -49,17 +49,24 @@
     @for (item of navigationItems; track $index) {
       <mat-list-item class="nav-item">
         <blog-button>
-          <a
-            mat-button
-            [routerLink]="item.external ? null : item.link"
-            [target]="item.external ? '_blank' : '_self'"
-            (click)="toggleMenu()"
-            blogIsActive>
-            {{ item.label }}
-            @if (item.external) {
+          @if (item.external) {
+            <a
+              mat-button
+              target="_blank"
+              [href]="item.link"
+              (click)="toggleMenu()">
+              {{ item.label }}
               <mat-icon iconPositionEnd fontIcon="open_in_new"></mat-icon>
-            }
-          </a>
+            </a>
+          } @else {
+            <a
+              mat-button
+              [routerLink]="item.link"
+              (click)="toggleMenu()"
+              blogIsActive>
+              {{ item.label }}
+            </a>
+          }
         </blog-button>
       </mat-list-item>
     }
