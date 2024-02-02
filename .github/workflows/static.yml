@@ -39,6 +39,7 @@ jobs:
           npm run build:utils
           npm run posts:update
           npm run build -- --configuration=production --base-href=/
+          cp dist/blog/browser/404/index.html dist/blog/browser/404.html
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
