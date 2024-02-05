@@ -36,7 +36,10 @@
           [headers]="(headers$ | async) || []"></blog-table-of-content>
       </aside>
       <article class="post__content-text center-container">
-        <markdown class="markdown-container" [data]="markdown$ | async"></markdown>
+        <markdown
+          class="markdown-container"
+          [mermaidOptions]="options"
+          [data]="markdown$ | async"></markdown>
       </article>
     </div>
   }

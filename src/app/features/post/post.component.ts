@@ -1,12 +1,11 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Inject,
   ViewEncapsulation,
 } from '@angular/core';
-import { AsyncPipe, DOCUMENT, DatePipe } from '@angular/common';
-import { Observable, filter, map, switchMap, tap, withLatestFrom } from 'rxjs';
+import { AsyncPipe, DatePipe, DOCUMENT } from '@angular/common';
+import { filter, map, Observable, switchMap, tap, withLatestFrom } from 'rxjs';
 import { Post } from '../../core/model/post.model';
 import { PostsService } from '../../core/services/posts.service';
 import {
@@ -15,7 +14,7 @@ import {
   RouterLink,
   RouterModule,
 } from '@angular/router';
-import { MarkdownModule, MarkdownService } from 'ngx-markdown';
+import { MarkdownModule, MarkdownService, MermaidAPI } from 'ngx-markdown';
 import { AuthorComponent } from '../../components/author/author.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { PostItemComponent } from '../../components/post-item/post-item.component';
@@ -59,16 +58,16 @@ export class PostComponent {
   post$: Observable<Post | undefined> = this.activatedRoute.url.pipe(
     map(segments => segments.map(({ path }) => path).join('/')),
     switchMap(permalink => this.postsService.getPost(permalink)),
-    tap((post) => {
+    tap(post => {
       if (post) return;
       this.notFound = true;
-    }),
+    })
   );
 
   markdown$: Observable<string> = this.activatedRoute.url.pipe(
     map(segments => `${segments.map(({ path }) => path).join('/')}/post.md`),
     switchMap(link => this.markdownService.getSource(link)),
-    map(this.removeMarkdownMetadataHeader),
+    map(this.removeMarkdownMetadataHeader)
   );
 
   relatedPosts$: Observable<Post[]> = this.post$.pipe(
@@ -95,14 +94,14 @@ export class PostComponent {
   );
 
   notFound = false;
+  options = { securityLevel: MermaidAPI.SecurityLevel.Sandbox };
 
   constructor(
     private postsService: PostsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private markdownService: MarkdownService,
-    @Inject(DOCUMENT) private document: Document,
-    private cd: ChangeDetectorRef
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   navigate(path: string) {
