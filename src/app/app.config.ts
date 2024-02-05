@@ -14,6 +14,7 @@ import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import markdownConfig from './markdown.config';
 import { DOCUMENT } from '@angular/common';
 import { AUTHORS_AVATAR_PATH_TOKEN } from './core/config/configuration-tokens';
+import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -36,7 +37,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_INITIALIZER,
       useFactory: markdownConfig,
-      deps: [MarkdownService, DOCUMENT],
+      deps: [MarkdownService, DOCUMENT, HtmlInMarkdownService],
     },
     {
       provide: AUTHORS_AVATAR_PATH_TOKEN,

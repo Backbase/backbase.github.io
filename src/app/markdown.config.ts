@@ -1,6 +1,7 @@
 import { MarkdownService } from 'ngx-markdown';
+import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
 
-export default function (markdownService: MarkdownService, document: Document) {
+export default function (markdownService: MarkdownService, document: Document, htmlInMarkdownService: HtmlInMarkdownService) {
   markdownService.renderer.link = (
     href: string,
     title: string | null | undefined,
@@ -63,6 +64,9 @@ export default function (markdownService: MarkdownService, document: Document) {
       <h${level > 1 ? level : 2} id="${id}">${text}</h${level}>
     `;
   };
+  markdownService.renderer.html = (html: string, block?: boolean | undefined) => {
+    return htmlInMarkdownService.add(html);
+  }
 }
 
 function parseFigCaption(text: string) {

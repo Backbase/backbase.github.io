@@ -3,10 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   Inject,
+  Renderer2,
   ViewEncapsulation,
 } from '@angular/core';
 import { AsyncPipe, DOCUMENT, DatePipe } from '@angular/common';
-import { Observable, filter, map, switchMap, tap, withLatestFrom } from 'rxjs';
+import { Observable, distinctUntilChanged, filter, map, switchMap, tap, withLatestFrom } from 'rxjs';
 import { Post } from '../../core/model/post.model';
 import { PostsService } from '../../core/services/posts.service';
 import {
@@ -28,6 +29,7 @@ import { GradientComponent } from '../../components/gradient/gradient.component'
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NotFoundComponent } from '../not-found/not-found.component';
+import { HtmlInMarkdownService } from '../../core/services/html-in-markdown.service';
 
 @Component({
   selector: 'blog-post',
@@ -69,6 +71,7 @@ export class PostComponent {
     map(segments => `${segments.map(({ path }) => path).join('/')}/post.md`),
     switchMap(link => this.markdownService.getSource(link)),
     map(this.removeMarkdownMetadataHeader),
+    distinctUntilChanged(),
   );
 
   relatedPosts$: Observable<Post[]> = this.post$.pipe(
@@ -102,7 +105,8 @@ export class PostComponent {
     private router: Router,
     private markdownService: MarkdownService,
     @Inject(DOCUMENT) private document: Document,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private htmlInMarkdownService: HtmlInMarkdownService,
   ) {}
 
   navigate(path: string) {
@@ -152,5 +156,9 @@ export class PostComponent {
     } catch (e) {
       throw new Error('Markdown not with right format');
     }
+  }
+
+  resolveScripts() {
+    this.htmlInMarkdownService.parseAll();
   }
 }
