@@ -4,19 +4,19 @@
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node
       *matTreeNodeDef="let node"
-      matTreeNodePadding
+      [matTreeNodePadding]="0"
       [matTreeNodePaddingIndent]="10">
       <button mat-icon-button disabled></button>
       <a
         routerLink="."
         [fragment]="node.id"
-        [ngClass]="{ current: node.id === current }"
+        [ngClass]="{ current: node.id === activeHeader }"
         >{{ node.name }}</a
       >
     </mat-tree-node>
     <mat-tree-node
       *matTreeNodeDef="let node; when: hasChild"
-      matTreeNodePadding
+      [matTreeNodePadding]="0"
       [matTreeNodePaddingIndent]="10">
       <button
         class="expand"
@@ -30,7 +30,7 @@
       <a
         routerLink="."
         [fragment]="node.id"
-        [ngClass]="{ current: node.id === current }"
+        [ngClass]="{ current: node.id === activeHeader }"
         >{{ node.name }}</a
       >
     </mat-tree-node>
