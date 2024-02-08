@@ -99,7 +99,7 @@ const Joystream = () => (
 export default Joystream;
 ```
 
-In your browser what you'll get out of this code is just an HTML <div> with a static text, and yet there's something I'd like to highlight. What might look as an HTML snippet (lines 5-7), isn't a real HTML, but a thing called JSX. JSX is simply a syntax extension of JavaScript. It allows us to directly write HTML in React (within JavaScript code). It is easy to create a template using JSX in React, but it is not a simple template language instead it comes with the full power of JavaScript. It is faster than normal JavaScript as it performs optimizations while translating to regular JavaScript. Instead of separating the markup and logic in separated files, React uses *components* for this purpose.
+In your browser what you'll get out of this code is just an HTML `<div>` with a static text, and yet there's something I'd like to highlight. What might look as an HTML snippet (lines 5-7), isn't a real HTML, but a thing called JSX. JSX is simply a syntax extension of JavaScript. It allows us to directly write HTML in React (within JavaScript code). It is easy to create a template using JSX in React, but it is not a simple template language instead it comes with the full power of JavaScript. It is faster than normal JavaScript as it performs optimizations while translating to regular JavaScript. Instead of separating the markup and logic in separated files, React uses *components* for this purpose.
 
 To include our new function component into the app, we need to update the main file `App.tsx`:
 
