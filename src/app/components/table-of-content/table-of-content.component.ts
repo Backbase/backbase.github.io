@@ -1,5 +1,12 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, HostListener, Inject, Input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  HostListener,
+  Inject,
+  Input,
+  OnInit,
+} from '@angular/core';
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
@@ -8,8 +15,9 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderNode, HeaderTreeNode } from '../../core/model/content.model';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DOCUMENT, NgClass } from '@angular/common';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'blog-table-of-content',
@@ -18,13 +26,13 @@ import { DOCUMENT, NgClass } from '@angular/common';
   templateUrl: './table-of-content.component.html',
   styleUrl: './table-of-content.component.scss',
 })
-export class TableOfContentComponent {
+export class TableOfContentComponent implements AfterViewInit {
   @Input() set headers(headers: HeaderNode[]) {
     this.dataSource.data = headers;
     this.treeControl.expandAll();
     if (headers.length) {
       this.createOffsets(headers);
-      this.activeHeader = this.offsetHeaders[0];
+      this.checkFirstHeader();
     }
   }
 
@@ -32,7 +40,7 @@ export class TableOfContentComponent {
 
   offsetHeaders: string[] = [];
 
-  activeHeader: string | null = null;
+  activeHeader = '';
 
   @HostListener('document:scroll', ['$event'])
   public onViewportScroll() {
@@ -68,7 +76,20 @@ export class TableOfContentComponent {
     }
   }
 
-  constructor(@Inject(DOCUMENT) private document: Document) {}
+  constructor(
+    @Inject(DOCUMENT)
+    private document: Document,
+    private route: ActivatedRoute
+  ) {}
+
+  ngAfterViewInit(): void {
+    this.route.fragment.pipe(first()).subscribe(fragment => {
+      if (fragment) {
+        this.activeHeader = fragment;
+        this.checkFirstHeader();
+      }
+    });
+  }
 
   private _transformer = (node: HeaderNode, level: number) => {
     return {
@@ -95,13 +116,32 @@ export class TableOfContentComponent {
 
   hasChild = (_: number, node: HeaderTreeNode) => node.expandable;
 
-  private createOffsets(data: HeaderNode[], array = this.offsetHeaders) {
+  private createOffsets(data: HeaderNode[], array = this.offsetHeaders): void {
     for (const element of data) {
       array.push(element.id);
 
       if (element.children.length) {
         this.createOffsets(element.children, array);
       }
+    }
+  }
+
+  private checkFirstHeader(): void {
+    if (!this.offsetHeaders.length) {
+      return;
+    }
+
+    if (!this.activeHeader) {
+      this.activeHeader = this.offsetHeaders[0]
+    }
+
+    const offset = (
+      this.document.getElementById(this.activeHeader) as HTMLElement
+    ).offsetTop;
+    if (this.offsetHeaders.includes(this.activeHeader) && offset) {
+      this.document.documentElement.scrollTo(0, offset);
+    } else {
+      this.activeHeader = this.offsetHeaders[this.offsetHeaders.length];
     }
   }
 }

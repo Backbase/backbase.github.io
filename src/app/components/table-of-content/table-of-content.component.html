@@ -4,7 +4,7 @@
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node
       *matTreeNodeDef="let node"
-      [matTreeNodePadding]="0"
+      matTreeNodePadding
       [matTreeNodePaddingIndent]="10">
       <button mat-icon-button disabled></button>
       <a
@@ -16,7 +16,7 @@
     </mat-tree-node>
     <mat-tree-node
       *matTreeNodeDef="let node; when: hasChild"
-      [matTreeNodePadding]="0"
+      matTreeNodePadding
       [matTreeNodePaddingIndent]="10">
       <button
         class="expand"

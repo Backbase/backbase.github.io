@@ -6,7 +6,15 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { AsyncPipe, DOCUMENT, DatePipe } from '@angular/common';
-import { Observable, distinctUntilChanged, filter, map, switchMap, tap, withLatestFrom } from 'rxjs';
+import {
+  Observable,
+  distinctUntilChanged,
+  filter,
+  map,
+  switchMap,
+  tap,
+  withLatestFrom,
+} from 'rxjs';
 import { Post } from '../../core/model/post.model';
 import { PostsService } from '../../core/services/posts.service';
 import {
@@ -60,17 +68,17 @@ export class PostComponent {
   post$: Observable<Post | undefined> = this.activatedRoute.url.pipe(
     map(segments => segments.map(({ path }) => path).join('/')),
     switchMap(permalink => this.postsService.getPost(permalink)),
-    tap((post) => {
+    tap(post => {
       if (post) return;
       this.notFound = true;
-    }),
+    })
   );
 
   markdown$: Observable<string> = this.activatedRoute.url.pipe(
     map(segments => `${segments.map(({ path }) => path).join('/')}/post.md`),
     switchMap(link => this.markdownService.getSource(link)),
     map(this.removeMarkdownMetadataHeader),
-    distinctUntilChanged(),
+    distinctUntilChanged()
   );
 
   relatedPosts$: Observable<Post[]> = this.post$.pipe(
@@ -97,6 +105,7 @@ export class PostComponent {
   );
 
   notFound = false;
+  isContentReady = false;
 
   constructor(
     private postsService: PostsService,
@@ -104,7 +113,8 @@ export class PostComponent {
     private router: Router,
     private markdownService: MarkdownService,
     @Inject(DOCUMENT) private document: Document,
-    private htmlInMarkdownService: HtmlInMarkdownService,
+    private cd: ChangeDetectorRef,
+    private htmlInMarkdownService: HtmlInMarkdownService
   ) {}
 
   navigate(path: string) {
@@ -158,5 +168,6 @@ export class PostComponent {
 
   resolveScripts() {
     this.htmlInMarkdownService.parseAll();
+    this.isContentReady = true;
   }
 }
