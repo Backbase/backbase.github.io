@@ -45,15 +45,15 @@ function scanDirectory(directoryPath, filesArray, routesArray) {
   );
 }
 
-async function getAuthorRoutes() {
-  if (fs.existsSync('content/authors/authors.json')) {
-    const authors = JSON.parse(fs.readFileSync('content/authors/authors.json', 'utf8'));
+async function getAuthorRoutes(source) {
+  if (fs.existsSync(source)) {
+    const authors = JSON.parse(fs.readFileSync(source, 'utf8'));
 
     const utils = await loadEsmModule(
       '../../dist/utils/esm2022/lib/permalink.mjs'
     );
     return Object.keys(authors).map(name =>
-      `people/${utils.getAuthorPermalink(name)}`);
+      `/people/${utils.getAuthorPermalink(name)}`);
   }
   return [];
 }
@@ -61,6 +61,7 @@ async function getAuthorRoutes() {
 async function main() {
   const startDirectory = 'content/posts'; // Change this to the starting directory path
   const outputFilePath = 'content/posts/posts.json'; // Change this to the desired output file path
+  const authorsFilePath = 'content/authors/authors.json';
 
   if (fs.existsSync(outputFilePath)) {
     fs.unlinkSync(outputFilePath);
@@ -82,7 +83,7 @@ async function main() {
     '/category/frontend',
     '/category/sdlc',
     '/404',
-    ...(await getAuthorRoutes())
+    ...(await getAuthorRoutes(authorsFilePath))
   );
   fs.writeFileSync('dist/routes.txt', routesArray.join('\r\n'), 'utf8');
 
