@@ -5,7 +5,7 @@
 ![](assets/placeholder.png)
 
 Authors: <%= authors %>
-Date: <%= date || 'unpublished' %>
+Date: unpublished
 Category: <%= category %>
 
 tags: <%= tags %>
