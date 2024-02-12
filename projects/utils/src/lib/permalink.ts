@@ -25,3 +25,7 @@ export function getPermalink(
 
   return `${base}/${titleDirectoryName}`;
 }
+
+export function getAuthorPermalink(authorName: string) {
+  return authorName.replace(/\W/g, '-').toLowerCase();
+}
