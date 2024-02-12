@@ -11,6 +11,18 @@
     }
   }
 
+  &__chip {
+    margin-bottom: 1rem;
+    mat-chip {
+      --mdc-chip-label-text-size: .8em;
+      --mdc-chip-container-height: auto;
+
+      &.mat-neutral {
+        --mdc-chip-elevated-container-color: var(--blog-palette-neutral);
+      }
+    }
+  }
+
   &__title {
     font-size: 3em;
     position: relative;

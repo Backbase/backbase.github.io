@@ -12,26 +12,25 @@
     <aside>
       <div class="center-container">
         Here we talk about
-        <mat-chip-set>
           @for (item of categories$ | async; track $index) {
-            <mat-chip data-role="button">
+            <mat-chip-row data-role="button" color="light-primary">
               <a [routerLink]="'/category/' + item">{{ Category[item] }}</a>
-            </mat-chip>
+            </mat-chip-row>
           }
-        </mat-chip-set>
       </div>
     </aside>
     <div class="center-container">
       <blog-posts-list
         [posts]="(posts$ | async) || undefined"></blog-posts-list>
     </div>
-  } @else {
+
+    <div class="center-container bottom-cta">
+      <a mat-stroked-button color="primary" routerLink="/people">View everyone</a>
+    </div>
+  }
+  @if (notFound) {
     <div class="center-container">
       <blog-not-found></blog-not-found>
     </div>
   }
-
-  <div class="center-container bottom-cta">
-    <a mat-stroked-button color="primary" routerLink="/people">View everyone</a>
-  </div>
 </div>

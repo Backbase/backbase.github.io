@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthorsService } from '../../core/services/authors.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { map, Observable, switchMap, withLatestFrom } from 'rxjs';
+import { map, Observable, switchMap, tap, withLatestFrom } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Author } from '../../core/model/author.model';
 import { PostsListComponent } from '../../components/posts-list/posts-list.component';
@@ -41,7 +41,12 @@ export class AuthorComponent {
             key.replace(/\W/g, '').toLowerCase() ===
             param?.toLowerCase().replace(/\W/g, '')
         )?.[1]
-    )
+    ),
+    tap((author) => {
+      if (!author) {
+        this.notFound = true;
+      }
+    })
   );
   posts$: Observable<Post[] | undefined> = this.author$.pipe(
     switchMap(author =>
@@ -58,6 +63,8 @@ export class AuthorComponent {
   );
 
   Category = Object.fromEntries(Object.entries(Category));
+
+  notFound = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,

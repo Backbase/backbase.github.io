@@ -12,7 +12,7 @@
 }
 
 .light-theme {
-  .mat-mdc-standard-chip {
+  .mat-mdc-standard-chip.mat-light-primary {
     --mdc-chip-elevated-container-color: #{map-get($backbase-primary, 100)};
   }
   .mat-mdc-slide-toggle {
@@ -96,12 +96,6 @@ body {
   margin: 3rem 0;
 }
 
-blog-root {
-  .mat-mdc-standard-chip {
-    --mdc-chip-label-text-color: var(--blog-palette-primary);
-  }
-}
-
 .hide {
   display: none !important;
 }
@@ -141,8 +135,11 @@ figure {
   }
 }
 
-mat-chip a {
-  text-decoration: none;
+mat-chip,
+mat-chip-row {
+  a {
+    text-decoration: none;
+  }
 }
 
 .highlight {

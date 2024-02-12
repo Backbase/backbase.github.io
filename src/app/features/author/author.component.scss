@@ -34,9 +34,8 @@
     padding: 1rem 0;
     background-color: var(--blog-palette-neutral);
 
-    mat-chip-set {
-      display: inline-flex;
-      margin-left: 0.5rem;
+    mat-chip-row {
+      margin: 0 0.5rem
     }
   }
 
