@@ -20,6 +20,8 @@ function updateMetaDate(filePath) {
 }
 
 async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
+  if (!fs.existsSync(sourcePath)) { return; }
+  
   const unpublished = fs.readdirSync(sourcePath);
 
   unpublished.forEach(async articlePath => {

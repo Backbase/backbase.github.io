@@ -69,7 +69,7 @@ Do you have an interesting topic to share but it's not technical? we have a plac
 
 We use Google Style Guide and write-good to provide consistent writing style.
 
-The linting tool is [Vale](https://github.com/errata-ai/vale) and you can run it locally by following the [installation](https://docs.errata.ai/vale/install) and running the following command.
+The linting tool is [Vale](https://github.com/errata-ai/vale) and you can run it locally by following the [installation](https://vale.sh/docs/vale-cli/installation/) and running the following command.
 
 
 ```bash

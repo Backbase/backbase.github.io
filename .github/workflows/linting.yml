@@ -1,0 +1,17 @@
+name: Linting
+on: [pull_request]
+
+jobs:
+  prose:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Vale
+      uses: errata-ai/vale-action@v2.0.1
+      with:
+         onlyAnnotateModifiedLines: true
+         reporter: github-pr-check
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
