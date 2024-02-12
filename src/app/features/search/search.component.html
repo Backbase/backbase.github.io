@@ -1,0 +1,30 @@
+<form class="search-form">
+  <mat-form-field class="search-form__field">
+    <mat-label class="search-form__label">
+      <span class="label">
+        <mat-icon aria-hidden="false" fontIcon="search"></mat-icon> Search
+      </span>
+    </mat-label>
+    <input
+      type="text"
+      matInput
+      [formControl]="control"
+      [matAutocomplete]="auto" />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [autoActiveFirstOption]="true"
+      [displayWith]="displayFn"
+      panelWidth="500"
+      (optionSelected)="goToPost($event)">
+      @for (option of filteredOptions | async; track option) {
+        <mat-option [value]="option">
+          <span [blogHighlight]="control.value" class="search-form__option">
+            <span>
+              {{ option.title }}
+            </span>
+          </span>
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

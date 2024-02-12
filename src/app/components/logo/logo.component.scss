@@ -1,0 +1,24 @@
+.bb-engineering-logo {
+  display: flex;
+  line-height: 1;
+  height: 100%;
+  align-items: center;
+  color: var(--blog-palette-text);
+
+  svg {
+    fill: var(--blog-palette-text);
+  }
+
+  .symbol {
+    width: 0.66em;
+  }
+
+  .spacer {
+    margin: 0 0.2em;
+    font-weight: 100;
+  }
+
+  .text {
+    font-weight: 100;
+  }
+}

@@ -1,9 +1,0 @@
-.page__meta {
-  > span:not(:last-child) {
-    &::after {
-      content: "|";
-      margin-left: map-get($spacers, 2);
-      margin-right: map-get($spacers, 2);
-    }
-  }
-}

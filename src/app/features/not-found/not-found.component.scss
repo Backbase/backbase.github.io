@@ -1,0 +1,13 @@
+.not-found {
+  text-align: center;
+  padding: 2rem 0;
+
+  &__image {
+    margin: 3rem 0;
+    img {
+      max-width: 350px;
+      width: 100%;
+    }
+  }
+}
+

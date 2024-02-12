@@ -1,9 +1,0 @@
-a  {
-  @at-root .bg-dark &, .bg-primary & {
-    color: $white;
-  }
-}
-
-p {
-  max-width: 60ch;
-}

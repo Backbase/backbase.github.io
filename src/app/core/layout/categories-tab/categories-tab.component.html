@@ -1,0 +1,6 @@
+@if (categories$ | async; as categories) {
+  <blog-categories
+    [categories]="categories"
+    [active]="selectedCategory$ | async"
+    (selected)="navigate($event)"></blog-categories>
+}

@@ -1,0 +1,29 @@
+:host {
+  --mat-tree-container-background-color: transparent;
+  color: var(--blog-palette-muted);
+  --blog-palette-text: var(--blog-palette-muted);
+
+  .expand {
+    --mdc-icon-button-icon-color: var(--blog-palette-muted);
+    opacity: 0.5;
+  }
+
+  a {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.container {
+  max-height: 100vh;
+  overflow: auto;
+}
+
+.current {
+  font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+}

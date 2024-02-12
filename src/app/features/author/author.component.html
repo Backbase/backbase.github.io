@@ -1,0 +1,36 @@
+<blog-gradient [height]="250"></blog-gradient>
+<div class="author">
+  @if (author$ | async; as author) {
+    <header class="author__header center-container">
+      <div class="author__header-title">
+        <h1>{{ author.fullname }}</h1>
+        <h2>{{ author.role }}</h2>
+      </div>
+
+      <blog-avatar [url]="author.avatar"></blog-avatar>
+    </header>
+    <aside>
+      <div class="center-container">
+        Here we talk about
+          @for (item of categories$ | async; track $index) {
+            <mat-chip-row data-role="button" color="light-primary">
+              <a [routerLink]="'/category/' + item">{{ Category[item] }}</a>
+            </mat-chip-row>
+          }
+      </div>
+    </aside>
+    <div class="center-container">
+      <blog-posts-list
+        [posts]="(posts$ | async) || undefined"></blog-posts-list>
+    </div>
+
+    <div class="center-container bottom-cta">
+      <a mat-stroked-button color="primary" routerLink="/people">View everyone</a>
+    </div>
+  }
+  @if (notFound) {
+    <div class="center-container">
+      <blog-not-found></blog-not-found>
+    </div>
+  }
+</div>

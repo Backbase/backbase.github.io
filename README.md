@@ -1,27 +1,52 @@
 # [Backbase Engineering Blog](https://engineering.backbase.com)
 
-Static blog powered by [Jekyll](https://jekyllrb.com/)
+This blog is an Angular single page application, which builds a static web site based on content created using markdown.
 
 ## Build locally
 
-Using Docker Compose:
+### Prerequisites
 
-```sh
-$ docker-compose up
+- NodeJS 20+
+- NPM 10+
+
+### Installation 
+
+Run the followig commands to install and run the application:
+
+```bash
+  $ npm ci
+  $ npm run build:utils
+  $ npm start
 ```
 
-> Make sure you have [Docker Compose installed](https://docs.docker.com/compose/install/) to run it.
+## Creating content
 
-Using your local Ruby environment:
+To create a new post, run the following command to scaffold the structure:
 
-```sh
-$ bundle install
-$ bundle exec jekyll serve
+```bash
+  $ npm run posts:new
 ```
+
+This will prompt some questions to prefill the data of your post – don't worry, you can edit it later.
+
+Once scaffolded, you can edit your post in `content/posts/unpublished/{title}`
+
+> Be aware:
+> - Date will be set at the moment you merge your PR, so keep it unpublished
+> - Changes to the post metadata – header of markdown – requires a rebuild: `npm run posts:update` or server restart (`npm start`)
+
+For guidelines on writing your post, please check the [next section](#content)
 
 ---
 
-The blog is served at http://localhost:4000
+The blog is served at http://localhost:4200
+
+## Publishing an article
+
+* Ensure you're part of the list of authors in [content/authors/authors.json](content/authors/authors.json). Add your profile image to folder [content/authors/avatars/](content/authors/avatars/);
+* Commit your changes to a new branch created out of `main`;
+* Check the result of your newly created post [running it locally](#build-locally);
+* Create a PR against `main` branch and request the necessary reviews.
 
 ## Content
 
@@ -40,21 +65,11 @@ Engineering blog posts are not just about "show and tell"; they're how our engin
 
 Do you have an interesting topic to share but it's not technical? we have a place for that too, please check: https://medium.com/backbase
 
-
-## Publishing an article
-
-* Branch out of `main` branch.
-* Ensure you're part of the list of authors in [_data/authors.yml](_data/authors.yml). Add your profile image to folder [assets/images/avatars/](assets/images/avatars/).
-* Create a file inside folder [_posts/](_posts/) with the following naming convention: `yyyy-mm-dd-title-with-spaces.md`
-* Add images that you'll use in this post to folder [assets/images/post/](assets/images/post/)
-* Ensure your header is correct. Use existing posts as an example, both for the header and the content.
-* Ensure you [run it locally](#build-locally) and double check everything is fine in your browser before submitting a PR to branch `main`.
-
 ## Linting your posts
 
 We use Google Style Guide and write-good to provide consistent writing style.
 
-The linting tool is [Vale](https://github.com/errata-ai/vale) and you can run it locally by following the [installation](https://docs.errata.ai/vale/install) and running the following command.
+The linting tool is [Vale](https://github.com/errata-ai/vale) and you can run it locally by following the [installation](https://vale.sh/docs/vale-cli/installation/) and running the following command.
 
 
 ```bash

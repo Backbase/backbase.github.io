@@ -1,0 +1,37 @@
+.search-form {
+  line-height: 32px;
+
+  .mat-mdc-form-field {
+    width: 100%;
+  }
+
+  &__field {
+    --mdc-filled-text-field-container-color: transparent;
+    --mat-form-field-state-layer-color: transparent;
+
+    .mdc-floating-label .mat-icon {
+      height: 0.9em;
+    }
+  }
+
+  &__label {
+    display: block;
+
+    .label {
+      font-size: 0.85em;
+      @at-root .mat-form-field-hide-placeholder & {
+        display: block;
+        padding-top: 19px;
+      }
+    }
+  }
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    padding: 0;
+  }
+
+  &__option {
+    display: flex;
+    flex-direction: column;
+  }
+}

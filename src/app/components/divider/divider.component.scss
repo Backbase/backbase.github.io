@@ -1,0 +1,18 @@
+.mat-divider {
+  --mat-divider-color: var(--blog-palette-primary);
+
+  width: 500%;
+  position: relative;
+  margin: 3rem 0;
+  left: -400%;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    background: var(--mat-divider-color);
+  }
+}

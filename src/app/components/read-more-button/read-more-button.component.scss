@@ -1,0 +1,25 @@
+a {
+  .arrow {
+    transform: translateX(-3px);
+    transition: 0.15s ease-out transform;
+    background: var(--mdc-text-button-label-text-color);
+    color: var(--mat-full-pseudo-checkbox-selected-checkmark-color);
+    width: 1.2em;
+    height: 1.2em;
+    display: inline-block;
+    border-radius: 2rem;
+    vertical-align: middle;
+    margin-left: 0.2em;
+
+    .icon {
+      padding: 0.1em;
+      font-size: 1em;
+      vertical-align: middle;
+    }
+  }
+  &:hover {
+    .arrow {
+      transform: translateX(0);
+    }
+  }
+}

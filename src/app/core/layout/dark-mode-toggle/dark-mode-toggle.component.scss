@@ -1,0 +1,32 @@
+.toggler {
+  .mdc-switch {
+    --mdc-switch-track-height: 24px;
+    --mdc-switch-track-shape: 24px;
+  }
+
+  .mdc-switch__track {
+    &::before,
+    &::after {
+      box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.3);
+      border: 0;
+    }
+  }
+
+  .mdc-switch__handle-track {
+    transform: translateX(2px);
+  }
+
+  .mdc-switch--selected {
+
+    .mdc-switch__handle-track {
+      transform: translateX(calc(100% - 2px));
+    }
+  }
+
+  .mat-icon {
+    font-size: 1em;
+    color: var(--mdc-switch-selected-icon-color);
+    line-height: 1.35;
+    width: auto;
+  }
+}

@@ -1,0 +1,46 @@
+@use 'breakpoints' as responsive;
+
+.container {
+  display: grid;
+  grid-gap: 36px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+
+  @include responsive.up('sm') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+h2 {
+  display: block;
+  text-align: center;
+}
+
+mat-card {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+
+  .image {
+    width: 250px;
+  }
+
+  .title {
+    margin: 0;
+    padding: 0 1rem;
+    flex-wrap: wrap;
+    display: flex;
+    align-content: center;
+  }
+}
+
+img {
+  width: 100%;
+}
+
+[data-role='button'] {
+  transition: 0.15s ease-out transform;
+  &:hover {
+    transform: scale(1.02);
+  }
+}

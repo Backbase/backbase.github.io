@@ -1,0 +1,38 @@
+.item-card {
+  position: relative;
+  &__authors {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .mdc-card {
+    height: 100%;
+  }
+
+  .mdc-card__media {
+    width: 100%;
+  }
+
+  &__actions {
+    display: flex;
+    margin-top: auto;
+  }
+
+  .mat-mdc-chip.mat-mdc-standard-chip {
+    --mdc-chip-label-text-size: 0.8em;
+    --mdc-chip-container-height: 22px;
+  }
+
+  .muted {
+    font-size: 0.85em;
+    color: var(--blog-palette-muted);
+  }
+
+  &__header {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 8px;
+    aspect-ratio: 2.5;
+  }
+}

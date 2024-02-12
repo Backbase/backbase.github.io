@@ -1,0 +1,149 @@
+@use '@angular/material' as mat;
+@use 'sass:color';
+@use 'palette' as *;
+@use 'typography' as *;
+@use 'theme' as *;
+@use 'breakpoints' as *;
+
+@include mat.core();
+
+:root {
+  @include theme;
+}
+
+.light-theme {
+  .mat-mdc-standard-chip.mat-light-primary {
+    --mdc-chip-elevated-container-color: #{map-get($backbase-primary, 100)};
+  }
+  .mat-mdc-slide-toggle {
+    --mdc-switch-unselected-track-color: #{map-get(
+        $backbase-secondary-light,
+        100
+      )};
+    --mdc-switch-unselected-focus-track-color: #{map-get(
+        $backbase-secondary-light,
+        50
+      )};
+  }
+}
+
+.dark-theme {
+  @include theme(
+    $primary-color: $backbase-primary-dark,
+    $secondary-color: $backbase-secondary-dark,
+    $accent-color: $backbase-accent-dark,
+    $neutral: #000000,
+    $text-color: #ffffff,
+    $text-muted: #999999,
+    $typography: $backbase-typography,
+    $background-color: #{color.mix(
+      #000000,
+      map-get($backbase-secondary, 700),
+      75%
+    )},
+    $bg-gradient: (
+      #69feff,
+      #ff6047,
+      #69feff,
+      #ff6047,
+    ),
+    $default: false,
+    $dark: true,
+  )
+}
+
+:root {
+  --mdc-typography-button-font-weight: bold;
+  --mdc-elevated-card-container-elevation: none;
+  --mdc-elevated-card-container-shape: 0;
+  --mdc-outlined-button-container-height: 50px;
+  --mdc-typography-button-letter-spacing: 0.03em;
+
+  .mat-mdc-card {
+    --mdc-elevated-card-container-elevation: 0;
+  }
+
+  @each $size, $width in $breakpoints {
+    --blog-breakpoint-#{$size}: #{$width};
+  }
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  color: var(--blog-palette-text);
+  background-color: var(--blog-palette-background);
+  position: relative;
+}
+
+.center-container {
+  max-width: 1108px;
+  padding: 0 1rem;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+[data-role='button'] {
+  cursor: pointer;
+}
+
+.spacer {
+  margin: 3rem 0;
+}
+
+.hide {
+  display: none !important;
+}
+
+a {
+  .external {
+    font-size: 0.8em;
+    display: inline;
+  }
+
+  &,
+  &:active,
+  &:visited,
+  &:focus,
+  &:hover {
+    color: var(--blog-palette-text);
+    text-decoration-thickness: 2px;
+  }
+}
+
+figure {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+  }
+
+  iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  figcaption {
+    color: var(--blog-palette-muted);
+  }
+}
+
+mat-chip,
+mat-chip-row {
+  a {
+    text-decoration: none;
+  }
+}
+
+.highlight {
+  background: none;
+  color: inherit;
+  font-weight: bold;
+}
