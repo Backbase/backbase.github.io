@@ -31,7 +31,7 @@ export class TableOfContentComponent implements AfterViewInit {
     this.dataSource.data = headers;
     this.treeControl.expandAll();
     if (headers.length) {
-      this.createOffsets(headers);
+      this.offsetHeaders = this.createOffsets(headers);
       this.checkFirstHeader();
     }
   }
@@ -50,20 +50,32 @@ export class TableOfContentComponent implements AfterViewInit {
       const fullHeight =
         this.document.body.scrollHeight - this.document.body.clientHeight;
 
-      this.activeHeader = this.offsetHeaders.find((element, i, offsetHeaders) => {
-        const nextElement = offsetHeaders[i + 1];
+      if (scroll === fullHeight) {
+        this.activeHeader = this.offsetHeaders[this.offsetHeaders.length - 1];
+        return;
+      }
 
-        const offset = this.document.getElementById(element)?.offsetTop;
-        const nextOffset = nextElement
-          ? this.document.getElementById(nextElement)?.offsetTop
-          : fullHeightWithScroll;
+      const firstElementOffset = this.document.getElementById(
+        this.offsetHeaders[0]
+      )?.offsetTop;
 
-        if (fullHeight === scroll && i === offsetHeaders.length) {
-          return true;
+      if (scroll < Number(firstElementOffset)) {
+        this.activeHeader = this.offsetHeaders[0];
+        return;
+      }
+
+      this.activeHeader = this.offsetHeaders.find(
+        (element, i, offsetHeaders) => {
+          const nextElement = offsetHeaders[i + 1];
+
+          const offset = this.document.getElementById(element)?.offsetTop;
+          const nextOffset = nextElement
+            ? this.document.getElementById(nextElement)?.offsetTop
+            : fullHeightWithScroll;
+
+          return scroll >= Number(offset) && scroll < Number(nextOffset);
         }
-
-        return scroll >= Number(offset) && scroll < Number(nextOffset);
-      });
+      );
     }
   }
 
@@ -108,11 +120,16 @@ export class TableOfContentComponent implements AfterViewInit {
   hasChild = (_: number, node: HeaderTreeNode) => node.expandable;
 
   private createOffsets(data: HeaderNode[]): string[] {
-    return data.reduce((offsetHeaders: string[], element: HeaderNode) => [
-      ...offsetHeaders,
-      element.id,
-      ...(element.children.length ? this.createOffsets(element.children) : []),
-    ], []);
+    return data.reduce(
+      (offsetHeaders: string[], element: HeaderNode) => [
+        ...offsetHeaders,
+        element.id,
+        ...(element.children.length
+          ? this.createOffsets(element.children)
+          : []),
+      ],
+      []
+    );
   }
 
   private checkFirstHeader(): void {
@@ -121,7 +138,7 @@ export class TableOfContentComponent implements AfterViewInit {
     }
 
     if (!this.activeHeader) {
-      this.activeHeader = this.offsetHeaders[0]
+      this.activeHeader = this.offsetHeaders[0];
     }
 
     const offset = (
@@ -129,8 +146,6 @@ export class TableOfContentComponent implements AfterViewInit {
     ).offsetTop;
     if (this.offsetHeaders.includes(this.activeHeader) && offset) {
       this.document.documentElement.scrollTo(0, offset);
-    } else {
-      this.activeHeader = this.offsetHeaders[this.offsetHeaders.length];
     }
   }
 }
