@@ -113,7 +113,6 @@ export class PostComponent {
     private router: Router,
     private markdownService: MarkdownService,
     @Inject(DOCUMENT) private document: Document,
-    private cd: ChangeDetectorRef,
     private htmlInMarkdownService: HtmlInMarkdownService
   ) {}
 
