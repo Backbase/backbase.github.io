@@ -107,14 +107,12 @@ export class TableOfContentComponent implements AfterViewInit {
 
   hasChild = (_: number, node: HeaderTreeNode) => node.expandable;
 
-  private createOffsets(data: HeaderNode[], array = this.offsetHeaders): void {
-    for (const element of data) {
-      array.push(element.id);
-
-      if (element.children.length) {
-        this.createOffsets(element.children, array);
-      }
-    }
+  private createOffsets(data: HeaderNode[]): string[] {
+    return data.reduce((offsetHeaders: string[], element: HeaderNode) => [
+      ...offsetHeaders,
+      element.id,
+      ...(element.children.length ? this.createOffsets(element.children) : []),
+    ], []);
   }
 
   private checkFirstHeader(): void {
