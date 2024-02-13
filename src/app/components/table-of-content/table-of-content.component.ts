@@ -40,7 +40,7 @@ export class TableOfContentComponent implements AfterViewInit {
 
   offsetHeaders: string[] = [];
 
-  activeHeader = '';
+  activeHeader: string | undefined = '';
 
   @HostListener('document:scroll', ['$event'])
   public onViewportScroll() {
@@ -50,29 +50,20 @@ export class TableOfContentComponent implements AfterViewInit {
       const fullHeight =
         this.document.body.scrollHeight - this.document.body.clientHeight;
 
-      for (let i = 0; i < this.offsetHeaders.length; i++) {
-        const element = this.offsetHeaders[i];
-        const nextElement = this.offsetHeaders[i + 1];
+      this.activeHeader = this.offsetHeaders.find((element, i, offsetHeaders) => {
+        const nextElement = offsetHeaders[i + 1];
 
         const offset = this.document.getElementById(element)?.offsetTop;
         const nextOffset = nextElement
           ? this.document.getElementById(nextElement)?.offsetTop
           : fullHeightWithScroll;
 
-        if (offset == null || nextOffset == null) {
-          continue;
+        if (fullHeight === scroll && i === offsetHeaders.length) {
+          return true;
         }
 
-        if (fullHeight === scroll) {
-          this.activeHeader = this.offsetHeaders[this.offsetHeaders.length - 1];
-          return;
-        }
-
-        if (scroll >= offset && scroll < nextOffset) {
-          this.activeHeader = element;
-          return;
-        }
-      }
+        return scroll >= Number(offset) && scroll < Number(nextOffset);
+      });
     }
   }
 
