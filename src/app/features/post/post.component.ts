@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Inject,
+  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import { AsyncPipe, DOCUMENT, DatePipe } from '@angular/common';
@@ -10,6 +10,7 @@ import {
   Observable,
   distinctUntilChanged,
   filter,
+  first,
   map,
   switchMap,
   tap,
@@ -37,6 +38,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { HtmlInMarkdownService } from '../../core/services/html-in-markdown.service';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'blog-post',
@@ -59,12 +61,13 @@ import { HtmlInMarkdownService } from '../../core/services/html-in-markdown.serv
     MatSidenavModule,
     NotFoundComponent,
   ],
+  providers: [PostUrlPipe],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostComponent {
+export class PostComponent implements OnInit {
   post$: Observable<Post | undefined> = this.activatedRoute.url.pipe(
     map(segments => segments.map(({ path }) => path).join('/')),
     switchMap(permalink => this.postsService.getPost(permalink)),
@@ -113,8 +116,22 @@ export class PostComponent {
     private router: Router,
     private markdownService: MarkdownService,
     @Inject(DOCUMENT) private document: Document,
-    private htmlInMarkdownService: HtmlInMarkdownService
+    private htmlInMarkdownService: HtmlInMarkdownService,
+    private postUrlPipe: PostUrlPipe,
+    private meta: Meta
   ) {}
+
+  ngOnInit(): void {
+    this.post$
+      .pipe(
+        filter((value): value is Post => !!value),
+        map(value => this.postUrlPipe.transform(value, value.teaser)),
+        first()
+      )
+      .subscribe(content => {
+        this.meta.updateTag({ name: 'thumbnail', content });
+      });
+  }
 
   navigate(path: string) {
     this.router.navigate([path]);
