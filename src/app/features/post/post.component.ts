@@ -59,7 +59,6 @@ import { Meta } from '@angular/platform-browser';
     MatSidenavModule,
     NotFoundComponent,
   ],
-  providers: [PostUrlPipe],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -71,13 +70,14 @@ export class PostComponent {
     switchMap(permalink => this.postsService.getPost(permalink)),
     tap(post => {
       if (post) {
-        const tag = this.meta.getTag('property="og:url"');
-        if (!tag) {
-          return;
-        }
-        const content =
-          tag.content + this.postUrlPipe.transform(post, post.teaser);
-        this.meta.updateTag({ property: 'og:image', content });
+        this.meta.updateTag({
+          property: 'og:image',
+          content: `${this.document.location.href}/${post.teaser}`,
+        });
+        this.meta.updateTag({
+          property: 'og:url',
+          content: this.document.location.href,
+        });
         return;
       }
       this.notFound = true;
@@ -124,7 +124,6 @@ export class PostComponent {
     private markdownService: MarkdownService,
     @Inject(DOCUMENT) private document: Document,
     private htmlInMarkdownService: HtmlInMarkdownService,
-    private postUrlPipe: PostUrlPipe,
     private meta: Meta
   ) {}
 
