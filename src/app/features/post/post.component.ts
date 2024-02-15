@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  OnDestroy,
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
@@ -10,9 +11,9 @@ import {
   Observable,
   distinctUntilChanged,
   filter,
-  first,
   map,
   switchMap,
+  takeUntil,
   tap,
   withLatestFrom,
 } from 'rxjs';
@@ -67,12 +68,17 @@ import { Meta } from '@angular/platform-browser';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostComponent implements OnInit {
+export class PostComponent {
   post$: Observable<Post | undefined> = this.activatedRoute.url.pipe(
     map(segments => segments.map(({ path }) => path).join('/')),
     switchMap(permalink => this.postsService.getPost(permalink)),
     tap(post => {
-      if (post) return;
+      if (post) {
+        const content = this.postUrlPipe.transform(post, post.teaser);
+        this.meta.updateTag({ name: 'og:image', content });
+        this.meta.updateTag({ name: 'og:url', content });
+        return;
+      }
       this.notFound = true;
     })
   );
@@ -120,18 +126,6 @@ export class PostComponent implements OnInit {
     private postUrlPipe: PostUrlPipe,
     private meta: Meta
   ) {}
-
-  ngOnInit(): void {
-    this.post$
-      .pipe(
-        filter((value): value is Post => !!value),
-        map(value => this.postUrlPipe.transform(value, value.teaser)),
-        first()
-      )
-      .subscribe(content => {
-        this.meta.updateTag({ name: 'thumbnail', content });
-      });
-  }
 
   navigate(path: string) {
     this.router.navigate([path]);
