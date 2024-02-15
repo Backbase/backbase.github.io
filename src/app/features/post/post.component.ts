@@ -2,8 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
-  OnDestroy,
-  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import { AsyncPipe, DOCUMENT, DatePipe } from '@angular/common';
@@ -13,7 +11,6 @@ import {
   filter,
   map,
   switchMap,
-  takeUntil,
   tap,
   withLatestFrom,
 } from 'rxjs';
@@ -74,9 +71,13 @@ export class PostComponent {
     switchMap(permalink => this.postsService.getPost(permalink)),
     tap(post => {
       if (post) {
-        const content = this.postUrlPipe.transform(post, post.teaser);
-        this.meta.updateTag({ name: 'og:image', content });
-        this.meta.updateTag({ name: 'og:url', content });
+        const tag = this.meta.getTag('property="og:url"');
+        if (!tag) {
+          return;
+        }
+        const content =
+          tag.content + this.postUrlPipe.transform(post, post.teaser);
+        this.meta.updateTag({ property: 'og:image', content });
         return;
       }
       this.notFound = true;
