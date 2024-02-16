@@ -31,16 +31,17 @@
     </header>
     <div class="post__content">
       <aside class="post__content-table">
-        <blog-table-of-content
-          class="sticky"
-          [headers]="(headers$ | async) || []"></blog-table-of-content>
+        @if (isContentReady) {
+          <blog-table-of-content
+            class="sticky"
+            [headers]="(headers$ | async) || []"></blog-table-of-content>
+        }
       </aside>
       <article class="post__content-text center-container">
         <markdown
           class="markdown-container"
           [data]="markdown$ | async"
-          (ready)="resolveScripts()"
-        ></markdown>
+          (ready)="resolveScripts()"></markdown>
       </article>
     </div>
   }

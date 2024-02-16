@@ -10,7 +10,7 @@
       <a
         routerLink="."
         [fragment]="node.id"
-        [ngClass]="{ current: node.id === current }"
+        [ngClass]="{ current: node.id === activeHeader }"
         >{{ node.name }}</a
       >
     </mat-tree-node>
@@ -30,7 +30,7 @@
       <a
         routerLink="."
         [fragment]="node.id"
-        [ngClass]="{ current: node.id === current }"
+        [ngClass]="{ current: node.id === activeHeader }"
         >{{ node.name }}</a
       >
     </mat-tree-node>
