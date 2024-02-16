@@ -1,4 +1,4 @@
-name: Publish content before merging
+name: Publish content before merging 
 
 on:
   pull_request:
