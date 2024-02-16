@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  OnDestroy,
   ViewEncapsulation,
 } from '@angular/core';
 import { AsyncPipe, DOCUMENT, DatePipe } from '@angular/common';
@@ -64,7 +65,7 @@ import { Meta } from '@angular/platform-browser';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostComponent {
+export class PostComponent implements OnDestroy {
   post$: Observable<Post | undefined> = this.activatedRoute.url.pipe(
     map(segments => segments.map(({ path }) => path).join('/')),
     switchMap(permalink => this.postsService.getPost(permalink)),
@@ -126,6 +127,14 @@ export class PostComponent {
     private htmlInMarkdownService: HtmlInMarkdownService,
     private meta: Meta
   ) {}
+
+  ngOnDestroy(): void {
+    this.meta.removeTag('property="og:image"');
+    this.meta.updateTag({
+      property: 'og:url',
+      content: 'https://engineering.backbase.com/',
+    });
+  }
 
   navigate(path: string) {
     this.router.navigate([path]);
