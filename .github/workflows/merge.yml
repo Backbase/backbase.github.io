@@ -4,6 +4,8 @@ on:
   pull_request:
     types: [enqueued]
     branches: [main, publish-article-pipeline]
+  merge_group:
+    types: [checks_requested]
 
 jobs:
   publish:
