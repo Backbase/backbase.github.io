@@ -1,7 +1,9 @@
 name: Publish content before merging
 
 on:
-  pull_request: ['enqueued']
+  pull_request:
+    types: [enqueued]
+    branches: [main, publish-article-pipeline]
 
 jobs:
   publish:
