@@ -9,6 +9,8 @@ This blog is an Angular single page application, which builds a static web site 
 - NodeJS 20+
 - NPM 10+
 
+> If you have `nvm` installed, just run `nvm use`
+
 ### Installation 
 
 Run the followig commands to install and run the application:
