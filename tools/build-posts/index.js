@@ -45,9 +45,23 @@ function scanDirectory(directoryPath, filesArray, routesArray) {
   );
 }
 
-function main() {
+async function getAuthorRoutes(source) {
+  if (fs.existsSync(source)) {
+    const authors = JSON.parse(fs.readFileSync(source, 'utf8'));
+
+    const utils = await loadEsmModule(
+      '../../dist/utils/esm2022/lib/permalink.mjs'
+    );
+    return Object.keys(authors).map(name =>
+      `/people/${utils.getAuthorPermalink(name)}`);
+  }
+  return [];
+}
+
+async function main() {
   const startDirectory = 'content/posts'; // Change this to the starting directory path
   const outputFilePath = 'content/posts/posts.json'; // Change this to the desired output file path
+  const authorsFilePath = 'content/authors/authors.json';
 
   if (fs.existsSync(outputFilePath)) {
     fs.unlinkSync(outputFilePath);
@@ -68,11 +82,16 @@ function main() {
     '/category/career',
     '/category/frontend',
     '/category/sdlc',
-    '/404'
+    '/404',
+    ...(await getAuthorRoutes(authorsFilePath))
   );
-  fs.writeFileSync('routes.txt', routesArray.join('\r\n'), 'utf8');
+  fs.writeFileSync('dist/routes.txt', routesArray.join('\r\n'), 'utf8');
 
   console.log(`Scanning completed. Output written to ${outputFilePath}`);
 }
 
 main();
+
+function loadEsmModule(modulePath) {
+  return new Function('modulePath', `return import(modulePath);`)(modulePath);
+}

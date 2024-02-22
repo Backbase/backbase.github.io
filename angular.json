@@ -47,7 +47,7 @@
             },
             "styles": ["styles/styles.scss"],
             "prerender": {
-              "routesFile": "routes.txt"
+              "routesFile": "dist/routes.txt"
             },
             "scripts": [
               "node_modules/prismjs/prism.js",
