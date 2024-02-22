@@ -4,7 +4,7 @@ Using Ruby Gems to ensure that everyone in the project shares the same setup.
 
 ![](assets/the_better_way_ruby_gems.png)
 
-Authors: Arthur Alves
+Authors: Arthur Alves, Nathan Wong
 Date: 2023-09-29
 Category: mobile
 
@@ -31,7 +31,7 @@ A solution to maintain all these alignments, regardless of how many projects you
 
 **_Versions specified here are illustrative. Choose your versions carefully in accordance with your team._**
 
-#### **1.** Multiple Ruby versions.
+### 1. Multiple Ruby versions.
 
 **1.1** Install RBENV
 
@@ -123,7 +123,7 @@ This will create the file `.ruby-version`. This file should be committed, so tha
 
 **_Later, if you want to change the version, make sure it’s installed with `rbenv` and run the `local` command again, i.e: `rbenv local 3.1.2`._**
 
-#### **2.** Using Ruby Gems.
+### 2. Using Ruby Gems.
 
 You’ve managed to have multiple versions of Ruby and set different versions for different repositories. Now, we’re set to use Ruby Gems.
 
@@ -165,7 +165,7 @@ Then proceed to run `bundle install` again._**
 **_`Gemfile.lock` should also be committed._**
 
 
-##### **3.** Running your tools.
+### 3. Running your tools.
 
 By now your project has a locked version of Ruby, which everyone can install without conflicting with other setups/projects. And you have most of the tools you need, such as Cocoapods and Fastlane, installed in a similar manner, as Ruby Gems.
 
@@ -185,7 +185,6 @@ bundle exec pod install
 bundle exec fastlane <YOUR-LANE>
 ```
 
---
 
 You can make this easier by creating an alias in your `~/.zshrc` or `~/.bashrc` file:
 
@@ -199,3 +198,35 @@ From now on, the commands above could be used as:
 bx pod install
 bx fastlane <YOUR-LANE>
 ```
+
+## Using Ruby aliases
+
+When aligning Ruby versions across a team, or with a CI platform that you don't have full control over,
+using explicit versions in the `.ruby-version` file may result in unexpected build failures.
+
+One way to mitigate this is by configuring version aliases. An aliased version allows us to specify a minor
+version in the `.ruby-version` file (eg. `3.2`) - then each engineer's machine would define an alias from
+this version to the patch version that they have installed locally (`3.2.1`, `3.2.2` or `3.2.3`).
+
+Aliases can be configured on a machine by using the [rbenv-aliases](https://github.com/tpope/rbenv-aliases) plugin for rbenv. 
+
+```
+mkdir -p "$(rbenv root)/plugins"
+git clone https://github.com/tpope/rbenv-aliases.git \
+  "$(rbenv root)/plugins/rbenv-aliases"
+rbenv alias --auto
+```
+
+This will automatically configure aliases for each minor version to the most recent patch version, and
+update `rbenv` so that future installed versions will update any aliases where appropriate.
+
+You can then update the `.ruby-version` file with the aliased version:
+
+```
+rbenv local 3.2
+```
+
+There are some negatives to this approach: by not pinning specific versions, we may start to observe different
+behaviour if aliasing to different ruby versions on different machines. Using the command `rbenv install` will
+also no longer work when `.ruby-version` points to an aliased version - it's necessary to explicitly 
+provide the Ruby version that should be installed.
