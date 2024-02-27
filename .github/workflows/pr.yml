@@ -1,7 +1,7 @@
 name: Publish content before merging
 
 on:
-  merge_group:
+  pull_request:
 
 jobs:
   publish:
