@@ -14,5 +14,13 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm run build:utils
-      - run: npm run posts:publish
-
+      - name: Set date to new article
+        id: publish
+        run: npm run posts:publish
+      - name: Commit files
+        if: steps.publish.outputs.publish == 'published'
+        run: |
+         git config --local user.email "oss@backbase.com"
+         git config --local user.name "backbaseoss"
+         git commit -m "Publish article" -a
+         git push

@@ -20,7 +20,7 @@ function updateMetaDate(filePath) {
 }
 
 async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
-  if (!fs.existsSync(sourcePath)) { return; }
+  if (!fs.existsSync(sourcePath)) { return false; }
   
   const unpublished = fs.readdirSync(sourcePath);
 
@@ -67,10 +67,15 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
       });
 
       // Remove the "unpublished" directory
-      fs.rmdirSync(unpublishedPath);
+      fs.rmdirSync(sourcePath);
+
       console.log('Unpublished directory removed.');
+
+      return true;
     } else {
       console.log('No "unpublished" directory found.');
+
+      return false;
     }
   });
 }
@@ -79,9 +84,11 @@ function main() {
   const sourceDirectory = 'content/posts/unpublished';
   const destinationRoot = 'content/posts';
 
-  moveUnpublishedDirectory(sourceDirectory, destinationRoot);
+  const published = moveUnpublishedDirectory(sourceDirectory, destinationRoot);
 
   console.log('Process completed.');
+
+  fs.writeFileSync(process.env.GITHUB_OUTPUT, `publish=${published ? 'published' : 'none'}`);
 }
 
 main();
