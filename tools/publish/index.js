@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const core = require('@actions/core');  
 
 function updateMetaDate(filePath) {
   try {
@@ -24,7 +25,7 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
   
   const unpublished = fs.readdirSync(sourcePath);
 
-  unpublished.forEach(async articlePath => {
+  return unpublished.reduce(async (output, articlePath) => {
     const unpublishedPath = path.join(sourcePath, articlePath);
     const filePath = path.join(unpublishedPath, 'post.md');
 
@@ -67,7 +68,7 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
       });
 
       // Remove the "unpublished" directory
-      fs.rmdirSync(sourcePath);
+      fs.rmdirSync(sourcePath, { recursive: true });
 
       console.log('Unpublished directory removed.');
 
@@ -75,20 +76,20 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
     } else {
       console.log('No "unpublished" directory found.');
 
-      return false;
+      return output;
     }
-  });
+  }, false);
 }
 
-function main() {
+async function main() {
   const sourceDirectory = 'content/posts/unpublished';
   const destinationRoot = 'content/posts';
 
-  const published = moveUnpublishedDirectory(sourceDirectory, destinationRoot);
+  const published = await moveUnpublishedDirectory(sourceDirectory, destinationRoot);
 
   console.log('Process completed.');
 
-  fs.writeFileSync(process.env.GITHUB_OUTPUT, `publish=${published ? 'published' : 'none'}`);
+  core.setOutput('publish', published ? 'published' : 'none');
 }
 
 main();
