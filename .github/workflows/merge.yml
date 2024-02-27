@@ -19,6 +19,8 @@ jobs:
         run: npm run posts:publish
       - name: Commit files
         if: steps.publish.outputs.publish == 'published'
+        env:  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
         run: |
          git config --local user.email "oss@backbase.com"
          git config --local user.name "backbaseoss"
