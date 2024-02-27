@@ -5,3 +5,5 @@ on:
 
 jobs:
   publish:
+    steps:
+      - run:
