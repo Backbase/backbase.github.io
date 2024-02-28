@@ -9,6 +9,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { PostUrlPipe } from '../../core/utils/post-url.pipe';
 import { Category } from '../../core/model/categories.model';
 import { RouterLink } from '@angular/router';
+import { PostImageComponent } from '../post-image/post-image.component';
 
 @Component({
   selector: 'blog-post-item',
@@ -22,6 +23,7 @@ import { RouterLink } from '@angular/router';
     MatChipsModule,
     PostUrlPipe,
     RouterLink,
+    PostImageComponent,
   ],
   templateUrl: './post-item.component.html',
   styleUrl: './post-item.component.scss',

@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { PostUrlPipe } from '../../core/utils/post-url.pipe';
 import { ReadMoreButtonComponent } from '../read-more-button/read-more-button.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { PostImageComponent } from '../post-image/post-image.component';
 
 export enum Reason {
   LATEST = 'Latest',
@@ -22,6 +23,7 @@ export enum Reason {
     PostUrlPipe,
     RouterLink,
     MatChipsModule,
+    PostImageComponent,
   ],
   templateUrl: './post-featured.component.html',
   styleUrl: './post-featured.component.scss',
