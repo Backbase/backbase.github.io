@@ -1,12 +1,14 @@
-<picture>
-  @for (image of images; track $index) {
-    <source
-      [srcset]="image.url"
-      [media]="'(min-width: ' + image.width + 'px)'" />
-  }
+@if (isShown) {
+  <picture>
+    @for (image of images; track $index) {
+      <source
+        [srcset]="image.url"
+        [media]="'(min-width: ' + image.width + 'px)'" />
+    }
 
-  <img
-    mat-card-image
-    [src]="images[images.length - 1].url"
-    alt="${title || text}" />
-</picture>
+    <img
+      mat-card-image
+      [src]="images[images.length - 1].url"
+      alt="${title || text}" />
+  </picture>
+}
