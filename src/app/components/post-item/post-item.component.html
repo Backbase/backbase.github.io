@@ -1,11 +1,19 @@
-<mat-card matRipple data-role="button" class="item-card" [routerLink]="post | postUrl">
+<mat-card
+  matRipple
+  data-role="button"
+  class="item-card"
+  [routerLink]="post | postUrl">
   <mat-card-header class="item-card__header">
-    <img loading="lazy" mat-card-image [src]="post | postUrl: post.teaser" alt="" />
+    <blog-post-image
+      loading="lazy"
+      [url]="post | postUrl: post.teaser"></blog-post-image>
   </mat-card-header>
 
   <mat-card-content>
     <mat-chip-set>
-      <mat-chip data-role="button" color="light-primary">{{ Category[post.category] }}</mat-chip>
+      <mat-chip data-role="button" color="light-primary">{{
+        Category[post.category]
+      }}</mat-chip>
     </mat-chip-set>
     <mat-card-title>{{ post.title }}</mat-card-title>
     <span class="muted">

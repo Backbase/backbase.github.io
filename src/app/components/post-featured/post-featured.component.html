@@ -1,6 +1,9 @@
-<div class="featured center-container" data-role="button" [routerLink]="post | postUrl">
+<div
+  class="featured center-container"
+  data-role="button"
+  [routerLink]="post | postUrl">
   <div class="featured__image">
-    <img mat-card-image [src]="post | postUrl: post.teaser" alt="" />
+    <blog-post-image [url]="post | postUrl: post.teaser"></blog-post-image>
   </div>
 
   <div class="featured__content">

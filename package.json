@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "prestart": "npm run posts:update && npm run images:authors && npm run build:utils",
+    "prestart": "npm run posts:update && npm run images:authors && npm run images:posts && npm run build:utils",
     "start": "ng serve",
-    "prebuild": "npm run posts:update && npm run images:authors",
+    "prebuild": "npm run posts:update && npm run images:authors && npm run images:posts",
     "build": "ng build",
     "build:utils": "ng build utils",
     "build:all": "npm run build:utils && npm run build",
@@ -15,7 +15,8 @@
     "posts:update": "node tools/build-posts",
     "posts:new": "ng generate ./tools/post-scaffolder:post-scaffolder",
     "preposts:new": "cd tools/post-scaffolder && npm i && npm run build",
-    "images:authors": "node tools/process-images content/authors/avatars content/authors/avatars/dist --lg 200,200",
+    "images:authors": "node tools/process-images content/authors/avatars --lg 200,200",
+    "images:posts": "node tools/process-images content/posts --lg 1920,0 --md 1280,0",
     "prettier": "prettier --write ."
   },
   "private": true,
