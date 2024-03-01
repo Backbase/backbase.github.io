@@ -27,12 +27,7 @@
     </p>
     <div class="item-card__authors">
       @for (author of post.authors; track $index) {
-        <a
-          [attr.data-role]="$any(author).url ? 'button' : ''"
-          [routerLink]="'/' + $any(author).url"
-          (click)="$event.stopPropagation()">
-          <blog-author [author]="author" [muted]="true"></blog-author>
-        </a>
+        <blog-author [author]="author" [muted]="true"></blog-author>
       }
     </div>
   </mat-card-content>

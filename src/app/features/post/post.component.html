@@ -21,10 +21,7 @@
         </span>
         <div class="post__header-authors">
           @for (author of post.authors; track $index) {
-            <a
-              [attr.data-role]="$any(author).url ? 'button' : ''"
-              [routerLink]="'/' + $any(author).url"
-              (click)="$event.stopPropagation()">
+            <a [routerLink]="'/' + $any(author).url">
               <blog-author [author]="author" size="lg"></blog-author>
             </a>
           }
