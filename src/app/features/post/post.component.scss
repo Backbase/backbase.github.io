@@ -30,7 +30,7 @@
         position: relative;
       }
     }
-    
+
     &-filling {
       background: repeating-linear-gradient(
         55deg,
@@ -54,6 +54,7 @@
     @include responsive.up('lg') {
       display: flex;
       gap: 2rem;
+      align-items: center;
     }
   }
 
@@ -81,7 +82,7 @@
 
   &__content-text {
     @include responsive.up('sm') {
-      font-size: 1.2em; 
+      font-size: 1.2em;
     }
     line-height: 2;
 

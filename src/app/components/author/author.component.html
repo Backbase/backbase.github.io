@@ -1,5 +1,5 @@
 @if (author) {
-  <div
+  <a
     class="author"
     [ngClass]="{
       sm: size === 'sm',
@@ -8,8 +8,7 @@
       muted: muted
     }"
     [attr.data-role]="profileUrl ? 'button' : ''"
-    [routerLink]="'/' + profileUrl"
-  >
+    [routerLink]="'/' + profileUrl">
     <div
       class="author__avatar"
       [ngStyle]="{ 'background-image': 'url(' + imagePath + ')' }"></div>
@@ -19,5 +18,5 @@
         <div class="author__role">{{ author.role }}</div>
       }
     </div>
-  </div>
+  </a>
 }
