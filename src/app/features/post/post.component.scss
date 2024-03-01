@@ -2,6 +2,10 @@
 
 @import 'prismjs/themes/prism-tomorrow.css';
 
+a {
+  text-decoration-color: var(--blog-palette-accent);
+  text-decoration-thickness: 3px;
+}
 .post {
   &__header {
     margin: 3rem 1rem;
@@ -55,6 +59,11 @@
       display: flex;
       gap: 2rem;
       align-items: center;
+    }
+
+    a {
+      text-decoration-color: transparent;
+      text-decoration-thickness: 0;
     }
   }
 
@@ -155,11 +164,6 @@
         bottom: 0.2rem;
       }
     }
-  }
-
-  a {
-    text-decoration-color: var(--blog-palette-accent);
-    text-decoration-thickness: 3px;
   }
 
   table {

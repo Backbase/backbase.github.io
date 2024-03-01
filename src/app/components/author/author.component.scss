@@ -2,8 +2,6 @@
   display: flex;
   align-items: center;
   gap: 0.5em;
-  text-decoration-color: transparent;
-  text-decoration-thickness: 0;
 
   &.muted {
     color: var(--blog-palette-muted);

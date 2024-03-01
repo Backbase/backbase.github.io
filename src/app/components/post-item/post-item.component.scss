@@ -4,6 +4,10 @@
     display: flex;
     gap: 5px;
     flex-wrap: wrap;
+    a {
+      text-decoration-color: transparent;
+      text-decoration-thickness: 0;
+    }
   }
 
   .mdc-card {
