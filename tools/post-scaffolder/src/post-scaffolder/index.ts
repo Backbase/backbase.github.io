@@ -27,7 +27,8 @@ export function postScaffolder(options: any): Rule {
     ]);
 
     const rule = mergeWith(templateSource, MergeStrategy.Default);
-    return rule(tree, context);
+    // Below type casting is needed to assure TS
+    return rule(tree, context) as Rule;
   };
 }
 
