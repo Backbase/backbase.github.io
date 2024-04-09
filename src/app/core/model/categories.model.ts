@@ -11,5 +11,5 @@ export enum Category {
 }
 
 export const SpecialCategories = [
-  Category.principles,
+  'principles',
 ];

@@ -14,7 +14,14 @@ const POSTS_PER_PAGE = 8;
 export class PostsService {
   private cached: Observable<Post[]> = this.httpClient
     .get<Post[]>('posts.json')
-    .pipe(shareReplay());
+    .pipe(
+      map((posts) => posts.map((post) => ({
+        ...post,
+        specialCategory: SpecialCategories.includes(post.category),
+        date: post.date?.match(/^\d{4}-\d{2}-\d{2}/) ? post.date : undefined,
+      }))),
+      shareReplay()
+    );
 
   constructor(
     private httpClient: HttpClient,
@@ -30,7 +37,7 @@ export class PostsService {
       map(
         posts =>
           posts.find(({ featured }) => featured) ??
-          posts.find(({ date }) => !!date)
+          posts.find(({ category }) => !SpecialCategories.includes(category))
       )
     );
   }
@@ -67,8 +74,6 @@ export class PostsService {
             authors: post.authors.map(author =>
               typeof author === 'string' ? authors[author] || author : author
             ),
-            specialCategory: SpecialCategories.includes(post.category),
-            date: post.date?.match(/^\d{4}-\d{2}-\d{2}/) ? post.date : undefined,
           })),
           total: filteredPosts.length,
           perPage: size,
