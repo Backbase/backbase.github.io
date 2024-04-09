@@ -8,7 +8,7 @@ Authors: Dilshan Fernando
 Date: unpublished
 Category: qa
 
-tags:
+tags: playwright
 
 ---
 This blog provides a solid solution where we use a proxy tool to modify an API request/response to perform validations on a web application. 
