@@ -4,7 +4,7 @@ import { Post, Posts } from '../model/post.model';
 import { HttpClient } from '@angular/common/http';
 import { getPermalink } from '@blog/utils';
 import { AuthorsService } from './authors.service';
-import { Category } from '../model/categories.model';
+import { Category, SpecialCategories } from '../model/categories.model';
 
 const POSTS_PER_PAGE = 8;
 
@@ -67,6 +67,8 @@ export class PostsService {
             authors: post.authors.map(author =>
               typeof author === 'string' ? authors[author] || author : author
             ),
+            specialCategory: SpecialCategories.includes(post.category),
+            date: post.date?.match(/^\d{4}-\d{2}-\d{2}/) ? post.date : undefined,
           })),
           total: filteredPosts.length,
           perPage: size,
@@ -77,7 +79,7 @@ export class PostsService {
 
   getPost(permalink: string | null): Observable<Post | undefined> {
     const filterByPermalink = (post: Post) =>
-      getPermalink(post.title, post.date, post.category) === permalink;
+      getPermalink(post.title, post.specialCategory, post.category, post.date) === permalink;
     return this.getPosts(0, 1, false, (post: Post) =>
       filterByPermalink(post)
     ).pipe(map(({ posts }) => posts[0]));

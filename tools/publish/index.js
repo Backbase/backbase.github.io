@@ -46,8 +46,9 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
         destinationRoot,
         utils.getPermalink(
           metaJsonObject.title,
+          false,
+          metaJsonObject.category,
           metaJsonObject.date,
-          metaJsonObject.category
         )
       );
 

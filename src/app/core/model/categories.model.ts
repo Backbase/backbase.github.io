@@ -9,3 +9,7 @@ export enum Category {
   'qa' = 'Quality Assurance',
   'mobile' = 'Mobile',
 }
+
+export const SpecialCategories = [
+  Category.principles,
+];
