@@ -163,7 +163,7 @@ import { NgOptimizedImage, IMAGE_LOADER, ImageLoaderConfig } from '@angular/comm
     return url; } }], 
  
 // in markup 
- <img priority ngSrc="custom-img.png" width="50" height="50" alt="custom image"/> 
+ <img priority ngSrc="custom-yn.png" width="50" height="50" alt="custom image"/> 
  
 // in DOM the img tag is changed to this
  <img _ngcontent-btb-c158="" ng-reflect-ng-src="business" ng-reflect-width="400" ng-reflect-height="400" 
