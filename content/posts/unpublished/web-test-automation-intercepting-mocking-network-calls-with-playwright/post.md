@@ -1,6 +1,6 @@
-# Web Test Automation: Intercepting/Mocking network calls with Playwright
+# Web Test Automation: Intercepting/Mocking Network Calls With Playwright
 
-Nowadays, QAs are much more into test automation to improve the quality and efficiency of the testing. There are test cases that we labelled as Not Possible To Automate due to technical limitations.
+Nowadays, QAs are much more into test automation to improve the quality and efficiency of the testing. Due to the technical limitations, we labelled test cases as Not Possible To Automate due to .
 
 ![](assets/Interceptor.png)
 
@@ -11,15 +11,15 @@ Category: qa
 tags: playwright
 
 ---
-This blog provides a solid solution where we use a proxy tool to modify an API request/response to perform validations on a web application. 
+This blog provides a solid solution where tester use a proxy tool to intercept an API request/response to perform validations on a web application. 
 Playwright provides APIs to monitor and modify browser network traffic, both HTTP and HTTPS. Any requests a page does, including XHRs and fetch requests, can be tracked, modified, and handled.
 Now let's look at the benefits and possibilities of intercepting and mocking HTTP requests/responses  in your Playwright test.
 
 ## What are the benefits of this?
 
-1. During manual web testing, we use proxy tools such as Proxyman and Charles to capture the traffic between your applications and the SSL Web Server. Breakpoint Tool helps you to modify Requests/Responses Data on the fly without changing any client code. If we can automate these manual steps, then you know how it would be beneficial for the final quality of the application. 
+1. During manual web testing, testers use proxy tools such as Proxyman and Charles to capture the traffic between your applications and the SSL Web Server. Breakpoint Tool helps you to intercept Requests/Responses Data on the fly without changing any client code. If we can automate these manual steps, then you know how it would be beneficial for the final quality of the application. 
 
-2. No need to maintain mock servers or depend on client test data 100%. While using the client data we can,
+2. No need to maintain mock servers or depend on client test data 100%. While using the client data tester can,
    - Control the quality of test data Increase data volume/varieties
    - Readiness and availability of data
 3. At last, the automation coverage can be increased by automating manual test cases which depends on the proxy tools.
@@ -30,7 +30,7 @@ Now let's look at the benefits and possibilities of intercepting and mocking HTT
 
 Playwright allows you to intercept network requests by using the route method. You can use this method to modify or log the network traffic, or even block certain requests. 
 
-There are 5 methods.
+Playwright provide 5 methods,
 - abort -> Aborts the route's request.
 - continue -> Continue route's request with optional overrides.
 - fallback -> When several routes match the given pattern, they run in the order opposite to their registration. That way the last registered route can always override all the previous ones. 
