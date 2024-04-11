@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Author, AuthorsList } from '../model/author.model';
 import { Observable, map, shareReplay } from 'rxjs';
+import { getAuthorPermalink } from '@blog/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class AuthorsService {
             [curr]: {
               ...authors[curr],
               fullname: curr,
-              url: `people/${curr.toLowerCase().replace(/\W/g, '-')}`,
+              url: `/people/${getAuthorPermalink(curr)}`,
             },
           }),
           {}

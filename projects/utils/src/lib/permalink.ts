@@ -23,3 +23,7 @@ function toKebabCase(str: string): string {
     .replace(/[^a-zA-Z0-9]/g, '-')
     .replace(/-+/g, '-');
 }
+
+export function getAuthorPermalink(authorName: string) {
+  return authorName.replace(/\W/g, '-').toLowerCase();
+}
