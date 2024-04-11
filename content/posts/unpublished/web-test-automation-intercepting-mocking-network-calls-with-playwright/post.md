@@ -1,6 +1,6 @@
 # Web Test Automation: Intercepting/Mocking Network Calls With Playwright
 
-Nowadays, QAs are much more into test automation to improve the quality and efficiency of the testing. Due to the technical limitations, we labelled test cases as Not Possible To Automate due to .
+Nowadays, QAs are much more into test automation to improve the quality and efficiency of the testing. Due to the technical limitations, the test cases are labelled as Not Possible To Automate due to .
 
 ![](assets/Interceptor.png)
 
@@ -11,13 +11,12 @@ Category: qa
 tags: playwright
 
 ---
-This blog provides a solid solution where tester use a proxy tool to intercept an API request/response to perform validations on a web application. 
-Playwright provides APIs to monitor and modify browser network traffic, both HTTP and HTTPS. Any requests a page does, including XHRs and fetch requests, can be tracked, modified, and handled.
-Now let's look at the benefits and possibilities of intercepting and mocking HTTP requests/responses  in your Playwright test.
+This blog provides a solid solution where tester use a proxy tool to intercept an API request/response to perform validations on a web app. Playwright provides APIs to monitor and intercept browser network traffic, both HTTP and HTTPS. Any requests a page does, including XHRs and fetch requests, can be tracked, modified, and handled.
+As the next step, look at the benefits and possibilities of intercepting and mocking HTTP requests/responses  in your Playwright test.
 
 ## What are the benefits of this?
 
-1. During manual web testing, testers use proxy tools such as Proxyman and Charles to capture the traffic between your applications and the SSL Web Server. Breakpoint Tool helps you to intercept Requests/Responses Data on the fly without changing any client code. If we can automate these manual steps, then you know how it would be beneficial for the final quality of the application. 
+1. During manual web testing, testers use proxy tools such as Proxyman and Charles to capture the traffic between your app and the SSL Web Server. Breakpoint Tool helps you to intercept Requests/Responses Data on the fly without changing any client code. If the tester can automate these manual steps, then everyone knows how it would be beneficial for the final quality of the app.
 
 2. No need to maintain mock servers or depend on client test data 100%. While using the client data tester can,
    - Control the quality of test data Increase data volume/varieties
@@ -26,20 +25,20 @@ Now let's look at the benefits and possibilities of intercepting and mocking HTT
 
 ---
 
-## Now let's look at the implementation
+## Next look at the implementation
 
-Playwright allows you to intercept network requests by using the route method. You can use this method to modify or log the network traffic, or even block certain requests. 
+Playwright allows you to intercept network requests by using the route method. You can use this method to change or log the network traffic, or even block certain requests. 
 
 Playwright provide 5 methods,
 - abort -> Aborts the route's request.
 - continue -> Continue route's request with optional overrides.
-- fallback -> When several routes match the given pattern, they run in the order opposite to their registration. That way the last registered route can always override all the previous ones. 
+- fallback -> When several routes match the given pattern, they run in the order opposite to their registration. That way the last registered route can always override all the previous ones.
 - fetch -> Performs the request and fetches the result without fulfilling it so that the response can be modified and then fulfilled.
 - fulfill -> Fulfills route's request with a given response.
 
 ### How to integrate this approach into your test framework?
 
-Let's look at the `netwrokInterceptor.ts`
+Next look at the `netwrokInterceptor.ts`
 
 ```typescript
 import { Page } from "@playwright/test";
@@ -146,7 +145,7 @@ await Promise.all([
 ## Conclusion
 
 The [page.route](https://playwright.dev/docs/api/class-page#page-route) method of Playwright allows you to intercept HTTP requests and return a mocked response. Because you are fully in control of the response, this enables you to create edge cases to cover all the possible scenarios quickly without introducing a lot of overhead.
-The Playwright API is flexible enough to be used in different ways. You can just create a mocked response, return an error, or you can make the original request and modify the response.
+The Playwright API is flexible enough to be used in different ways. You can just create a mocked response, return an error, or you can make the original request and alter the response.
 
 ## References
 Official documentation for [Network](https://playwright.dev/docs/network) interception.
