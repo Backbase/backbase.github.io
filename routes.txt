@@ -18,7 +18,6 @@
 /2023/11/03/visual-testing-using-playwright
 /2023/11/21/a-new-chapter-exploring-azure-resources
 /2023/12/13/angular-micro-frontends
-/2024/04/08/working-with-test-containers
 /principles/innersource
 /principles/software-engineering
 /unpublished/working-with-test-containers
