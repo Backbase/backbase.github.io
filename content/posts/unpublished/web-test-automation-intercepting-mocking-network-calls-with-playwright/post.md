@@ -20,21 +20,24 @@ Now let's look at the benefits and possibilities of intercepting and mocking HTT
 1. During manual web testing, we use proxy tools such as Proxyman and Charles to capture the traffic between your applications and the SSL Web Server. Breakpoint Tool helps you to modify Requests/Responses Data on the fly without changing any client code. If we can automate these manual steps, then you know how it would be beneficial for the final quality of the application. 
 
 2. No need to maintain mock servers or depend on client test data 100%. While using the client data we can,
-  - Control the quality of test data Increase data volume/varieties
-  - Readiness and availability of data
+   - Control the quality of test data Increase data volume/varieties
+   - Readiness and availability of data
 3. At last, the automation coverage can be increased by automating manual test cases which depends on the proxy tools.
 
 ---
 
 ## Now let's look at the implementation
 
-Playwright allows you to intercept network requests by using the route method. You can use this method to modify or log the network traffic, or even block certain requests. There are 5 methods.
+Playwright allows you to intercept network requests by using the route method. You can use this method to modify or log the network traffic, or even block certain requests. 
+
+There are 5 methods.
 - abort -> Aborts the route's request.
 - continue -> Continue route's request with optional overrides.
 - fallback -> When several routes match the given pattern, they run in the order opposite to their registration. That way the last registered route can always override all the previous ones. 
 - fetch -> Performs the request and fetches the result without fulfilling it so that the response can be modified and then fulfilled.
 - fulfill -> Fulfills route's request with a given response.
 
+### How to integrate this approach into your test framework?
 
 Let's look at the `netwrokInterceptor.ts`
 
@@ -98,13 +101,15 @@ function readJsonFile(filePath: string) {
   return JSON.parse(rawData);
 }
 ```
-Let's go through the available methods at a high level.
+Let's go through the above implementation at a high level.
 
 The method `InterceptResponse` is a generic method that can be used or modified (based on the use case) to intercept any response you want.
 The method `InterceptRequest` is a generic method that can be used or modified (based on the use case) to intercept any request you want.
 
 > 💡
 > You only need to add a new parameter to the option based on what you need. This way you can modify the same method without breaking the existing code.
+
+### How to use this new method in Test class?
 
 The tricky part is, how to invoke this method in your test. The most common mistakes are,
 
@@ -119,7 +124,9 @@ await identityPage.loginButton.click()
 ```
 In the first approach, once the login button is clicked request response will already happen, and the test will be waiting for a response.
 
-In the second approach, the request has not happened because the lick event hasn't happened yet. To resolve this you must use `await Promise.all([]);` to wait for both interactions to resolve.
+In the second approach, the request has not happened because the lick event hasn't happened yet. 
+
+To resolve this you must use `await Promise.all([]);` to wait for both interactions to resolve.
 
 ```typescript
 const filePath = '../data/json-files/internal-server-error.json'
@@ -140,3 +147,8 @@ await Promise.all([
 
 The [page.route](https://playwright.dev/docs/api/class-page#page-route) method of Playwright allows you to intercept HTTP requests and return a mocked response. Because you are fully in control of the response, this enables you to create edge cases to cover all the possible scenarios quickly without introducing a lot of overhead.
 The Playwright API is flexible enough to be used in different ways. You can just create a mocked response, return an error, or you can make the original request and modify the response.
+
+## References
+Official documentation for [Network](https://playwright.dev/docs/network) interception.
+
+
