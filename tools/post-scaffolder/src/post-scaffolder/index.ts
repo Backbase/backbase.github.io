@@ -23,7 +23,7 @@ export function postScaffolder(options: any): Rule {
         ...options,
         stringify,
       }),
-      move(normalize(`content/posts/${getPermalink(options.title, 'unpublished')}`)),
+      move(normalize(`content/posts/${getPermalink(options.title, false, '', undefined)}`)),
     ]);
 
     const rule = mergeWith(templateSource, MergeStrategy.Default);
