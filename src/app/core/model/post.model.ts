@@ -11,6 +11,7 @@ export interface Post {
   category: Category;
   tags: string[];
   readingTime: string;
+  specialCategory: boolean;
 }
 
 export interface Posts {
