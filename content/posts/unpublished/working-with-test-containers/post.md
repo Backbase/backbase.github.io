@@ -26,15 +26,15 @@ Testcontainers simplifies running of integration tests that involve external dep
 
 ## Why should you use testcontainers instead of mocked and in-memory services?
 
-  - **In-memory services may lack functionalities present in your production service.** For example: For the sake of integration testing with Postgres/Oracle databases in-memory H2 database may be used, but H2 might not support all features that are used. That might lead to worse quality of tests and forcing to consider using of the feature at all.
-  - **In-memory services and mocks might delay the feedback cycle.** For example: Despite successful testing with an H2 database, you may discover unexpected issues with the SQL query syntax only during deployment. It might happen with mocking APIs, when it does not reflect real-world compatability.
+  - **In-memory services may lack functionalities present in your production service.** For example: for the sake of integration testing with Postgres/Oracle databases in-memory H2 database may be used, but H2 might not support all features that are used. That might lead to worse quality of tests and forcing to consider using of the feature at all.
+  - **In-memory services and mocks might delay the feedback cycle.** For example: despite successful testing with an H2 database, you may discover unexpected issues with the SQL query syntax only during deployment. It might happen with mocking APIs, when it does not reflect real-world compatability.
 
 ## How to use it?
 
-In this example an integration test that uses Testcontainers with MySQL and Kafka will be shown.
+In this example an integration test that uses Testcontainers with MySQL and Kafka are shown.
 
 Let’s consider the following scenario:
-We have a product that is stored in MySQL database. A service consumes Kafka message, processes it and update the product in MySQL database according to the message payload.
+There is a product that is stored in MySQL database. A service consumes Kafka message, processes it and update the product in MySQL database according to the message payload.
 
 ![](assets/diagram.png)
 
