@@ -14,15 +14,27 @@ tags: liquibase, backend, init container, container, kubernetes, docker, auxilia
 
 ## **Understanding Init Containers**
 
-Init containers in Kubernetes are specialized containers that run before the main application containers start. They handle initialization tasks, such as setting up configurations or fetching necessary data. This ensures that the main application containers only start once all dependencies are met.
+[Init containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) in Kubernetes are specialized containers that run before the main application containers start. They handle initialization tasks, such as setting up configurations or fetching necessary data. This ensures that the main application containers only start once all dependencies are met.
+
+---
+
+## **Introduction to Liquibase**
+
+[Liquibase](https://docs.liquibase.com/concepts/introduction-to-liquibase.html) serves as a pivotal tool in modern database management, offering developers a seamless solution for tracking and automating database schema changes. With its user-friendly interface and powerful features, Liquibase simplifies the complexities of database versioning and deployment, allowing teams to maintain consistency and reliability across their database environments. By providing a comprehensive platform for managing database changes, Liquibase empowers developers to focus on innovation and collaboration, rather than being overwhelmed by manual database maintenance tasks.
+
+![](assets/sql.png)
+
+---
+
+## **Why Liquibase as an Init Containers?**
+
+While using Liquibase as an init container in Kubernetes deployments, teams gain the ability to efficiently handle database schema changes even before the main application container kicks off. This strategy brings several advantages: it guarantees that database updates are consistently and reliably applied across all instances of the application, no matter the environment. Additionally, incorporating Liquibase into an init container promotes a cleaner separation of tasks and boosts the modularity of the application's design. By doing so, we ensure that initializing the database doesn't slow down or interfere with the application's startup process, thus leading to a more reliable and manageable system. In essence, embracing Liquibase as an init container within Kubernetes offers a robust solution for managing database schemas, ultimately enhancing the scalability, reliability, and maintainability of our containerized applications.
 
 ---
 
 ## **Integrating Liquibase**
 
 Liquibase, a powerful database schema management tool, can be seamlessly integrated into Kubernetes environments as an init container. By leveraging Liquibase's capabilities, teams can automate database schema changes and ensure consistency across deployments.
-
-![](assets/sql.png)
 
 ---
 
