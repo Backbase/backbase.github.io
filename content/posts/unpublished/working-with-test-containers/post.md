@@ -18,30 +18,30 @@ tags: backend, tests, testing, integration testing, docker, containers
 
 ## What is Testcontainers?
 
-Testcontainers is a testing library integration tests with real services wrapped in Docker containers. Using Testcontainers, you can write tests by directly interacting with the same type of services utilized in production, without relying on mocks or in-memory services.
+Testcontainers is a testing library integration tests with real services wrapped in Docker containers. Using Testcontainers, you can write tests by directly interacting with the same kind of services utilized in production, without relying on mocks or in-memory services.
 
 ## When to use it?
 
-Testcontainers simplifies running of integration tests that involve external dependencies such as databases, message queues and many more, by providing a convenient way to spin up disposable instances of these dependencies within you test environment.
+Testcontainers simplifies running of integration tests that involve external dependencies such as databases, message queues, etc., by providing a convenient way to spin up disposable instances of these dependencies within you test environment.
 
 ## Why should you use testcontainers instead of mocked and in-memory services?
 
-  - **In-memory services may lack functionalities present in your production service.** For example: for the sake of integration testing with Postgres/Oracle databases in-memory H2 database may be used, but H2 might not support all features that are used. That might lead to worse quality of tests and forcing to consider using of the feature at all.
-  - **In-memory services and mocks might delay the feedback cycle.** For example: despite successful testing with an H2 database, you may discover unexpected issues with the SQL query syntax only during deployment. It might happen with mocking APIs, when it does not reflect real-world compatability.
+  - **In-memory services may lack functionalities present in your production service.** For example: to facilitate integration testing with Postgres/Oracle databases, one might utilize an in-memory H2 database. However, H2 might not support some MySQL/Oracle specific features. That might lead to worse quality of tests and forcing to consider using of the feature at all.
+  - **In-memory services and mocks might delay the feedback cycle.** For example: despite successful testing with an H2 database, you may not discover unexpected issues with the SQL query syntax before deployment. It might happen with mocking APIs, when it does not reflect real-world compatability.
 
 ## How to use it?
 
-In this example an integration test that uses Testcontainers with MySQL and Kafka are shown.
+This example demonstrates an integration test utilizing Testcontainers with MySQL and Kafka.
 
 Let’s consider the following scenario:
-There is a product that is stored in MySQL database. A service consumes Kafka message, processes it and update the product in MySQL database according to the message payload.
+A product resides in the MySQL database. A service consumes Kafka message, processes it and update the product in MySQL database according to the message payload.
 
 ![](assets/diagram.png)
 
 ### Getting started
-First thing first it is required to install and configure a docker runtime [supported](https://java.testcontainers.org/supported_docker_environment/) by Testcontainers.
+First and foremost, installing and configuring a Docker runtime [supported](https://java.testcontainers.org/supported_docker_environment/) by Testcontainers is necessary.
 
-Next, some dependencies for using Testcontainers must be added:
+Next, one must add some dependencies to use Testcontainers.:
 
 ```xml
 <dependency>
@@ -73,7 +73,7 @@ Also, dependencies for using Testcontainers with MySQL and Kafka:
 </dependency>
 ```
 
-There are some ready-to-use test containers (Mysql, Kafka,…) but if you can’t find your desired module you can use any custom image that you want.
+Some ready-to-use test containers are available (Mysql, Kafka,…) but if you can’t find your desired module you can use any custom image that you want.
 
 You can find ready-to-use modules on the [Testcontainers website](https://testcontainers.com/).
 
@@ -148,12 +148,12 @@ public class ProductPriceChangedEventHandlerTest {
 ```
 
 
-* `@SpringBootTest` load the complete Spring application context
-* The Testcontainers special JDBC URL is configured to spin up MySQL container and configure it as a DataSource with Spring Boot application context
-* Testcontainers JUnit 5 Extension annotations @Testcontainers and @Container are used to spin up a Kafka container and registered the bootstrap-servers location using DynamicPropertySource mechanism.
+* `@SpringBootTest` load the complete Spring app context
+* The Testcontainers special JDBC URL exists to spin up MySQL container and configure it as a DataSource with Spring Boot application context
+* Testcontainers JUnit 5 Extension annotations @Testcontainers and @Container annotations participate in spinning up a Kafka container and registering the bootstrap-servers location using DynamicPropertySource mechanism.
 * Created a Product record in the database before running the test using the @BeforeEach callback method.
 * During the test a message using `EventEmitter` is sent.
-* As Kafka message processing is an asynchronous process, the Awaitility library is used to check whether the product price is updated in the database to the expected value or not with an interval of 3 seconds waiting up to a maximum of 10 seconds. If the message is consumed and processed within 10 seconds the test will pass, otherwise the test will fail.
+* As Kafka message processing is an asynchronous process, the Awaitility library is used to check whether the product price is updated in the database to the expected value or not with an interval of 3 seconds waiting up to a maximum of 10 seconds. If the message gets consumed and processed within 10 seconds, the test passes; otherwise, it fails.
 * Also, notice that the property `spring.kafka.consumer.auto-offset-reset` is configured to the `earliest` so that the listener will consume the messages even if the message is sent to the topic before the listener is ready. This setting is helpful for running tests.
 
 ## Conclusion
@@ -162,6 +162,6 @@ Testcontainers offers the advantage of real-world compatibility, accurately refl
 By utilizing Testcontainers, developers can identify compatibility issues early in the development process, leading to more resilient software deployments, 
 enhance the effectiveness of testing and improve the reliability of software applications.
 
-## References and additional resources
+## References
  - [Testcontainers official documentation](https://testcontainers.com/)a
  - [Awaitility](http://www.awaitility.org/)
