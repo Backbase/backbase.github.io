@@ -150,9 +150,9 @@ public class ProductPriceChangedEventHandlerTest {
 
 * `@SpringBootTest` load the complete Spring app context
 * The Testcontainers special JDBC URL exists to spin up MySQL container and configure it as a DataSource with Spring Boot application context
-* Testcontainers JUnit 5 Extension annotations @Testcontainers and @Container annotations participate in spinning up a Kafka container and registering the bootstrap-servers location using DynamicPropertySource mechanism.
+* Testcontainers JUnit 5 Extension annotations @Testcontainers and @Container annotations spin up a Kafka container and register the bootstrap-servers location using DynamicPropertySource mechanism.
 * Created a Product record in the database before running the test using the @BeforeEach callback method.
-* During the test a message using `EventEmitter` is sent.
+* During the test `EventEmitter` sends messages to Kafka.
 * As Kafka message processing is an asynchronous process, the Awaitility library is used to check whether the product price is updated in the database to the expected value or not with an interval of 3 seconds waiting up to a maximum of 10 seconds. If the message gets consumed and processed within 10 seconds, the test passes; otherwise, it fails.
 * Also, notice that the property `spring.kafka.consumer.auto-offset-reset` is configured to the `earliest` so that the listener will consume the messages even if the message is sent to the topic before the listener is ready. This setting is helpful for running tests.
 
@@ -160,7 +160,7 @@ public class ProductPriceChangedEventHandlerTest {
 Testcontainers emerges as a powerful tool for ensuring reliable and robust testing environments. Unlike mocked and in-memory services, 
 Testcontainers offers the advantage of real-world compatibility, accurately reflecting the behavior of external dependencies such as databases, APIs, message queues. 
 By utilizing Testcontainers, developers can identify compatibility issues early in the development process, leading to more resilient software deployments, 
-enhance the effectiveness of testing and improve the reliability of software applications.
+enhance the effectiveness of testing and improve the reliability of software apps.
 
 ## References
  - [Testcontainers official documentation](https://testcontainers.com/)a
