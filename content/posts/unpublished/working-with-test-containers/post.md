@@ -4,11 +4,11 @@
 Framework that simplifies the process of setting up, managing, and tearing down containerized environments for integration testing.
 
 
-![](assets/testcontainers.jpg)
+![](assets/testcontainers.png)
 
 
 Authors: Yauheni Navosha
-Date: unpublished
+Date: 2024-04-09 
 Category: backend
 
 
@@ -16,359 +16,72 @@ tags: backend, tests, testing, integration testing, docker, containers
 
 ---
 
-## Introduction
+## What is Testcontainers?
 
+Testcontainers is a testing library integration tests with real services wrapped in Docker containers. Using Testcontainers, you can write tests by directly interacting with the same type of services utilized in production, without relying on mocks or in-memory services.
 
-We are going to create a Spring Boot project using Kafka, Spring Data JPA, MySQL database, Backbase [events](https://backbase.io/developers/documentation/backend-devkit/17.0.0/messaging/use-events/) for our scenario, where we implement a service which receives an event payload and persists the event data in the database.
-Then we will write an integration test using the Testcontainers Kafka and MySQL modules altogether with [Awaitility](http://www.awaitility.org/)
+## When to use it?
 
+Testcontainers simplifies running of integration tests that involve external dependencies such as databases, message queues and many more, by providing a convenient way to spin up disposable instances of these dependencies within you test environment.
 
-## Prerequisites
-* Java 21+
-* Maven
-* Your favorite IDE
-* A docker environment supported by [testcontainers](https://java.testcontainers.org/supported_docker_environment/).
+## Why should you use testcontainers instead of mocked and in-memory services?
 
+  - **In-memory services may lack functionalities present in your production service.** For example: For the sake of integration testing with Postgres/Oracle databases in-memory H2 database may be used, but H2 might not support all features that are used. That might lead to worse quality of tests and forcing to consider using of the feature at all.
+  - **In-memory services and mocks might delay the feedback cycle.** For example: Despite successful testing with an H2 database, you may discover unexpected issues with the SQL query syntax only during deployment. It might happen with mocking APIs, when it does not reflect real-world compatability.
 
+## How to use it?
 
+In this example an integration test that uses Testcontainers with MySQL and Kafka will be shown.
 
-## Getting started
 Let’s consider the following scenario:
-We have a product that will be stored in MySQL database. We are going to update it on a received event from Kafka.
+We have a product that is stored in MySQL database. A service consumes Kafka message, processes it and update the product in MySQL database according to the message payload.
 
+![](assets/diagram.png)
 
-Let’s create a spring boot service which will be responsible for handling the scenario. I use the [Backbase service toolkit](https://engineering.backbase.com/intellij-docs/#create-a-new-backbase-project) for this purpose.
+### Getting started
+First thing first it is required to install and configure a docker runtime [supported](https://java.testcontainers.org/supported_docker_environment/) by Testcontainers.
 
-
-Required dependencies:
-
-
-```xml
-       <dependency>
-           <groupId>com.mysql</groupId>
-           <artifactId>mysql-connector-j</artifactId>
-           <scope>runtime</scope>
-       </dependency>
-
-
-       <dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-starter-data-jpa</artifactId>
-       </dependency>
-
-
-       <dependency>
-           <groupId>org.projectlombok</groupId>
-           <artifactId>lombok</artifactId>
-           <version>1.18.32</version>
-           <scope>provided</scope>
-       </dependency>
-
-
-       <dependency>
-           <groupId>org.springframework.cloud</groupId>
-           <artifactId>spring-cloud-stream-binder-kafka</artifactId>
-       </dependency>
-
-
-       <dependency>
-           <groupId>com.backbase.buildingblocks</groupId>
-           <artifactId>service-sdk-starter-test</artifactId>
-           <scope>test</scope>
-       </dependency>
-
-
-       <dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-testcontainers</artifactId>
-           <scope>test</scope>
-       </dependency>
-
-
-       <dependency>
-           <groupId>org.testcontainers</groupId>
-           <artifactId>junit-jupiter</artifactId>
-           <scope>test</scope>
-       </dependency>
-       <dependency>
-           <groupId>org.testcontainers</groupId>
-           <artifactId>kafka</artifactId>
-           <scope>test</scope>
-       </dependency>
-       <dependency>
-           <groupId>org.testcontainers</groupId>
-           <artifactId>mysql</artifactId>
-           <scope>test</scope>
-       </dependency>
-```
-
-
-## Persistence implementation
-Next we will create JPA entity:
-
-
-```java
-@AllArgsConstructor
-@Data
-@NoArgsConstructor
-@Entity
-@Table(name = "products")
-public class Product {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long id;
-
-
-   @Column(nullable = false, unique = true)
-   private String code;
-
-
-   @Column(nullable = false)
-   private String name;
-
-
-   @Column(nullable = false)
-   private BigDecimal price;
-}
-```
-
-
-Following SQL script must be placed under _/src/main/resources/schema.sql_
-
-
-```sql
-create table products (
-                         id int NOT NULL AUTO_INCREMENT,
-                         code varchar(255) not null,
-                         name varchar(255) not null,
-                         price numeric(5,2) not null,
-                         PRIMARY KEY (id),
-                         UNIQUE (code)
-);
-```
-
-
-Also, you need to put the following property to `application.yaml` or `application.properties` to initialize the script on an app start
-```yaml
-spring:
- sql:
-   init:
-     mode: always
-```
-
-
-One more thing you are required is Spring Data JPA repository:
-
-
-```java
-public interface ProductRepository extends JpaRepository<Product, Long> {
- @Modifying
- @Query("update Product p set p.price = :price where p.code = :productCode")
- void updateProductPrice(
-   @Param("productCode") String productCode,
-   @Param("price") BigDecimal price
- );
-
-
- Optional<Product> findByCode(String code);
-}
-```
-
-
-
-
-That is pretty much it from database perspective, let's configure sending and receiving Kafka messages using Backbase [events](https://backbase.io/developers/documentation/backend-devkit/17.0.0/messaging/use-events/) for our scenario.
-
-
-## Kafka events using Backbase events
-
-
-First thing first we need some event class. We are going to create it using the configuration `jsonschema-events-maven-plugin`:
-
+Next, some dependencies for using Testcontainers must be added:
 
 ```xml
-<plugin>
- <groupId>com.backbase.codegen</groupId>
- <artifactId>jsonschema-events-maven-plugin</artifactId>
- <executions>
-   <execution>
-     <phase>generate-sources</phase>
-     <goals>
-       <goal>events-generation</goal>
-     </goals>
-   </execution>
- </executions>
- <configuration>
-   <inputFile>${project.basedir}/src/main/resources/events</inputFile>
-   <outputFile>${project.build.directory}/generated-sources/events</outputFile>
-   <basePackageName>${project.groupId}</basePackageName>
-   <packageName>testcontainerssamples</packageName>
-   <packageVersion>1</packageVersion>
-   <useJavaTime>true</useJavaTime>
-   <generatedResourcesDirectory>${project.build.directory}/generated-resources
-   </generatedResourcesDirectory>
-   <generatedSpringFactoriesDir>${project.build.directory}/generated-spring-factories
-   </generatedSpringFactoriesDir>
- </configuration>
-</plugin>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-testcontainers</artifactId>
+    <scope>test</scope>
+</dependency>
+
+
+<dependency>
+    <groupId>org.testcontainers</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <scope>test</scope>
+</dependency>
 ```
 
+Also, dependencies for using Testcontainers with MySQL and Kafka:
 
-Also, it is required to place the product-price-changed-event.json file to the directory `/src/main/resources/events/` :
-
-
-```json
-{
- "$schema": "http://json-schema.org/draft-04/schema#",
- "groupId": "demo",
- "destination": "product-price-changes",
- "type": "object",
- "properties": {
-   "id": {
-     "type": "integer"
-   },
-   "code": {
-     "type": "string"
-   },
-   "name": {
-     "type": "string"
-   },
-   "price": {
-     "type": "string"
-   }
- },
- "required": [
-   "id"
- ]
-}
+```xml
+<dependency>
+    <groupId>org.testcontainers</groupId>
+    <artifactId>kafka</artifactId>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.testcontainers</groupId>
+    <artifactId>mysql</artifactId>
+    <scope>test</scope>
+</dependency>
 ```
 
+There are some ready-to-use test containers (Mysql, Kafka,…) but if you can’t find your desired module you can use any custom image that you want.
+
+You can find ready-to-use modules on the [Testcontainers website](https://testcontainers.com/).
 
 
-
-Use `mvn jsonschema-events:events-generation -f pom.xml` to generate event from the json. It will be placed on `target/generated-sources/` directory. Make sure you included it as source folder in your IDE.
-
-
-Next step is to create events emitter and events handler:
+### Write the integration test
 
 
 ```java
-import com.backbase.buildingblocks.backend.communication.event.EnvelopedEvent;
-import com.backbase.buildingblocks.backend.communication.event.proxy.EventBus;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-
-@Service
-public class EventEmitter<T> {
-
-
- private final EventBus eventBus;
-
-
- @Autowired
- public EventEmitter(EventBus eventBus) {
-   this.eventBus = eventBus;
- }
-
-
- public void sendMessage(T event) {
-   EnvelopedEvent<T> envelopedEvent = new EnvelopedEvent<>();
-   envelopedEvent.setEvent(event);
-   eventBus.emitEvent(envelopedEvent);
- }
-}
-```
-
-
-```java
-import com.backbase.buildingblocks.backend.communication.event.EnvelopedEvent;
-import com.backbase.buildingblocks.backend.communication.event.handler.EventHandler;
-import com.backbase.testcontainers.repository.ProductRepository;
-import com.backbase.testcontainerssamples.event.spec.v1.ProductPriceChangedEvent;
-import java.math.BigDecimal;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-
-@Component
-@Slf4j
-public class ProductPriceChangedEventHandler implements EventHandler<ProductPriceChangedEvent> {
-
-
- private final ProductRepository productRepository;
-
-
- @Autowired
- public ProductPriceChangedEventHandler(ProductRepository productRepository) {
-   this.productRepository = productRepository;
- }
-
-
- @Override
- @Transactional
- public void handle(
-   EnvelopedEvent<ProductPriceChangedEvent> envelopedEvent) {
-   ProductPriceChangedEvent event = envelopedEvent.getEvent();
-   productRepository.updateProductPrice(event.getCode(), new BigDecimal(event.getPrice()));
- }
-}
-```
-
-
-Following properties are also must be included in the `properties.yaml`:
-```yaml
-backbase:
- activemq:
-   enabled: false
-spring:
- cloud:
-   stream:
-     default-binder: kafka
-     kafka:
-       binder:
-         brokers: localhost:9092
-```
-
-
-## Write integration test
-
-
-We are going to write a test for the events emitter by sending a message and verify updated product price in the database. We will use Testcontainers library to spin up Kafka and MySQL database
-as Docker containers.
-
-
-```java
-
-
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
-
-
-import com.backbase.testcontainers.domain.Product;
-import com.backbase.testcontainers.repository.ProductRepository;
-import com.backbase.testcontainerssamples.event.spec.v1.ProductPriceChangedEvent;
-import java.math.BigDecimal;
-import java.time.Duration;
-import java.util.Optional;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.context.TestPropertySource;
-import org.testcontainers.containers.KafkaContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
-
-
 @SpringBootTest
 @TestPropertySource(
  properties = {
@@ -436,9 +149,19 @@ public class ProductPriceChangedEventHandlerTest {
 
 
 * `@SpringBootTest` load the complete Spring application context
-* We have configured the Testcontainers special JDBC URL to spin up MySQL container and configure it as a DataSource with Spring Boot application context
-* We have used the Testcontainers JUnit 5 Extension annotations @Testcontainers and @Container to spin up a Kafka container and registered the bootstrap-servers location using DynamicPropertySource mechanism.
-* We have created a Product record in the database before running the test using the @BeforeEach callback method.
-* During the test we sent a message using `EventEmitter`.
-* As Kafka message processing is an asynchronous process, we are using the Awaitility library to check whether the product price is updated in the database to the expected value or not with an interval of 3 seconds waiting up to a maximum of 10 seconds. If the message is consumed and processed within 10 seconds the test will pass, otherwise the test will fail.
-* Also, notice that we have configured the property spring.kafka.consumer.auto-offset-reset to earliest so that the listener will consume the messages even if the message is sent to the topic before the listener is ready. This setting is helpful for running tests.
+* The Testcontainers special JDBC URL is configured to spin up MySQL container and configure it as a DataSource with Spring Boot application context
+* Testcontainers JUnit 5 Extension annotations @Testcontainers and @Container are used to spin up a Kafka container and registered the bootstrap-servers location using DynamicPropertySource mechanism.
+* Created a Product record in the database before running the test using the @BeforeEach callback method.
+* During the test a message using `EventEmitter` is sent.
+* As Kafka message processing is an asynchronous process, the Awaitility library is used to check whether the product price is updated in the database to the expected value or not with an interval of 3 seconds waiting up to a maximum of 10 seconds. If the message is consumed and processed within 10 seconds the test will pass, otherwise the test will fail.
+* Also, notice that the property `spring.kafka.consumer.auto-offset-reset` is configured to the `earliest` so that the listener will consume the messages even if the message is sent to the topic before the listener is ready. This setting is helpful for running tests.
+
+## Conclusion
+Testcontainers emerges as a powerful tool for ensuring reliable and robust testing environments. Unlike mocked and in-memory services, 
+Testcontainers offers the advantage of real-world compatibility, accurately reflecting the behavior of external dependencies such as databases, APIs, message queues. 
+By utilizing Testcontainers, developers can identify compatibility issues early in the development process, leading to more resilient software deployments, 
+enhance the effectiveness of testing and improve the reliability of software applications.
+
+## References and additional resources
+ - [Testcontainers official documentation](https://testcontainers.com/)a
+ - [Awaitility](http://www.awaitility.org/)
