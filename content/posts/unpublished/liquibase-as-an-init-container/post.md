@@ -43,7 +43,7 @@ Liquibase, a powerful database schema management tool, can be seamlessly integra
 
 To begin, reviewing the official Kubernetes documentation on init containers and Liquibase's guidelines for using Liquibase in Kubernetes environments. These resources provide valuable insights into setting up and configuring Liquibase as an init container.
 
-> Preparation Steps:
+#### Preparation Steps:
 
 - **Install Liquibase:** Set up Liquibase in your project and configure it to manage your database schema.
 - **Define Change Sets:** Create XML or YAML change sets that specify the desired database schema changes.
@@ -85,12 +85,12 @@ The Auxiliary Config module serves as a cornerstone in facilitating the configur
 
 Integrating Liquibase into your Kubernetes environment involves leveraging the `InitContainerApplication` provided by the Auxiliary Config module. Below are sample configurations for incorporating Liquibase as an init container in Docker Compose and Kubernetes YAML:
 
-> Docker Compose
+#### Docker Compose
 ```yaml
 entrypoint: "java -cp /app/extras/*:/app/WEB-INF/classes:/app/WEB-INF/lib/* com.backbase.buildingblocks.auxiliaryconfig.InitContainerApplication"
 ```
 
-> Kubernetes YAML
+#### Kubernetes YAML
 ```yaml
 spec:
   initContainers:
@@ -111,7 +111,7 @@ One critical aspect to consider when using Liquibase in Kubernetes environments 
 
 ---
 
-> Sample Code Snippets
+#### Sample Code Snippets
 ```yaml
 // Sample Liquibase changelog
 databaseChangeLog:
