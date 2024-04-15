@@ -163,5 +163,5 @@ By utilizing Testcontainers, developers can identify compatibility issues in the
 enhance the effectiveness of testing and improve the reliability of software apps.
 
 ## References
- - [Testcontainers official documentation](https://testcontainers.com/)a
+ - [Testcontainers official documentation](https://testcontainers.com/)
  - [Awaitility](http://www.awaitility.org/)
