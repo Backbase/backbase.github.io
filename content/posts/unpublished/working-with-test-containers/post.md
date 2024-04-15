@@ -39,7 +39,7 @@ a product resides in the MySQL database. A service consumes Kafka message, proce
 ![](assets/diagram.png)
 
 ### Getting started
-Firstly, installing and configuring a Docker runtime [supported](https://java.testcontainers.org/supported_docker_environment/) by Testcontainers is necessary.
+Firstly, installing, and configuring a Docker runtime [supported](https://java.testcontainers.org/supported_docker_environment/) by Testcontainers is necessary.
 
 Next, one must add some dependencies to use Testcontainers:
 
