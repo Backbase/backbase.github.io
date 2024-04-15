@@ -149,17 +149,17 @@ public class ProductPriceChangedEventHandlerTest {
 
 
 * `@SpringBootTest` load the complete Spring app context
-* The Testcontainers special JDBC URL exists to spin up MySQL container and configure it as a DataSource with Spring Boot application context
+* The Testcontainers special JDBC URL exists to spin up MySQL container and configure it as a DataSource with Spring Boot app context
 * Testcontainers JUnit 5 Extension annotations @Testcontainers and @Container annotations spin up a Kafka container and register the bootstrap-servers location using DynamicPropertySource mechanism.
 * Created a Product record in the database before running the test using the @BeforeEach callback method.
 * During the test `EventEmitter` sends messages to Kafka.
-* As Kafka message processing is an asynchronous process, the Awaitility library is used to check whether the product price is updated in the database to the expected value or not with an interval of 3 seconds waiting up to a maximum of 10 seconds. If the message gets consumed and processed within 10 seconds, the test passes; otherwise, it fails.
-* Also, notice that the property `spring.kafka.consumer.auto-offset-reset` is configured to the `earliest` so that the listener will consume the messages even if the message is sent to the topic before the listener is ready. This setting is helpful for running tests.
+* As Kafka message processing is an asynchronous process, the Awaitility library checks updates for the product price in the database to the expected value or not with an interval of 3 seconds waiting up to 10 seconds. If the message gets consumed and processed within 10 seconds, the test passes; otherwise, it fails.
+* Also, notice that the property `spring.kafka.consumer.auto-offset-reset` has the value `earliest` so that the listener consume the messages even if the sender dispatches the message to the topic before the listener is ready. This setting is helpful for running tests.
 
 ## Conclusion
 Testcontainers emerges as a powerful tool for ensuring reliable and robust testing environments. Unlike mocked and in-memory services, 
-Testcontainers offers the advantage of real-world compatibility, accurately reflecting the behavior of external dependencies such as databases, APIs, message queues. 
-By utilizing Testcontainers, developers can identify compatibility issues early in the development process, leading to more resilient software deployments, 
+Testcontainers offers the advantage of real-world compatibility, accurately reflecting the behavior of external dependencies such as databases, APIs, message queues.
+By utilizing Testcontainers, developers can identify compatibility issues in the development process at its outset, leading to more resilient software deployments, 
 enhance the effectiveness of testing and improve the reliability of software apps.
 
 ## References
