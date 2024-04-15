@@ -26,7 +26,7 @@ Testcontainers simplifies running of integration tests that involve external dep
 
 ## Why should you use testcontainers instead of mocked and in-memory services?
 
-  - **In-memory services may lack functionalities present in your production service.** For example: to facilitate integration testing with Postgres/Oracle databases, one might utilize an in-memory H2 database. However, H2 might not support some MySQL/Oracle specific features. That might lead to worse quality of tests and forcing to consider using of the feature at all.
+  - **In-memory services may lack functionalities present in your production service.** For example: to enable integration testing with Postgres/Oracle databases, one might use an in-memory H2 database. But H2 might not support some MySQL/Oracle specific features. That might lead to worse quality of tests and forcing to consider using of the feature at all.
   - **In-memory services and mocks might delay the feedback cycle.** For example: despite successful testing with an H2 database, you may not discover unexpected issues with the SQL query syntax before deployment. It might happen with mocking APIs, when it does not reflect real-world compatability.
 
 ## How to use it?
@@ -34,7 +34,7 @@ Testcontainers simplifies running of integration tests that involve external dep
 This example demonstrates an integration test utilizing Testcontainers with MySQL and Kafka.
 
 Let’s consider the following scenario:
-A product resides in the MySQL database. A service consumes Kafka message, processes it and update the product in MySQL database according to the message payload.
+a product resides in the MySQL database. A service consumes Kafka message, processes it and update the product in MySQL database according to the message payload.
 
 ![](assets/diagram.png)
 
