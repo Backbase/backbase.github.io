@@ -1,6 +1,6 @@
-# Web Test Automation: Intercepting/Mocking Network Calls With Playwright
+# Web Test Automation: Intercepting/Mocking Network Calls with Playwright
 
-Nowadays, QAs are much more into test automation to improve the quality and efficiency of the testing. Due to the technical limitations, the test cases are categorized as Not Possible To Automate due to .
+Nowadays, QAs are much more into test automation to improve the quality and efficiency of the testing. Due to the technical limitations, the test cases are categorized as `Not Possible To Automate`.
 
 ![](assets/Interceptor.png)
 
@@ -16,10 +16,11 @@ As the next step, look at the benefits and possibilities of intercepting and moc
 
 ## What are the benefits of this?
 
-1. During manual web testing, testers use proxy tools such as Proxyman and Charles to capture the traffic between your app and the SSL Web Server. Breakpoint Tool helps you to intercept Requests/Responses Data on the fly without changing any client code. If the tester can automate these manual steps, then everyone knows how it would be beneficial for the final quality of the app.
+1. During manual web testing, testers use proxy tools such as [Proxyman](https://proxyman.io/) and [Charles](https://www.charlesproxy.com/) to capture the traffic between your app and the SSL Web Server. Breakpoint Tool helps you to intercept Requests/Responses data on the fly without changing any client code. If the tester can automate these manual steps, then everyone knows how it would be beneficial for the final quality of the app.
 
 2. No need to maintain mock servers or depend on client test data 100%. While using the client data tester can,
-   - Control the quality of test data Increase data volume/varieties
+   - Control the quality of test data 
+   - Increase data volume/varieties
    - Readiness and availability of data
 3. At last, the automation coverage can be increased by automating manual test cases which depends on the proxy tools.
 
@@ -121,7 +122,7 @@ OR
 await page.waitForResponse(urlToIntercept)
 await identityPage.loginButton.click()
 ```
-In the first approach, once the login button is clicked request and response were already occurred, and the test execution is waiting for a response.(line# 2)
+In the first approach, as soon as the login button is clicked request and response occurred, but the test execution is waiting for a response.(line# 2)
 
 In the second approach, the request has not happened because the click event hasn't happened yet. 
 
