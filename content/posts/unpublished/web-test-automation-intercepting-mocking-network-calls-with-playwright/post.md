@@ -1,6 +1,6 @@
 # Web Test Automation: Intercepting/Mocking Network Calls With Playwright
 
-Nowadays, QAs are much more into test automation to improve the quality and efficiency of the testing. Due to the technical limitations, the test cases are labelled as Not Possible To Automate due to .
+Nowadays, QAs are much more into test automation to improve the quality and efficiency of the testing. Due to the technical limitations, the test cases are categorized as Not Possible To Automate due to .
 
 ![](assets/Interceptor.png)
 
@@ -100,7 +100,7 @@ function readJsonFile(filePath: string) {
   return JSON.parse(rawData);
 }
 ```
-Let's go through the above implementation at a high level.
+Let's go through the implementation at a high level.
 
 The method `InterceptResponse` is a generic method that can be used or modified (based on the use case) to intercept any response you want.
 The method `InterceptRequest` is a generic method that can be used or modified (based on the use case) to intercept any request you want.
@@ -121,9 +121,9 @@ OR
 await page.waitForResponse(urlToIntercept)
 await identityPage.loginButton.click()
 ```
-In the first approach, once the login button is clicked request response will already happen, and the test will be waiting for a response.
+In the first approach, once the login button is clicked request and response were already occurred, and the test execution is waiting for a response.(line# 2)
 
-In the second approach, the request has not happened because the lick event hasn't happened yet. 
+In the second approach, the request has not happened because the click event hasn't happened yet. 
 
 To resolve this you must use `await Promise.all([]);` to wait for both interactions to resolve.
 
