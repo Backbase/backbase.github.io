@@ -46,6 +46,39 @@ The approach has the following advantages:
   * Cache consistency - during temporary unavailability of a cache certain updates of data occurs in a source, but not in the cache. After the cache becomes available again the changes must be synchronized. Another separate complex topic is consistency of a distributed cache nodes.
   * Cache poisoning - caches are susceptible to various security threats, such as cache poisoning. Attackers inject malicious data into the cache compromising system integrity and user security, exposing harmful or fraudulent data to users.
 
+## Asynchronous processing
+
+### Use cases and advantages
+
+In web development, performance and responsiveness are intricately linked and play crucial role. Using of asynchronous processing for time-consuming or computation-intensive tasks is beneficial for both of them. For email sending, files processing, logging, where instant response is impossible or not necessary,
+asynchronous processing provides an efficient way to handle tasks without delaying other critical operations or blocking the main execution flow. Consider using of Java `CompletableFuture` and `@Async` Spring annotation for asynchronous processing.
+Let's demonstrate an example with email sending, using Spring `@Async` annotation. It allows to submit sending of email without waiting a response from actual email processing service.
+
+```java
+    @Async
+    public void sendEmail(EmailDetails emailDetails){
+        try {
+            EmailTemplate template = new EmailTemplate();
+            template.setFrom(emailDetails.getEmailSender);
+            template.setTo(emailDetails.getRecipients());
+            template.setText(emailDetails.getMessageBody());
+            template.setSubject(emailDetails.getSubject());
+            javaMailSender.send(template);
+            log.info("Mail sent successfully");
+        }catch (MailException exception){
+            log.debug("Error during sending an email", exception);
+        }
+    }
+```
+
+But `@Async` has its limitations, for large scale applications with more complex requirements and business logic using message queues like Apache Kafka, RabbitMQ or building an app using Event-Driven architecture is preferable.
+
+### Pitfalls
+
+  * Error handling, especially propagations of such errors across asynchronous boundaries, can be really challenging. Also, improper error handling in asynchronous code can produce silent errors and lead to data corruption, unexpected or misleading behaviour. Consider using exceptions handlers in callbacks and using events for error propagation.
+  * Asynchronous programming requires careful management of resources, especially for long-running asynchronous processes. Pay special attention to proper cleanup of resources, possible resource leaking and excess resource consumption.
+  * Debugging and testing may require specialized frameworks and techniques.
+
 ## Parallel processing
 
 ### Use cases and advantages
