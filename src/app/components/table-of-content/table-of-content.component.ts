@@ -50,7 +50,7 @@ export class TableOfContentComponent implements AfterViewInit {
       const fullHeight =
         this.document.body.scrollHeight - this.document.body.clientHeight;
 
-      if (scroll === fullHeight) {
+      if (scroll >= fullHeight) {
         this.activeHeader = this.offsetHeaders[this.offsetHeaders.length - 1];
         return;
       }

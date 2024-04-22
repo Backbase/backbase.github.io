@@ -22,20 +22,16 @@ export class AuthorComponent {
       };
     } else {
       this.author = value;
-      this.profileUrl = this.author.url;
     }
   }
   @Input() size: string = 'sm';
   @Input() muted = false;
 
   author!: Author;
-  profileUrl: string | undefined;
 
   get imagePath() {
     return `${this.basePath}/${this.size}/${this.author.avatar}`;
   }
 
-  constructor(
-    @Inject(AUTHORS_AVATAR_PATH_TOKEN) protected basePath: string,
-  ) {}
+  constructor(@Inject(AUTHORS_AVATAR_PATH_TOKEN) protected basePath: string) {}
 }

@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Inject,
+  OnDestroy,
   ViewEncapsulation,
 } from '@angular/core';
 import { AsyncPipe, DOCUMENT, DatePipe } from '@angular/common';
@@ -37,6 +37,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { HtmlInMarkdownService } from '../../core/services/html-in-markdown.service';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'blog-post',
@@ -64,12 +65,22 @@ import { HtmlInMarkdownService } from '../../core/services/html-in-markdown.serv
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostComponent {
+export class PostComponent implements OnDestroy {
   post$: Observable<Post | undefined> = this.activatedRoute.url.pipe(
     map(segments => segments.map(({ path }) => path).join('/')),
     switchMap(permalink => this.postsService.getPost(permalink)),
     tap(post => {
-      if (post) return;
+      if (post) {
+        this.meta.updateTag({
+          property: 'og:image',
+          content: `${this.document.location.href}/${post.teaser}`,
+        });
+        this.meta.updateTag({
+          property: 'og:url',
+          content: this.document.location.href,
+        });
+        return;
+      }
       this.notFound = true;
     })
   );
@@ -113,8 +124,17 @@ export class PostComponent {
     private router: Router,
     private markdownService: MarkdownService,
     @Inject(DOCUMENT) private document: Document,
-    private htmlInMarkdownService: HtmlInMarkdownService
+    private htmlInMarkdownService: HtmlInMarkdownService,
+    private meta: Meta
   ) {}
+
+  ngOnDestroy(): void {
+    this.meta.removeTag('property="og:image"');
+    this.meta.updateTag({
+      property: 'og:url',
+      content: 'https://engineering.backbase.com/',
+    });
+  }
 
   navigate(path: string) {
     this.router.navigate([path]);

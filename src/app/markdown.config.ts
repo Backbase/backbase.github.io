@@ -1,7 +1,11 @@
 import { MarkdownService } from 'ngx-markdown';
 import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
 
-export default function (markdownService: MarkdownService, document: Document, htmlInMarkdownService: HtmlInMarkdownService) {
+export default function (
+  markdownService: MarkdownService,
+  document: Document,
+  htmlInMarkdownService: HtmlInMarkdownService
+) {
   markdownService.renderer.link = (
     href: string,
     title: string | null | undefined,
@@ -37,9 +41,26 @@ export default function (markdownService: MarkdownService, document: Document, h
       : `${document.defaultView?.window?.location.pathname}/${href}`;
     const isVideo = ['youtube.com'].some(embed => href.includes(embed));
     if (!isVideo) {
+      const splittedHref = mpaHref.split('/');
+      const lastItem = splittedHref.pop();
+      const mdImage = [...splittedHref, 'dist', 'md', lastItem].join('/');
+      const lgImage = [...splittedHref, 'dist', 'lg', lastItem].join('/');
       return `
         <figure>
-          <img src="${mpaHref}" alt="${title || text}" />
+          <picture>
+            <source
+              srcset="${lgImage}"
+              media="(min-width: 1200px)"
+            />
+            <source
+              srcset="${mdImage}"
+              media="(min-width: 800px)"
+            />
+            <img
+              src="${lgImage}"
+              alt="${title || text}"
+            />
+          </picture> 
           <figcaption>${parseFigCaption(text)}</figcaption>
         </figure>
       `;
@@ -64,9 +85,12 @@ export default function (markdownService: MarkdownService, document: Document, h
       <h${level > 1 ? level : 2} id="${id}">${text}</h${level}>
     `;
   };
-  markdownService.renderer.html = (html: string, block?: boolean | undefined) => {
+  markdownService.renderer.html = (
+    html: string,
+    block?: boolean | undefined
+  ) => {
     return htmlInMarkdownService.add(html);
-  }
+  };
 }
 
 function parseFigCaption(text: string) {

@@ -21,7 +21,9 @@
         </span>
         <div class="post__header-authors">
           @for (author of post.authors; track $index) {
-            <blog-author [author]="author" size="lg"></blog-author>
+            <a [routerLink]="'/' + $any(author).url">
+              <blog-author [author]="author" size="lg"></blog-author>
+            </a>
           }
         </div>
       </div>
