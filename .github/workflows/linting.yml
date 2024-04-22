@@ -8,10 +8,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
+    - name: Get Changed Files
+      id: get_changed_files
+      uses: lots0logs/gh-action-get-changed-files@2.2.2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Vale
       uses: errata-ai/vale-action@reviewdog
       with:
         reporter: github-pr-check
-        files: __onlyModified
+        files: '${{ steps.get_changed_files.outputs.all }}'
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
