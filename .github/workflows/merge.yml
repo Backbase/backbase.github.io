@@ -18,6 +18,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs: check-unpublished
-    if: ${{needs.check-unpublished.outputs.should-publish}}
+    if: ${{needs.check-unpublished.outputs.should-publish == true}}
     steps:
       - run: echo "run"
