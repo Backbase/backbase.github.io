@@ -19,5 +19,6 @@ jobs:
       with:
         reporter: github-pr-check
         files: '${{ steps.get_changed_files.outputs.all }}'
+        fail_on_error: true
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
