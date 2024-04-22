@@ -16,6 +16,7 @@ jobs:
         run: echo "::set-output name=should-publish::$([[ -d "content/posts/unpublished" ]] && echo true || echo false)"
       
   publish:
+    runs-on: ubuntu-latest
     needs: check-unpublished
     if: ${{needs.check-unpublished.outputs.should-publish}}
     steps:
