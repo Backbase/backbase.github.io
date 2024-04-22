@@ -1,18 +1,22 @@
 name: Publish content before merging
 
 on:
-  merge_group:
+  push:
+    # to be changed to 'main'
+    branches: ['publish-article-pipeline']
 
 jobs:
-  publish:
+  check-unpublished:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm run build:utils
-      - run: npm run posts:publish
-
+      - name: Should publish
+        id: should-publish
+        run: echo "::set-output name=should-publish::$([[ -d "content/posts/unpublished" ]] && echo true || echo false)"
+      
+  publish:
+    needs: check-unpublished
+    if: ${{needs.check-unpublished.outputs.should-publish}}
+    steps:
+      - run: echo "run"
