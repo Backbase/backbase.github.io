@@ -14,10 +14,10 @@ jobs:
       - name: Should publish
         id: should-publish
         run: |
-          echo "should-publish=$([[ -d "content/posts/unpublished" ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "should_publish=$([[ -d "content/posts/unpublished" ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
       
   publish:
     runs-on: ubuntu-latest
     needs: check-unpublished
     steps:
-      - run: echo ${{needs.check-unpublished.outputs.should-publish}}
+      - run: echo ${{needs.check-unpublished.outputs.should_publish}}
