@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Should publish
         id: should-publish
-        run: echo "::set-output name=should-publish::$([[ -d "content/posts/unpublished" ]] && echo true || echo false)"
+        run: echo "should-publish=$([[ -d "content/posts/unpublished" ]] && echo true || echo false)" >> $GITHUB_OUTPUT
       
   publish:
     runs-on: ubuntu-latest
