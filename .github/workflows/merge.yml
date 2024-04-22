@@ -15,7 +15,7 @@ jobs:
         id: should-publish
         run: |
           echo "should-publish=$([[ -d "content/posts/unpublished" ]] && echo true || echo false)" >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
+          echo "should-publish=$([[ -d "content/posts/unpublished" ]] && echo true || echo false)"
       
   publish:
     runs-on: ubuntu-latest
