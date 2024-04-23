@@ -8,6 +8,8 @@ on:
 jobs:
   check-unpublished:
     runs-on: ubuntu-latest
+    outputs:
+      should_publish: ${{ steps.should-publish.outputs.should_publish }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -20,4 +22,4 @@ jobs:
     runs-on: ubuntu-latest
     needs: check-unpublished
     steps:
-      - run: echo ${{needs.check-unpublished.outputs.should_publish}}
+      - run: echo ${ {needs.check-unpublished.outputs.should_publish }}
