@@ -42,8 +42,8 @@ The approach has the following advantages:
   * **Distributed cache** - involves storing data across multiple machines or nodes, often in a network. This type of caching is essential for applications that need to scale across multiple servers or are distributed geographically.
 
 ### Pitfalls
-  * One of the most complex and challenging aspects of caching is deciding when and how to invalidate or update the cached data. Wrong **Caching invalidation** implementation might lead to losing advantages of caching or to providing outdated data to users.
-  * Cache consistency - during temporary unavailability of a cache certain updates of data occurs in a source, but not in the cache. After the cache becomes available again the changes must be synchronized. Another separate complex topic is consistency of a distributed cache nodes.
+  * One of the most complex and challenging aspects of caching is deciding when and how to invalidate or update the cached data. Wrong **Caching invalidation** implementation might lead to losing advantages of caching or to providing outdated data to users;
+  * Cache consistency - during temporary unavailability of a cache certain updates of data occurs in a source, but not in the cache. After the cache becomes available again the changes must be synchronized. Another separate complex topic is consistency of a distributed cache nodes;
   * Cache poisoning - caches are susceptible to various security threats, such as cache poisoning. Attackers inject malicious data into the cache compromising system integrity and user security, exposing harmful or fraudulent data to users.
 
 ## Asynchronous processing
@@ -75,8 +75,8 @@ But `@Async` has its limitations, for large scale applications with more complex
 
 ### Pitfalls
 
-  * Error handling, especially propagations of such errors across asynchronous boundaries, can be really challenging. Also, improper error handling in asynchronous code can produce silent errors and lead to data corruption, unexpected or misleading behaviour. Consider using exceptions handlers in callbacks and using events for error propagation.
-  * Asynchronous programming requires careful management of resources, especially for long-running asynchronous processes. Pay special attention to proper cleanup of resources, possible resource leaking and excess resource consumption.
+  * Error handling, especially propagations of such errors across asynchronous boundaries, can be really challenging. Also, improper error handling in asynchronous code can produce silent errors and lead to data corruption, unexpected or misleading behaviour. Consider using exceptions handlers in callbacks and using events for error propagation;
+  * Asynchronous programming requires careful management of resources, especially for long-running asynchronous processes. Pay special attention to proper cleanup of resources, possible resource leaking and excess resource consumption;
   * Debugging and testing may require specialized frameworks and techniques.
 
 ## Parallel processing
@@ -138,3 +138,35 @@ But `@Async` has its limitations, for large scale applications with more complex
   * Debugging and testing may be really challenging since traditional debugging techniques may not be sufficient for investigation concurrency-related issues;
   * Using parallel processing in wrong context. For example before buying a product, application should check that user owes sufficient funds for the purchase. Using of parallel processing in this context may produce a situation when a user is able to buy a good with insufficient funds on his account.
 
+## Using of Circuit Breaker
+
+### Use cases
+
+Circuit Breaker is a design pattern, despite the fact that its main purpose is to enhance the resilience of a system, implementation of the pattern can lead to performance improvements in certain scenarios:
+
+When a remote service experiencing a degradation, the application fails fast, preventing resource-exhaustion issues and reducing the time spent waiting for unresponsive or faulty service. At the same time circuit breaker can periodically check to see if the service is healthy and get the access to the service back if in positive scenario. 
+Also, by timing out and failing fast, the circuit breaker pattern allows to fail gracefully. Application can avoid unnecessary delays by implementing appropriate fallback strategies like using default values or cached data.
+
+Let's demonstrate using of Circuit Breaker of Resilience4j library. Enabling it simply requires putting `@CircuitBreaker` annotation on top of a method and configuration of properties in `application.yml` or `bootstrap.yml` file:
+
+``` java
+@CircuitBreaker(name="someService")
+public List<Item> getSomeItems(String id) {
+  ....
+}
+```
+
+```yaml
+resilience4j.circuitbreaker:
+  instances:
+    someService:
+      failureRateThreshold: 50
+      waitDurationOpenState: 10s
+      .....
+  
+```
+
+### Pitfalls
+
+  * Tuning the circuit breakers thresholds and timeouts is crucial, but quite complex task. Without proper configuration such issues as breaking early(false negative scenario) are possible, leading to degradation of a healthy service;
+  * Due to overhead implementation may negatively impact performance in high-throughput scenarios.
