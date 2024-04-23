@@ -70,6 +70,11 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
 
       // Remove the "unpublished" directory
       fs.rmdirSync(unpublishedPath);
+
+      if (isEmpty(sourcePath)) {
+        fs.rmdirSync(sourcePath);
+      }
+
       console.log('Unpublished directory removed.');
     } else {
       console.log('No "unpublished" directory found.');
@@ -82,10 +87,6 @@ function main() {
   const destinationRoot = 'content/posts';
 
   moveUnpublishedDirectory(sourceDirectory, destinationRoot);
-
-  if (isEmpty(sourceDirectory)) {
-    fs.rmdirSync(sourceDirectory);
-  }
 
   console.log('Process completed.');
 }
