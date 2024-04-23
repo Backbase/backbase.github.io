@@ -22,4 +22,4 @@ jobs:
     runs-on: ubuntu-latest
     needs: check-unpublished
     steps:
-      - run: echo ${ {needs.check-unpublished.outputs.should_publish }}
+      - run: echo ${{ needs.check-unpublished.outputs.should_publish }}
