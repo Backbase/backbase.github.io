@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { isEmpty } = require('rxjs');
 
 function updateMetaDate(filePath) {
   try {
@@ -82,6 +83,10 @@ function main() {
 
   moveUnpublishedDirectory(sourceDirectory, destinationRoot);
 
+  if (isEmpty(sourceDirectory)) {
+    fs.rmdirSync(sourceDirectory);
+  }
+
   console.log('Process completed.');
 }
 
@@ -89,4 +94,14 @@ main();
 
 function loadEsmModule(modulePath) {
   return new Function('modulePath', `return import(modulePath);`)(modulePath);
+}
+
+function isDirectoryEmpty(path) {
+  let empty = false;
+  if (fs.existsSync(path)) {
+    fs.readdir(dirname, (_, files) => {
+      empty = !files?.length
+    });
+  }
+  return empty;
 }
