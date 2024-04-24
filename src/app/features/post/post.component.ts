@@ -38,6 +38,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { HtmlInMarkdownService } from '../../core/services/html-in-markdown.service';
 import { Meta } from '@angular/platform-browser';
+import { ObservabilityService } from '../../core/services/observability.service';
 
 @Component({
   selector: 'blog-post',
@@ -79,6 +80,7 @@ export class PostComponent implements OnDestroy {
           property: 'og:url',
           content: this.document.location.href,
         });
+        this.observability.publishEvent(post);
         return;
       }
       this.notFound = true;
@@ -125,7 +127,8 @@ export class PostComponent implements OnDestroy {
     private markdownService: MarkdownService,
     @Inject(DOCUMENT) private document: Document,
     private htmlInMarkdownService: HtmlInMarkdownService,
-    private meta: Meta
+    private meta: Meta,
+    private observability: ObservabilityService
   ) {}
 
   ngOnDestroy(): void {

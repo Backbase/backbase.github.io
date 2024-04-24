@@ -3,16 +3,19 @@ import {
     WebTracerProvider,
     BatchSpanProcessor,
     TraceIdRatioBasedSampler,
+    Span,
 } from '@opentelemetry/sdk-trace-web';
-import { ZoneContextManager } from '@opentelemetry/context-zone';
+import { ZoneContextManager } from '@opentelemetry/context-zone-peer-dep';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { Resource } from '@opentelemetry/resources';
 import { SEMRESATTRS_SERVICE_NAME, SEMRESATTRS_SERVICE_VERSION } from '@opentelemetry/semantic-conventions';
 import { getWebAutoInstrumentations } from '@opentelemetry/auto-instrumentations-web';
+import opentelemetry from '@opentelemetry/api';
 
 import { Inject, Injectable } from '@angular/core';
 import { O11Y_CONFIG_TOKEN } from '../config/configuration-tokens';
 import { ObservabilityConfig } from '../model/observability.model';
+import { Post } from '../model/post.model';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +63,10 @@ export class ObservabilityService {
       contextManager: new ZoneContextManager(),
     });
     
+    provider.getActiveSpanProcessor().onStart = (span: Span) => {
+      span.setAttribute('view.name', 'Backbase Engineering');
+      span.setAttribute('view.path', document.location.href);
+    };
     
     registerInstrumentations({
       instrumentations: [
@@ -75,8 +82,16 @@ export class ObservabilityService {
     this.initiated = true;
   }
 
-  public publish() {
-
+  public publishEvent(payload: Post) {
+    opentelemetry.trace.getTracer('@blog/observability').startActiveSpan('page view', activeSpan => {
+      activeSpan.setAttributes({
+        post: payload.title,
+        category: payload.category,
+        'location.href': window.location.href,
+        'user.action.event.type': 'navigation'
+      });
+      activeSpan.end();
+    });
   }
 
   private generateSessionId(): string {
