@@ -86,7 +86,7 @@ But `@Async` has its limitations, for large scale applications with more complex
   During development a service in microservice architecture the following situation may happen:
   a service's task is to query several different services and aggregate data fetched from them. The straightforward approach is to fetch data by querying those services one-by-one,
   but if those calls are independent we might speed up the process by executing the queries in parallel.
-  Let's consider an example where a service fetches data from Product, Payment, Order services for further processing. Let's assume that it takes 200ms, 100ms and 150 ms accordingly. 
+  Let's consider an example where a service fetches data from Product, Payment, Order services for further processing. Let's assume that it takes 200 ms, 100 ms and 150 ms accordingly. 
   The comparison of these two approaches is on the diagram
 
 ![](assets/parallel.png)
