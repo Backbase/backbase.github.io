@@ -26,7 +26,7 @@ ways you could boost an API performance.
 ## Use cases and advantages
 
 
-   To improve backend API performance using caching the general approach is to store in cache expensive or frequent queries to 3rd party APIs, time-consuming and complex database queries.
+   To improve backend API performance using caching the general approach is to store in cache expensive or frequent queries to third party APIs, time-consuming and complex database queries.
    For example: 
 1. Hotel search queries are quite expensive, caching a request combination for 15 min provides fast initial user experience. For that purpose applying of TTL(time to live, indicates the duration for storing of cached record). On the checkout page the app checks availability again before making payment, but this time using a source of the data.
 2. Another example is an e-commerce app. A Product contains rarely changing information like description, price, size etc. A product may be cached for quite long time, but it is a task of the app to manage the cached record on update or delete in source.
