@@ -22,7 +22,7 @@ Testcontainers is a testing library integration tests with real services wrapped
 
 ## When to use it?
 
-Testcontainers simplifies running of integration tests that involve external dependencies such as databases, message queues, etc., by providing a convenient way to spin up disposable instances of these dependencies within you test environment.
+Testcontainers simplifies running of integration tests that involve external dependencies such as databases, message queues, etc., by providing a convenient way to spin up disposable instances of these dependencies within your test environment.
 
 ## Why should you use testcontainers instead of mocked and in-memory services?
 
