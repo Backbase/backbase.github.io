@@ -165,3 +165,4 @@ enhance the effectiveness of testing and improve the reliability of software app
 ## References
  - [Testcontainers official documentation](https://testcontainers.com/)
  - [Awaitility](http://www.awaitility.org/)
+ - [An example of using testcontainers](https://github.com/Backbase/working-with-testcontainers)
