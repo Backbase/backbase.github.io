@@ -89,13 +89,18 @@ CS Communication Library provides extensive configurations to tailor its behavio
 - **TLS Configuration**: Flexible TLS configurations for enabling certificate-based requests, verifying hostnames, and specifying keystore/truststore paths and passwords.
 
 ---
-## **Beyond CS Communication Library: Commonized Capabilities-**
+## **Beyond CS Communication Library: Commonized Capabilities**
 
 In addition to logging, timeout management, and TLS configuration, several other capabilities can be commonized in custom communication libraries. General error handling strategies, for instance, can be standardized to ensure consistent responses to various failure scenarios, enhancing robustness across services.
 
 Furthermore, rate limiting and circuit breaking mechanisms can be integrated to manage service dependencies effectively and prevent cascading failures. Authentication and authorization mechanisms can also be abstracted to simplify integration with authentication providers and enforce access control policies consistently.
 
 By encapsulating these common functionalities within custom communication libraries, developers can accelerate development, improve maintainability, and ensure adherence to best practices across their projects.
+
+### **Release Cycle of Utility Libraries**
+
+In managing utility libraries like custom communication tools, sticking to a regular release schedule is important. Unlike integration services, these libraries can have their own release timetable. It's better not to use snapshot versions because they can cause problems. In using snapshot versions, it can lead to unpredictability and potential conflicts, making it harder for developers to maintain a stable environment. By keeping the release cycle separate from integration services, developers can avoid issues and adapt to changes more easily. This way, they can fix bugs and add new features without causing disruptions.
+
 ---
 ## **When Not to Use Common Libraries?**
 
