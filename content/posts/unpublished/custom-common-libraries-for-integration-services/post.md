@@ -30,7 +30,7 @@ Before diving into the specifics of communication libraries, let's briefly explo
 ---
 ## **Introducing CS Communication Library**
 
-**Overview**: CS Communication Library is a versatile solution designed to facilitate communication with external APIs in Spring-based services. Leveraging Apache HTTP Client, this library simplifies the process of creating and managing REST templates for making API calls.
+CS Communication Library is a versatile solution designed to facilitate communication with external APIs in Spring-based services. Leveraging Apache HTTP Client, this library simplifies the process of creating and managing REST templates for making API calls.
 
 ### **Features**:
 
