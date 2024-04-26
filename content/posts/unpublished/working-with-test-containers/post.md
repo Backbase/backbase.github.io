@@ -1,4 +1,4 @@
-# Working with test containers
+# Working with Testcontainers
 
 
 Framework that simplifies the process of setting up, managing, and tearing down containerized environments for integration testing.
@@ -78,7 +78,7 @@ Also, dependencies for using Testcontainers with MySQL and Kafka:
 </dependency>
 ```
 
-Some ready-to-use test containers are available (Mysql, Kafka,…) but if you can’t find your desired module you can use any custom image that you want.
+Some ready-to-use testcontainers are available (Mysql, Kafka,…) but if you can’t find your desired module you can use any custom image that you want.
 
 You can find ready-to-use modules on the [Testcontainers website](https://testcontainers.com/).
 
