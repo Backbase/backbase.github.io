@@ -29,6 +29,11 @@ Testcontainers simplifies running of integration tests that involve external dep
   - **In-memory services may lack functionalities present in your production service.** For example: to enable integration testing with Postgres/Oracle databases, one might use an in-memory H2 database. But H2 might not support some MySQL/Oracle specific features. That might lead to worse quality of tests and forcing to consider using of the feature at all.
   - **In-memory services and mocks might delay the feedback cycle.** For example: despite successful testing with an H2 database, you may not discover unexpected issues with the SQL query syntax before deployment. It might happen with mocking APIs, when it does not reflect real-world compatability.
 
+## What are drawbacks?
+
+  Each technology has benefits and drawback and Testcontainers is not an exception. Creation of containerized service is more expensive from the perspective of startup time and resources required for running the service
+  in comparison to in-memory and mocking solutions. Therefore, time for integration test execution may be increased. Also, running of the tests may require additional CPU and RAM for a continuous integration node.
+
 ## How to use it?
 
 This example demonstrates an integration test utilizing Testcontainers with MySQL and Kafka.
