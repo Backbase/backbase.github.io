@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
+import { AssetsService } from '../../core/services/assets.service';
 
 @Component({
   selector: 'blog-post-image',
@@ -22,10 +23,10 @@ export class PostImageComponent {
     if (!this.isShown) {
       return;
     }
-    const splittedHref = value.split('/');
-    const lastItem = splittedHref.pop();
     this.images.forEach(element => {
-      element.url = [...splittedHref, 'dist', element.size, lastItem].join('/');
+      element.url = value.replace('assets', this.assetsService.getBase(element.size, 'assets'));
     });
   }
+
+  constructor(private assetsService: AssetsService) {}
 }

@@ -1,10 +1,12 @@
 import { MarkdownService } from 'ngx-markdown';
 import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
+import { AssetsService } from './core/services/assets.service';
 
 export default function (
   markdownService: MarkdownService,
   document: Document,
-  htmlInMarkdownService: HtmlInMarkdownService
+  htmlInMarkdownService: HtmlInMarkdownService,
+  assetsService: AssetsService,
 ) {
   markdownService.renderer.link = (
     href: string,
@@ -36,28 +38,26 @@ export default function (
     title: string | null,
     text: string
   ) => {
-    const mpaHref = href.startsWith('http')
-      ? href
-      : `${document.defaultView?.window?.location.pathname}/${href}`;
     const isVideo = ['youtube.com'].some(embed => href.includes(embed));
     if (!isVideo) {
-      const splittedHref = mpaHref.split('/');
-      const lastItem = splittedHref.pop();
-      const mdImage = [...splittedHref, 'dist', 'md', lastItem].join('/');
-      const lgImage = [...splittedHref, 'dist', 'lg', lastItem].join('/');
+      if (href.startsWith('http')) {
+        return `<img src="${href}">`
+      }
+      const pathname = document.defaultView?.window?.location.pathname;
+      const img = href.replace('assets/', '');
       return `
         <figure>
           <picture>
             <source
-              srcset="${lgImage}"
+              srcset="${pathname}/${assetsService.getBase('lg', 'assets')}/${img}"
               media="(min-width: 1200px)"
             />
             <source
-              srcset="${mdImage}"
+            srcset="${pathname}/${assetsService.getBase('md', 'assets')}/${img}"
               media="(min-width: 800px)"
             />
             <img
-              src="${lgImage}"
+            srcset="${pathname}/${assetsService.getBase('lg', 'assets')}/${img}"
               alt="${title || text}"
             />
           </picture> 
