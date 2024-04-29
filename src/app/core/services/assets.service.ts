@@ -8,6 +8,6 @@ export class AssetsService {
   constructor(@Inject(USE_PROCESSED_IMAGES) private useProcessedImages: Boolean) { }
 
   getBase(size: string, base: string = '/') {
-    return `${base}${this.useProcessedImages ? '/dist/' + size: ''}`;
+    return `${base}${this.useProcessedImages ? '/dist/' + size : ''}`;
   }
 }
