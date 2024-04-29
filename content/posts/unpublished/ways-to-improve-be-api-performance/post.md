@@ -36,8 +36,8 @@ The approach has the following advantages:
   * Caching can lead to cost saving by reducing the need for expensive infrastructure resources such as CPU, memory, and network.
 
   Also, developers should consider using local or distributed caches:
-  * **Local cache** - refers to storing data on a single machine or within a single application. Good choice for scenarios where data retrieval is limited to one machine or where the volume of data is relatively small.
-  * **Distributed cache** - involves storing data across multiple machines or nodes, often in a network. This type of caching is essential for applications that need to scale across multiple servers or are distributed geographically.
+  * **In-memory** - refers to storing data on a single machine or within a single application. Good choice for scenarios where data retrieval is limited to one machine or where the volume of data is relatively small. Libraries like Ehcache, ConcurrentMapCache, or Caffeine may be used.
+  * **Distributed cache** - involves storing data across multiple machines or nodes, often in a network. This type of caching is essential for applications that need to scale across multiple servers or are distributed geographically. Frameworks like Redis, Hazelcast, or Apache Ignite may be used.
 
 ## Pitfalls
   * One of the most complex and challenging aspects of caching is deciding when and how to invalidate or update the cached data. Wrong **Caching invalidation** implementation might lead to losing advantages of caching or to providing outdated data to users;
