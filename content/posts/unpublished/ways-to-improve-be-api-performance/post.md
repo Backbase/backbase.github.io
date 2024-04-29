@@ -1,7 +1,5 @@
 # Ways to improve BE API performance
 
-Ways to improve BE API performance
-
 ![](assets/banner.png)
 
 Authors: Yauheni Navosha
@@ -16,8 +14,8 @@ tags: backend, api, performance
 
 Performance is crucial for modern apps. To achieve high performance of an app you need to utilize resources efficiently,
 that in turn leads to cost saving in terms of infrastructure and operational expenses. Also, performance drastically
-affects user experience - faster applications result in happier users, higher engagement. The article is an overview of
-ways you could boost an API performance.
+affects user experience - faster applications result in happier users, higher engagement. API performance plays one of the key roles here: 
+it is barely possible to achieve all these benefits without decreasing API latency, boosting throughput, improving responsiveness, especially for processing large volumes of data where a little tweak could make tremendous impact.
 
 # Caching
 
@@ -50,7 +48,7 @@ The approach has the following advantages:
 
 ## Use cases and advantages
 
-In web development, performance and responsiveness are intricately linked and play crucial role. Using of asynchronous processing for time-consuming or computation-intensive tasks is beneficial for both of them. For email sending, files processing, logging, where instant response is impossible or not necessary,
+In BE development, performance and responsiveness are intricately linked and play crucial role. Using of asynchronous processing for time-consuming or computation-intensive tasks is beneficial for both of them. For email sending, files processing, logging, where instant response is impossible or not necessary,
 asynchronous processing provides an efficient way to handle tasks without delaying other critical operations or blocking the main execution flow. Consider using of Java `CompletableFuture` and `@Async` Spring annotation for asynchronous processing.
 Let's demonstrate an example with email sending, using Spring `@Async` annotation. It allows to submit sending of email without waiting a response from actual email processing service.
 
