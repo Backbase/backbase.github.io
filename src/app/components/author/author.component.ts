@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { Author } from '../../core/model/author.model';
 import { NgClass, NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AssetsService } from '../../core/services/assets.service';
+import { AUTHORS_AVATAR_PATH_TOKEN } from '../../core/config/configuration-tokens';
 
 @Component({
   selector: 'blog-author',
@@ -30,10 +31,11 @@ export class AuthorComponent {
   author!: Author;
 
   get imagePath() {
-    return `${this.assetsService.getBase(this.size, 'authors')}/${this.author.avatar}`;
+    return `${this.assetsService.getBase(this.size, this.basePath)}/${this.author.avatar}`;
   }
 
   constructor(
     private assetsService: AssetsService,
+    @Inject(AUTHORS_AVATAR_PATH_TOKEN) private basePath: string,
   ) {}
 }

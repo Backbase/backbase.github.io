@@ -16,7 +16,7 @@ import markdownConfig from './markdown.config';
 import { DOCUMENT } from '@angular/common';
 import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
 import { AssetsService } from './core/services/assets.service';
-import { USE_PROCESSED_IMAGES } from './core/config/configuration-tokens';
+import { AUTHORS_AVATAR_PATH_TOKEN, USE_PROCESSED_IMAGES } from './core/config/configuration-tokens';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -42,8 +42,12 @@ export const appConfig: ApplicationConfig = {
       deps: [MarkdownService, DOCUMENT, HtmlInMarkdownService, AssetsService],
     },
     {
+      provide: AUTHORS_AVATAR_PATH_TOKEN,
+      useValue: 'authors',
+    },
+    {
       provide: USE_PROCESSED_IMAGES,
-      useValue: true,
+      useValue: !isDevMode(),
     }
   ],
 };
