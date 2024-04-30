@@ -30,6 +30,8 @@ tags: liquibase, backend, init container, container, kubernetes, docker, auxilia
 
 While using Liquibase as an init container in Kubernetes deployments, teams gain the ability to efficiently handle database schema changes even before the main app container kicks off. This strategy brings several advantages: it guarantees that database updates are consistently and reliably applied across all instances of the app, no matter the environment. Also, incorporating Liquibase into an init container promotes a cleaner separation of tasks and boosts the modularity of the app's design. By doing so, ensuring that initializing the database doesn't slow down or interfere with the app's startup process leads to a more reliable and manageable system. In essence, embracing Liquibase as an init container within Kubernetes offers a robust solution for managing database schemas, ultimately enhancing the scalability, reliability, and maintainability of containerized apps.
 
+Deploying [Liquibase as an init container in Kubernetes](https://www.liquibase.com/blog/using-liquibase-in-kubernetes) provides a crucial advantage: avoiding deadlocks, a big worry that led us to choose this method. Unlike situations where Liquibase processes can be easily stopped and restarted, Kubernetes works on a *"when in doubt, kill the process"* principle, which can cause issues if Liquibase processes end too soon, leading to stuck locks and problems with starting the application. While there are efforts to improve how Kubernetes handles stopped processes, it also offers other ways to smoothly add Liquibase into the application startup process. This issue is made more complex by Kubernetes wanting pods to start quickly, which is important for fixing any slow startup problems but can conflict with giving pods enough time for tasks like database migration. To solve this, it's recommended to use init containers in Kubernetes. By adding Liquibase as an init container alongside the main application container in a Pod, we ensure that database changes are made before the main application starts, reducing the risk of deadlocks and keeping the application running smoothly.
+
 ---
 
 ## **Integrating Liquibase**
@@ -71,7 +73,7 @@ Before deploying to production, thoroughly test the init container configuration
 
 ---
 
-## **Liquibase with Init Container**
+## **Backbase Approach On Liquibase with Init Container**
 
 In the dynamic landscape of Kubernetes deployments, efficient database schema management is imperative for ensuring the reliability and scalability of apps. One promising approach gaining traction is using Liquibase as an init container within Kubernetes environments. Exploring how the integration of Liquibase with Kubernetes, complemented by the Auxiliary Config module, can streamline database schema management while ensuring robust containerization practices.
 
@@ -106,6 +108,8 @@ Also, you can incorporate extra auto-configuration classes into the startup proc
 Furthermore, to ensure seamless database availability, the Auxiliary Config module sets the `spring.datasource.hikari.initialization-fail-timeout` property, allowing ample time for the database to become operational.
 
 One critical aspect to consider when using Liquibase in Kubernetes environments is managing the database change lock. This ensures that one instance of Liquibase is running at a time to prevent conflicts and data corruption. By leveraging Kubernetes primitives such as ConfigMaps or Secrets, you can develop a distributed lock mechanism to coordinate Liquibase executions across more than one pods, ensuring data integrity and consistency.
+
+Liquibase's approach to managing database changes is supported by a robust locking mechanism designed to prevent conflicts, particularly in distributed environments. This mechanism relies on the **DATABASECHANGELOGLOCK** table, acting as a synchronization point. When a service initiates a database change, it marks the **LOCKED** column as 1 to indicate lock acquisition, reverting it to 0 upon task completion to release the lock. However, occasional process failures may lead to deadlocks, causing other Liquibase processes to be indefinitely blocked. To address this, administrators can manually release the lock using the Liquibase unlock command or by updating the DATABASECHANGELOGLOCK table, ensuring seamless operations.
 
 ![](assets/workflow.png)
 
