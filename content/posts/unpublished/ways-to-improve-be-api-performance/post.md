@@ -38,11 +38,15 @@ The approach has the following advantages:
   Also, developers should consider using in-memory or distributed caches:
   * **In-memory** - refers to storing data on a single machine or within a single application. Good choice for scenarios where data retrieval is limited to one machine or where the volume of data is relatively small. Libraries like Ehcache, ConcurrentMapCache, or Caffeine may be used.
   * **Distributed cache** - involves storing data across multiple machines or nodes, often in a network. This type of caching is essential for applications that need to scale across multiple servers or are distributed geographically. Frameworks like Redis, Hazelcast, or Apache Ignite may be used.
+  * **Hybrid cache** - is a caching system, that combines some the benefits from in-memory and distributed cache systems: the cache system still stores data in-memory, but in addition to in-memory caching, 
+a hybrid cache also incorporates a distributed caching component that spans multiple nodes or servers.
 
 ## Pitfalls
   * One of the most complex and challenging aspects of caching is deciding when and how to invalidate or update the cached data. Wrong **Caching invalidation** implementation might lead to losing advantages of caching or to providing outdated data to users;
   * Cache consistency - during temporary unavailability of a cache certain updates of data occurs in a source, but not in the cache. After the cache becomes available again the changes must be synchronized. Another separate complex topic is consistency of a distributed cache nodes;
   * Cache poisoning - caches are susceptible to various security threats, such as cache poisoning. Attackers inject malicious data into the cache compromising system integrity and user security, exposing harmful or fraudulent data to users.
+  * For hybrid caches like Infinispan in case of upscaling or downscaling all nodes must be restarted. Infinispan always segments data that it stores in-memory and 
+changing the number of segments Infinispan creates requires a full cluster restart.
 
 # Asynchronous processing
 
