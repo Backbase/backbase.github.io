@@ -252,3 +252,15 @@ public RestTemplate pooledRestTemplate() {
   * Connections in the pool may become invalid if they are kept idle for too long or remote server terminates the connection unexpectedly. Using such connection may result in errors or 
 unexpected behaviour. Consider implementing custom `Keep-Alive` strategy, which determines how long a connection may remain unused in the pool until it is closed.
   * Improper configuration and connection management may lead to connection exhaustion or using excessive resources for maintaining unnecessary connection.
+
+# References
+
+  * [Redis documentation](https://redis.io/)
+  * [Concurrency tutorial](https://docs.oracle.com/javase/tutorial/essential/concurrency/)
+  * [CompletableFuture](https://forums.oracle.com/ords/apexds/post/completablefuture-for-asynchronous-programming-in-java-8-8539)
+  * [Virtual Threads](https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html)
+  * [Pagination](https://docs.spring.io/spring-data/rest/reference/paging-and-sorting.html)
+  * [Resilience4j](https://resilience4j.readme.io/docs/getting-started-3)
+  * [Spring Boot compression](https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/html/howto.html#howto.webserver.enable-response-compression)
+  * [Apache HttpComponents](https://hc.apache.org/)
+
