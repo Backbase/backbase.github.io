@@ -216,3 +216,39 @@ resilience4j.circuitbreaker:
 
   * Tuning the circuit breakers thresholds and timeouts is crucial, but quite complex task. Without proper configuration such issues as breaking early(false negative scenario) are possible, leading to degradation of a healthy service;
   * Due to overhead implementation may negatively impact performance in high-throughput scenarios.
+
+# Using connection pool with `RestTemplate`
+
+## Use cases & advantages
+
+In Spring Framework, the `RestTemplate` class created by default uses the `SimpleClientHttpRequestFactory` under the hood, which creates a new connection for each request.
+Using this approach such operations like socket opening, handshake etc. must be executed over and over again during a connection creation. 
+Obvious improvement is to minimize new connections creation by reusing existing connections. To do so you can use `Apache HttpComponents` as the client API for the `RestTemplate`.
+The library provides `PoolingHttpClientConnectionManager`, class that maintains a pool of `HttpClientConnections` and is able to service connection requests from multiple execution threads. 
+Connections are pooled on a per-route basis.
+An example of configuration: 
+
+```java
+@Bean
+public RestTemplate pooledRestTemplate() {
+    PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+    connectionManager.setMaxTotal(2000);
+    connectionManager.setDefaultMaxPerRoute(2000);
+
+    HttpClient httpClient = HttpClientBuilder.create()
+        .setConnectionManager(connectionManager)
+        .build();
+
+    return new RestTemplateBuilder().rootUri("http://service-base-url:8080/")
+        .setConnectTimeout(Duration.ofMillis(1000))
+        .setReadTimeout(Duration.ofMillis(1000))
+        .messageConverters(new StringHttpMessageConverter(), new MappingJackson2HttpMessageConverter())
+        .requestFactory(() -> new HttpComponentsClientHttpRequestFactory(httpClient))
+        .build();
+  }
+```
+
+## Pitfalls
+  * Connections in the pool may become invalid if they are kept idle for too long or remote server terminates the connection unexpectedly. Using such connection may result in errors or 
+unexpected behaviour. Consider implementing custom `Keep-Alive` strategy, which determines how long a connection may remain unused in the pool until it is closed.
+  * Improper configuration and connection management may lead to connection exhaustion or using excessive resources for maintaining unnecessary connection.
