@@ -22,8 +22,21 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  check-unpublished:
+    runs-on: ubuntu-latest
+    outputs:
+      should_deploy: ${{ steps.should-publish.outputs.should_deploy }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Should publish
+        id: should-publish
+        run: echo "should_deploy=$([[ -d "content/posts/unpublished" ]] && echo false || echo true)" >> "$GITHUB_OUTPUT"
+
   # Single deploy job since we're just deploying
   deploy:
+    needs: check-unpublished
+    if: ${{ needs.check-unpublished.outputs.should_deploy == 'true' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
