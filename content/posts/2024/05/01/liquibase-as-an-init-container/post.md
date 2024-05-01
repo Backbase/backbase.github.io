@@ -5,7 +5,7 @@ Exploring Liquibase's integration as an init container, emphasizing database cha
 ![](assets/thumbnail.png)
 
 Authors: Furkan Aksin
-Date: unpublished
+Date: 2024-05-01T09:06:48.427Z
 Category: backend
 
 tags: liquibase, backend, init container, container, kubernetes, docker, auxiliary, config, database, change
