@@ -21,6 +21,7 @@
 /principles/innersource
 /principles/software-engineering
 /unpublished/working-with-test-containers
+/unpublished/liquibase-as-an-init-container
 /category/tech-life
 /category/devops
 /category/backend
