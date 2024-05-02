@@ -21,6 +21,7 @@
 /principles/innersource
 /principles/software-engineering
 /unpublished/custom-common-libraries-for-integration-services
+/unpublished/liquibase-as-an-init-container
 /category/tech-life
 /category/devops
 /category/backend
