@@ -20,7 +20,7 @@ export class AvatarComponent implements AfterViewInit {
   placeholder: boolean = false;
 
   ngAfterViewInit(): void {
-    this.image.nativeElement.addEventListener('error', () => {
+    this.image?.nativeElement?.addEventListener('error', () => {
       this.placeholder = true
     });
   }
