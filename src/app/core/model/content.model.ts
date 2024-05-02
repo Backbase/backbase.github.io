@@ -17,3 +17,7 @@ export interface Header {
   id: string;
   heading: string;
 }
+
+export type ImageSize = 'sm' | 'md' | 'lg';
+
+export type ProcessedAsset = { [size in ImageSize]: string } | undefined;
