@@ -20,7 +20,7 @@
 /2023/12/13/angular-micro-frontends
 /principles/innersource
 /principles/software-engineering
-/unpublished/custom-common-libraries-for-integration-services
+/unpublished/custom-common-libraries-for-backend-services
 /unpublished/liquibase-as-an-init-container
 /category/tech-life
 /category/devops
