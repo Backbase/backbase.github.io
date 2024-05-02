@@ -47,7 +47,7 @@ export const appConfig: ApplicationConfig = {
     },
     {
       provide: USE_PROCESSED_IMAGES,
-      useValue: true || !isDevMode(),
+      useValue: !isDevMode(),
     }
   ],
 };
