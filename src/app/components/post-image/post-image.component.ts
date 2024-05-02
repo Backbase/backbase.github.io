@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
-import { AssetsService } from '../../core/services/assets.service';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ProcessedAsset } from '../../core/model/content.model';
 
 @Component({
   selector: 'blog-post-image',
@@ -11,22 +11,6 @@ import { AssetsService } from '../../core/services/assets.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostImageComponent {
-  images = [
-    { size: 'md', width: 800, url: '' },
-    { size: 'lg', width: 1200, url: '' },
-  ];
-
-  isShown = true;
-
-  @Input() set url(value: string) {
-    this.isShown = !!value;
-    if (!this.isShown) {
-      return;
-    }
-    this.images.forEach(element => {
-      element.url = value.replace('assets', this.assetsService.getBase(element.size, 'assets'));
-    });
-  }
-
-  constructor(private assetsService: AssetsService) {}
+  @Input() asset!: ProcessedAsset;
+  @Input() postUrl!: string;
 }

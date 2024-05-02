@@ -1,31 +1,28 @@
-import { Component, Inject, Input } from '@angular/core';
-import { AssetsService } from '../../core/services/assets.service';
-import { AUTHORS_AVATAR_PATH_TOKEN } from '../../core/config/configuration-tokens';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'blog-avatar',
   standalone: true,
+  imports: [NgClass],
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.scss',
 })
-export class AvatarComponent {
-  private _url: string | null = null;
+export class AvatarComponent implements AfterViewInit {
 
-  @Input() set url(value: string | null) {
-    this._url = value;
+  @Input() url!: string | undefined;
+  @Input() format: 'circle' | 'square' = 'circle';
+  @Input() shadow = false;
+
+  @ViewChild('avatar')
+  image!: ElementRef;
+
+  placeholder: boolean = false;
+
+  ngAfterViewInit(): void {
+    this.image.nativeElement.addEventListener('error', () => {
+      this.placeholder = true
+    });
   }
 
-  get url(): string | null {
-    if (this._url) {
-      return `${this.assetService.getBase('lg', this.basePath)}/${this._url}`;
-    }
-    return null;
-  }
-
-  placeholder = `${this.assetService.getBase('lg', this.basePath)}/placeholder.jpg`;
-
-  constructor(
-    private assetService: AssetsService,
-    @Inject(AUTHORS_AVATAR_PATH_TOKEN) private basePath: string,
-  ) {}
 }

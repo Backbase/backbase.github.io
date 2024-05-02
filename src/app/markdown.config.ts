@@ -40,24 +40,21 @@ export default function (
   ) => {
     const isVideo = ['youtube.com'].some(embed => href.includes(embed));
     if (!isVideo) {
-      if (href.startsWith('http')) {
-        return `<img src="${href}">`
-      }
       const pathname = document.defaultView?.window?.location.pathname;
-      const img = href.replace('assets/', '');
+      const url = `${pathname}/${href}`;
       return `
         <figure>
           <picture>
             <source
-              srcset="${pathname}/${assetsService.getBase('lg', 'assets')}/${img}"
+              srcset="${url}"
               media="(min-width: 1200px)"
             />
             <source
-            srcset="${pathname}/${assetsService.getBase('md', 'assets')}/${img}"
+            srcset="${url}"
               media="(min-width: 800px)"
             />
             <img
-            srcset="${pathname}/${assetsService.getBase('lg', 'assets')}/${img}"
+            srcset="${url}"
               alt="${title || text}"
             />
           </picture> 

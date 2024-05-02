@@ -1,14 +1,16 @@
-@if (isShown) {
+@if (asset) {
   <picture>
-    @for (image of images; track $index) {
-      <source
-        [srcset]="image.url"
-        [media]="'(min-width: ' + image.width + 'px)'" />
-    }
+    <source
+      [srcset]="postUrl + '/' + asset.md"
+      [media]="'(min-width: 800px)'" />
 
+    <source
+      [srcset]="postUrl + '/' + asset.lg"
+      [media]="'(min-width: 1200px)'" />
+  
     <img
       mat-card-image
-      [src]="images[images.length - 1].url"
-      alt="${title || text}" />
+      [src]="postUrl + '/' + asset.md"
+      alt="" />
   </picture>
 }
