@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { getPermalink } from '@blog/utils';
 import { AuthorsService } from './authors.service';
 import { Category, SpecialCategories } from '../model/categories.model';
+import { ImageSize } from '../model/content.model';
+import { AssetsService } from './assets.service';
 
 const POSTS_PER_PAGE = 8;
 
@@ -19,13 +21,15 @@ export class PostsService {
         ...post,
         specialCategory: SpecialCategories.includes(post.category),
         date: post.date?.match(/^\d{4}-\d{2}-\d{2}/) ? post.date : undefined,
+        displayTeaser: this.generateDisplayAssets(post.teaser)
       }))),
       shareReplay()
     );
 
   constructor(
     private httpClient: HttpClient,
-    private authorsService: AuthorsService
+    private authorsService: AuthorsService,
+    private assetsService: AssetsService,
   ) {}
 
   getAllPosts(): Observable<Post[]> {
@@ -106,5 +110,16 @@ export class PostsService {
           .map(entry => entry[0] as Category);
       })
     );
+  }
+
+  private generateDisplayAssets(url?: string): { [size in ImageSize]: string } | undefined {
+    const sizes: ImageSize[] = ['sm', 'md', 'lg'];
+    if (url) {
+      return sizes.reduce((acc, curr) => ({
+        ...acc,
+        [curr]: this.assetsService.getAssetPath(url, curr)
+      }), {} as { [size in ImageSize]: string });
+    }
+    return undefined;
   }
 }

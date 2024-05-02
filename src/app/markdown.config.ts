@@ -1,10 +1,12 @@
 import { MarkdownService } from 'ngx-markdown';
 import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
+import { AssetsService } from './core/services/assets.service';
 
 export default function (
   markdownService: MarkdownService,
   document: Document,
-  htmlInMarkdownService: HtmlInMarkdownService
+  htmlInMarkdownService: HtmlInMarkdownService,
+  assetsService: AssetsService,
 ) {
   markdownService.renderer.link = (
     href: string,
@@ -36,42 +38,27 @@ export default function (
     title: string | null,
     text: string
   ) => {
-    const mpaHref = href.startsWith('http')
-      ? href
-      : `${document.defaultView?.window?.location.pathname}/${href}`;
-    const isVideo = ['youtube.com'].some(embed => href.includes(embed));
-    if (!isVideo) {
-      const splittedHref = mpaHref.split('/');
-      const lastItem = splittedHref.pop();
-      const mdImage = [...splittedHref, 'dist', 'md', lastItem].join('/');
-      const lgImage = [...splittedHref, 'dist', 'lg', lastItem].join('/');
-      return `
-        <figure>
-          <picture>
-            <source
-              srcset="${lgImage}"
-              media="(min-width: 1200px)"
-            />
-            <source
-              srcset="${mdImage}"
-              media="(min-width: 800px)"
-            />
-            <img
-              src="${lgImage}"
-              alt="${title || text}"
-            />
-          </picture> 
-          <figcaption>${parseFigCaption(text)}</figcaption>
-        </figure>
-      `;
-    } else {
-      return `
-        <figure>
-          <iframe src="${href}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          <figcaption>${parseFigCaption(text)}</figcaption>
-        </figure>
-      `;
-    }
+    const pathname = document.defaultView?.window?.location.pathname;
+    const url = `${pathname}/${href}`;
+    return `
+      <figure>
+        <picture>
+          <source
+            srcset="${assetsService.getAssetPath(url, 'lg')}"
+            media="(min-width: 1200px)"
+          />
+          <source
+            srcset="${assetsService.getAssetPath(url, 'md')}"
+            media="(min-width: 800px)"
+          />
+          <img
+            srcset="${assetsService.getAssetPath(url, 'md')}"
+            alt="${title || text}"
+          />
+        </picture> 
+        <figcaption>${parseFigCaption(text)}</figcaption>
+      </figure>
+    `;
   };
   markdownService.renderer.heading = (
     text: string,
@@ -89,6 +76,16 @@ export default function (
     html: string,
     block?: boolean | undefined
   ) => {
+    if (html.startsWith('<iframe')) {
+      const caption: string | undefined = html.match(/title="([^"]+)/)?.[1];
+      return `
+        <figure>
+          ${html}
+          ${caption ? '<figcaption>' + caption + '</figcaption>' : ''}
+        </figure>
+      `;
+    }
+  
     return htmlInMarkdownService.add(html);
   };
 }
