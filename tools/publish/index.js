@@ -69,6 +69,11 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
 
       // Remove the "unpublished" directory
       fs.rmdirSync(unpublishedPath);
+      
+      if (isDirectoryEmpty(sourcePath)) {
+        fs.rmdirSync(sourcePath);
+      }
+
       console.log('Unpublished directory removed.');
     } else {
       console.log('No "unpublished" directory found.');
@@ -90,3 +95,13 @@ main();
 function loadEsmModule(modulePath) {
   return new Function('modulePath', `return import(modulePath);`)(modulePath);
 }
+
+function isDirectoryEmpty(path) {
+  let empty = false;
+  if (fs.existsSync(path)) {
+    const files = fs.readdirSync(path);
+    empty = !files?.length
+  }
+  return empty;
+}
+
