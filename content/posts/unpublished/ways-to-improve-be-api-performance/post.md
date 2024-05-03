@@ -28,7 +28,7 @@ it is barely possible to achieve all these benefits without decreasing API laten
    For example: 
 1. Hotel search queries are quite expensive, caching a request combination for 15 min provides fast initial user experience. For that purpose applying of TTL(time to live, indicates the duration for storing of cached record). On the checkout page the app checks availability again before making payment, but this time using a source of the data.
 2. Another example is an e-commerce app. A Product contains rarely changing information like description, price, size etc. A product may be cached for quite long time, but it is a task of the app to manage the cached record on update or delete in source.
-
+3. A data that common to all the users like weather forecast or currency, country/state lists also can be cached. Cached data can be cleared anytime based on the requirement. We can even set the scheduler to clear the cached data.
 
 The approach has the following advantages:
   * Reduce response time for hundreds of milliseconds;
@@ -132,6 +132,40 @@ But `@Async` has its limitations, for large scale applications with more complex
     t1.join();t2.join();t3.join();
     return requiredData;
 }
+  ```  
+  Spring reactive Webclient is another tool we can use to make parallel service calls. 
+
+
+  ```Java
+    WebClient webClient = WebClient.create("http://localhost:8080");
+
+    public Mono<Customer> getCustomer(int id) {
+      return webClient.get()
+        .uri("/customer/{id}", id)
+        .retrieve()
+        .bodyToMono(Customer.class);
+    }    
+    
+    public Mono<Employee> getEmployee(int id) {
+      return webClient.get()
+        .uri("/employee/{id}", id)
+        .retrieve()
+        .bodyToMono(Employee.class);
+    }
+
+    public Flux getCustomers(List<int> customerIds) { // Multiple calls to same service
+        return Flux.fromIterable(customerIds)
+            .flatMap(this::getCustomer);
+    }
+    
+    public Mono getCustomerAndEmployee(int customerId, int employeeId) { // Call to different services
+      Mono customer = getCustomer(customerId);
+      Mono employee = getEmployee(employeeId);
+    
+      return Mono.zip(customer, employee, CustomerWithEmployee::new);
+    }
+
+
   ```
 
 ## Pitfalls
