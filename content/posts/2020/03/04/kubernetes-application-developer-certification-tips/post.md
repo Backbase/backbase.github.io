@@ -24,9 +24,9 @@ First, you need a base, if you have no work experience with production Kubernete
 
 Here some nice intros:
 
-![The illustrated Children’s Guide to Kubernetes](https://www.youtube.com/embed/4ht22ReBjno)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4ht22ReBjno?si=2oahPZeHL9Ae8N5m" title="The illustrated Children’s Guide to Kubernetes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-![Kubernetes explained](https://www.youtube.com/embed/aSrqRSk43lY)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aSrqRSk43lY?si=PDEbpNpT_9ZwonKp" title="Kubernetes explained" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 For something more academic I would recommend following the course:
 

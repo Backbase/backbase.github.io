@@ -8,3 +8,7 @@ export const AUTHORS_AVATAR_PATH_TOKEN = new InjectionToken<string>(
 export const O11Y_CONFIG_TOKEN = new InjectionToken<ObservabilityConfig>(
   '[CONFIG][O11Y] Observability config provider'
 );
+
+export const USE_PROCESSED_IMAGES = new InjectionToken<boolean>(
+  '[CONFIG][ASSETS] Token to control source of content assets'
+);

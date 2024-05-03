@@ -3,7 +3,10 @@
   data-role="button"
   [routerLink]="post | postUrl">
   <div class="featured__image">
-    <blog-post-image [url]="post | postUrl: post.teaser"></blog-post-image>
+    <blog-post-image
+      [asset]="post.displayTeaser"
+      [postUrl]="post | postUrl"
+    ></blog-post-image>
   </div>
 
   <div class="featured__content">

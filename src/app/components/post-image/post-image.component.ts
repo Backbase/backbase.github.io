@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ProcessedAsset } from '../../core/model/content.model';
 
 @Component({
   selector: 'blog-post-image',
@@ -10,22 +11,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostImageComponent {
-  images = [
-    { size: 'md', width: 800, url: '' },
-    { size: 'lg', width: 1200, url: '' },
-  ];
-
-  isShown = true;
-
-  @Input() set url(value: string) {
-    this.isShown = !!value;
-    if (!this.isShown) {
-      return;
-    }
-    const splittedHref = value.split('/');
-    const lastItem = splittedHref.pop();
-    this.images.forEach(element => {
-      element.url = [...splittedHref, 'dist', element.size, lastItem].join('/');
-    });
-  }
+  @Input() asset!: ProcessedAsset;
+  @Input() postUrl!: string;
 }

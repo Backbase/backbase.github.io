@@ -15,11 +15,12 @@ import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import markdownConfig from './markdown.config';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { AUTHORS_AVATAR_PATH_TOKEN, O11Y_CONFIG_TOKEN } from './core/config/configuration-tokens';
+import { AUTHORS_AVATAR_PATH_TOKEN, USE_PROCESSED_IMAGES, O11Y_CONFIG_TOKEN } from './core/config/configuration-tokens';
 import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
 import { ObservabilityService } from './core/services/observability.service';
 import { ObservabilityConfig } from './core/model/observability.model';
 import * as pkg from '../../package.json';
+import { AssetsService } from './core/services/assets.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -51,13 +52,6 @@ export const appConfig: ApplicationConfig = {
     },
     {
       provide: APP_INITIALIZER,
-      useFactory: (...deps: any) =>
-        () => markdownConfig.apply(this, deps),
-      deps: [MarkdownService, DOCUMENT, HtmlInMarkdownService],
-      multi: true,
-    },
-    {
-      provide: APP_INITIALIZER,
       useFactory: (
         o11yService: ObservabilityService,
         platform: Object,
@@ -72,8 +66,18 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     },
     {
+      provide: APP_INITIALIZER,
+      multi: true,
+      useFactory: markdownConfig,
+      deps: [MarkdownService, DOCUMENT, HtmlInMarkdownService, AssetsService],
+    },
+    {
       provide: AUTHORS_AVATAR_PATH_TOKEN,
       useValue: 'authors',
     },
+    {
+      provide: USE_PROCESSED_IMAGES,
+      useValue: !isDevMode(),
+    }
   ],
 };

@@ -9,6 +9,10 @@ export class HtmlInMarkdownService {
   constructor(@Inject(DOCUMENT) private document: Document) { }
 
   add(html: string) {
+    if (html.startsWith('<br')) {
+      return html
+    };
+
     return `<iframe src="about:blank" data-content="${this.document.defaultView?.window.btoa(html)}"></iframe>`
   }
 
