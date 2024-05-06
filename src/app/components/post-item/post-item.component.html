@@ -6,7 +6,9 @@
   <mat-card-header class="item-card__header">
     <blog-post-image
       loading="lazy"
-      [url]="post | postUrl: post.teaser"></blog-post-image>
+      [asset]="post.displayTeaser"
+      [postUrl]="post | postUrl"
+    ></blog-post-image>
   </mat-card-header>
 
   <mat-card-content>

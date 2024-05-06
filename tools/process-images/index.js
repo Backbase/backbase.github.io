@@ -46,6 +46,7 @@ const walk = async dir => {
               }
 
               return callback
+                .clone() // clone resets exif metadata
                 .quality(60) // set JPEG quality
                 .write(path.join(distDir, file)); // save
             });

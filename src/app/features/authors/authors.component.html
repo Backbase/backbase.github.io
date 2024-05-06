@@ -2,7 +2,7 @@
 <main class="authors">
   @for (author of authors$ | async; track $index) {
     <div class="authors__item" [routerLink]="'../' + author.url">
-      <blog-avatar [url]="author.avatar"></blog-avatar>
+      <blog-avatar [url]="author.displayAvatar?.lg"></blog-avatar>
       <h3>{{ author.fullname }}</h3>
       <h4>{{ author.role }}</h4>
     </div>
