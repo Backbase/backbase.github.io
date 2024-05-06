@@ -19,10 +19,10 @@
 /2023/11/21/a-new-chapter-exploring-azure-resources
 /2023/12/13/angular-micro-frontends
 /2024/05/01/liquibase-as-an-init-container
+/2024/05/06/migration-from-karma-jasmine-to-jest
+/2024/05/06/working-with-testcontainers
 /principles/innersource
 /principles/software-engineering
-/unpublished/working-with-test-containers
-/unpublished/migration-from-karma-jasmine-to-jest
 /category/tech-life
 /category/devops
 /category/backend
