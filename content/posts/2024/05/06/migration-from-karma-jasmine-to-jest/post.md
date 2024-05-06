@@ -5,7 +5,7 @@ Given the faster execution, clearer stack trace of Jest, Karma is being deprecat
 ![](assets/migration_karma_jest.png)
 
 Authors: Utku, Omar Rojas
-Date: unpublished
+Date: 2024-05-06T15:28:51.865Z
 Category: frontend
 
 tags: web,testing,test,unit,frontend,karma,jest,jasmine
