@@ -7,13 +7,14 @@ import {
   MatAutocompleteSelectedEvent,
 } from '@angular/material/autocomplete';
 import { AsyncPipe } from '@angular/common';
-import { map, Observable, switchMap } from 'rxjs';
+import { debounceTime, filter, map, Observable, switchMap, tap } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { PostsService } from '../../core/services/posts.service';
 import { Post } from '../../core/model/post.model';
 import { Router } from '@angular/router';
 import { getPermalink } from '@blog/utils';
 import { HighlightDirective } from './highlight.directive';
+import { ObservabilityService } from '../../core/services/observability.service';
 
 @Component({
   selector: 'blog-search',
@@ -41,7 +42,8 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private postsService: PostsService,
-    private router: Router
+    private router: Router,
+    private observabilityService: ObservabilityService,
   ) {}
 
   ngOnInit() {
@@ -52,6 +54,16 @@ export class SearchComponent implements OnInit {
           .pipe(map(({ posts }) => posts || []));
       })
     );
+
+    this.control.valueChanges.pipe(
+      filter((search) => 
+        typeof search === 'string' && search.length > 3),
+      debounceTime(1000),
+    ).subscribe((search) => {
+      this.observabilityService.publishEvent({
+        'search.term': <string>search,
+      }, 'search');
+    })
   }
 
   displayFn(post: Post): string {

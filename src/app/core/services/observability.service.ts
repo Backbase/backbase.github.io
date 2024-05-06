@@ -3,43 +3,47 @@ import {
     WebTracerProvider,
     BatchSpanProcessor,
     TraceIdRatioBasedSampler,
-    Span,
 } from '@opentelemetry/sdk-trace-web';
 import { ZoneContextManager } from '@opentelemetry/context-zone-peer-dep';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { Resource } from '@opentelemetry/resources';
 import { SEMRESATTRS_SERVICE_NAME, SEMRESATTRS_SERVICE_VERSION } from '@opentelemetry/semantic-conventions';
 import { getWebAutoInstrumentations } from '@opentelemetry/auto-instrumentations-web';
-import opentelemetry from '@opentelemetry/api';
+import opentelemetry, { Attributes, Span } from '@opentelemetry/api';
 
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { O11Y_CONFIG_TOKEN } from '../config/configuration-tokens';
 import { ObservabilityConfig } from '../model/observability.model';
-import { Post } from '../model/post.model';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+
+const ANNONYMOUS_USER_ID = 'ANNONYMOUS_USER_ID';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ObservabilityService {
-  private initiated = false;
 
   constructor(
     @Inject(O11Y_CONFIG_TOKEN) private config: ObservabilityConfig,
+    @Inject(PLATFORM_ID) platformId: object,
+    @Inject(DOCUMENT) private document: Document,
+    private router: Router
   ) {
+    if(isPlatformBrowser(platformId) && config.enabled) {
+      this.initiateTracking();
+    }
   }
 
-  public initiateTracking() {
-    if (this.initiated) {
-      return;
-    }
-
+  private initiateTracking() {
     const { appName, version, url, apiKey } = this.config;
 
     const resource = Resource.default()?.merge(
       new Resource({
         [SEMRESATTRS_SERVICE_NAME]: appName,
         [SEMRESATTRS_SERVICE_VERSION]: version,
-        sessionId: this.generateSessionId(),
+        sessionId: this.getSessionId(),
       }),
     );
 
@@ -64,7 +68,7 @@ export class ObservabilityService {
     });
     
     provider.getActiveSpanProcessor().onStart = (span: Span) => {
-      span.setAttribute('view.name', 'Backbase Engineering');
+      span.setAttribute('view.name', document.title);
       span.setAttribute('view.path', document.location.href);
     };
     
@@ -73,28 +77,42 @@ export class ObservabilityService {
         getWebAutoInstrumentations({
           '@opentelemetry/instrumentation-document-load': {},
           '@opentelemetry/instrumentation-user-interaction': {},
-          '@opentelemetry/instrumentation-fetch': {},
-          '@opentelemetry/instrumentation-xml-http-request': {},
         }),
       ],
     });
 
-    this.initiated = true;
+    this.registerPageViews();
   }
 
-  public publishEvent(payload: Post) {
-    opentelemetry.trace.getTracer('@blog/observability').startActiveSpan('page view', activeSpan => {
-      activeSpan.setAttributes({
-        post: payload.title,
-        category: payload.category,
-        'location.href': window.location.href,
-        'user.action.event.type': 'navigation'
-      });
+  public publishEvent(payload: Attributes, event: string) {
+    opentelemetry.trace.getTracer('@blog/observability').startActiveSpan(event, activeSpan => {
+      activeSpan.setAttributes(payload);
       activeSpan.end();
     });
   }
 
-  private generateSessionId(): string {
-    return window?.crypto?.getRandomValues(new Uint32Array(1))[0].toString(16);
+  private getSessionId(): string {
+    const localStorage = this.document.defaultView?.window.localStorage;
+    let sessionId: string = `${localStorage?.getItem(ANNONYMOUS_USER_ID)}`;
+    if (!this.isHex(sessionId)) {
+      const newSessionId = window?.crypto?.getRandomValues(new Uint32Array(1))[0].toString(16);
+      localStorage?.setItem(ANNONYMOUS_USER_ID, newSessionId);
+      sessionId = newSessionId;
+    }
+    return sessionId;
+  }
+
+  private registerPageViews() {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.publishEvent({
+          'user.action.event.type': 'navigation'
+        }, 'page_view');
+      });
+  }
+
+  private isHex(value: string) {
+    return /^[0-9a-fA-F]{8}$/.test(value);
   }
 }
