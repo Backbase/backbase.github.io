@@ -134,6 +134,6 @@ In Backbase, we use Nx Angular schematics to generate our applications. The step
 
 ## References
 
-**transformIgnorePatterns**: [Troubleshooting | jest-preset-angular](https://thymikee.github.io/jest-preset-angular/docs/guides/troubleshooting/#unexpected-token-importexportother)
+- [transformIgnorePatterns Troubleshooting | jest-preset-angular](https://thymikee.github.io/jest-preset-angular/docs/guides/troubleshooting/#unexpected-token-importexportother)
 
-[@nx/jest](https://nx.dev/nx-api/jest)
+- [@nx/jest](https://nx.dev/nx-api/jest)
