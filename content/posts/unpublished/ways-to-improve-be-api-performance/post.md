@@ -134,7 +134,7 @@ But `@Async` has its limitations, for large scale applications with more complex
 }
   ```  
 
-  Spring Webclient is another tool we can use to make parallel service calls. WebClient uses an asynchronous, non-blocking solution provided by the Spring Reactive framework.
+  Spring Webclient is another tool we can use to make parallel service calls. WebClient uses an asynchronous, non-blocking solution provided by the Spring Reactive framework:
 
   ```Java
 
@@ -150,6 +150,24 @@ But `@Async` has its limitations, for large scale applications with more complex
   }
   ```
 
+  Using of batches is another use case where parallel processing may be applied. Whether by providing Batch API or by batch job implementation you can use `Executor Framework` or parallel stream
+for parallel processing. 
+
+  ```Java
+    public void processItems(List<Item> items) {
+      // parallel stream sample
+      items
+        .stream()
+        .parallel()
+        .forEach(this::submitTask);
+
+      // executor service sample
+      ExecutorService executor = Executors.newFixedThreadPool(2);
+      items.stream()
+        .map((Item item) -> taskFactory.create(item))
+        .forEach(executor::execute);
+    }
+  ```
 ## Pitfalls
   * Parallel processing introduces additional complexity to the software design and implementation. Coordinating multiple threads or processes, managing synchronization, and handling communication between parallel tasks can be challenging and error-prone;
   * Parallel processing does not necessarily guarantie linear performance grow. You can not really assume that 100 similar tasks executed using 100 threads will be 10 times faster than 100 tasks, but executed on 10 threads;
