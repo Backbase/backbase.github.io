@@ -133,39 +133,21 @@ But `@Async` has its limitations, for large scale applications with more complex
     return requiredData;
 }
   ```  
-  Spring reactive Webclient is another tool we can use to make parallel service calls. 
 
+  Spring Webclient is another tool we can use to make parallel service calls. WebClient uses an asynchronous, non-blocking solution provided by the Spring Reactive framework.
 
   ```Java
-    WebClient webClient = WebClient.create("http://localhost:8080");
 
-    public Mono<Customer> getCustomer(int id) {
-      return webClient.get()
-        .uri("/customer/{id}", id)
-        .retrieve()
-        .bodyToMono(Customer.class);
-    }    
-    
-    public Mono<Employee> getEmployee(int id) {
-      return webClient.get()
-        .uri("/employee/{id}", id)
-        .retrieve()
-        .bodyToMono(Employee.class);
-    }
-
-    public Flux getCustomers(List<int> customerIds) { // Multiple calls to same service
-        return Flux.fromIterable(customerIds)
-            .flatMap(this::getCustomer);
-    }
-    
-    public Mono getCustomerAndEmployee(int customerId, int employeeId) { // Call to different services
-      Mono customer = getCustomer(customerId);
-      Mono employee = getEmployee(employeeId);
-    
-      return Mono.zip(customer, employee, CustomerWithEmployee::new);
-    }
-
-
+  public void run() throws Exception {
+    IntStream.range(0, 5)
+        .forEach(
+            index -> webClient.get().uri("/api/sample")
+                .retrieve()
+                .bodyToMono(String.class)
+                .publishOn(Schedulers.fromExecutor(executor))
+                .subscribe(response -> log.info("Result: {}", response))
+        );
+  }
   ```
 
 ## Pitfalls
