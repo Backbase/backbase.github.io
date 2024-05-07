@@ -47,3 +47,5 @@ Thumbs.db
 /content/posts/posts.json
 /content/authors/avatars/dist
 /content/posts/**/**/assets/dist
+
+routes.txt
