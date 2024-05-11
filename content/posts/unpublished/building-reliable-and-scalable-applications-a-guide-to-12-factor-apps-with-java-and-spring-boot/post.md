@@ -124,7 +124,7 @@ pipeline {
     }
 }
 ```
-GitHub Actions provides an excellent platform for CI/CD. Below is an example workflow for building and deploying a Spring Boot application:
+Automating build, release, and run processes is essential for efficiency. GitHub Actions provides an excellent platform for CI/CD. Below is an example workflow for building and deploying a Spring Boot application:
 
 ```yaml
 name: CI/CD
