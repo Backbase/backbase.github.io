@@ -23,6 +23,7 @@
 /2024/05/06/working-with-testcontainers
 /principles/innersource
 /principles/software-engineering
+/unpublished/building-reliable-and-scalable-applications-a-guide-to-12-factor-apps-with-java-and-spring-boot
 /category/tech-life
 /category/devops
 /category/backend
