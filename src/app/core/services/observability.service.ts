@@ -92,11 +92,11 @@ export class ObservabilityService {
   }
 
   private getSessionId(): string {
-    const localStorage = this.document.defaultView?.window.localStorage;
-    let sessionId: string = `${localStorage?.getItem(ANONYMOUS_USER_ID)}`;
+    const storage = this.document.defaultView?.window.sessionStorage;
+    let sessionId: string = `${storage?.getItem(ANONYMOUS_USER_ID)}`;
     if (!this.isHex(sessionId)) {
       const newSessionId = window?.crypto?.getRandomValues(new Uint32Array(1))[0].toString(16);
-      localStorage?.setItem(ANONYMOUS_USER_ID, newSessionId);
+      storage?.setItem(ANONYMOUS_USER_ID, newSessionId);
       sessionId = newSessionId;
     }
     return sessionId;
