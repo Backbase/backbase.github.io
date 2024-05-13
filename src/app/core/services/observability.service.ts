@@ -18,7 +18,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
-const ANNONYMOUS_USER_ID = 'ANNONYMOUS_USER_ID';
+const ANONYMOUS_USER_ID = 'uid';
 
 @Injectable({
   providedIn: 'root'
@@ -93,10 +93,10 @@ export class ObservabilityService {
 
   private getSessionId(): string {
     const localStorage = this.document.defaultView?.window.localStorage;
-    let sessionId: string = `${localStorage?.getItem(ANNONYMOUS_USER_ID)}`;
+    let sessionId: string = `${localStorage?.getItem(ANONYMOUS_USER_ID)}`;
     if (!this.isHex(sessionId)) {
       const newSessionId = window?.crypto?.getRandomValues(new Uint32Array(1))[0].toString(16);
-      localStorage?.setItem(ANNONYMOUS_USER_ID, newSessionId);
+      localStorage?.setItem(ANONYMOUS_USER_ID, newSessionId);
       sessionId = newSessionId;
     }
     return sessionId;
