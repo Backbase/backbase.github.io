@@ -1,6 +1,6 @@
 # Custom Common Libraries For Backend Services
 
-Discover the best practices and considerations for commonizing aspects of software development, including custom libraries, business logic and error handling. Learn when commonization enhances efficiency and when customization is essential for project success.
+Discover the best practices and considerations for commonizing aspects of software development, including custom libraries and business logic. Learn when commonization enhances efficiency and when customization is essential for project success.
 
 ![](assets/thumbnail.png)
 
@@ -8,23 +8,23 @@ Authors: Furkan Aksin
 Date: unpublished
 Category: backend
 
-tags: custom, communication, integration, services, commonize, backend, logging, error, handling, libraries, library
+tags: custom, integration, services, commonize, backend, logging, error, handling, libraries, library
 
 ---
 
-## **Introducing Common Libraries**
+## **Introduction**
 
-Common libraries are like toolboxes for developers, helping simplify tasks, reuse code, decrease code duplication and keep projects organized. They're essential for making coding easier and projects more manageable.
+Common libraries are like toolboxes for developers, helping simplify tasks, reuse code, decrease code duplication, making projects consistent across multiple service aspects  and keep them organized. They're essential for making coding easier and projects more manageable.
 
 In this post, we go through the importance of custom common libraries in backend development, exploring their benefits, structures, and considerations. We'll discuss common library structures, explore commonized capabilities beyond it, examine scenarios where common libraries may not be suitable, highlight the advantages of using custom libraries, and consider their disadvantages and key considerations. Finally, we'll conclude with insights on effectively leveraging custom common libraries in software development.
 
 ---
 ## **Why Custom Common Libraries?**
 
-Before diving into the specifics of custom libraries, let's briefly explore why custom common libraries are valuable assets in modern development:
+Before diving into the specifics of custom libraries, let's briefly explore why custom common libraries are valuable assets in modern development before diving into the details in next sections:
 
 1. **Avoid Code Duplication**: By centralizing common functionalities in a custom library, developers can avoid duplicating code across projects.
-2. **Consistency**: By encapsulating communication logic within a reusable library, you ensure consistency across your projects. This consistency simplifies maintenance and reduces the likelihood of errors.
+2. **Consistency**: By encapsulating common logic within a reusable library, you ensure consistency across your projects. This consistency simplifies maintenance and reduces the likelihood of errors.
 3. **Abstraction**: Libraries abstract away low-level implementation details, allowing developers to focus on business logic rather than intricate networking configurations.
 4. **Flexibility**: Custom libraries can be tailored to suit the specific requirements of your project, offering a level of flexibility that generic solutions may lack.
 5. **Enhanced Security**: Implementing standardized security measures within the library ensures that all API communications adhere to best practices, minimizing vulnerabilities.
@@ -32,67 +32,7 @@ Before diving into the specifics of custom libraries, let's briefly explore why 
 ![](assets/library.png)
 
 ---
-## **Introducing CS Common Library**
 
-CS Common Library is a versatile solution designed to facilitate communication with external APIs in Spring-based services. Leveraging Apache HTTP Client, this library simplifies the process of creating and managing REST templates for making API calls.
-
-### **Features**:
-
-- **RestTemplate Creation**: Simplified creation of RestTemplate instances using Apache HTTP Client.
-- **Request/Response Logging**: Comprehensive logging of request and response details, including headers, URIs, payloads, and response statuses.
-- **Time Measurement**: Measurement of the time taken for RestTemplate calls, aiding in performance monitoring and optimization.
-- **Configurability**: Flexible configurations for enabling/disabling logging, adjusting timeouts, and enabling TLS certificate-based requests.
-
-### **How to Use It**:
-
-Using CS Common Library in your project is straightforward:
-
-1. **Add Dependency**: Include the library as a dependency in your project.
-2. **Configuration**: Import the library's configuration class and inject the provided RestTemplateProvider.
-3. **Custom RestTemplate**: Expose the custom RestTemplate bean in your configuration class, optionally customizing it as needed.
-4. **Integration**: Utilize the RestTemplate bean in your API client classes to make external API calls effortlessly.
-
-```java
-// Step 1: Add Dependency
-<dependency>
-   <groupId>com.backbase.custom</groupId>
-   <artifactId>cs-communication</artifactId>
-   <version>${cs-communication.version}</version>
-</dependency>
-
-// Step 2: Import Configuration
-@Import(CustomCommunicationConfiguration.class)
-public class ExperienceApiConfiguration {
-}
-
-// Step 3: Inject RestTemplateProvider
-@Autowired
-private RestTemplateProvider restTemplateProvider;
-
-// Step 4: Expose Custom RestTemplate
-@Qualifier("ssbRestTemplate")
-@Bean
-public RestTemplate ssbRestTemplate() {
-    return restTemplateProvider.createTraceableRestTemplate(null);
-}
-
-// Step 5: Use RestTemplate in API Client
-@Bean
-public ApiClient apiClient() {
-    var apiClient = new ApiClient(ssbRestTemplate());
-    return apiClient;
-}
-```
-
-### Configurations and Flexibility
-
-CS Common Library provides extensive configurations to tailor its behavior to your project's requirements:
-
-- **Logging Configuration**: Fine-grained control over logging settings, including enabling/disabling logging, specifying log formats, and setting payload size limits.
-- **Timeout Configuration**: Adjustable timeouts for reading, connecting, and requesting connections, allowing for optimized network performance.
-- **TLS Configuration**: Flexible TLS configurations for enabling certificate-based requests, verifying hostnames, and specifying keystore/truststore paths and passwords.
-
----
 ## **Common Libraries Structures**
 
 Custom libraries can be structured in various ways to organize their functionality effectively. For instance, they might follow a package naming convention like "com.example.custom" with subpackages such as "logging," "rest," and "tls," each handling specific functionalities. Alternatively, libraries could adopt a naming scheme like "example-captcha," and "example-communication," where each name reflects a distinct aspect or feature set of the library. The choice of structure depends on factors like the library's scope, the complexity of its functionalities, and the preferences of the development team.
@@ -149,7 +89,7 @@ Custom libraries can be structured in various ways to organize their functionali
 
 
 ---
-## **Beyond CS Common Library: Commonized Capabilities**
+## **Beyond Common Libraries: Commonized Capabilities**
 
 In addition to logging, timeout management, and TLS configuration, several other capabilities can be commonized in custom libraries. General error handling strategies, for instance, can be standardized to ensure consistent responses to various failure scenarios, enhancing robustness across services.
 
@@ -206,7 +146,7 @@ By incorporating these common libraries into our application, we simplify develo
 
 ### **Release Cycle of Utility Libraries**
 
-In managing utility libraries like custom communication tools, sticking to a regular release schedule is important. Unlike integration services, these libraries can have their own release timetable. It's better not to use snapshot versions because they can cause problems. In using snapshot versions, it can lead to unpredictability and potential conflicts, making it harder for developers to maintain a stable environment. By keeping the release cycle separate from integration services, developers can avoid issues and adapt to changes more easily. This way, they can fix bugs and add new features without causing disruptions.
+In managing utility libraries, sticking to a regular release schedule is important. Unlike integration services, these libraries can have their own release timetable. It's better not to use snapshot versions because they can cause problems. In using snapshot versions, it can lead to unpredictability and potential conflicts, making it harder for developers to maintain a stable environment. By keeping the release cycle separate from integration services, developers can avoid issues and adapt to changes more easily. This way, they can fix bugs and add new features without causing disruptions.
 
 ---
 ## **When Not to Use Common Libraries?**
@@ -223,9 +163,9 @@ Despite the benefits of common libraries, there are instances where specialized 
 ---
 ## **Advantages of Using Custom  Libraries**
 
-The adoption of custom libraries like CS Common offers several advantages and examples for them:
+The adoption of custom libraries offers several advantages and examples for them:
 
-1. **Improved Productivity**: Streamlined integration processes reduce development time and effort, enabling teams to focus on core functionality.
+1. **Improved Productivity**: Streamlined integration processes reduce development time and effort, enabling teams to focus on core functionality and avoid such code duplications.
    - In a microservices-based platform, developers utilize a custom library to abstract away complexities of making API calls to various external services (e.g., payment gateways, inventory management systems, shipping providers). 
    - This abstraction allows for quick integration of services without manual implementation of communication logic, reducing development time and effort.
 2. **Enhanced Maintainability**: Centralized communication logic simplifies maintenance tasks and promotes code reuse across projects.
