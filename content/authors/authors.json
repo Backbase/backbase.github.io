@@ -83,8 +83,16 @@
     "avatar": "anjali_goyal.jpg",
     "role": "Senior QA Engineer - Customer Success"
   },
+  "Yauheni Navosha": {
+    "avatar": "yn.png",
+    "role": "Backend Engineer - Customer Success"
+  },
   "Furkan Aksin": {
     "avatar": "furkan.jpg",
     "role": "Backend Engineer - Customer Success"
+  },
+  "Omar Rojas": {
+    "avatar": "omar.jpg",
+    "role": "Frontend Engineer - Customer Success"
   }
 }
