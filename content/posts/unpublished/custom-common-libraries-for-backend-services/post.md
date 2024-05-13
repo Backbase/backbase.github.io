@@ -101,7 +101,7 @@ By encapsulating these common functionalities within custom libraries, developer
 
 Let's say we're building a web application that needs to communicate with various external services, log important events, handle user authentication tokens, and manage event notifications. We can leverage common libraries for each of these tasks:
 
-- **Communication:** We use a communication library to simplify making HTTP requests to external APIs. For example, we can use the library to send requests to a payment gateway or retrieve data from a third-party service.
+- **Communication:** We use a communication library to simplify making HTTP requests to external APIs. We can use simplified RestTemplate instances in there. For example, we can use the library to send requests to a payment gateway or retrieve data from a third-party service.
   ```yaml
   # Communication Configuration
   communication:
