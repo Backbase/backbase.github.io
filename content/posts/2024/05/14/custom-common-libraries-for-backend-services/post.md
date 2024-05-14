@@ -5,7 +5,7 @@ Discover the best practices and considerations for commonizing aspects of softwa
 ![](assets/thumbnail.png)
 
 Authors: Furkan Aksin
-Date: unpublished
+Date: 2024-05-14T21:24:01.380Z
 Category: backend
 
 tags: custom, integration, services, commonize, backend, logging, error, handling, libraries, library
