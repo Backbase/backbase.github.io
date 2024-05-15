@@ -174,7 +174,9 @@ public void processItems(List<Item> items) {
   * Parallel processing introduces additional complexity to the software design and implementation. Coordinating multiple threads or processes, managing synchronization, and handling communication between parallel tasks can be challenging and error-prone;
   * Parallel processing does not necessarily guarantee linear performance grow. You can not really assume that 100 similar tasks executed using 100 threads will be 10 times faster than 100 tasks, but executed on 10 threads;
   * Debugging and testing may be really challenging since traditional debugging techniques may not be sufficient for investigating concurrency-related issues;
+  * Parallel streams use common fork-join thread pool, using a custom thread pool is required for executing parallel streams with I/O operations, as the common fork-join pool is optimized for CPU-bound tasks and may experience thread starvation when blocked by I/O operations.
   * Using parallel processing in the wrong context. For example, before buying a product, application should check that user owes sufficient funds for the purchase. Using of parallel processing in this context may produce a situation when a user is able to buy a good with insufficient funds on his account.
+
 
 # Payload reduction
 
