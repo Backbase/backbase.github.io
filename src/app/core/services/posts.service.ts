@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map, shareReplay, withLatestFrom } from 'rxjs';
+import { Observable, map, of, shareReplay, switchMap, throwError, withLatestFrom } from 'rxjs';
 import { Post, Posts } from '../model/post.model';
 import { HttpClient } from '@angular/common/http';
 import { getPermalink } from '@blog/utils';
@@ -86,12 +86,15 @@ export class PostsService {
     );
   }
 
-  getPost(permalink: string | null): Observable<Post | undefined> {
+  getPost(permalink: string | null): Observable<Post> {
     const filterByPermalink = (post: Post) =>
       getPermalink(post.title, post.specialCategory, post.category, post.date) === permalink;
     return this.getPosts(0, 1, false, (post: Post) =>
       filterByPermalink(post)
-    ).pipe(map(({ posts }) => posts[0]));
+    ).pipe(
+      switchMap(({ posts }) =>
+        posts[0] ? of(posts[0]) : throwError(() => new Error('not found')))
+    );
   }
 
   getCategories(): Observable<Category[]> {

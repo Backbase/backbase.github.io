@@ -8,12 +8,12 @@ import {
 import { AsyncPipe, DOCUMENT, DatePipe } from '@angular/common';
 import {
   Observable,
+  catchError,
   distinctUntilChanged,
-  filter,
   map,
+  of,
   switchMap,
   tap,
-  withLatestFrom,
 } from 'rxjs';
 import { Post } from '../../core/model/post.model';
 import { PostsService } from '../../core/services/posts.service';
@@ -38,6 +38,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { HtmlInMarkdownService } from '../../core/services/html-in-markdown.service';
 import { Meta } from '@angular/platform-browser';
+import { ObservabilityService } from '../../core/services/observability.service';
 
 @Component({
   selector: 'blog-post',
@@ -69,54 +70,43 @@ export class PostComponent implements OnDestroy {
   post$: Observable<Post | undefined> = this.activatedRoute.url.pipe(
     map(segments => segments.map(({ path }) => path).join('/')),
     switchMap(permalink => this.postsService.getPost(permalink)),
-    tap(post => {
-      if (post) {
-        this.meta.updateTag({
-          property: 'og:image',
-          content: `${this.document.location.href}/${post.teaser}`,
-        });
-        this.meta.updateTag({
-          property: 'og:url',
-          content: this.document.location.href,
-        });
-        return;
-      }
+    tap((post) => {
+      this.meta.updateTag({
+        property: 'og:image',
+        content: `${this.document.location.href}/${post.teaser}`,
+      });
+      this.meta.updateTag({
+        property: 'og:url',
+        content: this.document.location.href,
+      });
+      return;
+    }),
+    tap((posts) => this.setRelatedPosts(posts)),
+    tap((posts) => this.observability.publishEvent({
+      post: posts.title,
+      category: posts.category,
+    }, 'post')),
+    catchError(() => {
       this.notFound = true;
+      return of(undefined);
     })
   );
 
   markdown$: Observable<string> = this.activatedRoute.url.pipe(
     map(segments => `${segments.map(({ path }) => path).join('/')}/post.md`),
     switchMap(link => this.markdownService.getSource(link)),
+    tap((markdown) => this.headers = this.createTree(markdown)),
     map(this.removeMarkdownMetadataHeader),
     distinctUntilChanged()
   );
 
-  relatedPosts$: Observable<Post[]> = this.post$.pipe(
-    filter(Boolean),
-    switchMap(post =>
-      this.postsService.getPosts(
-        0,
-        2,
-        false,
-        (_post: Post) =>
-          post.title !== _post.title &&
-          (post.category === _post.category ||
-            post.tags.some(tag => _post.tags.includes(tag)))
-      )
-    ),
-    map(({ posts }) => posts)
-  );
+  relatedPosts$!: Observable<Post[]>;
 
   Category = Object.fromEntries(Object.entries(Category));
 
-  headers$: Observable<HeaderNode[]> = this.markdown$.pipe(
-    withLatestFrom(this.post$),
-    map(([markdown, post]) => this.createTree(markdown, post?.title))
-  );
+  headers: HeaderNode[] | undefined;
 
   notFound = false;
-  isContentReady = false;
 
   constructor(
     private postsService: PostsService,
@@ -125,7 +115,8 @@ export class PostComponent implements OnDestroy {
     private markdownService: MarkdownService,
     @Inject(DOCUMENT) private document: Document,
     private htmlInMarkdownService: HtmlInMarkdownService,
-    private meta: Meta
+    private meta: Meta,
+    private observability: ObservabilityService
   ) {}
 
   ngOnDestroy(): void {
@@ -140,7 +131,7 @@ export class PostComponent implements OnDestroy {
     this.router.navigate([path]);
   }
 
-  private createTree(markdown: string, rootTitle: string = '') {
+  private createTree(markdown: string) {
     const regExp = new RegExp(/<h\d(.*?)<\/h\d>/gm);
     const matches = this.markdownService
       .parse(markdown)
@@ -161,6 +152,8 @@ export class PostComponent implements OnDestroy {
       children: [],
     }));
 
+    const title = headings.shift();
+
     return headings
       .reduce(
         (hierarchy: HeaderNode[], node: HeaderNode) => {
@@ -172,7 +165,7 @@ export class PostComponent implements OnDestroy {
 
           return hierarchy;
         },
-        [{ id: 'post-header', heading: rootTitle, level: 1, children: [] }]
+        [{ id: 'post-header', heading: title?.heading || 'Header', level: 1, children: [] }]
       )
       .splice(0, 1);
   }
@@ -185,8 +178,19 @@ export class PostComponent implements OnDestroy {
     }
   }
 
+  private setRelatedPosts(post: Post) {
+    this.relatedPosts$ = this.postsService.getPosts(
+      0,
+      2,
+      false,
+      (_post: Post) =>
+        post.title !== _post.title &&
+        (post.category === _post.category ||
+          post.tags.some(tag => _post.tags.includes(tag)))
+    ).pipe(map(({ posts }) => posts));
+  }
+
   resolveScripts() {
     this.htmlInMarkdownService.parseAll();
-    this.isContentReady = true;
   }
 }
