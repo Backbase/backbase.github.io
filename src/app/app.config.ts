@@ -23,7 +23,13 @@ import { AssetsService } from './core/services/assets.service';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
-      routes,
+      [
+        {
+          path: '',
+          title: 'Backbase Engineering',
+          children: routes
+        }
+      ],
       withInMemoryScrolling({
         scrollPositionRestoration: 'enabled',
         anchorScrolling: 'enabled',

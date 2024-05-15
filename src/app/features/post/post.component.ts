@@ -37,7 +37,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { HtmlInMarkdownService } from '../../core/services/html-in-markdown.service';
-import { Meta } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { ObservabilityService } from '../../core/services/observability.service';
 
 @Component({
@@ -81,6 +81,9 @@ export class PostComponent implements OnDestroy {
       });
       return;
     }),
+    tap((post) =>
+      this.title.setTitle(`${post.title} | ${this.activatedRoute.snapshot.parent?.title}`)
+    ),
     tap((posts) => this.setRelatedPosts(posts)),
     tap((posts) => this.observability.publishEvent({
       post: posts.title,
@@ -116,7 +119,8 @@ export class PostComponent implements OnDestroy {
     @Inject(DOCUMENT) private document: Document,
     private htmlInMarkdownService: HtmlInMarkdownService,
     private meta: Meta,
-    private observability: ObservabilityService
+    private observability: ObservabilityService,
+    private title: Title,
   ) {}
 
   ngOnDestroy(): void {
