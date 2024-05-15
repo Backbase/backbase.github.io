@@ -136,7 +136,9 @@ But `@Async` has its limitations; for large scale applications with more complex
     return requiredData;
   ```  
 
-  Spring Webclient is another tool we can use to make parallel service calls. WebClient uses an asynchronous, non-blocking solution provided by the Spring Reactive framework:
+  Spring `Webclient` is another tool we can use to make parallel service calls. WebClient uses an asynchronous, non-blocking solution provided by the Spring Reactive framework, 
+  but since Java 21 using virtual threads is probably going to be the preferred approach given the complexity of implementing reactive components.
+Sample of using `WebClient`:
 
   ```Java
 
