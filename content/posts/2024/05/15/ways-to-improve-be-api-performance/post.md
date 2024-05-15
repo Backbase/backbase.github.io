@@ -1,5 +1,7 @@
 # Ways to improve BE API performance
 
+Enhancing performance for efficient resource utilization and cost saving in modern applications
+
 ![](assets/banner.png)
 
 Authors: Yauheni Navosha
@@ -10,18 +12,18 @@ tags: backend, api, performance
 
 ---
 
-# Introduction
+## Introduction
 
 Performance is crucial for modern apps. To achieve high performance of an app you need to utilize resources efficiently,
 that in turn leads to cost saving in terms of infrastructure and operational expenses. Also, performance drastically
 affects user experience - faster applications result in happier users, higher engagement. API performance plays one of the key roles here: 
 it is barely possible to achieve all these benefits without decreasing API latency, boosting throughput, improving responsiveness, especially for processing large volumes of data where a little tweak could make tremendous impact.
 
-# Caching
+## Caching
 
 ![](assets/caching.png)
 
-## Use cases and advantages
+### Use cases and advantages
 
 
    To improve backend API performance using caching the general approach is to store in cache expensive or frequently executed queries to third party APIs, as well as time-consuming and complex database queries.
@@ -41,16 +43,16 @@ The approach has the following advantages:
   * **Hybrid cache** - is a caching system, that combines some the benefits from in-memory and distributed cache systems: the cache system still stores data in-memory, but in addition to in-memory caching, 
 a hybrid cache also incorporates a distributed caching component that spans multiple nodes or servers.
 
-## Pitfalls
+### Pitfalls
   * One of the most complex and challenging aspects of caching is deciding when and how to invalidate or update the cached data. Wrong **Caching invalidation** implementation might lead to losing advantages of caching or to providing outdated data to users;
   * Cache consistency - during temporary unavailability of a cache certain updates of data occurs in a source, but not in the cache. After the cache becomes available again the changes must be synchronized. Another separate complex topic is consistency of a distributed cache nodes;
   * Cache poisoning - caches are susceptible to various security threats, such as cache poisoning. Attackers inject malicious data into the cache compromising system integrity and user security, exposing harmful or fraudulent data to users.
   * For hybrid caches like Infinispan upscaling or downscaling requires restarting all nodes. Infinispan always segments data that it stores in-memory and 
 changing the number of segments Infinispan creates requires a full cluster restart.
 
-# Asynchronous processing
+## Asynchronous processing
 
-## Use cases and advantages
+### Use cases and advantages
 
 In BE development, performance and responsiveness are intricately linked and play crucial role. Utilizing asynchronous processing for time-consuming or computation-intensive tasks is beneficial for both. For tasks such as email sending, files processing, and logging, where instant response is impossible or not necessary,
 asynchronous processing provides an efficient way to handle tasks without delaying other critical operations or blocking the main execution flow. Consider using of Java `CompletableFuture` and `@Async` Spring annotation for asynchronous processing.
@@ -80,15 +82,15 @@ But `@Async` has its limitations; for large scale applications with more complex
  4. Throttling. You can control the rate at which messages are produced or consumed to prevent overload and ensure optimal resource utilization.
  5. Partitioning. Message queues often provide features for partitioning data for parallel processing.
 
-## Pitfalls
+### Pitfalls
 
   * Error handling, especially propagations of such errors across asynchronous boundaries, can be really challenging. Also, improper error handling in asynchronous code can produce silent errors and lead to data corruption, unexpected or misleading behaviour. Consider using exceptions handlers in callbacks and using events for error propagation;
   * Asynchronous programming requires careful management of resources, especially for long-running asynchronous processes. Pay special attention to proper cleanup of resources, possible resource leaking and excess resource consumption;
   * Debugging and testing may require specialized frameworks and techniques.
 
-# Parallel processing
+## Parallel processing
 
-## Use cases and advantages
+### Use cases and advantages
 
   During development of a service in microservice architecture the following situation may arise:
   the task of the service is to query several different services and aggregate data fetched from them. The straightforward approach is to fetch data by querying those services one by one,
@@ -177,7 +179,7 @@ public void processItems(List<Item> items) {
         .forEach(executor::execute);
 }
   ```
-## Pitfalls
+### Pitfalls
   * Parallel processing introduces additional complexity to the software design and implementation. Coordinating multiple threads or processes, managing synchronization, and handling communication between parallel tasks can be challenging and error-prone;
   * Parallel processing does not necessarily guarantee linear performance grow. You can not really assume that 100 similar tasks executed using 100 threads will be 10 times faster than 100 tasks, but executed on 10 threads;
   * Debugging and testing may be really challenging since traditional debugging techniques may not be sufficient for investigating concurrency-related issues;
@@ -185,11 +187,11 @@ public void processItems(List<Item> items) {
   * Using parallel processing in the wrong context. For example, before buying a product, application should check that user owes sufficient funds for the purchase. Using of parallel processing in this context may produce a situation when a user is able to buy a good with insufficient funds on his account.
 
 
-# Payload reduction
+## Payload reduction
 
 To improve performance consider using smaller payloads. Smaller payloads lead to faster transmission over network, reduced latency, improves responsiveness.
 
-## Use cases & advantages
+### Use cases & advantages
 
 One of the ways to reduce a response size is pagination. Using pagination, an API respond with small chunks of the complete queried dataset. For example, you can apply it for user navigation through content:
 
@@ -227,14 +229,14 @@ public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody Jso
 }
 ```
 
-## Pitfalls
+### Pitfalls
  * Improperly implemented pagination may result in issues with data consistency and integrity, particularly in data-intensive apps.
  * Using compression for small-sized responses or data that is already compressed. While compression reduces the size of HTTP responses it increases processing time. Therefore, in the mentioned cases, compression may negatively affect performance;
  * Using `PATCH` introduces additional complexity, especially in testing. Additionally, the HTTP method may not be supported by all servers or clients;
 
-# Using of Circuit Breaker
+## Using of Circuit Breaker
 
-## Use cases & advantages
+### Use cases & advantages
 
 The Circuit Breaker is a design pattern. Despite its main purpose being to enhance the resilience of a system, implementing the pattern can lead to performance improvements in certain scenarios:
 
@@ -260,14 +262,14 @@ resilience4j.circuitbreaker:
   
 ```
 
-## Pitfalls
+### Pitfalls
 
   * Tuning the circuit breakers thresholds and timeouts is crucial, but it's a quite complex task. Without proper configuration, issues such as breaking early(false negative scenario) are possible, leading to degradation of a healthy service;
   * Due to overhead, implementation may negatively impact performance in high-throughput scenarios.
 
-# Using connection pool with `RestTemplate`
+## Using connection pool with `RestTemplate`
 
-## Use cases & advantages
+### Use cases & advantages
 
 In the Spring Framework, the `RestTemplate` class created by default uses the `SimpleClientHttpRequestFactory` under the hood, which creates a new connection for each request.
 With this approach, operations like socket opening, and handshake must be executed repeatedly during connection creation.
@@ -296,12 +298,12 @@ public RestTemplate pooledRestTemplate() {
   }
 ```
 
-## Pitfalls
+### Pitfalls
   * Connections in the pool may become invalid if they are kept idle for too long or if the remote server terminates the connection unexpectedly. Using such connection may result in errors or 
 unexpected behaviour. Consider implementing a custom`Keep-Alive` strategy, which determines how long a connection may remain unused in the pool until it is closed.
   * Improper configuration and connection management may lead to connection exhaustion or the excessive use of resources for maintaining unnecessary connections.
 
-# References
+## References
 
   * [Redis documentation](https://redis.io/)
   * [Concurrency tutorial](https://docs.oracle.com/javase/tutorial/essential/concurrency/)
