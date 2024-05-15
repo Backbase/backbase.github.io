@@ -41,12 +41,12 @@ $ npx @angular/cli@14 add @angular-architects/module-federation@14.3.14 --projec
 
 3. Add [@angular/elements](https://angular.io/guide/elements) to create custom components.
 ```shell
-$ npm i @angular/elements@12.2.17
+$ npm i @angular/elements@14.3.0
 ```
 
 4. Add [@angular-architects/module-federation-tools](https://www.npmjs.com/package/@angular-architects/module-federation-tools) to reduce boilerplate code.
 ```shell
-$ npm i @angular-architects/module-federation-tools@12.5.3
+$ npm i @angular-architects/module-federation-tools@14.3.14
 ```
 
 5. The plugin creates a Webpack configuration `webpack.config.js` which you need to adjust:
@@ -101,13 +101,13 @@ export class AppModule {
 ```
 ### Convert the existing app
 
-Add the plugin to the existing app in Angular 12 that acts as the shell.
+1. The existing app in Angular 12 acts as the shell. Add the plugin to configure it.
 ```shell
 $ npx @angular/cli@12 add @angular-architects/module-federation@12.5.3 --project yourProject
 ```
 NOTE: Replace `yourProject` with the name of your project.
 
-And adjust the resulting `webpack.config.js` as needed:
+2. Adjust the resulting `webpack.config.js` as needed:
 ```js
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 
@@ -123,6 +123,11 @@ module.exports = {
     new ModuleFederationPlugin(),
   ],
 }
+```
+
+3. Add [@angular-architects/module-federation-tools](https://www.npmjs.com/package/@angular-architects/module-federation-tools):
+```shell
+$ npm i @angular-architects/module-federation-tools@12.5.2
 ```
 
 ### Routing between the shell and the remote
