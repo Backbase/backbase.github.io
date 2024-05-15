@@ -69,7 +69,7 @@ export class ObservabilityService {
     
     provider.getActiveSpanProcessor().onStart = (span: Span) => {
       span.setAttribute('view.name', document.title);
-      span.setAttribute('view.path', document.location.href);
+      span.setAttribute('http.url', document.location.href);
     };
     
     registerInstrumentations({
