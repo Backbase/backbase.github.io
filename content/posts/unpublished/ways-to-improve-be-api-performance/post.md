@@ -57,20 +57,20 @@ asynchronous processing provides an efficient way to handle tasks without delayi
 Let's demonstrate an example with email sending, using Spring `@Async` annotation. It allows to submit sending of email without waiting a response from actual email processing service.
 
 ```java
-    @Async
-    public void sendEmail(EmailDetails emailDetails){
-        try {
-            EmailTemplate template = new EmailTemplate();
-            template.setFrom(emailDetails.getEmailSender);
-            template.setTo(emailDetails.getRecipients());
-            template.setText(emailDetails.getMessageBody());
-            template.setSubject(emailDetails.getSubject());
-            javaMailSender.send(template);
-            log.info("Mail sent successfully");
-        }catch (MailException exception){
-            log.debug("Error during sending an email", exception);
-        }
+@Async
+public void sendEmail(EmailDetails emailDetails){
+    try {
+        EmailTemplate template = new EmailTemplate();
+        template.setFrom(emailDetails.getEmailSender);
+        template.setTo(emailDetails.getRecipients());
+        template.setText(emailDetails.getMessageBody());
+        template.setSubject(emailDetails.getSubject());
+        javaMailSender.send(template);
+        log.info("Mail sent successfully");
+    } catch (MailException exception){
+        log.debug("Error during sending an email", exception);
     }
+}
 ```
 
 But `@Async` has its limitations; for large scale applications with more complex requirements and business logic using message queues like Apache Kafka, RabbitMQ or building an app using Event-Driven architecture is preferable.
@@ -95,50 +95,52 @@ But `@Async` has its limitations; for large scale applications with more complex
   
   To implement the parallel approach, `CompletableFuture` may be used, CompletableFuture is a class introduced in Java 8 that allows us to write asynchronous, non-blocking code. Let's look at the example:
   ```Java
-{
-    var productFuture=CompletableFuture.supplyAsync(()->ProductService.fetch(request),exec);
-    var paymentFuture=CompletableFuture.supplyAsync(()->PaymentService.fetch(request),exec);
-    var orderFuture=CompletableFuture.supplyAsync(()->OrderService.fetch(request),exec);
+    var productFuture = CompletableFuture.supplyAsync(() -> ProductService.fetch(request),exec);
+    var paymentFuture = CompletableFuture.supplyAsync(() -> PaymentService.fetch(request),exec);
+    var orderFuture = CompletableFuture.supplyAsync(() -> OrderService.fetch(request),exec);
 
-    CompletableFuture<Void> allFutures=CompletableFuture.allOf(productInfoFuture,paymentFuture,orderFuture);
-
+    CompletableFuture<Void> allFutures = CompletableFuture.allOf(productInfoFuture,paymentFuture,orderFuture);
     try {
         allFutures.get(); // Waits until all tasks are completed
-    } catch(InterruptedException|ExecutionException e){
+    } catch (InterruptedException|ExecutionException e){
         e.printStackTrace();
     }
 
-    try {
+    try{
         requiredData.setProductInfo(productFuture.get());
         requiredData.setPaymentInfo(paymentFuture.get());
         requiredData.setOrderInfo(orderFuture.get());
-    } catch(InterruptedException|ExecutionException e){
+    } catch (InterruptedException|ExecutionException e){
         e.printStackTrace();
     }
+  
     return requiredData;
-}
   ```
   
   Virtual threads are a new feature introduced in Java 21. Virtual threads are lightweight threads that reduce the effort of writing, maintaining, and debugging high-throughput concurrent applications.
   Unlike regular thread, virtual threads does not entail any OS-level blocking. Let's try to implement the previous example using Virtual Threads.
 
   ```Java
-{
-    Thread t1=startVirtualThread(()->requiredData.setProductInfo(ProductService.fetch(request)));
-    Thread t2=startVirtualThread(()->requiredData.setPaymentInfo(PaymentService.fetch(request)));
-    Thread t3=startVirtualThread(()->requiredData.setOrderInfo(OrderService.fetch(request)));
+    Thread t1 = startVirtualThread(() -> requiredData.setProductInfo(ProductService.fetch(request)));
+    Thread t2 = startVirtualThread(() -> requiredData.setPaymentInfo(PaymentService.fetch(request)));
+    Thread t3 = startVirtualThread(() -> requiredData.setOrderInfo(OrderService.fetch(request)));
 
-    t1.start();t2.start();t3.start();
-    t1.join();t2.join();t3.join();
+    t1.start();
+    t2.start();
+    t3.start();
+  
+    t1.join();
+    t2.join();
+    t3.join();
+  
     return requiredData;
-}
   ```  
 
   Spring Webclient is another tool we can use to make parallel service calls. WebClient uses an asynchronous, non-blocking solution provided by the Spring Reactive framework:
 
   ```Java
 
-  public void run() throws Exception {
+public void run() throws Exception {
     IntStream.range(0, 5)
         .forEach(
             index -> webClient.get().uri("/api/sample")
@@ -154,19 +156,19 @@ But `@Async` has its limitations; for large scale applications with more complex
 for parallel processing. 
 
   ```Java
-    public void processItems(List<Item> items) {
-      // parallel stream sample
-      items
+public void processItems(List<Item> items) {
+    // parallel stream sample
+    items
         .stream()
         .parallel()
         .forEach(this::submitTask);
 
-      // executor service sample
-      ExecutorService executor = Executors.newFixedThreadPool(2);
-      items.stream()
+    // executor service sample
+    ExecutorService executor = Executors.newFixedThreadPool(2);
+    items.stream()
         .map((Item item) -> taskFactory.create(item))
         .forEach(executor::execute);
-    }
+}
   ```
 ## Pitfalls
   * Parallel processing introduces additional complexity to the software design and implementation. Coordinating multiple threads or processes, managing synchronization, and handling communication between parallel tasks can be challenging and error-prone;
@@ -183,14 +185,13 @@ To improve performance consider using smaller payloads. Smaller payloads lead to
 One of the ways to reduce a response size is pagination. Using pagination, an API respond with small chunks of the complete queried dataset. For example, you can apply it for user navigation through content:
 
 ```java
-    @GetMapping
-    public Page<Product> getProducts(@RequestParam(defaultValue = "0") int page,
-                                     @RequestParam(defaultValue = "10") int size) {
+@GetMapping
+public Page<Product> getProducts(@RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "10") int size) {
         
-        Pageable pageable = PageRequest.of(page, size);
-        d
-        return productRepository.findAll(pageable);
-    }   
+    Pageable pageable = PageRequest.of(page, size);
+    return productRepository.findAll(pageable);
+}   
 ```
 
 Another way to reduce response size is response compression. An API compresses a response using a compression algorithm, for instance gzip, and responds with its binary representation.
