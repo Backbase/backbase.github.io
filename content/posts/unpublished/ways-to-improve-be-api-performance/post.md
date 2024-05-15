@@ -73,7 +73,12 @@ public void sendEmail(EmailDetails emailDetails){
 }
 ```
 
-But `@Async` has its limitations; for large scale applications with more complex requirements and business logic using message queues like Apache Kafka, RabbitMQ or building an app using Event-Driven architecture is preferable.
+But `@Async` has its limitations; for large scale applications with more complex requirements and business logic using message queues like Apache Kafka, RabbitMQ or building an app using Event-Driven architecture is preferable since with events more control is available in non-functional aspects such as:
+ 1. Scalability. Message queues decouple components of a system, allowing them to scale independently. 
+ 2. Reliability. Messages queues ensure reliable message delivery - messages are persisted until they are successfully processed, or dead letter queues (DLQs) may be used for storing messages that can not be processed for any reason.
+ 3. Back-Pressure Management. Message queues allow you to implement back-pressure mechanisms to control the flow of messages through your system.
+ 4. Throttling. You can control the rate at which messages are produced or consumed to prevent overload and ensure optimal resource utilization.
+ 5. Partitioning. Message queues often provide features for partitioning data for parallel processing.
 
 ## Pitfalls
 
