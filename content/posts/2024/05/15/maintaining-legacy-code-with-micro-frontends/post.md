@@ -5,7 +5,7 @@ Taking advantage of Micro Frontends with Module Federation to maintain legacy ap
 ![](assets/banner.png)
 
 Authors: Pablo Villoslada Puigcerber
-Date: unpublished
+Date: 2024-05-15T13:51:39.651Z
 Category: frontend
 
 tags: angular,frontend,micro-frontends,module-federation,web
