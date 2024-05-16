@@ -322,3 +322,7 @@ public class ScheduledTasks {
 Here's a simple Spring Boot application demonstrating some 12-Factor principles:
 
 - https://github.com/Backbase/golden-sample-services
+- https://12factor.net/
+- https://developer.ibm.com/articles/creating-a-12-factor-application-with-open-liberty/
+- https://www.redhat.com/architect/12-factor-app-containers
+- https://cloud.google.com/architecture/twelve-factor-app-development-on-gcp
