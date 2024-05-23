@@ -25,20 +25,14 @@ Let's explore how to implement these principles using Java and Spring Boot:
 
 ### 1. Codebase
 
-Maintain a single codebase for your application, typically stored in a version control system like Git. This ensures consistent code across development, staging, and production environments. Start by initializing a Git repository for your project:
-
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git remote add origin https://github.com/your-username/your-app.git
-git push -u origin main
-
-```
+Maintain a single codebase for your application, typically stored in a centralized version control system like Subversion or decentralized version control system like Git. This ensures consistent code across development, staging, and production environments. 
+![](assets/image.png)
+Multiple apps should not share same codebase, rather shared code as libraries which can be added as [dependencies](#2-dependencies). In reality there can be multple deployments of an app from the same codebase, although code versions may differ in each deployment. 
+![](assets/image-1.png)
 
 ### 2. Dependencies
 
-Declare all dependencies explicitly in a manifest file like a Maven POM (pom.xml) or Gradle build script. This avoids conflicts and ensures consistency between environments.
+Declare all dependencies explicitly and isolate dependencies in a manifest file like a Maven POM (pom.xml) or Gradle build script. This makes sure that the dependecies are pulled during build phase and the does not assume the dependencies to be present on the build system/runtime. This helps to provide consistency between development and production environments, simplifies the setup for developers new to the application, and supports portability between cloud platforms.
 
 ```xml
 <project>
@@ -58,119 +52,52 @@ Declare all dependencies explicitly in a manifest file like a Maven POM (pom.xml
 
 ### 3. Configuration
 
-Store configuration details (database connection strings, API keys) outside your codebase. Use environment variables to load configuration specific to each environment. Spring Boot allows for externalized configuration sources like property files and environment variables. Here's an example of configuring a database connection in `application.properties`:
-
-```properties
-# application.properties
-spring.datasource.url=jdbc:h2:mem:testdb
-spring.datasource.username=sa
-spring.datasource.password=
-server.port=${PORT:8080}
+Store configuration details (database connection strings, API keys, and other [backing services](#4-backing-services)) outside your codebase as it is likely to vary between deployments(dev, stage, prod). Use environment variables to load configuration specific to each environment. Spring Boot allows for externalized configuration sources like property files and environment variables. Here's an example of configuring Backbase's user-manager service for [local development using docker-compose](https://github.com/Backbase/local-backend-setup/blob/main/development/docker-compose/docker-compose.yaml):
+```yaml
+user-manager:
+    image: repo.backbase.com/backbase-docker-releases/user-manager:${BB_VERSION}
+    ports:
+      - "8060:8080"
+    environment:
+      <<: [*common-variables, *message-broker-variables, *database-variables]
+      spring.datasource.url: jdbc:mysql://mysql:3306/user-manager?useSSL=false&allowPublicKeyRetrieval=true&cacheServerConfiguration=true&createDatabaseIfNotExist=true
+      backbase.users.identity-endpoints-enabled: true
+      backbase.users.identity-integration-enabled: true
+      backbase.users.sync-primary-to-identity-enabled: true
+      spring.cloud.discovery.client.simple.instances.user-integration-outbound-service[0].uri: http://wiremock:8080
+    volumes:
+      - ./exe/HealthCheck.jar:/tmp/HealthCheck.jar
+    healthcheck:
+      <<: *healthcheck-defaults
+      test: [ "CMD", "java", "-jar", "-Xms5M", "-Xmx10M", "/tmp/HealthCheck.jar", "http://registry:8080/eureka/apps/user-manager", "<status>UP</status>" ]
+    depends_on:
+      mysql:
+        condition: service_healthy
+    links:
+      - activemq
+      - registry
 ```
+
 
 ### 4. Backing Services
 
-Treat databases and other external services as attached resources. Configure them through environment variables or service discovery mechanisms. Spring Boot's auto-configuration makes integrating with backing services like databases straightforward. Below is a simple service class that retrieves the database URL from configuration:
+Treat backing services (databases and other external services) as attached resources which can be accessed via a URL or credentials stored in the [config](#3-configuration). A deployment of the twelve-factor app should be able to swap out a local MySQL database with one managed by a third party (such as Azure SQL Database) without any changes to the app’s code. In Backbase we have helm charts which contains backing services configuations for all environments. This allows to deploy the application without making code change and re-packaging.
 
-```java
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-@Service
-public class DatabaseService {
-
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
-
-    public String getDbUrl() {
-        return dbUrl;
-    }
-}
-```
-```Dockerfile
-# Dockerfile (environment variables for database)
-ENV SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
-ENV DB_HOST=my-database-service
-ENV DB_NAME=mydb
-ENV DB_USER=dbuser
-ENV DB_PASSWORD=password
-```
+![](assets/image-2.png)
 
 ### 5. Build, Release, Run
 
-Separate the build, release, and run stages. Spring Boot provides a powerful mvn package or gradle build command for building your application. You can then package the application as a JAR file for deployment.
+Separate the build, release, and run stages. 
+- **build**: Build automation tools like maven can pull the [dependencies](#2-dependencies) and package into a docker image which can be pushed to a docker repository.
+- **release**: Combining the docker image generated from build process with the environment specific [configuration](#3-configuration) will produce a release and the release should be labelled with unique ID.
+- **run**: The deployed app runs in an execution environment, by launching app's [process](#6-processes). A continous deployment tool like Argo CD, usually uses tooling like containers and processes to launch the application. Once that operation is running, the cloud runtime is responsible for its maintenance, health, and dynamic scaling.
 
-Automating build, release, and run processes is crucial for efficiency. CI/CD tools like Jenkins or GitLab CI can help with this. Below is an example Jenkinsfile for a pipeline:
-
-```groovy
-pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                // Build steps
-            }
-        }
-        stage('Test') {
-            steps {
-                // Test steps
-            }
-        }
-        stage('Deploy') {
-            steps {
-                // Deployment steps
-            }
-        }
-    }
-}
-```
-Automating build, release, and run processes is essential for efficiency. GitHub Actions provides an excellent platform for CI/CD. Below is an example workflow for building and deploying a Spring Boot application:
-
-```yaml
-name: CI/CD
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up JDK
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Deploy to Kubernetes
-      uses: azure/k8s-deploy@v1
-      with:
-        azure-k8s: '<your-azure-kubernetes-service>'
-        images: 'your-docker-image:latest'
-        namespace: 'default'
-        secrets: '<your-kubernetes-secrets>'
-```
+![](assets/image-3.png)
 
 ### 6. Processes
 
-Treat applications as one or more stateless processes. Each request should be handled independently without relying on persistent state within the process. Spring Boot applications typically run as stateless services, making them horizontally scalable. Spring Boot applications are standalone Java processes. You can run them using the `java -jar` command:
-
-```bash
-java -jar your-application.jar
-```
+Treat applications as a stateless processes and [share-nothing](http://en.wikipedia.org/wiki/Shared_nothing_architecture). Any data that needs to persist must be stored in a stateful [backing service](#4-backing-services), typically a database.
+Applications build using REST as transport protocol using JAX-RS RESTful architecture are stateless. REST based microservices can scale up and down without losing any information. While designing REST applications "sticky sessions" (caching user session data in app memory) should not be used and it is a violation of twelve-factor. Session state data is a good candidate for a datastore that offers time-expiration, such as Memcached or Redis.
 
 ### 7. Port Binding
 Bind applications to a port using environment variables. Spring Boot applications typically listen on a port defined in the application properties or environment variables.
@@ -186,21 +113,8 @@ server.port=${PORT:8080}
 
 Leverage process-based concurrency for scaling. Spring Boot applications can be easily deployed across multiple instances to handle increased traffic.
 
-Java provides powerful concurrency utilities. Spring Boot supports asynchronous processing. Here's an example of an asynchronous task in a service:
+![](assets/image-4.png)
 
-```java
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-
-@Service
-public class MyService {
-
-    @Async
-    public void asyncTask() {
-        // Async task implementation
-    }
-}
-```
 
 ### 9. Disposability
 
@@ -224,61 +138,15 @@ public class MyComponent {
 
 ### 10. Dev/Prod Parity
 
-Keep development, staging, and production environments as similar as possible. This reduces the risk of deployment issues. By using environment variables and externalized configuration, you can achieve parity between environments.
+Keep development, staging, and production environments as similar as possible to ensure that all potential bugs/failures can be identified in development and testing instead of when the application is put into production. By using environment variables and externalized configuration, you can achieve parity between environments.
 
-Maintaining parity between development and production environments is essential. Docker is commonly used for this purpose:
-
-Here's a Dockerfile for containerizing your Spring Boot application:
-
-```Dockerfile
-FROM openjdk:11-jre-slim
-COPY target/your-application.jar /app.jar
-CMD ["java", "-jar", "/app.jar"]
-```
-
-And a Kubernetes deployment manifest for deploying your application:
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: your-application
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: your-application
-  template:
-    metadata:
-      labels:
-        app: your-application
-    spec:
-      containers:
-      - name: your-application
-        image: your-docker-image:latest
-        ports:
-        - containerPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: your-application
-spec:
-  selector:
-    app: your-application
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
-  type: LoadBalancer
-```
-
+Docker Containers enable the creation and use of the same image in development, staging, and production. It also helps to ensure that the same backing services are used in every environment. Utilizing this concept of containerization, testing tools like MicroShed Testing enable us to ensure that the testing environment is as close to production as possible, too.
 
 ### 11. Logs
 
-Treat logs as event streams. Spring Boot integrates seamlessly with logging frameworks like Logback, allowing you to centralize log collection and analysis.
+Treat logs as event streams. Cloud-native applications can elastically scale from 1 to over 100 instances, which makes it difficult to track those instances and organize all of the logs. Spring Boot integrates seamlessly with logging frameworks like Logback, allowing you to centralize log collection and analysis using tools like (e.g., ELK stack, Splunk, Sumologic, etc.).
 
-Logging is critical for monitoring and debugging. Spring Boot uses SLF4J and Logback by default. You can configure logging levels and appenders in `logback-spring.xml`:
+[Disposing](#9-disposability) an instance should not cause logs to vanish. Spring Boot uses SLF4J and Logback by default and helps to configure stdout and stderr logs. You can configure logging levels and appenders in `logback-spring.xml`:
 
 ```xml
 <configuration>
@@ -290,9 +158,11 @@ Logging is critical for monitoring and debugging. Spring Boot uses SLF4J and Log
 
 ### 12. Admin Processes
 
-Run administrative tasks as one-off processes. Spring Boot applications can be extended with custom admin commands for specific tasks.
+Run administrative tasks as one-off processes and they can be run as Kubernetes tasks. This factor discourages putting one-off admin or management tasks like migrating databases and running one-time scripts to do clean-up inside your microservices instead microservice should focus on business logic.
 
-Admin processes, such as database migrations or scheduled tasks, should be part of your application. Here's an example of a scheduled task in Spring Boot:
+While running admin process make sure to run in an identical environment as the regular app. They should use the same [codebase](#1-codebase) and [config](#3-configuration) as the app to avoid synchronization issues.
+
+Spring Boot applications can be extended with custom admin commands for specific tasks. Here's an example of a scheduled task in Spring Boot:
 
 ```java
 import org.springframework.scheduling.annotation.Scheduled;
@@ -312,17 +182,20 @@ public class ScheduledTasks {
 
 ## Benefits of 12-Factor Apps:
 
-  - Increased Developer Productivity: Consistent environments and clear separation of concerns make development and maintenance easier.
-  - Improved Scalability: Stateless processes allow for easy scaling based on demand.
-  - Enhanced Portability: Applications can be deployed across different platforms with minimal changes.
-  - Simplified Maintainability: Clear separation of code, configuration, and dependencies simplifies application management.
+  - **Increased Developer Productivity**: Consistent environments and clear separation of concerns make development and maintenance easier.
+  - **Improved Scalability**: Stateless processes allow for easy scaling based on demand.
+  - **Enhanced Portabilit**y: Applications can be deployed across different platforms with minimal changes.
+  - **Simplified Maintainability**: Clear separation of code, configuration, and dependencies simplifies application management.
 
 ## Code Examples
 
 Here's a simple Spring Boot application demonstrating some 12-Factor principles:
 
-- https://github.com/Backbase/golden-sample-services
-- https://12factor.net/
-- https://developer.ibm.com/articles/creating-a-12-factor-application-with-open-liberty/
-- https://www.redhat.com/architect/12-factor-app-containers
-- https://cloud.google.com/architecture/twelve-factor-app-development-on-gcp
+- [Backbase golden sample services](https://github.com/Backbase/golden-sample-services)
+
+## References
+
+- [12factor.net](https://12factor.net/)
+- [IBM Developer](https://developer.ibm.com/articles/creating-a-12-factor-application-with-open-liberty/)
+- [Redhat](https://www.redhat.com/architect/12-factor-app-containers)
+- [Google cloud](https://cloud.google.com/architecture/twelve-factor-app-development-on-gcp)
