@@ -5,31 +5,26 @@ import {
   importProvidersFrom,
   isDevMode,
 } from '@angular/core';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { ActivationEnd, EventType, Router, provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
+import { Meta, provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import markdownConfig from './markdown.config';
 import { DOCUMENT } from '@angular/common';
-import { AUTHORS_AVATAR_PATH_TOKEN, USE_PROCESSED_IMAGES, O11Y_CONFIG_TOKEN } from './core/config/configuration-tokens';
+import { AUTHORS_AVATAR_PATH_TOKEN, USE_PROCESSED_IMAGES, O11Y_CONFIG_TOKEN, SPECIAL_CATEGORIES } from './core/config/configuration-tokens';
 import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
 import { ObservabilityConfig } from './core/model/observability.model';
 import * as pkg from '../../package.json';
 import { AssetsService } from './core/services/assets.service';
+import { filter } from 'rxjs';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
-      [
-        {
-          path: '',
-          title: 'Backbase Engineering',
-          children: routes
-        }
-      ],
+      routes,
       withInMemoryScrolling({
         scrollPositionRestoration: 'enabled',
         anchorScrolling: 'enabled',
@@ -61,12 +56,31 @@ export const appConfig: ApplicationConfig = {
       deps: [MarkdownService, DOCUMENT, HtmlInMarkdownService, AssetsService],
     },
     {
+      provide: APP_INITIALIZER,
+      multi: true,
+      useFactory: (router: Router, meta: Meta) => () => {
+        router.events
+        .pipe(
+          filter((event): event is ActivationEnd => event.type === EventType.ActivationEnd && !!event.snapshot.component),
+        )
+        .subscribe(({ snapshot }: ActivationEnd) => {
+          meta.addTags(snapshot.data['meta']);
+        });
+      },
+      deps: [Router, Meta],
+    },
+    {
       provide: AUTHORS_AVATAR_PATH_TOKEN,
       useValue: 'authors',
     },
     {
       provide: USE_PROCESSED_IMAGES,
       useValue: !isDevMode(),
+    },{
+      provide: SPECIAL_CATEGORIES,
+      useValue: [
+        'principles',
+      ]
     }
   ],
 };

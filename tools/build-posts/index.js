@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const { readingTime } = require('reading-time-estimator');
 
-function scanDirectory(directoryPath, filesArray, routesArray) {
+let utils;
+
+async function scanDirectory(directoryPath, filesArray, routesArray) {
   const files = fs.readdirSync(directoryPath);
 
   files.forEach(async file => {
@@ -11,28 +12,13 @@ function scanDirectory(directoryPath, filesArray, routesArray) {
 
     if (stat.isDirectory()) {
       // Recursively scan subdirectories
-      scanDirectory(filePath, filesArray, routesArray);
+      await scanDirectory(filePath, filesArray, routesArray);
     } else if (file === 'post.md') {
       // If the file is named "meta.json", read its content and add it to the array
       const fileContent = fs.readFileSync(filePath, 'utf8');
 
-      const metaData = fileContent.split('---')[0];
-      filesArray.push({
-        title: metaData.match(/^# ([^\n]+)/m)?.[1],
-        excerpt: metaData.match(/^#[^\n]+\n+([^\n]+)/s)?.[1],
-        teaser: metaData.match(/^\!\[[^\(]+\(([^\)]+)/im)?.[1],
-        authors: metaData
-          .match(/^Authors: ([^\n]+)/im)?.[1]
-          ?.split(',')
-          .map(n => n.trim()),
-        category: metaData.match(/^Category: ([^\n]+)/im)?.[1],
-        tags: metaData
-          .match(/^Tags: ([^\n]+)/im)?.[1]
-          ?.split(',')
-          .map(n => n.trim()),
-        date: metaData.match(/^Date: ([^\n]+)/im)?.[1],
-        readingTime: readingTime(fileContent, 238).text,
-      });
+      const metaData = utils.extractPostMetaData(fileContent);
+      filesArray.push(metaData);
       routesArray.push(directoryPath.replace('content/posts', ''));
     }
   });
@@ -45,7 +31,7 @@ function scanDirectory(directoryPath, filesArray, routesArray) {
   );
 }
 
-function main() {
+async function main() {
   const startDirectory = 'content/posts'; // Change this to the starting directory path
   const outputFilePath = 'content/posts/posts.json'; // Change this to the desired output file path
 
@@ -55,7 +41,8 @@ function main() {
 
   const filesArray = [];
   const routesArray = [];
-  scanDirectory(startDirectory, filesArray, routesArray);
+
+  await scanDirectory(startDirectory, filesArray, routesArray);
 
   // Write the sorted array to the output file
   const outputContent = JSON.stringify(filesArray);
@@ -75,4 +62,16 @@ function main() {
   console.log(`Scanning completed. Output written to ${outputFilePath}`);
 }
 
-main();
+async function withUtils() {
+  utils = await loadEsmModule(
+    '../../dist/utils/esm2022/lib/post-metadata.mjs'
+  );
+
+  main();
+}
+
+withUtils();
+
+function loadEsmModule(modulePath) {
+  return new Function('modulePath', `return import(modulePath);`)(modulePath);
+}
