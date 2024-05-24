@@ -26,6 +26,10 @@ Resiliency patterns in microservices are established mechanisms that enable appl
 Implementing those patterns can assist developers in minimizing the impact of unexpected errors or excessive load on the system, which in turn can reduce downtimes and improve the overall performance of the application.
 
 ### **Common Resiliency Patterns**
+It's important to note that achieving resiliency in microservices can be done by implementing the patterns described below at both the application/service level and the infrastructure level, such as in Istio. 
+If there are plenty of microservices and the same configuration is required for all of them, it's better to use an infrastructure solution rather than implementing patterns for each service. 
+However, if the patterns need to be implemented only in certain scenarios and not across all services, it's better to choose the service resiliency level method.
+
 ## Timeout
 
 Microservices talk to each other, not only to internal API's in the same container or machine, but also to other external dependencies.
