@@ -4,7 +4,7 @@ How can we make our microservice more resilient?
 
 ![](assets/res_micro.png)
 
-Authors: Sebastian Opacki, Rafał Lukowski
+Authors: Sebastian Opacki, Rafał Łukowski
 Date: unpublished
 Category: backend
 
@@ -46,9 +46,9 @@ We should always have explicitly declared value of timeout in our configuration.
   }
 ```
 
-ConnectTimeout is the timeout for creating a connection. For instance, you are dealing with unreliable server, you want to wait only few seconds before notifying a end user that "something is wrong".
+- ConnectTimeout is the timeout for creating a connection. For instance, you are dealing with unreliable server, you want to wait only few seconds before notifying a end user that "something is wrong".
 
-ReadTimeout is the timeout when you have a connection, you're blocked on read() and you want to get an exception if the read blocks for more than timeout.
+- ReadTimeout is the timeout when you have a connection, you're blocked on read() and you want to get an exception if the read blocks for more than timeout.
 It does not matter if you are using a Java application, the Spring Framework, or a RestTemplate client - it is important to always set a timeout in your application when making synchronous calls to other dependencies.
 
 By having declared timeout we can deal with issues when dependency is unreliable, sometime we just a cut a connection and just a log an error, but in other cases we need to quickly notify end user about the error.
@@ -62,14 +62,14 @@ Circuit Breaker Pattern is a crucial mechanism used in a microservices architect
 It detects when a dependency that we are trying to reach is unstable by checking a ratio of success and failed calls to that dependency
 The circuit breaker pattern works in three states: closed, open and half-open:
 
-## Closed State
+- Closed State
 This is the normal operational state when there are no errors encountered during invocation to dependency. In this state, all requests from the client are passed through to the downstream service.
 
-## Open State
+- Open State
 When there are too many failed responses from an external dependency, the mechanism changes the state to 'Open'. In this state, requests do not reach the service, and instead, a callback method is called or an error is thrown instantly. 
 By doing this, we give time for the dependency to recover.
 
-## Half-Open State
+- Half-Open State
 After a configured time, the Open State needs to be finished. We then check if our dependency has recovered or still is unhealthy.
 In 'Open State' we allow some request to reach the external dependency and base on the ratio of responses we decide if the next state will be 'Open' or 'Closed'.
 If the server is responding well, then we change the state to 'Closed', indicating that all is good. 
