@@ -13,13 +13,13 @@ export class HtmlInMarkdownService {
       return html
     };
 
-    return `<iframe src="about:blank" data-content="${this.document.defaultView?.window.btoa(html)}"></iframe>`
+    return `<iframe src="about:blank" data-content="${this.document.defaultView?.window.btoa?.(html)}"></iframe>`
   }
 
   parseAll() {
     const frames = this.document.querySelectorAll('iframe[data-content]');
     frames.forEach(iframe => {
-      const content = this.document.defaultView?.window.atob(iframe.getAttribute('data-content') ?? '');
+      const content = this.document.defaultView?.window.atob?.(iframe.getAttribute('data-content') ?? '');
       iframe.removeAttribute('data-content');
       const frameDoc = (iframe as any).contentWindow.document as Document;
       frameDoc.open();

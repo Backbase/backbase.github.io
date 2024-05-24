@@ -1,10 +1,15 @@
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, Routes } from '@angular/router';
 import { postRedirects } from './app.routes.map';
-import { EMPTY, catchError, tap } from 'rxjs';
-import { inject } from '@angular/core';
+import { EMPTY, Subject, catchError, tap } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
 import { PostsService } from './core/services/posts.service';
-import { RouteDetailsService } from './core/services/route-details.service';
 import { MetaDefinition } from '@angular/platform-browser';
+
+@Injectable({ providedIn: 'root' })
+class RouteDetails {
+  title$$ = new Subject<string>();
+  meta$$ = new Subject<MetaDefinition[]>;
+}
 
 export const routes: Routes = [
   {
@@ -52,9 +57,9 @@ export const routes: Routes = [
           import('./features/post/post.component').then(m => m.PostComponent),
         resolve: {
           post: postFactory,
-          meta: () => inject(RouteDetailsService).meta$,
+          meta: () => inject(RouteDetails).meta$$,
         },
-        title: () => inject(RouteDetailsService).title$,
+        title: () => inject(RouteDetails).title$$,
       },
       {
         path: 'unpublished/:permalink',
@@ -62,9 +67,9 @@ export const routes: Routes = [
           import('./features/post/post.component').then(m => m.PostComponent),
         resolve: {
           post: postFactory,
-          meta: () => inject(RouteDetailsService).meta$,
+          meta: () => inject(RouteDetails).meta$$,
         },
-        title: () => inject(RouteDetailsService).title$,
+        title: () => inject(RouteDetails).title$$,
       },
       {
         path: 'category/:cat',
@@ -86,9 +91,9 @@ export const routes: Routes = [
           import('./features/post/post.component').then(m => m.PostComponent),
         resolve: {
           post: postFactory,
-          meta: () => inject(RouteDetailsService).meta$,
+          meta: () => inject(RouteDetails).meta$$,
         },
-        title: () => inject(RouteDetailsService).title$,
+        title: () => inject(RouteDetails).title$$,
       },
       {
         path: 'people',
@@ -108,12 +113,41 @@ export const routes: Routes = [
   }
 ];
 
-function postFactory(_: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+function postFactory(activatedRouteSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
   const router = inject(Router);
-  const routeDetails = inject(RouteDetailsService);
+  const routeDetails = inject(RouteDetails);
   return inject(PostsService).getPost(state.url)
     .pipe(
-      tap((post) => routeDetails.update(post)),
+      tap(({
+        title,
+        excerpt,
+        displayTeaser,
+      }) => {
+        const pageTitle = `${title} | ${activatedRouteSnapshot.parent?.title}`;
+        routeDetails.title$$.next(pageTitle);
+        routeDetails.meta$$.next([
+          {
+            name: 'description',
+            content: excerpt,
+          },
+          {
+            property: 'og:title',
+            content: pageTitle,
+          },
+          {
+            property: 'og:url',
+            content: `https://engineering.backbase.com${state.url}`,
+          },
+          {
+            property: 'og:image',
+            content: `https://engineering.backbase.com${state.url}/${displayTeaser?.md}`,
+          },
+          {
+            property: 'og:description',
+            content: excerpt,
+          },
+        ])
+      }),
       catchError((_: any) => {
         router.navigate(['**'], { skipLocationChange: true });
         return EMPTY;

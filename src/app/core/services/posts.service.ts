@@ -101,7 +101,7 @@ export class PostsService {
         );
         const entries = Object.entries(categories);
         return entries
-          .sort((a, b) => b[1] - a[1])
+          .sort(([_, a], [__, b]) => b - a)
           .map(entry => entry[0] as Category);
       })
     );

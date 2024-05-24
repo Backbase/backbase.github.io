@@ -17,7 +17,7 @@ async function scanDirectory(directoryPath, filesArray, routesArray) {
       // If the file is named "meta.json", read its content and add it to the array
       const fileContent = fs.readFileSync(filePath, 'utf8');
 
-      const metaData = utils.extractPostMetaData(fileContent);
+      const metaData = utils.extractPostMetaData(fileContent, true);
       filesArray.push(metaData);
       routesArray.push(directoryPath.replace('content/posts', ''));
     }

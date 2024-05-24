@@ -8,7 +8,7 @@ import {
 import { ActivationEnd, EventType, Router, provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
-import { Meta, provideClientHydration } from '@angular/platform-browser';
+import { Meta, MetaDefinition, provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
@@ -61,10 +61,12 @@ export const appConfig: ApplicationConfig = {
       useFactory: (router: Router, meta: Meta) => () => {
         router.events
         .pipe(
-          filter((event): event is ActivationEnd => event.type === EventType.ActivationEnd && !!event.snapshot.component),
+          filter((event): event is ActivationEnd =>
+            event.type === EventType.ActivationEnd && !!event.snapshot.component),
         )
         .subscribe(({ snapshot }: ActivationEnd) => {
-          meta.addTags(snapshot.data['meta']);
+          const tags: MetaDefinition[] = snapshot.data['meta'] || [];
+          tags.forEach((tag) => meta.updateTag(tag));
         });
       },
       deps: [Router, Meta],
