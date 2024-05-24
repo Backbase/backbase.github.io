@@ -28,7 +28,7 @@
               "src/assets",
               {
                 "glob": "**/*.*",
-                "input": "content/authors/avatars/dist",
+                "input": "content/authors/avatars",
                 "output": "/authors"
               },
               {
@@ -77,6 +77,27 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
                   "maximumError": "6kb"
+                }
+              ],
+              "assets": [
+                "src/favicon.ico",
+                "src/assets",
+                {
+                  "glob": "**/*.*",
+                  "input": "content/authors/avatars",
+                  "output": "/authors",
+                  "ignore": ["*.*"]
+                },
+                {
+                  "glob": "**/*.*",
+                  "input": "content/posts",
+                  "output": "/",
+                  "ignore": ["**/assets/*.*"]
+                },
+                {
+                  "glob": "authors.json",
+                  "input": "content/authors",
+                  "output": "/"
                 }
               ],
               "outputHashing": "all"
@@ -155,6 +176,6 @@
     }
   },
   "cli": {
-    "analytics": "556498e4-0f5d-4721-ae8a-0641b9ceda2b"
+    "analytics": false
   }
 }

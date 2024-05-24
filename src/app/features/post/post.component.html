@@ -28,15 +28,15 @@
         </div>
       </div>
       <div class="post__header-image">
-        <img [src]="post | postUrl: post.teaser" alt="" />
+        <img [src]="post | postUrl : post.displayTeaser?.lg" alt="" />
       </div>
     </header>
     <div class="post__content">
       <aside class="post__content-table">
-        @if (isContentReady) {
+        @if (headers) {
           <blog-table-of-content
             class="sticky"
-            [headers]="(headers$ | async) || []"></blog-table-of-content>
+            [headers]="headers"></blog-table-of-content>
         }
       </aside>
       <article class="post__content-text center-container">

@@ -7,7 +7,7 @@
         <h2>{{ author.role }}</h2>
       </div>
 
-      <blog-avatar [url]="author.avatar"></blog-avatar>
+      <blog-avatar class="author__avatar" [url]="author.displayAvatar?.lg" [shadow]="true" format="square"></blog-avatar>
     </header>
     <aside>
       <div class="center-container">

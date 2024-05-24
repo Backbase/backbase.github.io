@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Author, AuthorsList } from '../model/author.model';
-import { Observable, map, shareReplay } from 'rxjs';
+import { Observable, map, shareReplay, tap } from 'rxjs';
+import { AUTHORS_AVATAR_PATH_TOKEN } from '../config/configuration-tokens';
+import { AssetsService } from './assets.service';
+import { ImageSize } from '../model/content.model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,12 +12,7 @@ import { Observable, map, shareReplay } from 'rxjs';
 export class AuthorsService {
   private cached: Observable<AuthorsList> = this.httpClient
     .get<AuthorsList>('authors.json')
-    .pipe(shareReplay());
-
-  constructor(private httpClient: HttpClient) {}
-
-  getAuthors(): Observable<AuthorsList> {
-    return this.cached.pipe(
+    .pipe(
       map(authors =>
         Object.keys(authors).reduce(
           (acc, curr) => ({
@@ -23,12 +21,23 @@ export class AuthorsService {
               ...authors[curr],
               fullname: curr,
               url: `people/${curr.toLowerCase().replace(/\W/g, '-')}`,
+              displayAvatar: this.generateAvatarPaths(authors[curr]?.avatar)
             },
           }),
           {}
         )
-      )
+      ),
+      shareReplay()
     );
+
+  constructor(
+    private httpClient: HttpClient,
+    private assetsService: AssetsService,
+    @Inject(AUTHORS_AVATAR_PATH_TOKEN) private basePath: string,
+  ) {}
+
+  getAuthors(): Observable<AuthorsList> {
+    return this.cached;
   }
 
   getAuthorsDetails(
@@ -41,5 +50,16 @@ export class AuthorsService {
         )
       )
     );
+  }
+
+  private generateAvatarPaths(url?: string) {
+    const sizes: ImageSize[] = ['sm', 'lg'];
+    if (url) {
+      return sizes.reduce((acc, curr) => ({
+        ...acc,
+        [curr]: `authors/${this.assetsService.getAssetPath(url, curr)}`
+      }), {});
+    }
+    return undefined;
   }
 }

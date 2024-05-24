@@ -1,13 +1,14 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Author } from '../../core/model/author.model';
 import { NgClass, NgStyle } from '@angular/common';
-import { AUTHORS_AVATAR_PATH_TOKEN } from '../../core/config/configuration-tokens';
 import { RouterLink } from '@angular/router';
+import { ImageSize } from '../../core/model/content.model';
+import { AvatarComponent } from '../avatar/avatar.component';
 
 @Component({
   selector: 'blog-author',
   standalone: true,
-  imports: [NgStyle, NgClass, RouterLink],
+  imports: [NgStyle, NgClass, RouterLink, AvatarComponent],
   templateUrl: './author.component.html',
   styleUrl: './author.component.scss',
 })
@@ -24,14 +25,9 @@ export class AuthorComponent {
       this.author = value;
     }
   }
-  @Input() size: string = 'sm';
+  @Input() size: ImageSize = 'sm';
   @Input() muted = false;
 
   author!: Author;
 
-  get imagePath() {
-    return `${this.basePath}/${this.size}/${this.author.avatar}`;
-  }
-
-  constructor(@Inject(AUTHORS_AVATAR_PATH_TOKEN) protected basePath: string) {}
 }
