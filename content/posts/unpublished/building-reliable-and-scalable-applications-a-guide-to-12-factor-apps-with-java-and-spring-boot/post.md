@@ -27,6 +27,7 @@ Let's explore how to implement these principles using Java and Spring Boot:
 
 Maintain a single codebase for your application, typically stored in a centralized version control system like Subversion or decentralized version control system like Git. This ensures consistent code across development, staging, and production environments. 
 ![](assets/image.png)
+
 Multiple apps should not share same codebase, rather shared code as libraries which can be added as [dependencies](#2-dependencies). In reality there can be multple deployments of an app from the same codebase, although code versions may differ in each deployment. 
 ![](assets/image-1.png)
 
