@@ -1,16 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Input,
   ViewEncapsulation,
 } from '@angular/core';
-import { AsyncPipe, DatePipe } from '@angular/common';
-import {
-  Observable,
-  map,
-} from 'rxjs';
+import { DatePipe } from '@angular/common';
 import { PostContent } from '../../core/model/post.model';
 import {
-  ActivatedRoute,
   RouterLink,
   RouterModule,
 } from '@angular/router';
@@ -33,7 +29,6 @@ import { RelatedPostsComponent } from '../related-posts/related-posts.component'
   selector: 'blog-post',
   standalone: true,
   imports: [
-    AsyncPipe,
     DatePipe,
     MarkdownModule,
     AuthorComponent,
@@ -57,13 +52,14 @@ import { RelatedPostsComponent } from '../related-posts/related-posts.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostComponent {
-  post$: Observable<PostContent | undefined> =
-    this.activatedRoute.data.pipe(map(({ post }) => post));
+  /**
+   * From route data
+   */
+  @Input() post!: PostContent;
 
   Category = Object.fromEntries(Object.entries(Category));
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private htmlInMarkdownService: HtmlInMarkdownService,
   ) {}
 

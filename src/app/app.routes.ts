@@ -1,15 +1,10 @@
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Route, Router, RouterStateSnapshot, Routes } from '@angular/router';
 import { postRedirects } from './app.routes.map';
-import { EMPTY, Subject, catchError, tap } from 'rxjs';
-import { Injectable, inject } from '@angular/core';
-import { PostsService } from './core/services/posts.service';
+import { EMPTY, Subject, catchError, map, tap } from 'rxjs';
+import { inject } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
-
-@Injectable({ providedIn: 'root' })
-class RouteDetails {
-  title$$ = new Subject<string>();
-  meta$$ = new Subject<MetaDefinition[]>;
-}
+import { PostContent } from './core/model/post.model';
+import { PostsService } from './core/services/posts.service';
 
 export const routes: Routes = [
   {
@@ -55,21 +50,13 @@ export const routes: Routes = [
         path: ':year/:month/:day/:permalink',
         loadComponent: () =>
           import('./features/post/post.component').then(m => m.PostComponent),
-        resolve: {
-          post: postFactory,
-          meta: () => inject(RouteDetails).meta$$,
-        },
-        title: () => inject(RouteDetails).title$$,
+        ...getRouteData(),
       },
       {
         path: 'unpublished/:permalink',
         loadComponent: () =>
           import('./features/post/post.component').then(m => m.PostComponent),
-        resolve: {
-          post: postFactory,
-          meta: () => inject(RouteDetails).meta$$,
-        },
-        title: () => inject(RouteDetails).title$$,
+        ...getRouteData()
       },
       {
         path: 'category/:cat',
@@ -89,11 +76,7 @@ export const routes: Routes = [
         path: 'principles/:permalink',
         loadComponent: () =>
           import('./features/post/post.component').then(m => m.PostComponent),
-        resolve: {
-          post: postFactory,
-          meta: () => inject(RouteDetails).meta$$,
-        },
-        title: () => inject(RouteDetails).title$$,
+        ...getRouteData()
       },
       {
         path: 'people',
@@ -113,26 +96,30 @@ export const routes: Routes = [
   }
 ];
 
-function postFactory(activatedRouteSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-  const router = inject(Router);
-  const routeDetails = inject(RouteDetails);
-  return inject(PostsService).getPost(state.url)
-    .pipe(
-      tap(({
-        title,
-        excerpt,
-        displayTeaser,
-      }) => {
-        const pageTitle = `${title} | ${activatedRouteSnapshot.parent?.title}`;
-        routeDetails.title$$.next(pageTitle);
-        routeDetails.meta$$.next([
+function getRouteData(): Partial<Route> {
+  const postData = new Subject<PostContent>();
+  return {
+    resolve: {
+      post: (_: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot) => {
+        const router = inject(Router);
+        return inject(PostsService).getPost(routerStateSnapshot.url)
+          .pipe(
+            tap(post => postData.next(post)),
+            catchError((_: any) => {
+              router.navigate(['**'], { skipLocationChange: true });
+              return EMPTY;
+            })
+          )
+      },
+      meta: (activatedRouteSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
+        postData.pipe((map(({ excerpt, title, displayTeaser }) => [
           {
             name: 'description',
             content: excerpt,
           },
           {
             property: 'og:title',
-            content: pageTitle,
+            content: `${title} | ${activatedRouteSnapshot.parent?.title}`,
           },
           {
             property: 'og:url',
@@ -146,11 +133,9 @@ function postFactory(activatedRouteSnapshot: ActivatedRouteSnapshot, state: Rout
             property: 'og:description',
             content: excerpt,
           },
-        ])
-      }),
-      catchError((_: any) => {
-        router.navigate(['**'], { skipLocationChange: true });
-        return EMPTY;
-      })
-    );
+        ])))
+    },
+    title: (activatedRouteSnapshot: ActivatedRouteSnapshot) =>
+      postData.pipe((map(({ title }) => `${title} | ${activatedRouteSnapshot.parent?.title}`)))
+  }
 }

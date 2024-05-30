@@ -5,7 +5,14 @@ import {
   importProvidersFrom,
   isDevMode,
 } from '@angular/core';
-import { ActivationEnd, EventType, Router, provideRouter, withInMemoryScrolling } from '@angular/router';
+import {
+  ActivationEnd,
+  EventType,
+  Router,
+  provideRouter,
+  withComponentInputBinding,
+  withInMemoryScrolling
+} from '@angular/router';
 
 import { routes } from './app.routes';
 import { Meta, MetaDefinition, provideClientHydration } from '@angular/platform-browser';
@@ -14,7 +21,12 @@ import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import markdownConfig from './markdown.config';
 import { DOCUMENT } from '@angular/common';
-import { AUTHORS_AVATAR_PATH_TOKEN, USE_PROCESSED_IMAGES, O11Y_CONFIG_TOKEN, SPECIAL_CATEGORIES } from './core/config/configuration-tokens';
+import {
+  AUTHORS_AVATAR_PATH_TOKEN,
+  USE_PROCESSED_IMAGES,
+  O11Y_CONFIG_TOKEN,
+  SPECIAL_CATEGORIES
+} from './core/config/configuration-tokens';
 import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
 import { ObservabilityConfig } from './core/model/observability.model';
 import * as pkg from '../../package.json';
@@ -28,7 +40,8 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({
         scrollPositionRestoration: 'enabled',
         anchorScrolling: 'enabled',
-      })
+      }),
+      withComponentInputBinding(),
     ),
     provideClientHydration(),
     provideAnimations(),
@@ -58,17 +71,14 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_INITIALIZER,
       multi: true,
-      useFactory: (router: Router, meta: Meta) => () => {
-        router.events
-        .pipe(
+      useFactory: (router: Router, meta: Meta) => () =>
+        router.events.pipe(
           filter((event): event is ActivationEnd =>
             event.type === EventType.ActivationEnd && !!event.snapshot.component),
-        )
-        .subscribe(({ snapshot }: ActivationEnd) => {
+        ).subscribe(({ snapshot }: ActivationEnd) => {
           const tags: MetaDefinition[] = snapshot.data['meta'] || [];
           tags.forEach((tag) => meta.updateTag(tag));
-        });
-      },
+        }),
       deps: [Router, Meta],
     },
     {
