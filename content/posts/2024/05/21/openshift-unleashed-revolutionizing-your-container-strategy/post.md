@@ -1,8 +1,8 @@
-# Openshift Container Platform - Basics and Nuances
+# OpenShift Unleashed: Revolutionizing Your Container Strategy
 
-Azure’s limitless potential sets the stage for a promising journey, where opportunities abound on the horizon.
+Explore the future of containerized applications with Red Hat OpenShift Container Platform: A guide to understanding the basics, nuances of the platform.
 
-![](assets/redhatlogo.jpeg)
+![](assets/redhatlogo.png)
 
 Authors: Akshay PK, Sriram Seshadri , Sri Balaji
 Date: 2024-05-21
@@ -86,7 +86,7 @@ The above operator comes bundled with all the niceties of [ArgoCD](https://argop
 
 This section describes the nuances and differences of working with the RedHat Openshift Container Platform and the deployment aspects of Backbase product capabilities.
 
-**Tightened Security**
+### **Tightened Security**
 
 By default, the Openshift container platform comes with security context constraints that’s described here : [Managing security context constraints | Authentication and authorization | OpenShift Container Platform 4.15 ](https://docs.openshift.com/container-platform/4.15/authentication/managing-security-context-constraints.html)
 
@@ -96,7 +96,7 @@ The Backbase product capabilities are all secure, [distroless](https://github.co
 
 To overcome the problem mentioned in the above section we can modify the FE angular app’s Dockerfile which is based on the web-base docker image to modify root group permissions to those directories that contain the nginx installation process and the HTML statics folder because the arbitrary user assigned by Openshift will be part of the root group.
 
-## **Kubernetes Ingress vs Openshift Route**
+### **Kubernetes Ingress vs Openshift Route**
 
 This page even though written 6 years back is still a great article to learn about the differences between a Kubernetes Ingress and an Openshift Route : [Kubernetes Ingress vs OpenShift Route](https://www.redhat.com/en/blog/kubernetes-ingress-vs-openshift-route)
 
@@ -148,7 +148,7 @@ route:
 ```
 _**Note:**_ The above template can also be modified according to the client’s requirements to include other route features.
 
-## **Block Exposed URLs**
+### **Block Exposed URLs**
 
 Some exposed URLs that have to be blocked from public internet access and to only be accessible from the private network. These URLs are described here: [Block Exposed URLs](https://backbase.io/developers/documentation/security/infrastructure/block-exposed-urls/) as part of security best practices. These URLs can be blocked from public internet access directly on the Openshift route or any layer of networking above the Openshift route such as a WAF as a recommended practice. The following snippet shows how to do IP-based restriction on an Openshift route with a path to ensure it’s blocked from public access but can still be accessed from the private network. This configuration is however recommended to do on a WAF layer. 
 
@@ -156,7 +156,7 @@ Some exposed URLs that have to be blocked from public internet access and to onl
 haproxy.router.openshift.io/ip_whitelist: '<IPv4 address>'
 ```
 
-**Rate Limiting**
+### **Rate Limiting**
 
 The production hardening guide dictates what URLs should be configured with [Rate Limiting](https://backbase.io/developers/documentation/security/overview/production-hardening-guide/). Rate limiting restricts the number of requests allowed from each originating IP address within a specific time frame.
 
@@ -170,7 +170,7 @@ haproxy.router.openshift.io/rate-limit-connections: 'true'
 haproxy.router.openshift.io/rate-limit-connections.rate-http: '500' # Values are dependent on customer usecase
 ```
 
-**Cache-Control Header**
+### **Cache-Control Header**
 
 There was a finding during penetration testing that the Cache-Control header had no-cache but not no-store for certain API endpoints. To mitigate this on the Openshift infrastructure layer from 4.14 version of Openshift onwards, the response header could be set on the Openshift route itself as part of it’s configuration : [Route configuration - Configuring Routes | Networking | OpenShift Container Platform 4.15](https://docs.openshift.com/container-platform/4.15/networking/routes/route-configuration.html#nw-http-header-configuration_route-configuration) 
 
@@ -188,7 +188,7 @@ spec:
             value: no-cache,no-store
 ```
 
-**Cookie SameSite**
+### **Cookie SameSite**
 
 This article from OWASP describes what the SameSite attribute for a Cookie is all about and what are it’s possible values [SameSite | OWASP Foundation](https://owasp.org/www-community/SameSite) 
 
@@ -199,7 +199,7 @@ An example snippet of the same :
 router.openshift.io/cookie-same-site: 'Strict'
 ```
 
-## **Service Monitors**
+### **Service Monitors**
 
 The RedHat Openshift Container Platform comes bundled with a monitoring stack that uses Promethues which is explained in a lot of detail here : Monitoring overview - [Monitoring | Observability | OpenShift Container Platform 4.15](https://docs.openshift.com/container-platform/4.15/observability/monitoring/monitoring-overview.html) 
 
