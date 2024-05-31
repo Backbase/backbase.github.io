@@ -1,4 +1,4 @@
-# OpenShift Unleashed: Revolutionizing Your Container Strategy
+# OpenShift Unleashed
 
 Explore the future of containerized applications with Red Hat OpenShift Container Platform: A guide to understanding the basics, nuances of the platform.
 
