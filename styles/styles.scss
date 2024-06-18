@@ -66,6 +66,10 @@
   @each $size, $width in $breakpoints {
     --blog-breakpoint-#{$size}: #{$width};
   }
+
+  .mat-typography p {
+    margin-bottom: 1.5em;
+  }
 }
 
 html,
