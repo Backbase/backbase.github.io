@@ -9,6 +9,11 @@ a {
 }
 .post {
   &__header {
+    h2.lead.mat-body-2 {
+      font-weight: normal;
+      font-size: 1.25em;
+    }
+
     margin: 3rem 1rem;
     @include responsive.up('lg') {
       display: flex;

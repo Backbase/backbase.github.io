@@ -12,7 +12,7 @@
           </mat-chip>
         </mat-chip-set>
         <h1>{{ post.title }}</h1>
-        <h2>{{ post.excerpt }}</h2>
+        <h2 class="mat-body-2 lead">{{ post.excerpt }}</h2>
         <span class="post__header-info">
           @if (post.date) {
             {{ post.date | date: 'longDate' }} |
