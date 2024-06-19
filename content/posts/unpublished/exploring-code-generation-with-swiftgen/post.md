@@ -12,30 +12,30 @@ tags: iOS,SwiftGen,Code generation,tooling
 
 ---
 
-Most of the applications are using many types of resources to enrich user experience. It may be something that is user-facing like images, animations, videos, fonts, or something more low-level like strings or configuration in any form (JSON, Plist, YAML).
-While our application grows we tend to add new resources, amend existing ones, or even remove some which are not needed anymore.
-Due to resources nature - they are loaded in runtime and referenced by string literals - it's easy to go out-of-sync between what we have bundled into our application and what we are trying to reference in our code.
+Most of the apps are using many types of resources to enrich user experience. It may be something that is user-facing like images, animations, videos, fonts, or something more low-level like strings or configuration in any form (JSON, Plist, YAML).
+While our app grows we tend to add new resources, amend existing ones, or even remove some which are not needed anymore.
+Due to resources nature - they are loaded in runtime and referenced by string literals - it's easy to go out-of-sync between what we have bundled into our app and what we are trying to reference in our code.
 Let's check how we can improve developers experience by leveraging code generation to make type-safe constants (as Swift code) for our project resources, but first, let's take a closer look at issues we may face during development related to using resources.
 
-## Issues related with using resources in our applications
+## Issues related with using resources in our apps
 
 Let's take a look at the most used resources we are using while developing our apps and focus on issues we may face related to run-time nature of them.
 
 ### Strings
 
-For applications that support multiple languages, we used to use the [NSLocalizedString](https://developer.apple.com/documentation/foundation/1418095-nslocalizedstring) macro.
+For apps that support multiple languages, we used to use the [NSLocalizedString](https://developer.apple.com/documentation/foundation/1418095-nslocalizedstring) macro.
 
 Let's try to make our *My Profile* screen localizable.
 
-To be able to use the above macro, we need at least one LocalizableStrings file bundled with our application filled with key-value pairs like:
+To be able to use the above macro, we need at least one LocalizableStrings file bundled with our app filled with key-value pairs like:
 
 ```
 // Localizable.strings
 // ... 
 /* Personal Information text overrides */
 "personal_information.screen_title" = "My Profile";
-"personal_information.email_selection.section_title" = "E-mail address";
-"personal_information.email_selection.add_new" = "Add new e-mail";
+"personal_information.email_selection.section_title" = "Email address";
+"personal_information.email_selection.add_new" = "Add new email";
 "personal_information.phone_selection.section_title" = "Phone number";
 "personal_information.phone_selection.add_new" = "Add new phone";
 // ...
@@ -56,10 +56,10 @@ func setupStaticCopy() {
 }
 ```
 
-The outcome when we run the application will be:
-![Result after running application.](assets/1.png)
+The outcome when we run the app will be:
+![Result after running app.](assets/1.png)
 
-As you noted, instead of the expected: *"Add new e-mail"* text we get a localizable key instead.
+As you noted, instead of the expected: *"Add new email"* text we get a localizable key instead.
 
 It's due to a silly typo made while "retyping" the key for localized macro. Instead of add_new suffix, we have `add_news`. Above typo is quite easy to notice in runtime as it appear on main screen without any conditions or branching logic for text to display.
 
@@ -72,11 +72,11 @@ It's due to a silly typo made while "retyping" the key for localized macro. Inst
 
 ### Images and colors
 
-It's hard to imagine an application that doesn't use any media like images, videos, or custom colors to make the app unique.
+It's hard to imagine an app that doesn't use any media like images, videos, or custom colors to make the app unique.
 
-Let's consider the scenario where we would like to apply some icons for the application *TabBar* with the assumption that selected items display highlighted and filled icon variants.
+Let's consider the scenario where we would like to apply some icons for the app *TabBar* with the assumption that selected items display highlighted and filled icon variants.
 
-To be able to reference media in an application we need to put them inside the `xcmedia` (Asset Catalog) directory.
+To be able to reference media in an app we need to put them inside the `xcmedia` (Asset Catalog) directory.
 
 ![Media directory containing Tab bar icons and custom colors.](assets/2.png)
 
@@ -96,9 +96,9 @@ func setupMedia() {
 }
 ```
 
-![Actual and expected results of running application.](assets/3.png)
+![Actual and expected results of running app.](assets/3.png)
 
-When we run the application, at first glance all is good, but when we switch the tab to *Accounts* we will notice that our icon is highlighted but hasn't changed appearance to filled. The above issue appeared as the resource name used to instantiate the selected image was mistyped as `TabBarIcons/Account/Selected` instead of `TabBarIcons/Accounts/Selected` (there is a missing `s` in the middle path component).
+When we run the app, at first glance all is good, but when we switch the tab to *Accounts* we will notice that our icon is highlighted but hasn't changed appearance to filled. The above issue appeared as the resource name used to instantiate the selected image was mistyped as `TabBarIcons/Account/Selected` instead of `TabBarIcons/Accounts/Selected` (there is a missing `s` in the middle path component).
 
 To spot the above issue, we need to perform some actions - select an element on UI.
 
@@ -111,7 +111,7 @@ To spot the above issue, we need to perform some actions - select an element on 
 
 ### JSON files
 
-Some applications use resources like JSON, YAML, or Plist files to provide runtime configuration capabilities. Such files can be used to supply *Remote Configuration* default/fallback parameters.
+Some apps use resources like JSON, YAML, or Plist files to provide runtime configuration capabilities. Such files can be used to supply *Remote Configuration* default/fallback parameters.
 
 > **Info:**
 >
@@ -125,7 +125,7 @@ Some applications use resources like JSON, YAML, or Plist files to provide runti
 Let's consider the scenario where we would like to drive the visibility of *the Cancel Payment* button on the payment details screen. There are a few assumptions about our *Remote Config *integration:
 
 - Fallback values are defined in the JSON file.
-- *Remote Config* SDK is initialized on the application lever.
+- *Remote Config* SDK is initialized on the app lever.
 - SDK is active and overrides are fetched from *the Remote Config* Service.
   - `paymentDetailsCancelEnabled` is set to true
 
@@ -155,7 +155,7 @@ final class DefaultPaymentDetailsViewModel: PaymentDetailsViewModel {
 
 ![](assets/4.png)
 
-When we run the application and navigate to *Payment Details* below screen will be visible.
+When we run the app and navigate to *Payment Details* below screen will be visible.
 
 At first glance all is good and the button is visible as `paymentDetailsCancelEnabled` was set to `true` in the remote config service, but once we toggle that value or remove it in the *Remote Config Service App*, the outcome doesn't change.
 
@@ -167,7 +167,7 @@ This kind of bug requires much more effort to identify due to integration with 3
 
 > **Note:**
 >
-> The above code exposes one more issue related to data inconsistency. The configuration default value for `paymentDetailsCancelEnabled` is set to `false`, but in the application code in case of missing value, we fallback to `true` (via `?? true` syntax).
+> The above code exposes one more issue related to data inconsistency. The configuration default value for `paymentDetailsCancelEnabled` is set to `false`, but in the app code in case of missing value, we fallback to `true` (via `?? true` syntax).
 >
 
 ### Wrap up
@@ -281,10 +281,10 @@ internal enum L10n {
   internal enum PersonalInformation {
     internal static let screenTitle = L10n.tr("Localizable", "personal_information.screen_title", fallback: "My Profile")
     internal enum EmailSelection {
-      /// Add new e-mail
-      internal static let addNew = L10n.tr("Localizable", "personal_information.email_selection.add_new", fallback: "Add new e-mail")
-      /// E-mail address
-      internal static let email = L10n.tr("Localizable", "personal_information.email_selection.section_title", fallback: "E-mail address")
+      /// Add new email
+      internal static let addNew = L10n.tr("Localizable", "personal_information.email_selection.add_new", fallback: "Add new email")
+      /// Email address
+      internal static let email = L10n.tr("Localizable", "personal_information.email_selection.section_title", fallback: "Email address")
     }
     internal enum PhoneSelection {
       /// Add new phone
@@ -322,9 +322,9 @@ Localizations may be represented by static constants (let properties) or static 
 
 > **Note:**
 >
-> Even though we can use any of [String Format Specifiers](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Strings/Articles/formatSpecifiers.html) in `.strings` files it is good practice to properly format attributes in the application itself and pass the result as a String value.
+> Even though we can use any of [String Format Specifiers](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Strings/Articles/formatSpecifiers.html) in `.strings` files it is good practice to properly format attributes in the app itself and pass the result as a String value.
 >
-> This way application will be responsible for proper formatting without "employing" the Operating System to format inputs on the application's behalf.
+> This way app will be responsible for proper formatting without "employing" the Operating System to format inputs on the app's behalf.
 
 As we are using a "structured" template for localization, constants will be structured into namespaces where `.` (dot) is considered as delimiter (we are able to override it via configuration).
 
@@ -802,13 +802,13 @@ extension RemoteConfig {
 > - Don't reference values that are removed as part of the cleanup.
 > - Won't assign a bool value to string property due to type check.
 >
-> Lastly, we eliminated the issue with different code fallback values (due to nil coalescing checks) across multiple places in the application as the fallback value will be supplied during compilation by **SwiftGen**.
+> Lastly, we eliminated the issue with different code fallback values (due to nil coalescing checks) across multiple places in the app as the fallback value will be supplied during compilation by **SwiftGen**.
 
 ## Wrap up
 
 We touched only the surface of what we can achieve and how we can improve the developer experience by going through some basic use cases. Besides parsers which we use above there are several others that may be used for other purposes to improve code base and keep code in sync with resources.
 
-To conclude: **SwiftGen** is a really powerful tool that together with **Stencil** and custom templates may resolve massive issues related to using resources bundled with our application.
+To conclude: **SwiftGen** is a really powerful tool that together with **Stencil** and custom templates may resolve massive issues related to using resources bundled with our app.
 
 Out-of-the-box templates fit most of the developer's needs, but if we need some specific/tailored approach to code generation we are able to create our own template.
 
