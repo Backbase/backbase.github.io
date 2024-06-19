@@ -1,6 +1,6 @@
 # Cisco Appdynamics
 
-Exploring the Future of Application Performance Management with Cisco AppDynamics.
+Explore the Future of Application Performance Management with Cisco AppDynamics.
 
 ![](assets/appdynamicslogo.png)
 
