@@ -18,7 +18,7 @@ tags: appdynamics,devops,system engineering,cloud
 
 Another description that one comes across : “Dramatically simplify application instrumentation through intelligent agent automation and lifecycle management”. 
 
-So what does Cisco AppDynamics do? Cisco AppDynamics is an application performance management (APM) and IT operations analytics (ITOA) platform that provides comprehensive visibility and insight into application performance, user experiences, and business outcomes. It helps organizations ensure their applications are always running smoothly and efficiently, providing a seamless experience for users. It gathers metrics on various levels and it’s features are : 
+What does Cisco AppDynamics do? Cisco AppDynamics is an application performance management (APM) and IT operations analytics (ITOA) platform that provides comprehensive visibility and insight into application performance, user experiences, and business outcomes. It helps organizations ensure their applications are always running smoothly and efficiently, providing a seamless experience for users. It gathers metrics on various levels and it’s features are : 
 
 - Business performance monitoring
 
@@ -48,7 +48,7 @@ In today's digital landscape, organizations rely heavily on complex, distributed
 
 Organizations face several challenges in managing the performance and reliability of their applications such as to name a few : 
 
-- **Visibility Issues:** Lack of comprehensive visibility into the entire application stack, making it difficult to monitor performance across different layers (e.g., frontend, backend, database, infrastructure).
+- **Visibility Issues:** Lack of comprehensive visibility into the entire application stack, making it difficult to monitor performance across different layers (For example: frontend, backend, database, infrastructure).
 
 - **Performance Degradation:** Unidentified bottlenecks and performance issues leading to slow response times, errors, and downtime, adversely affecting user experience and business operations.
 
@@ -77,7 +77,7 @@ In this section we will take a look at how the AppDynamics agent can be injected
 
 Let’s consider the use case where the AppDynamics platform components are installed and we have all the necessary details with us which is described further below in this section to start integrating the spring boot application with the AppDynamics java agent. 
 
-In a Kubernetes like environment, the init-container pattern is used specifically for this use case as it is used to run additional containers at startup that helps initialize an application. Once the init containers have completed their initialization tasks, they terminate but leave the application container(s) running. For the App Server Agent installation, init containers are used as a delivery mechanism to copy the agent files into the application container at deploy time.
+In a Kubernetes like environment, the init-container pattern is used specifically for this use case as it is used to run additional containers at startup that helps initialize an application. Once the init containers have completed their initialization tasks, they terminate but leave the application containers running. For the App Server Agent installation, init containers are used as a delivery mechanism to copy the agent files into the application container at deploy time.
 
 ### **Prerequisites**
 
@@ -113,9 +113,9 @@ In a Kubernetes like environment, the init-container pattern is used specificall
 "APPDYNAMICS_AGENT_APPLICATION_NAME": <>
 "APPDYNAMICS_JAVA_AGENT_REUSE_NODE_NAME": "true"
 "APPDYNAMICS_CONTROLLER_SSL_ENABLED": "true"
-"APPDYNAMICS_CONTROLLER_HOST_NAME": <> #For Eg: appdynamicscontrolleruat.example.com
+"APPDYNAMICS_CONTROLLER_HOST_NAME": <> #For Example: appdynamicscontrolleruat.example.com
 "APPDYNAMICS_CONTROLLER_PORT": "8181"
-"APPDYNAMICS_POD_NAMESPACE": <> #For Eg: backbase
+"APPDYNAMICS_POD_NAMESPACE": <> #For Example: backbase
 "APPDYNAMICS_AGENT_ACCOUNT_NAME": <>
 "APPDYNAMICS_AGENT_TIER_NAME": <>
 "APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY":
