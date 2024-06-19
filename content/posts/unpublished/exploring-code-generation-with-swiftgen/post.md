@@ -163,7 +163,7 @@ The expected result should be a screen without *the Cancel Payment* button as `p
 
 The bug is caused by an invalid key passed to the remote config `getBool(for:)` method. Enabled is mistyped and as a result we are getting `nil` from the mentioned method. As we fallback to `true` in our code, button is always visible.
 
-This kind of bug requires much more effort to identify due to integration with 3rd part services.
+This kind of bug requires much more effort to identify due to integration with third party service.
 
 > **Note:**
 >
