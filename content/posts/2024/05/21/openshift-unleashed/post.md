@@ -59,13 +59,14 @@ On a very high level this following diagram present in the pages above describes
 ![](assets/product-arch.png)
 
 
-## **Backbase Deployment Topology**
+## **Deployment Topology**
 
-Let’s consider that all the necessary infrastructure components are present for the deployment of Backbase microservices and development is in full swing with Secure SDLC practices, deployment on RedHat Openshift Container Platform would look something very similar to deploying Backbase on a cloud based platform such as AWS, Azure or GCP with certain nuances specific to RedHat Openshift Container Platform. The below diagram depicts an example for the same : 
+Let’s consider that all the necessary infrastructure components are present for the deployment of  microservices and development is in full swing with Secure SDLC practices, deployment on RedHat Openshift Container Platform would look something very similar to deploying microservices on a cloud based platform such as AWS, Azure or GCP with certain nuances specific to RedHat Openshift Container Platform. The below diagram depicts an example for the same : 
+ 
 
 ![](assets/deployment-topology.png)
 
-In any traditional Kubernetes deployment, the Backbase product capabilities would be deployed to a namespace whereas in Openshift, they are called as Openshift projects. 
+In any traditional Kubernetes deployment, the microservices would be deployed to a namespace whereas in Openshift, they are called as Openshift projects. 
 
 In the above diagram, GitHub and JFrog Artifactory are two tools that are used for source code management and artifact/binary management which are two specific examples of tools used. For more details on the same : 
  
@@ -84,28 +85,21 @@ The above operator comes bundled with all the niceties of [ArgoCD](https://argop
 
 ## **Nuances - RedHat Openshift Container Platform**
 
-This section describes the nuances and differences of working with the RedHat Openshift Container Platform and the deployment aspects of Backbase product capabilities.
+This section describes the nuances and differences of working with the RedHat Openshift Container Platform and the deployment aspects of microservices.
 
 ### **Tightened Security**
 
 By default, the Openshift container platform comes with security context constraints that’s described here : [Managing security context constraints | Authentication and authorization | OpenShift Container Platform 4.15 ](https://docs.openshift.com/container-platform/4.15/authentication/managing-security-context-constraints.html)
 
-The Backbase product capability images are all secure, distroless, non-root images and therefore without any modification can be installed on the Openshift container platform. The web-base docker image used to run web applications is not compatible with the tightened security of the RedHat Openshift Container Platform under the restricted SCC : Managing SCCs in OpenShift  because of the way UID’s are allocated during the creation of an Openshift project and the way a UID is allocated from that range when a pod is created which is described in this page :
-
-The Backbase product capabilities are all secure, [distroless](https://github.com/GoogleContainerTools/distroless), non-root images and therefore without any modification can be installed on the Openshift container platform. The [web-base](https://repo.backbase.com/ui/native/backbase-docker-releases/web-base/) docker image used to run web applications is not compatible with the tightened security of the RedHat Openshift Container Platform under the restricted SCC : [Managing SCCs in OpenShift ](https://www.redhat.com/en/blog/managing-sccs-in-openshift) because of the way UID’s are allocated during the creation of an Openshift project and the way a UID is allocated from that range when a pod is created which is described in this page : [A Guide to OpenShift and UIDs ](https://www.redhat.com/en/blog/a-guide-to-openshift-and-uids)
-
-To overcome the problem mentioned in the above section we can modify the FE angular app’s Dockerfile which is based on the web-base docker image to modify root group permissions to those directories that contain the nginx installation process and the HTML statics folder because the arbitrary user assigned by Openshift will be part of the root group.
+The tightened security of the RedHat Openshift Container Platform under the restricted SCC : [Managing SCCs in OpenShift](https://www.redhat.com/en/blog/managing-sccs-in-openshift) because of the way UID’s are allocated during the creation of an Openshift project and the way a UID is allocated from that range when a pod is created which is described in this page : [A Guide to OpenShift and UIDs](https://www.redhat.com/en/blog/a-guide-to-openshift-and-uids)
 
 ### **Kubernetes Ingress vs Openshift Route**
 
 This page even though written 6 years back is still a great article to learn about the differences between a Kubernetes Ingress and an Openshift Route : [Kubernetes Ingress vs OpenShift Route](https://www.redhat.com/en/blog/kubernetes-ingress-vs-openshift-route)
 
-In most projects that run Openshift on a client’s infrastructure the recommended object to use for routing is an Openshift route as it has more features than that of a Kubernetes Ingress which is described in the above page. 
+In most projects that run Openshift the recommended object to use for routing is an Openshift route as it has more features than that of a Kubernetes Ingress which is described in the above page.  
 
-_**Note:**_ For a Backbase web application with respect to Openshift, two Routes have to be created with the same hostname but different paths pointing to different backend services. For Example : A ‘/' path that points to the web application service and a '/api’ path that points to the edge service. 
-
-
-Multiple ways exist to create a route through configuration where one such example is described below where a route template manifest is added to the templates/ folder of a helm chart with a condition to enable or disable the creation of the same. 
+Multiple ways to create a route through configuration where one such example is described below where a route template manifest is added to the templates/ folder of a helm chart with a condition to enable or disable the creation of the same. 
 
 ```yaml
 
@@ -134,7 +128,6 @@ spec:
 With this template, route can be created to expose a service to the outside of a cluster, simply add this to the helm chart’s values file. 
 
 ```yaml
-
 route:
   enabled: true
   name: #<name of the route>
@@ -144,13 +137,11 @@ route:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
   wildcardPolicy: None
-
 ```
-_**Note:**_ The above template can also be modified according to the client’s requirements to include other route features.
 
 ### **Block Exposed URLs**
 
-Some exposed URLs that have to be blocked from public internet access and to only be accessible from the private network. These URLs are described here: [Block Exposed URLs](https://backbase.io/developers/documentation/security/infrastructure/block-exposed-urls/) as part of security best practices. These URLs can be blocked from public internet access directly on the Openshift route or any layer of networking above the Openshift route such as a WAF as a recommended practice. The following snippet shows how to do IP-based restriction on an Openshift route with a path to ensure it’s blocked from public access but can still be accessed from the private network. This configuration is however recommended to do on a WAF layer. 
+Some exposed URLs that have to be blocked from public internet access and to only be accessible from the private network. These URLs can be blocked from public internet access directly on the Openshift route or any layer of networking above the Openshift route such as a WAF as a recommended practice. The following snippet shows how to do IP-based restriction on an Openshift route with a path to ensure it’s blocked from public access but can still be accessed from the private network. This configuration is however recommended to do on a WAF layer. 
 
 ```yaml
 haproxy.router.openshift.io/ip_whitelist: '<IPv4 address>'
@@ -158,11 +149,11 @@ haproxy.router.openshift.io/ip_whitelist: '<IPv4 address>'
 
 ### **Rate Limiting**
 
-The production hardening guide dictates what URLs should be configured with [Rate Limiting](https://backbase.io/developers/documentation/security/overview/production-hardening-guide/). Rate limiting restricts the number of requests allowed from each originating IP address within a specific time frame.
+Rate limiting restricts the number of requests allowed from each originating IP address within a specific time frame. 
 
 On the Openshift route layer, this can also be done through a set of annotations for TCP and HTTP traffic which is described here : [Route configuration - Configuring Routes | Networking | OpenShift Container Platform 4.15](https://docs.openshift.com/container-platform/4.15/networking/routes/route-configuration.html#nw-route-specific-annotations_route-configuration) 
 
-In simple terms the following configuration should be more than sufficient to enable rate limiting for a particular route and path. The configuration can be adjusted based on client requirements. This can also be tested if it works using JMeter and similar tools by sending concurrent requests. This configuration is however recommended to do on a WAF layer. 
+In simple terms the following configuration should be more than sufficient to enable rate limiting for a particular route and path. The configuration can be adjusted based on client requirements. This can also be tested if it works using JMeter and similar tools by sending concurrent requests. This configuration is however recommended to do on a WAF layer.
 
 
 ```yaml
@@ -172,7 +163,7 @@ haproxy.router.openshift.io/rate-limit-connections.rate-http: '500' # Values are
 
 ### **Cache-Control Header**
 
-There was a finding during penetration testing that the Cache-Control header had no-cache but not no-store for certain API endpoints. To mitigate this on the Openshift infrastructure layer from 4.14 version of Openshift onwards, the response header could be set on the Openshift route itself as part of it’s configuration : [Route configuration - Configuring Routes | Networking | OpenShift Container Platform 4.15](https://docs.openshift.com/container-platform/4.15/networking/routes/route-configuration.html#nw-http-header-configuration_route-configuration) 
+The Openshift infrastructure layer from 4.14 version of Openshift onwards, the response header could be set on the Openshift route itself as part of it’s configuration : [Route configuration - Configuring Routes | Networking | OpenShift Container Platform 4.15](https://docs.openshift.com/container-platform/4.15/networking/routes/route-configuration.html#nw-http-header-configuration_route-configuration) 
 
 An example snippet of the same under the spec section:
 
@@ -211,7 +202,7 @@ All the default platform monitoring components are present in the openshift-moni
 
 To scrape metrics of a user defined application one can use ServiceMonitor object described here : [Managing metrics - Monitoring | Observability | OpenShift Container Platform 4.15](https://docs.openshift.com/container-platform/4.15/observability/monitoring/managing-metrics.html)
 
-This allows to gather metrics related to the application such as JVM, GC etc based on a label that’s assigned to each deployment of a microservice when deployed to the cluster. In the following ServiceMonitor object example a label of app.backbase.com/monitoring: "true" is added while deploying the capability to the cluster based on which applications are selected to be scraped for metrics. 
+This allows to gather metrics related to the application such as JVM, GC etc based on a label that’s assigned to each deployment of a microservice when deployed to the cluster. In the following ServiceMonitor object example a label of app.example.com/monitoring: "true" is added while deploying the microservice to the cluster based on which applications are selected to be scraped for metrics. 
 
 ```yaml
 apiVersion: monitoring.coreos.com/v1
@@ -229,7 +220,7 @@ spec:
     path: /actuator/prometheus
   selector:
     matchLabels:
-      app.backbase.com/monitoring: "true"
+      app.example.com/monitoring: "true"
 ```
 
 If the actuator endpoints for scraping are protected behind authentication, the ServiceMonitor object also supports basic authentication with username/password as per the below example under the spec.endpoints section where the username/password can be referred from a Kubernetes Secret.
