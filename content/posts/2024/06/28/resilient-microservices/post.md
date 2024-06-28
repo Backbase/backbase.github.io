@@ -5,7 +5,7 @@ How can we make our microservice more resilient?
 ![](assets/res_micro.png)
 
 Authors: Sebastian Opacki, Rafał Łukowski
-Date: unpublished
+Date: 2024-06-28T15:01:55.872Z
 Category: backend
 
 tags: microservices,resillency,timeout,circuit breaker,retry
