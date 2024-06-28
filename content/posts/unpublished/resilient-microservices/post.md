@@ -19,7 +19,7 @@ Using a microservices architecture also allows us to manage specific areas witho
 Does that mean a microservices architecture has no flaws? No, there is nothing for free, we get certain benefits, but we also need to deal with other problems such as failures in microservices.
 Microservices applications rely heavily on distributed systems, ensuring resilience becomes a critical aspect of their design and performance.
 
-### **Understanding Microservices Resillence and Reiliency pattern**
+### **Understanding Microservices Resilience and Resiliency pattern**
 Resilience in microservices refers to a system's ability to anticipate and handle dependency failures, such as failures in other system microservices or third-party systems.
 In a world where plenty of services talk to each other we need to be prepared for failures that can be caused by various reasons such as service failures, network failures, and so on.
 Resiliency patterns in microservices are established mechanisms that enable applications to manage failures, ensuring stability even in complex, distributed systems.
@@ -185,7 +185,7 @@ public void initiateConfirmation(@Valid ScaConfirmationDTO confirmation) {
 }
 ```
 
-## Applicaion live properties:
+## Application live properties:
 ```bash
 resilience4j.retry.instances.postConfirmation.max-attempts: "3"
 resilience4j.retry.instances.postConfirmation.wait-duration: "1s"
