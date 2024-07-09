@@ -6,16 +6,16 @@ import {
   isDevMode,
 } from '@angular/core';
 import {
-  ActivationEnd,
-  EventType,
+  ActivatedRoute,
   Router,
   provideRouter,
   withComponentInputBinding,
-  withInMemoryScrolling
+  withInMemoryScrolling,
+  withRouterConfig
 } from '@angular/router';
 
 import { routes } from './app.routes';
-import { Meta, MetaDefinition, provideClientHydration } from '@angular/platform-browser';
+import { Meta, provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
@@ -31,7 +31,8 @@ import { HtmlInMarkdownService } from './core/services/html-in-markdown.service'
 import { ObservabilityConfig } from './core/model/observability.model';
 import * as pkg from '../../package.json';
 import { AssetsService } from './core/services/assets.service';
-import { filter } from 'rxjs';
+import { ObservabilityService } from './core/services/observability.service';
+import { routeEvents } from './core/utils/route-events';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -42,6 +43,9 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled',
       }),
       withComponentInputBinding(),
+      withRouterConfig({
+        onSameUrlNavigation: 'reload',
+      })
     ),
     provideClientHydration(),
     provideAnimations(),
@@ -71,15 +75,8 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_INITIALIZER,
       multi: true,
-      useFactory: (router: Router, meta: Meta) => () =>
-        router.events.pipe(
-          filter((event): event is ActivationEnd =>
-            event.type === EventType.ActivationEnd && !!event.snapshot.component),
-        ).subscribe(({ snapshot }: ActivationEnd) => {
-          const tags: MetaDefinition[] = snapshot.data['meta'] || [];
-          tags.forEach((tag) => meta.updateTag(tag));
-        }),
-      deps: [Router, Meta],
+      useFactory: routeEvents,
+      deps: [Router, ActivatedRoute, Meta, ObservabilityService],
     },
     {
       provide: AUTHORS_AVATAR_PATH_TOKEN,

@@ -14,9 +14,9 @@ import opentelemetry, { Attributes, Span } from '@opentelemetry/api';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { O11Y_CONFIG_TOKEN } from '../config/configuration-tokens';
 import { ObservabilityConfig } from '../model/observability.model';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Router } from '@angular/router';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { AttributeNames } from '@opentelemetry/instrumentation-user-interaction';
 
 const ANONYMOUS_USER_ID = 'uid';
 
@@ -69,7 +69,7 @@ export class ObservabilityService {
     
     provider.getActiveSpanProcessor().onStart = (span: Span) => {
       span.setAttribute('view.name', document.title);
-      span.setAttribute('http.url', document.location.href);
+      span.setAttribute(AttributeNames.HTTP_URL, document.location.href);
     };
     
     registerInstrumentations({
@@ -80,8 +80,6 @@ export class ObservabilityService {
         }),
       ],
     });
-
-    this.registerPageViews();
   }
 
   public publishEvent(payload: Attributes, event: string) {
@@ -100,16 +98,6 @@ export class ObservabilityService {
       sessionId = newSessionId;
     }
     return sessionId;
-  }
-
-  private registerPageViews() {
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.publishEvent({
-          'user.action.event.type': 'navigation'
-        }, 'page_view');
-      });
   }
 
   private isHex(value: string) {
