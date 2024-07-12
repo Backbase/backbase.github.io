@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Author, AuthorsList } from '../model/author.model';
-import { Observable, map, shareReplay, tap } from 'rxjs';
+import { Observable, map, shareReplay } from 'rxjs';
 import { AUTHORS_AVATAR_PATH_TOKEN } from '../config/configuration-tokens';
 import { AssetsService } from './assets.service';
 import { ImageSize } from '../model/content.model';
+import { getAuthorPermalink } from '@blog/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,7 @@ export class AuthorsService {
             [curr]: {
               ...authors[curr],
               fullname: curr,
-              url: `people/${curr.toLowerCase().replace(/\W/g, '-')}`,
+              url: `/people/${getAuthorPermalink(curr)}`,
               displayAvatar: this.generateAvatarPaths(authors[curr]?.avatar)
             },
           }),

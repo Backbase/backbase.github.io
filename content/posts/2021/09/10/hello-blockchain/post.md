@@ -1,6 +1,6 @@
 # Hello, Blockchain
 
-Create a \"Hello, world!\"-style React app that reads and displays data from the Joystream blockchain
+Create a "Hello, world!"-style React app that reads and displays data from the Joystream blockchain
 
 ![](assets/blockchain_banner.png)
 

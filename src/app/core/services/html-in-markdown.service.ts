@@ -9,7 +9,7 @@ export class HtmlInMarkdownService {
   constructor(@Inject(DOCUMENT) private document: Document) { }
 
   add(html: string) {
-    if (html.startsWith('<br')) {
+    if (html.startsWith('<br') || html.startsWith('<!--')) {
       return html
     };
 

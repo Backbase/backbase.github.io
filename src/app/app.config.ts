@@ -10,7 +10,6 @@ import {
   Router,
   provideRouter,
   withComponentInputBinding,
-  withDebugTracing,
   withInMemoryScrolling,
   withRouterConfig
 } from '@angular/router';

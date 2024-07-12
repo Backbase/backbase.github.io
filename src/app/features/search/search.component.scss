@@ -21,7 +21,8 @@
       font-size: 0.85em;
       @at-root .mat-form-field-hide-placeholder & {
         display: block;
-        padding-top: 19px;
+        padding-top: 30px;
+        font-weight: normal;
       }
     }
   }

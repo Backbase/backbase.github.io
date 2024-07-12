@@ -9,6 +9,10 @@ export function getPermalink(
   return `${base}/${titleDirectoryName}`;
 }
 
+export function getAuthorPermalink(authorName: string) {
+  return authorName.replace(/\W/g, '-').toLowerCase();
+}
+
 function generateBase(date?: string): string {
   if (date && !isNaN(Date.parse(date))) {
     const parsedDate = new Date(date);

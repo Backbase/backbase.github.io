@@ -28,7 +28,7 @@ export const defaultMeta: MetaDefinition[] = [
   },
   {
     property: 'og:image',
-    content: `http://localhost/assets/cover.png`,
+    content: `${prodUrl}/assets/cover.png`,
   },
 ];
 

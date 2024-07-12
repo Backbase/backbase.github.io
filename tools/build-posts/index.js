@@ -1,9 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-let utils;
-
-async function scanDirectory(directoryPath, filesArray, routesArray) {
+function scanDirectory(directoryPath, filesArray, routesArray) {
   const files = fs.readdirSync(directoryPath);
 
   files.forEach(async file => {
@@ -31,9 +29,23 @@ async function scanDirectory(directoryPath, filesArray, routesArray) {
   );
 }
 
+async function getAuthorRoutes(source) {
+  if (fs.existsSync(source)) {
+    const authors = JSON.parse(fs.readFileSync(source, 'utf8'));
+
+    const utils = await loadEsmModule(
+      '../../dist/utils/esm2022/lib/permalink.mjs'
+    );
+    return Object.keys(authors).map(name =>
+      `/people/${utils.getAuthorPermalink(name)}`);
+  }
+  return [];
+}
+
 async function main() {
   const startDirectory = 'content/posts'; // Change this to the starting directory path
   const outputFilePath = 'content/posts/posts.json'; // Change this to the desired output file path
+  const authorsFilePath = 'content/authors/authors.json';
 
   if (fs.existsSync(outputFilePath)) {
     fs.unlinkSync(outputFilePath);
@@ -41,8 +53,7 @@ async function main() {
 
   const filesArray = [];
   const routesArray = [];
-
-  await scanDirectory(startDirectory, filesArray, routesArray);
+  scanDirectory(startDirectory, filesArray, routesArray);
 
   // Write the sorted array to the output file
   const outputContent = JSON.stringify(filesArray);
@@ -55,9 +66,11 @@ async function main() {
     '/category/career',
     '/category/frontend',
     '/category/sdlc',
-    '/404'
+    '/404',
+    '/principles',
+    ...(await getAuthorRoutes(authorsFilePath))
   );
-  fs.writeFileSync('routes.txt', routesArray.join('\r\n'), 'utf8');
+  fs.writeFileSync('dist/routes.txt', routesArray.join('\r\n'), 'utf8');
 
   console.log(`Scanning completed. Output written to ${outputFilePath}`);
 }

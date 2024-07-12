@@ -1,20 +1,15 @@
-:host {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@use 'breakpoints' as responsive;
 
 .authors {
-  max-width: 1108px;
-  display: flex;
+  display: grid;
   grid-gap: 2rem;
-  padding: 2rem;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: center;
+  padding: 2rem 0;
+
+  @include responsive.up('sm') {
+    grid-template-columns: repeat(5, 1fr);
+  }
 
   &__item {
-    width: min-content;
     cursor: pointer;
     display: flex;
     flex-direction: column;

@@ -6,7 +6,7 @@ import { ImageSize } from '../model/content.model';
   providedIn: 'root'
 })
 export class AssetsService {
-  constructor(@Inject(USE_PROCESSED_IMAGES) private useProcessedImages: Boolean) { }
+  constructor(@Inject(USE_PROCESSED_IMAGES) private useProcessedImages: boolean) { }
 
   getAssetPath(url: string, size: ImageSize) {
     if (this.useProcessedImages && !url.startsWith('http')) {

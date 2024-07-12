@@ -14,7 +14,7 @@ tags: mobile,android,open source,deferred resources
 
 Our feature libraries, which include UI, have a number of varying requirements regarding
 configuration by our customers. (My colleague Hari wrote about one such library's requirements
-[here]({% post_url 2020-08-14-android-configuration-driven-ui-from-epoxy-to-compose %}).)
+[here](/2020/08/14/configuration-driven-ui-from-epoxy-to-compose).)
 Resources (text, colors, images, etc.) are a common type of configuration, and can be defined in
 various ways—typically in code, resources, or theme attributes. We created
 [Deferred Resources](https://engineering.backbase.com/DeferredResources) to support such

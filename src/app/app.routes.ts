@@ -79,16 +79,17 @@ function getRouteData(): Partial<Route> {
   const postData = new Subject<PostContent>();
   return {
     resolve: {
-      post: (_: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+      post: (activatedRoute: ActivatedRouteSnapshot) => {
+        const url = activatedRoute.url.map(({ path }) => path).join('/');
         const router = inject(Router);
         const transferState = inject(TransferState);
-        const stateKey = makeStateKey<PostContent | undefined>(state.url);
+        const stateKey = makeStateKey<PostContent | undefined>(url);
         if (transferState.hasKey(stateKey)) {
           const post = transferState.get<PostContent | undefined>(stateKey, undefined);
           postData.next(post as PostContent);
           return post;
         }
-        return inject(PostsService).getPost(state.url)
+        return inject(PostsService).getPost(url)
           .pipe(
             tap(post => {
               transferState.set<PostContent>(stateKey, post);
@@ -100,19 +101,21 @@ function getRouteData(): Partial<Route> {
             })
           )
       },
-      meta: (activatedRouteSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+      meta: (activatedRoute: ActivatedRouteSnapshot) => {
+        const url = activatedRoute.url.map(({ path }) => path).join('/');
         const transferState = inject(TransferState);
-        const stateKey = makeStateKey<PostContent | undefined>(state.url);
+        const stateKey = makeStateKey<PostContent | undefined>(url);
         if (transferState.hasKey(stateKey)) {
-          return getPostMeta(transferState.get<PostContent | undefined>(stateKey, undefined) as PostContent, state.url);
+          return getPostMeta(transferState.get<PostContent | undefined>(stateKey, undefined) as PostContent, url);
         }
-        return postData.pipe(map((post) => getPostMeta(post, state.url)));
+        return postData.pipe(map((post) => getPostMeta(post, url)));
       }
     },
-    title: (activatedRouteSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+    title: (activatedRoute: ActivatedRouteSnapshot) => {
+      const url = activatedRoute.url.map(({ path }) => path).join('/');
       const transferState = inject(TransferState);
-      const stateKey = makeStateKey<PostContent | undefined>(state.url);
-      const getTitle = ({ title }: PostContent) => `${title} | ${activatedRouteSnapshot.parent?.title}`;
+      const stateKey = makeStateKey<PostContent | undefined>(url);
+      const getTitle = ({ title }: PostContent) => `${title} | ${activatedRoute.parent?.title}`;
       if (transferState.hasKey(stateKey)) {
         return getTitle(transferState.get<PostContent | undefined>(stateKey, undefined) as PostContent);
       }

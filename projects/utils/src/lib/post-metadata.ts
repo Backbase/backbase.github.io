@@ -1,7 +1,7 @@
 import { readingTime } from 'reading-time-estimator';
 
 export function extractPostMetaData(post: string, metaonly: boolean = false) {
-  const [header, markdown] = post.split('---');
+  const [header, markdown] = post.split(/---(.*)/s);
   return {
     title: header.match(/^# ([^\n]+)/m)?.[1] || '',
     excerpt: header.match(/^#[^\n]+\n+([^\n]+)/s)?.[1] || '',
