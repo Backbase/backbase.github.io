@@ -10,6 +10,7 @@ import {
   Router,
   provideRouter,
   withComponentInputBinding,
+  withDebugTracing,
   withInMemoryScrolling,
   withRouterConfig
 } from '@angular/router';
@@ -70,7 +71,7 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       multi: true,
       useFactory: (...deps: any) => () => markdownConfig.apply(this, deps),
-      deps: [MarkdownService, DOCUMENT, HtmlInMarkdownService, AssetsService],
+      deps: [MarkdownService, DOCUMENT, HtmlInMarkdownService, AssetsService, Router],
     },
     {
       provide: APP_INITIALIZER,

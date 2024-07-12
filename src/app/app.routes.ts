@@ -1,38 +1,17 @@
 import { ActivatedRouteSnapshot, Route, Router, RouterStateSnapshot, Routes } from '@angular/router';
 import { postRedirects } from './app.routes.map';
 import { EMPTY, Subject, catchError, map, tap } from 'rxjs';
-import { inject } from '@angular/core';
-import { MetaDefinition } from '@angular/platform-browser';
+import { inject, makeStateKey, TransferState } from '@angular/core';
 import { PostContent } from './core/model/post.model';
 import { PostsService } from './core/services/posts.service';
+import { defaultMeta, getPostMeta } from './app.meta.config';
 
 export const routes: Routes = [
   {
     path: '',
     title: 'Backbase Engineering',
     data: {
-      meta: <MetaDefinition[]>[
-        {
-          name: 'description',
-          content: 'Backbase is a global fintech company creating the best digital banking solutions on the planet. We are a young-spirited, diverse (45+ nationalities), fast-growing and leading company in our niche.',
-        },
-        {
-          property: 'og:site_name',
-          content: 'Backbase Engineering',
-        },
-        {
-          property: 'og:title',
-          content: 'Backbase Engineering',
-        },
-        {
-          property: 'og:url',
-          content: 'https://engineering.backbase.com/',
-        },
-        {
-          property: 'og:description',
-          content: 'Backbase is a global fintech company creating the best digital banking solutions on the planet. We are a young-spirited, diverse (45+ nationalities), fast-growing and leading company in our niche.',
-        },
-      ]
+      meta: defaultMeta,
     },
     children: [
       ...postRedirects,
@@ -100,42 +79,44 @@ function getRouteData(): Partial<Route> {
   const postData = new Subject<PostContent>();
   return {
     resolve: {
-      post: (_: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot) => {
+      post: (_: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
         const router = inject(Router);
-        return inject(PostsService).getPost(routerStateSnapshot.url)
+        const transferState = inject(TransferState);
+        const stateKey = makeStateKey<PostContent | undefined>(state.url);
+        if (transferState.hasKey(stateKey)) {
+          const post = transferState.get<PostContent | undefined>(stateKey, undefined);
+          postData.next(post as PostContent);
+          return post;
+        }
+        return inject(PostsService).getPost(state.url)
           .pipe(
-            tap(post => postData.next(post)),
+            tap(post => {
+              transferState.set<PostContent>(stateKey, post);
+              postData.next(post)}
+            ),
             catchError((_: any) => {
               router.navigate(['**'], { skipLocationChange: true });
               return EMPTY;
             })
           )
       },
-      meta: (activatedRouteSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
-        postData.pipe((map(({ excerpt, title, displayTeaser }) => [
-          {
-            name: 'description',
-            content: excerpt,
-          },
-          {
-            property: 'og:title',
-            content: `${title} | ${activatedRouteSnapshot.parent?.title}`,
-          },
-          {
-            property: 'og:url',
-            content: `https://engineering.backbase.com${state.url}`,
-          },
-          {
-            property: 'og:image',
-            content: `https://engineering.backbase.com${state.url}/${displayTeaser?.md}`,
-          },
-          {
-            property: 'og:description',
-            content: excerpt,
-          },
-        ])))
+      meta: (activatedRouteSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+        const transferState = inject(TransferState);
+        const stateKey = makeStateKey<PostContent | undefined>(state.url);
+        if (transferState.hasKey(stateKey)) {
+          return getPostMeta(transferState.get<PostContent | undefined>(stateKey, undefined) as PostContent, state.url);
+        }
+        return postData.pipe(map((post) => getPostMeta(post, state.url)));
+      }
     },
-    title: (activatedRouteSnapshot: ActivatedRouteSnapshot) =>
-      postData.pipe((map(({ title }) => `${title} | ${activatedRouteSnapshot.parent?.title}`)))
+    title: (activatedRouteSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+      const transferState = inject(TransferState);
+      const stateKey = makeStateKey<PostContent | undefined>(state.url);
+      const getTitle = ({ title }: PostContent) => `${title} | ${activatedRouteSnapshot.parent?.title}`;
+      if (transferState.hasKey(stateKey)) {
+        return getTitle(transferState.get<PostContent | undefined>(stateKey, undefined) as PostContent);
+      }
+      return postData.pipe(map((post) => getTitle(post)));
+    }
   }
 }
