@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const Jimp = require('jimp');
+const { GifFrame, GifUtil, GifCodec } = require('gifwrap');
 
 // Get directories and sizes from command line arguments
 const sourceDir = path.resolve(process.cwd(), process.argv[2]);
@@ -55,6 +56,11 @@ const walk = async dir => {
             console.error(err);
           });
       });
+    } else if (/(gif)$/i.test(file)) {
+      Object.entries(SIZES).forEach(([size, [width, height]]) => {
+        const distDir = path.join(dir, 'dist', size);
+        fs.copyFileSync(fromPath, `${distDir}/${file}`);
+      })
     }
   }
 };

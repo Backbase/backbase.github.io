@@ -16,6 +16,10 @@ export interface Post {
   specialCategory: boolean;
 }
 
+export type PostContent = Post & {
+  markdown: string;
+}
+
 export interface Posts {
   posts: Post[];
   total: number;

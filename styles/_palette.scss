@@ -100,10 +100,10 @@ $backbase-accent: (
   ),
 );
 
-$backbase-primary-light: mat.define-palette($backbase-primary, 500);
-$backbase-secondary-light: mat.define-palette($backbase-secondary, 900);
-$backbase-accent-light: mat.define-palette($backbase-electric, 200);
+$backbase-primary-light: mat.m2-define-palette($backbase-primary, 500);
+$backbase-secondary-light: mat.m2-define-palette($backbase-secondary, 900);
+$backbase-accent-light: mat.m2-define-palette($backbase-electric, 200);
 
-$backbase-primary-dark: mat.define-palette($backbase-electric, 200);
-$backbase-secondary-dark: mat.define-palette($backbase-secondary, 600);
-$backbase-accent-dark: mat.define-palette($backbase-accent, 400);
+$backbase-primary-dark: mat.m2-define-palette($backbase-electric, 200);
+$backbase-secondary-dark: mat.m2-define-palette($backbase-secondary, 600);
+$backbase-accent-dark: mat.m2-define-palette($backbase-accent, 400);

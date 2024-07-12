@@ -54,8 +54,8 @@ It does not matter if you are using a Java application, the Spring Framework, or
 By having declared timeout we can deal with issues when dependency is unreliable, sometime we just a cut a connection and just a log an error, but in other cases we need to quickly notify end user about the error.
 
 ## Learn more:
-## https://resilience4j.readme.io/docs/timeout
-## https://www.baeldung.com/spring-rest-timeout
+- https://resilience4j.readme.io/docs/timeout
+- https://www.baeldung.com/spring-rest-timeout
 
 ### **Circuit Breaker Pattern**
 Circuit Breaker Pattern is a crucial mechanism used in a microservices architecture to prevent cascading failures across services.
@@ -137,8 +137,8 @@ public class CircuitBreakerLogger {
 ```
 
 ## Learn more:
-## https://resilience4j.readme.io/docs/circuitbreaker
-## https://medium.com/bliblidotcom-techblog/resilience4j-circuit-breaker-implementation-on-spring-boot-9f8d195a49e0
+- https://resilience4j.readme.io/docs/circuitbreaker
+- https://medium.com/bliblidotcom-techblog/resilience4j-circuit-breaker-implementation-on-spring-boot-9f8d195a49e0
 
 ### **Retry Pattern**
 
@@ -195,7 +195,7 @@ resilience4j.retry.metrics.enabled: "true"
 ```
 
 ## Learn more:
-## https://resilience4j.readme.io/docs/retry
+- https://resilience4j.readme.io/docs/retry
 
 ### **Summary**
 

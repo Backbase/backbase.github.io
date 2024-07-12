@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const { readingTime } = require('reading-time-estimator');
 
 function scanDirectory(directoryPath, filesArray, routesArray) {
   const files = fs.readdirSync(directoryPath);
@@ -11,28 +10,13 @@ function scanDirectory(directoryPath, filesArray, routesArray) {
 
     if (stat.isDirectory()) {
       // Recursively scan subdirectories
-      scanDirectory(filePath, filesArray, routesArray);
+      await scanDirectory(filePath, filesArray, routesArray);
     } else if (file === 'post.md') {
       // If the file is named "meta.json", read its content and add it to the array
       const fileContent = fs.readFileSync(filePath, 'utf8');
 
-      const metaData = fileContent.split('---')[0];
-      filesArray.push({
-        title: metaData.match(/^# ([^\n]+)/m)?.[1],
-        excerpt: metaData.match(/^#[^\n]+\n+([^\n]+)/s)?.[1],
-        teaser: metaData.match(/^\!\[[^\(]+\(([^\)]+)/im)?.[1],
-        authors: metaData
-          .match(/^Authors: ([^\n]+)/im)?.[1]
-          ?.split(',')
-          .map(n => n.trim()),
-        category: metaData.match(/^Category: ([^\n]+)/im)?.[1],
-        tags: metaData
-          .match(/^Tags: ([^\n]+)/im)?.[1]
-          ?.split(',')
-          .map(n => n.trim()),
-        date: metaData.match(/^Date: ([^\n]+)/im)?.[1],
-        readingTime: readingTime(fileContent, 238).text,
-      });
+      const metaData = utils.extractPostMetaData(fileContent, true);
+      filesArray.push(metaData);
       routesArray.push(directoryPath.replace('content/posts', ''));
     }
   });
@@ -45,9 +29,23 @@ function scanDirectory(directoryPath, filesArray, routesArray) {
   );
 }
 
-function main() {
+async function getAuthorRoutes(source) {
+  if (fs.existsSync(source)) {
+    const authors = JSON.parse(fs.readFileSync(source, 'utf8'));
+
+    const utils = await loadEsmModule(
+      '../../dist/utils/esm2022/lib/permalink.mjs'
+    );
+    return Object.keys(authors).map(name =>
+      `/people/${utils.getAuthorPermalink(name)}`);
+  }
+  return [];
+}
+
+async function main() {
   const startDirectory = 'content/posts'; // Change this to the starting directory path
   const outputFilePath = 'content/posts/posts.json'; // Change this to the desired output file path
+  const authorsFilePath = 'content/authors/authors.json';
 
   if (fs.existsSync(outputFilePath)) {
     fs.unlinkSync(outputFilePath);
@@ -68,11 +66,25 @@ function main() {
     '/category/career',
     '/category/frontend',
     '/category/sdlc',
-    '/404'
+    '/404',
+    '/principles',
+    ...(await getAuthorRoutes(authorsFilePath))
   );
-  fs.writeFileSync('routes.txt', routesArray.join('\r\n'), 'utf8');
+  fs.writeFileSync('dist/routes.txt', routesArray.join('\r\n'), 'utf8');
 
   console.log(`Scanning completed. Output written to ${outputFilePath}`);
 }
 
-main();
+async function withUtils() {
+  utils = await loadEsmModule(
+    '../../dist/utils/esm2022/lib/post-metadata.mjs'
+  );
+
+  main();
+}
+
+withUtils();
+
+function loadEsmModule(modulePath) {
+  return new Function('modulePath', `return import(modulePath);`)(modulePath);
+}

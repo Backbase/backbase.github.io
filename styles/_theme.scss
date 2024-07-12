@@ -24,7 +24,7 @@
 ) {
   $material-theme: ();
   @if ($dark) {
-    $material-theme: mat.define-dark-theme(
+    $material-theme: mat.m2-define-dark-theme(
       (
         color: (
           primary: $primary-color,
@@ -35,7 +35,7 @@
       )
     );
   } @else {
-    $material-theme: mat.define-light-theme(
+    $material-theme: mat.m2-define-light-theme(
       (
         color: (
           primary: $primary-color,

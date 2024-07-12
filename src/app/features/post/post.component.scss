@@ -25,6 +25,7 @@ a {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        flex-grow: 1;
 
         h2 {
           max-width: 60ch;
