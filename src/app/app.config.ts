@@ -6,7 +6,6 @@ import {
   isDevMode,
 } from '@angular/core';
 import {
-  ActivatedRoute,
   Router,
   provideRouter,
   withComponentInputBinding,
@@ -76,7 +75,7 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       multi: true,
       useFactory: routeEvents,
-      deps: [Router, ActivatedRoute, Meta, ObservabilityService],
+      deps: [Router, Meta, ObservabilityService],
     },
     {
       provide: AUTHORS_AVATAR_PATH_TOKEN,

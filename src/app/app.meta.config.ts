@@ -32,6 +32,13 @@ export const defaultMeta: MetaDefinition[] = [
   },
 ];
 
+export const notFoundMeta: MetaDefinition[] = [
+  {
+    name: 'robots',
+    content: 'noindex, nofollow',
+  }
+]
+
 export const getPostMeta = ({ excerpt, title, displayTeaser }: PostContent, url: string) => [
   {
     name: 'description',

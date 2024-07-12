@@ -4,7 +4,7 @@ import { EMPTY, Subject, catchError, map, tap } from 'rxjs';
 import { inject, makeStateKey, TransferState } from '@angular/core';
 import { PostContent } from './core/model/post.model';
 import { PostsService } from './core/services/posts.service';
-import { defaultMeta, getPostMeta } from './app.meta.config';
+import { defaultMeta, getPostMeta, notFoundMeta } from './app.meta.config';
 
 export const routes: Routes = [
   {
@@ -70,6 +70,7 @@ export const routes: Routes = [
           import('./features/not-found/not-found.component').then(
             m => m.NotFoundComponent
           ),
+        data: { meta: notFoundMeta },
       },
     ]
   }
