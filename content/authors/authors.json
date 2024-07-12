@@ -37,7 +37,7 @@
   },
   "Maxim Tyukov": {
     "avatar": "mt.jpg",
-    "role": "Principal Application Security Engineer - R&D"
+    "role": "(Former) Principal Application Security Engineer - R&D"
   },
   "Ankit Pant": {
     "avatar": "ankit_pant.png",
@@ -73,15 +73,15 @@
   },
   "Hari Vignesh Jayapalan": {
     "avatar": "hari_vignesh.jpg",
-    "role": "Senior Mobile Engineer - R&D"
+    "role": "(Former) Senior Mobile Engineer - R&D"
   },
   "Alexey Buistov": {
     "avatar": "ab.jpeg",
-    "role": "Solutions Architect, Crypto Enthusiast - R&D"
+    "role": "(Former) Solutions Architect, Crypto Enthusiast - R&D"
   },
   "Anjali Goyal": {
     "avatar": "anjali_goyal.jpg",
-    "role": "Senior QA Engineer - Customer Success"
+    "role": "(Former) Senior QA Engineer - Customer Success"
   },
   "Yauheni Navosha": {
     "avatar": "yn.png",
@@ -93,10 +93,26 @@
   },
   "Omar Rojas": {
     "avatar": "omar.jpg",
-    "role": "Frontend Engineer - Customer Success"
+    "role": "(Former) Frontend Engineer - Customer Success"
   },
   "Pablo Villoslada Puigcerber": {
     "avatar": "pablo.png",
     "role": "Lead Principal Frontend Engineer - Customer Success"
+  },
+  "Sebastian Opacki": {
+    "avatar": "sebastiano.jpeg",
+    "role": "Senior Backend Engineer - Customer Success"
+  },
+  "Rafał Łukowski": {
+    "avatar": "rafall.jpg",
+    "role": "Senior Backend Engineer - Customer Success"
+  },
+  "Akshay PK": {
+    "avatar": "akshaypk.png",
+    "role": "Lead Principal Systems Engineer - CS Expert Services"
+  },
+  "Sriram Seshadri": {
+    "avatar": "sriramg.png",
+    "role": "Principal System Engineer - Customer Success"
   }
 }

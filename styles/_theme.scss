@@ -70,4 +70,5 @@
   --blog-palette-muted: #{$text-muted};
   --mat-paginator-container-background-color: #{$background-color};
   --mdc-elevated-card-container-color: #{$background-color};
+  --backbase-primary: #{map-get(default-palette.$backbase-primary-light, 500)};
 }
