@@ -57,10 +57,10 @@ const walk = async dir => {
           });
       });
     } else if (/(gif)$/i.test(file)) {
-      Object.entries(SIZES).forEach(([size, [width, height]]) => {
-        const distDir = path.join(dir, 'dist', size);
-        fs.copyFileSync(fromPath, `${distDir}/${file}`);
-      })
+      // Object.entries(SIZES).forEach(([size, [width, height]]) => {
+      //   const distDir = path.join(dir, 'dist', size);
+      //   fs.copyFileSync(fromPath, `${distDir}/${file}`);
+      // })
     }
   }
 };
