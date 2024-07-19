@@ -32,9 +32,10 @@ const walk = async dir => {
         // Exclude 'dist' directories
         await walk(fromPath);
       }
-    } else if (/(png|jpg|jpeg)$/i.test(file)) {
+    } else if (/(png|jpg|jpeg|gif)$/i.test(file)) {
       Object.entries(SIZES).forEach(([size, [width, height]]) => {
-        Jimp.read(fromPath)
+        if (!file.endsWith('.gif')) {
+          Jimp.read(fromPath)
           .then(img => {
             const distDir = path.join(dir, 'dist', size);
 
@@ -55,15 +56,16 @@ const walk = async dir => {
           .catch(err => {
             console.error(err);
           });
-      });
-    } else if (/(gif)$/i.test(file)) {
-      Object.entries(SIZES).forEach(([size, [width, height]]) => {
-        const distDir = path.join(dir, 'dist', size);
-        GifUtil.read(fromPath).then(gif => {
-          gif.width = width;
-          gif.height = height ?? Math.ceil((width * gif.height) / gif.width);
-          GifUtil.write(path.join(distDir, file), gif.frames, gif)
-        });
+        } else {
+          GifUtil.read(fromPath).then(gif => {
+            const distDir = path.join(dir, 'dist', size);
+            fs.ensureDir(distDir).then(() => {
+              gif.width = width;
+              gif.height = height ?? Math.ceil((width * gif.height) / gif.width);
+              return GifUtil.write(path.join(distDir, file), gif.frames, gif)
+            });
+          });
+        }
       });
     }
   }
