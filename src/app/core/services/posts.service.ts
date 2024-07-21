@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Observable, map, of, shareReplay, switchMap, throwError, withLatestFrom } from 'rxjs';
-import { Post, Posts } from '../model/post.model';
+import { Inject, Injectable } from '@angular/core';
+import { Observable, map, shareReplay, withLatestFrom } from 'rxjs';
+import { Post, PostContent, Posts } from '../model/post.model';
 import { HttpClient } from '@angular/common/http';
-import { getPermalink } from '@blog/utils';
+import { extractPostMetaData } from '@blog/utils';
 import { AuthorsService } from './authors.service';
-import { Category, SpecialCategories } from '../model/categories.model';
+import { Category } from '../model/categories.model';
 import { ImageSize } from '../model/content.model';
 import { AssetsService } from './assets.service';
+import { MarkdownService } from 'ngx-markdown';
+import { SPECIAL_CATEGORIES } from '../config/configuration-tokens';
+import { AuthorsList } from '../model/author.model';
 
 const POSTS_PER_PAGE = 8;
 
@@ -17,12 +20,8 @@ export class PostsService {
   private cached: Observable<Post[]> = this.httpClient
     .get<Post[]>('posts.json')
     .pipe(
-      map((posts) => posts.map((post) => ({
-        ...post,
-        specialCategory: SpecialCategories.includes(post.category),
-        date: post.date?.match(/^\d{4}-\d{2}-\d{2}/) ? post.date : undefined,
-        displayTeaser: this.generateDisplayAssets(post.teaser)
-      }))),
+      withLatestFrom(this.authorsService.getAuthors()),
+      map(([posts, authors]) => posts.map((post) => this.decoratePost(post, authors))),
       shareReplay()
     );
 
@@ -30,6 +29,8 @@ export class PostsService {
     private httpClient: HttpClient,
     private authorsService: AuthorsService,
     private assetsService: AssetsService,
+    private markdownService: MarkdownService,
+    @Inject(SPECIAL_CATEGORIES) private specialCategories: Category[],
   ) {}
 
   getAllPosts(): Observable<Post[]> {
@@ -41,7 +42,7 @@ export class PostsService {
       map(
         posts =>
           posts.find(({ featured }) => featured) ??
-          posts.find(({ category }) => !SpecialCategories.includes(category))
+          posts.find(({ category }) => !this.specialCategories.includes(category))
       )
     );
   }
@@ -53,11 +54,8 @@ export class PostsService {
     filterFn?: (post: Post) => boolean
   ): Observable<Posts> {
     return this.getAllPosts().pipe(
-      withLatestFrom(
-        this.getHighlightedPost(),
-        this.authorsService.getAuthors()
-      ),
-      map(([posts, featured, authors]) => {
+      withLatestFrom(this.getHighlightedPost()),
+      map(([posts, featured]) => {
         let filteredPosts = posts;
         if (filterFeatured) {
           filteredPosts = filteredPosts.filter(
@@ -73,12 +71,7 @@ export class PostsService {
         );
 
         return {
-          posts: paginatedPosts.map(post => ({
-            ...post,
-            authors: post.authors.map(author =>
-              typeof author === 'string' ? authors[author] || author : author
-            ),
-          })),
+          posts: paginatedPosts,
           total: filteredPosts.length,
           perPage: size,
         };
@@ -86,15 +79,14 @@ export class PostsService {
     );
   }
 
-  getPost(permalink: string | null): Observable<Post> {
-    const filterByPermalink = (post: Post) =>
-      getPermalink(post.title, post.specialCategory, post.category, post.date) === permalink;
-    return this.getPosts(0, 1, false, (post: Post) =>
-      filterByPermalink(post)
-    ).pipe(
-      switchMap(({ posts }) =>
-        posts[0] ? of(posts[0]) : throwError(() => new Error('not found')))
-    );
+  getPost(permalink: string | null): Observable<PostContent> {
+    return this.markdownService.getSource(`${permalink}/post.md`)
+      .pipe(
+        withLatestFrom(this.authorsService.getAuthors()),
+        map(([markdown, authors]) => ({
+          ...this.decoratePost(extractPostMetaData(markdown) as Post, authors),
+        } as PostContent)),
+      );
   }
 
   getCategories(): Observable<Category[]> {
@@ -109,10 +101,22 @@ export class PostsService {
         );
         const entries = Object.entries(categories);
         return entries
-          .sort((a, b) => b[1] - a[1])
+          .sort(([_, a], [__, b]) => b - a)
           .map(entry => entry[0] as Category);
       })
     );
+  }
+
+  private decoratePost(post: Post | PostContent, authors: AuthorsList): Post | PostContent {
+    return {
+      ...post,
+      specialCategory: this.specialCategories.includes(post.category),
+      date: post.date?.match(/^\d{4}-\d{2}-\d{2}/) ? post.date : undefined,
+      displayTeaser: this.generateDisplayAssets(post.teaser),
+      authors: post.authors.map(author =>
+        typeof author === 'string' ? authors[author] || author : author
+      )
+    }
   }
 
   private generateDisplayAssets(url?: string): { [size in ImageSize]: string } | undefined {

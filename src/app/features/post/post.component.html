@@ -1,6 +1,6 @@
 <blog-gradient [height]="300"></blog-gradient>
-<section class="post">
-  @if (post$ | async; as post) {
+@if (post) {
+  <section class="post">
     <header id="post-header" class="post__header">
       <div class="post__header-filling"></div>
       <div class="post__header-content">
@@ -33,36 +33,18 @@
     </header>
     <div class="post__content">
       <aside class="post__content-table">
-        @if (headers) {
-          <blog-table-of-content
-            class="sticky"
-            [headers]="headers"></blog-table-of-content>
-        }
+        <blog-table-of-content
+          class="sticky"
+          [headers]="post.markdown | headers"></blog-table-of-content>
       </aside>
       <article class="post__content-text center-container">
         <markdown
           class="markdown-container"
-          [data]="markdown$ | async"
+          [data]="post.markdown"
           (ready)="resolveScripts()"></markdown>
       </article>
     </div>
-  }
 
-  @if (notFound) {
-    <blog-not-found></blog-not-found>
-  }
-
-  @if (relatedPosts$ | async; as relatedPosts) {
-    @if (relatedPosts.length) {
-      <blog-divider class="extra-spacing"></blog-divider>
-      <div class="center-container post__related-container">
-        <h3>Continue the Journey: Explore Related Posts</h3>
-        <div class="post__related-posts">
-          @for (relatedPost of relatedPosts; track $index) {
-            <blog-post-item [post]="relatedPost"></blog-post-item>
-          }
-        </div>
-      </div>
-    }
-  }
-</section>
+    <blog-related-posts [post]="post"></blog-related-posts>
+  </section>
+}

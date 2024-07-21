@@ -1,12 +1,14 @@
 import { MarkdownService } from 'ngx-markdown';
 import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
 import { AssetsService } from './core/services/assets.service';
+import { Router } from '@angular/router';
 
 export default function (
   markdownService: MarkdownService,
   document: Document,
   htmlInMarkdownService: HtmlInMarkdownService,
   assetsService: AssetsService,
+  router: Router,
 ) {
   markdownService.renderer.link = (
     href: string,
@@ -15,7 +17,7 @@ export default function (
   ) => {
     const external =
       href.startsWith('http') &&
-      !href.includes(document.defaultView?.window?.location.hostname || '');
+      !href.includes(document.defaultView?.window?.location.hostname ?? '');
     if (text.includes('<figure>')) {
       return text
         .replace(
@@ -38,7 +40,7 @@ export default function (
     title: string | null,
     text: string
   ) => {
-    const pathname = document.defaultView?.window?.location.pathname;
+    const pathname = router.url;
     const url = `${pathname}/${href}`;
     return `
       <figure>
@@ -53,7 +55,7 @@ export default function (
           />
           <img
             srcset="${assetsService.getAssetPath(url, 'md')}"
-            alt="${title || text}"
+            alt="${title ?? text}"
           />
         </picture> 
         <figcaption>${parseFigCaption(text)}</figcaption>

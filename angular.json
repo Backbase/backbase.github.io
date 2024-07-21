@@ -47,11 +47,12 @@
             },
             "styles": ["styles/styles.scss"],
             "prerender": {
-              "routesFile": "routes.txt"
+              "routesFile": "dist/routes.txt"
             },
             "scripts": [
               "node_modules/prismjs/prism.js",
               "node_modules/prismjs/components/prism-typescript.min.js",
+              "node_modules/prismjs/components/prism-c.min.js",
               "node_modules/prismjs/components/prism-json.min.js",
               "node_modules/prismjs/components/prism-bash.min.js",
               "node_modules/prismjs/components/prism-kotlin.min.js",

@@ -3,3 +3,4 @@
  */
 
 export * from './lib/permalink';
+export * from './lib/post-metadata';

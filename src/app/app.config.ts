@@ -5,34 +5,45 @@ import {
   importProvidersFrom,
   isDevMode,
 } from '@angular/core';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import {
+  Router,
+  provideRouter,
+  withComponentInputBinding,
+  withInMemoryScrolling,
+  withRouterConfig
+} from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
+import { Meta, provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import markdownConfig from './markdown.config';
 import { DOCUMENT } from '@angular/common';
-import { AUTHORS_AVATAR_PATH_TOKEN, USE_PROCESSED_IMAGES, O11Y_CONFIG_TOKEN } from './core/config/configuration-tokens';
+import {
+  AUTHORS_AVATAR_PATH_TOKEN,
+  USE_PROCESSED_IMAGES,
+  O11Y_CONFIG_TOKEN,
+  SPECIAL_CATEGORIES
+} from './core/config/configuration-tokens';
 import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
 import { ObservabilityConfig } from './core/model/observability.model';
 import * as pkg from '../../package.json';
 import { AssetsService } from './core/services/assets.service';
+import { ObservabilityService } from './core/services/observability.service';
+import { routeEvents } from './core/utils/route-events';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
-      [
-        {
-          path: '',
-          title: 'Backbase Engineering',
-          children: routes
-        }
-      ],
+      routes,
       withInMemoryScrolling({
         scrollPositionRestoration: 'enabled',
         anchorScrolling: 'enabled',
+      }),
+      withComponentInputBinding(),
+      withRouterConfig({
+        onSameUrlNavigation: 'reload',
       })
     ),
     provideClientHydration(),
@@ -58,7 +69,13 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       multi: true,
       useFactory: (...deps: any) => () => markdownConfig.apply(this, deps),
-      deps: [MarkdownService, DOCUMENT, HtmlInMarkdownService, AssetsService],
+      deps: [MarkdownService, DOCUMENT, HtmlInMarkdownService, AssetsService, Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      useFactory: routeEvents,
+      deps: [Router, Meta, ObservabilityService],
     },
     {
       provide: AUTHORS_AVATAR_PATH_TOKEN,
@@ -67,6 +84,11 @@ export const appConfig: ApplicationConfig = {
     {
       provide: USE_PROCESSED_IMAGES,
       useValue: !isDevMode(),
+    },{
+      provide: SPECIAL_CATEGORIES,
+      useValue: [
+        'principles',
+      ]
     }
   ],
 };

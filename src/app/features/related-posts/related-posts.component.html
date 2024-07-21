@@ -1,0 +1,13 @@
+@if (relatedPosts$ | async; as relatedPosts) {
+  @if (relatedPosts.length) {
+    <blog-divider class="extra-spacing"></blog-divider>
+    <div class="center-container post__related-container">
+      <h3>Continue the Journey: Explore Related Posts</h3>
+      <div class="post__related-posts">
+        @for (relatedPost of relatedPosts; track $index) {
+          <blog-post-item [post]="relatedPost"></blog-post-item>
+        }
+      </div>
+    </div>
+  }
+}
