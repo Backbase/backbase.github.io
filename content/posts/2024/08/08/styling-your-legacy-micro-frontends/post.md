@@ -5,7 +5,7 @@ Different approaches to style legacy Micro Frontends.
 ![](assets/banner.png)
 
 Authors: Pablo Villoslada Puigcerber
-Date: unpublished
+Date: 2024-08-08T15:51:02.527Z
 Category: frontend
 
 tags: angular,frontend,micro-frontends,module-federation,sass,web
