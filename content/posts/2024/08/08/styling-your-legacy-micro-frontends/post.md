@@ -72,6 +72,8 @@ Including coupled packages results in a significant amount of code duplication, 
 
 ### Set-up
 
+For a full working example, you can have a look to the [two-css-themes](https://github.com/Backbase/backbase-micro-frontends/commits/feature/two-css-themes/) branch of the backbase-micro-frontends repository.
+
 1. Create a `/themes` folder at the root level.
 2. Go to the newly created folder and install UI-Ang with its dependencies.
 ```bash
@@ -117,7 +119,20 @@ $accounts-list-cards-column-min-width: max(
 ```
 And you can replace it with `$accounts-list-cards-column-min-width: max(18.5rem, 25%);`.
 
-After all this steps you shall be able to see the app compiling. Run also the `npm run build` for precaution. And if there are new errors you have to fix them by either commenting the bad lines or finding alternative code that works.
+After all these steps you should be able to see the app compiling. Run also the `npm run build` for precaution. And if there are new errors you have to fix them by either commenting the bad lines or finding alternative code that works.
+
+#### CSS custom properties
+
+If your theme relies on the Boostrap 5 [CSS Variables](https://getbootstrap.com/docs/5.0/customize/css-variables/), which is the case in the Backbase design system, you need to include them at root level for everything to work smooth:
+```scss
+@import '@backbase/backbase-theme-business-preset/scss/main';
+
+// Include Bootstrap 5 custom properties at root level
+@import '../../themes/bootstrap5/scss/bootstrap-reboot';
+.angular17-theme {
+  @import '../../themes/angular17-theme/scss/main';
+}
+```
 
 ## Conclusion
 
