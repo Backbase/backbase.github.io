@@ -18,7 +18,7 @@ export class CategoriesTabComponent {
     .getCategories()
     .pipe(
       map(categories =>
-        categories.filter(category => !['principles'].includes(category))
+        categories.filter(category => !['principles', 'meetups'].includes(category))
       )
     );
   selectedCategory$ = this.activatedRoute.paramMap.pipe(

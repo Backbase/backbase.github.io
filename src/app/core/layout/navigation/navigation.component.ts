@@ -41,6 +41,7 @@ export class NavigationComponent implements OnInit {
   protected readonly navigationItems = [
     { link: '/', label: 'Blog', external: false },
     { link: '/principles', label: 'Principles', external: false },
+    { link: '/meetups', label: 'Meetups', external: false },
     {
       link: 'https://www.backbase.com/careers',
       label: 'Careers',
