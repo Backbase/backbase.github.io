@@ -1,10 +1,10 @@
-<blog-gradient></blog-gradient>
-
-<blog-meetups-header></blog-meetups-header>
-
-<blog-divider></blog-divider>
-
 @if (articles$ | async; as articles) {
+  <blog-gradient></blog-gradient>
+
+  <blog-meetups-header [post]="articles.posts[0]"></blog-meetups-header>
+
+  <blog-divider></blog-divider>
+
   <div class="center-container">
     <blog-posts-list [posts]="articles.posts"></blog-posts-list>
   </div>

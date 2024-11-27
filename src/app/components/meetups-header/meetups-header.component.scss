@@ -1,38 +1,55 @@
 @use 'breakpoints' as responsive;
 
-.principles-header {
-  margin: 2rem 1rem;
+.featured {
+  padding: 2rem 1rem;
+
   &__image {
-    width: 50%;
+    max-width: 560px;
+    position: relative;
+    img {
+      width: 100%;
+    }
+  }
+
+  &__chip {
+    margin-bottom: 1rem;
+    mat-chip {
+      --mdc-chip-label-text-size: 0.8em;
+      --mdc-chip-container-height: auto;
+
+      &.mat-neutral {
+        --mdc-chip-elevated-container-color: var(--blog-palette-neutral);
+      }
+    }
+  }
+
+  &__title {
+    font-size: 3em;
+    position: relative;
+  }
+
+  &__header {
+    font-size: 3em;
+    position: relative;
   }
 
   @include responsive.up('md') {
-    margin: 2rem 0;
     display: flex;
-    gap: 32px;
-    align-items: center;
+    flex-direction: row-reverse;
+    background-color: transparent;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 
-    &__image {
-      padding: 0 10%;
-      width: 20%;
+    &__content {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      max-width: 50%;
+
+      .post-content {
+        width: 100%;
+        padding: 0 1rem;
+      }
     }
-
-    &__introduction {
-      flex-grow: 2;
-    }
-  }
-
-  img {
-    width: 100%;
-  }
-
-  h2 {
-    font-weight: 100;
-    max-width: 650px;
-  }
-
-  .highlight {
-    font-size: 1.2em;
-    font-weight: 500;
   }
 }
