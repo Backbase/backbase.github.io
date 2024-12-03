@@ -1,6 +1,6 @@
 # Impact of using new AI tools
 
-January 26, 2023 | Backbase office | AI, OpenAI
+Event date: January 26, 2023 | Backbase office | AI, OpenAI
 
 ![](assets/placeholder.png)
 

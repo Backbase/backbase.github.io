@@ -21,11 +21,16 @@ import { MeetupsHeaderComponent } from '../../components/meetups-header/meetups-
   styleUrl: './meetups.component.scss',
 })
 export class MeetupsComponent {
+  readonly sortByDate = (a: Post, b: Post) =>
+    new Date(b.date?.trim() ?? 0).getTime() -
+    new Date(a.date?.trim() ?? 0).getTime();
+
   articles$ = this.postsService.getPosts(
     undefined,
     undefined,
     false,
-    this.filterPrinciplesArticles.bind(this)
+    this.filterPrinciplesArticles.bind(this),
+    this.sortByDate
   );
 
   constructor(private postsService: PostsService) {}

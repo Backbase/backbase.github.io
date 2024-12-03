@@ -1,6 +1,6 @@
 # Learn and play - Cybergames meetup
 
-July 24, 2024 | Backbase office | Games
+Event date: July 24, 2024 | Backbase office | Games
 
 ![](assets/placeholder.png)
 

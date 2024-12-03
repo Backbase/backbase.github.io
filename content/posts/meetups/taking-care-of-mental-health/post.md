@@ -1,6 +1,6 @@
 # Taking care of mental health
 
-June 19, 2024 | Backbase office | User Experience
+Event date: June 19, 2024 | Backbase office | User Experience
 
 ![](assets/placeholder.png)
 

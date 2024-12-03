@@ -1,6 +1,6 @@
 # Easy debugging in Playwright
 
-March 30, 2023 | Backbase office | Playwright
+Event date: March 30, 2023 | Backbase office | Playwright
 
 ![](assets/placeholder.png)
 

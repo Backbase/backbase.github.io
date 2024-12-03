@@ -1,6 +1,6 @@
 # Memory management for Data Structures - Fundamentals
 
-November 19, 2024 | Backbase office | Backend
+Event date: November 19, 2024 | Backbase office | Backend
 
 ![](assets/placeholder.png)
 

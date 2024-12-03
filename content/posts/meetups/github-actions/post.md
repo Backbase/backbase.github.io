@@ -1,6 +1,6 @@
 # GitHub Actions
 
-February 23, 2023 | Backbase office | GitHub
+Event date: February 23, 2023 | Backbase office | GitHub
 
 ![](assets/placeholder.png)
 

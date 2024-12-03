@@ -1,11 +1,11 @@
 # New trends in AI & Your Ticket to the States
 
-December 4, 2024 | Backbase office | AI
+Event date: December 4, 2024 | Backbase office | AI
 
 ![](assets/placeholder.png)
 
 Authors: Backbase Meetups
-Date: 2024-11-27T09:00:11.276Z  
+Date: 2024-12-01T09:00:11.276Z  
 Category: meetups
 
 tags: ux, test, fine

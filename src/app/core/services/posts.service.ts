@@ -51,7 +51,8 @@ export class PostsService {
     offset: number = 0,
     size: number = POSTS_PER_PAGE,
     filterFeatured: boolean = true,
-    filterFn?: (post: Post) => boolean
+    filterFn?: (post: Post) => boolean,
+    sortFn?: (a: Post, b: Post) => number,
   ): Observable<Posts> {
     return this.getAllPosts().pipe(
       withLatestFrom(this.getHighlightedPost()),
@@ -64,6 +65,9 @@ export class PostsService {
         }
         if (typeof filterFn === 'function') {
           filteredPosts = filteredPosts.filter(filterFn);
+        }
+        if (typeof sortFn === 'function') {
+          filteredPosts = filteredPosts.sort(sortFn);
         }
         const paginatedPosts = filteredPosts.slice(
           offset * size,
