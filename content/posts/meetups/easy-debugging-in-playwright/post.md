@@ -2,27 +2,25 @@
 
 Event date: March 30, 2023 | Backbase office | Playwright
 
-![](assets/placeholder.png)
+![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
 Date: 2023-03-01T08:54:35.051Z  
 Category: meetups
 
-tags: ux, test, fine
- 
---- 
+tags: krakow, meetup, Playwright, debugging
+
+---
 
 # ✅ Book your spot
 
 Join us for the next Backbase meetup where we speak not only about Tech
 
-🚨 Limited spots available!
-
-[Get your ticket](https://#)
+[Get your ticket](https://www.meetup.com/backbase-meetups/)
 
 # Speakers & Topics
 
-[Joanna Morgaś](https://linkedin...)
+[Joanna Morgaś](https://www.linkedin.com/in/joanna-morgas/)
 "Easy debugging in Playwright"
 
 Considering Software Quality in general there looms up the scary principle that the absence-of-errors in a software
@@ -37,7 +35,7 @@ easier and faster. This talk is to discuss and present some of them.
 🕑 Time: 5:00 pm
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
-[See the map](https://googlemaps)
+[See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
@@ -46,6 +44,4 @@ easier and faster. This talk is to discuss and present some of them.
 6:00pm - 6:15pm - Q&A
 6:15pm - 7:00pm - Networking, food&drinks
 
-🚨 Don't forget to book your spot!
-
-[Get your ticket](https://#)
+[Get your ticket](https://www.meetup.com/backbase-meetups/)

@@ -1,11 +1,24 @@
-@if (articles$ | async; as articles) {
+@if (allMeetups$ | async; as articles) {
   <blog-gradient></blog-gradient>
 
-  <blog-meetups-header [post]="articles.posts[0]"></blog-meetups-header>
+  @if (newestMeetup$ | async; as meetup) {
+    <blog-meetups-header [post]="meetup"></blog-meetups-header>
+  }
 
   <blog-divider></blog-divider>
 
   <div class="center-container">
     <blog-posts-list [posts]="articles.posts"></blog-posts-list>
+  </div>
+
+  <div class="center-container">
+    <mat-paginator
+      [length]="articles.total"
+      [pageSize]="articles.perPage"
+      [showFirstLastButtons]="true"
+      [pageIndex]="currentPage$ | async"
+      (page)="navigate($event)"
+      aria-label="Select page">
+    </mat-paginator>
   </div>
 }

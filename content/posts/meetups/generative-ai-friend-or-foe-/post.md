@@ -1,16 +1,16 @@
-# GitHub Actions
+# Generative AI Friend or Foe?
 
-Event date: February 23, 2023 | Backbase office | GitHub
+Event date: February 29, 2024 | Backbase office | AI
 
 ![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
-Date: 2023-02-01T08:53:54.871Z  
+Date: 2024-02-01T07:15:19.654Z  
 Category: meetups
 
-tags: krakow, meetup, Github, GitHub Actions
-
----
+tags: krakow, meetup, AI
+ 
+--- 
 
 # ✅ Book your spot
 
@@ -20,13 +20,13 @@ Join us for the next Backbase meetup where we speak not only about Tech
 
 # Speakers & Topics
 
-[Oleksandr Aleksandrov](Backend Engineer, RnD)
-"GitHub Actions"
+[Tomasz Aleksandrowicz](https://www.linkedin.com/in/tomasz-aleksandrowicz-7757372/)
+"Generative AI Friend or Foe?"
 
 
 # Place and time
 
-🗓️ Event Date: 23 February 2023
+🗓️ Event Date: 29 February 2024
 
 🕑 Time: 4:00 pm
 
@@ -36,7 +36,9 @@ Join us for the next Backbase meetup where we speak not only about Tech
 # Agenda
 
 4:00pm - 4:15pm - Doors open, grab a drink
-4:15pm - 5:00pm - Oleksandr Aleksandrov | "GitHub Actions" (in english)
-5:00pm - 6:00pm - Networking, food&drinks
+4:15pm - 4:30pm - Welcome
+4:30pm - 5:15pm - Brian Vlootman | "Generative AI Friend or Foe?" (in english)
+5:15pm - 7:00pm - Networking, food&drinks
+
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)

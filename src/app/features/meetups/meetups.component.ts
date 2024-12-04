@@ -6,6 +6,10 @@ import { Post } from '../../core/model/post.model';
 import { PostsListComponent } from '../../components/posts-list/posts-list.component';
 import { AsyncPipe } from '@angular/common';
 import { MeetupsHeaderComponent } from '../../components/meetups-header/meetups-header.component';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { NavigationService } from '../../core/services/navigation.service';
+import { map, switchMap } from 'rxjs';
+
 
 @Component({
   selector: 'blog-meetups',
@@ -16,26 +20,58 @@ import { MeetupsHeaderComponent } from '../../components/meetups-header/meetups-
     PostsListComponent,
     AsyncPipe,
     MeetupsHeaderComponent,
+    MatPaginator,
   ],
+  providers: [NavigationService],
   templateUrl: './meetups.component.html',
   styleUrl: './meetups.component.scss',
 })
 export class MeetupsComponent {
-  readonly sortByDate = (a: Post, b: Post) =>
-    new Date(b.date?.trim() ?? 0).getTime() -
-    new Date(a.date?.trim() ?? 0).getTime();
+  currentPage$ = this.navigationService.currentPage$;
+  newestMeetup$ = this.findNewestMeetup$();
+  allMeetups$ = this.getAllMeetups$();
 
-  articles$ = this.postsService.getPosts(
-    undefined,
-    undefined,
-    false,
-    this.filterPrinciplesArticles.bind(this),
-    this.sortByDate
-  );
+  constructor(
+    private postsService: PostsService,
+    private navigationService: NavigationService
+  ) {}
 
-  constructor(private postsService: PostsService) {}
+  navigate(page: PageEvent) {
+    this.navigationService.navigate(page.pageIndex);
+  }
 
-  private filterPrinciplesArticles(post: Post) {
+  private findNewestMeetup$() {
+    return this.postsService.getPosts(
+      undefined,
+      undefined,
+      false,
+      post => this.isMeetupCategory(post),
+      (a, b) => this.compareByDate(a, b)
+    ).pipe(map(result => result.posts[0]));
+  }
+
+  private getAllMeetups$() {
+    return this.currentPage$.pipe(
+      switchMap(page =>
+        this.postsService.getPosts(
+          page,
+          undefined,
+          false,
+          post => this.isMeetupCategory(post),
+          (a, b) => this.compareByDate(a, b)
+        )
+      )
+    );
+  }
+
+  private compareByDate(a: Post, b: Post): number {
+    return (
+      new Date(b.date?.trim() ?? 0).getTime() -
+      new Date(a.date?.trim() ?? 0).getTime()
+    );
+  }
+
+  private isMeetupCategory(post: Post): boolean {
     return (post.category as string) === 'meetups';
   }
 }

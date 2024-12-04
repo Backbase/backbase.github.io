@@ -2,13 +2,13 @@
 
 Event date: July 24, 2024 | Backbase office | Games
 
-![](assets/placeholder.png)
+![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
 Date: 2024-07-01T08:56:49.711Z  
 Category: meetups
 
-tags: ux, test, fine
+tags: krakow, meetup, Cybergames
  
 ---
 
@@ -16,9 +16,7 @@ tags: ux, test, fine
 
 Join us for the next Backbase meetup where we speak not only about Tech
 
-🚨 Limited spots available!
-
-[Get your ticket](https://www.meetup.com/backbase-meetups/events/301693056)
+[Get your ticket](https://www.meetup.com/backbase-meetups/)
 
 # Speakers & Topics
 
@@ -33,7 +31,7 @@ Join us for the next Backbase meetup where we speak not only about Tech
 🕑 Time: 6:00 pm
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
-[See the map](https://googlemaps)
+[See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
@@ -42,6 +40,4 @@ Join us for the next Backbase meetup where we speak not only about Tech
 5:00pm - 5:15pm - Break
 6:00pm - 7:00pm - Networking, food&drinks
 
-🚨 Don't forget to book your spot!
-
-[Get your ticket](https://www.meetup.com/backbase-meetups/events/301693056
+[Get your ticket](https://www.meetup.com/backbase-meetups/)

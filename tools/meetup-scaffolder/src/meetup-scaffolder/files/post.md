@@ -1,14 +1,14 @@
 # <%= title %>
 
-<%= excerpt %>
+Event date: <%= excerpt %>
 
-![](assets/placeholder.png)
+![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
 Date: <%= currentDate %>  
 Category: meetups
 
-tags: ux, test, fine
+tags: <%= tags %>
  
 --- 
   

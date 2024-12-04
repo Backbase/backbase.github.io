@@ -2,13 +2,13 @@
 
 Event date: June 19, 2024 | Backbase office | User Experience
 
-![](assets/placeholder.png)
+![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
 Date: 2024-06-01T08:56:12.211Z  
 Category: meetups
 
-tags: ux, test, fine
+tags: krakow, meetup, Health
  
 --- 
 
@@ -16,9 +16,7 @@ tags: ux, test, fine
 
 Join us for the next Backbase meetup where we speak not only about Tech
 
-🚨 Limited spots available!
-
-[Get your ticket](https://www.meetup.com/backbase-meetups/events/301134936)
+[Get your ticket](https://www.meetup.com/backbase-meetups/)
 
 # Speakers & Topics
 
@@ -34,7 +32,7 @@ A dive into the behavioral principles that drive user behavior, from cognitive b
 🕑 Time: 4:00 pm
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
-[See the map](https://googlemaps)
+[See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
@@ -44,6 +42,4 @@ A dive into the behavioral principles that drive user behavior, from cognitive b
 5:15pm - 6:00pm - Lightning talks space
 6:00pm - 7:00pm - Networking, food&drinks
 
-🚨 Don't forget to book your spot!
-
-[Get your ticket](https://www.meetup.com/backbase-meetups/events/301134936)
+[Get your ticket](https://www.meetup.com/backbase-meetups/)

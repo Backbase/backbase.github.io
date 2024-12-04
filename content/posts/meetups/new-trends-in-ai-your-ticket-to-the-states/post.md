@@ -2,13 +2,13 @@
 
 Event date: December 4, 2024 | Backbase office | AI
 
-![](assets/placeholder.png)
+![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
 Date: 2024-12-01T09:00:11.276Z  
 Category: meetups
 
-tags: ux, test, fine
+tags: krakow, meetup, AI, Travel
  
 --- 
 
@@ -16,9 +16,7 @@ tags: ux, test, fine
 
 Join us for the next Backbase meetup where we speak not only about Tech
 
-🚨 Limited spots available!
-
-[Get your ticket](https://www.meetup.com/backbase-meetups/events/304522625)
+[Get your ticket](https://www.meetup.com/backbase-meetups/)
 
 # Speakers & Topics
 
@@ -44,7 +42,7 @@ Have you ever thought about traveling to the States but didn’t know where to s
 🕑 Time: 6:00 pm
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
-[See the map](https://googlemaps)
+[See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
@@ -54,6 +52,4 @@ Have you ever thought about traveling to the States but didn’t know where to s
 7:15pm - 7:30pm - Monika Nowakowska | "Your Ticket to the States: Plan, Pack, and Go!" (in english)
 7:30pm - 8:15pm - Networking, food&drinks
 
-🚨 Don't forget to book your spot!
-
-[Get your ticket](https://www.meetup.com/backbase-meetups/events/304522625)
+[Get your ticket](https://www.meetup.com/backbase-meetups/)

@@ -2,13 +2,13 @@
 
 Event date: November 19, 2024 | Backbase office | Backend
 
-![](assets/placeholder.png)
+![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
 Date: 2024-11-01T08:59:33.493Z  
 Category: meetups
 
-tags: ux, test, fine
+tags: krakow, meetup, Backend
  
 --- 
 
@@ -17,9 +17,7 @@ tags: ux, test, fine
 
 Join us for the next Backbase meetup where we speak not only about Tech
 
-🚨 Limited spots available!
-
-[Get your ticket](https://www.meetup.com/backbase-meetups/events/304374021)
+[Get your ticket](https://www.meetup.com/backbase-meetups/)
 
 # Speakers & Topics
 
@@ -37,7 +35,7 @@ The talk is going to first cover different data types that apply to any programm
 🕑 Time: 5:30 pm
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
-[See the map](https://googlemaps)
+[See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
@@ -46,6 +44,4 @@ The talk is going to first cover different data types that apply to any programm
 5:50pm - 7:00pm - Pawel Chrzanowski | "Memory management for Data Structures - Fundamentals" (in english)
 7:05pm - 8:00pm - Networking, food&drinks
 
-🚨 Don't forget to book your spot!
-
-[Get your ticket](https://www.meetup.com/backbase-meetups/events/304374021)
+[Get your ticket](https://www.meetup.com/backbase-meetups/)
