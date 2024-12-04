@@ -19,7 +19,7 @@
     "images:posts": "node tools/process-images content/posts --lg 1920,0 --md 1280,0",
     "premeetup:new": "cd tools/meetup-scaffolder && npm i && npm run build",
     "meetup:new": "ng generate ./tools/meetup-scaffolder:meetup-scaffolder",
-    "prettier": "pImpact of using new AI toolsrettier --write ."
+    "prettier": "prettier --write ."
   },
   "private": true,
   "dependencies": {
