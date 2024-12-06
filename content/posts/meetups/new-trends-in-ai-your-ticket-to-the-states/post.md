@@ -27,7 +27,7 @@ Summary of 2024: biggest events and most important changes, products and announc
 Examples of most current applications of AI in products and services
 Following AI-trends predictions on what to expect in 2025
 
-–––––
+—————
 
 [Monika Nowakowska](https://www.linkedin.com/in/monika-nowakowska-71b196105/)
 "Your Ticket to the States: Plan, Pack, and Go!"
