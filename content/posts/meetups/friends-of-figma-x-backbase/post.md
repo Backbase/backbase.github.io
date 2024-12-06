@@ -41,7 +41,7 @@ As a Senior UX Designer I am specializing in employee solutions at Backbase. My 
 
 # Place and time
 
-🗓️ Event Date: 23 January 2025
+🗓️ Event Date: January 23, 2025
 
 🕑 Time: 6:00  PM
 

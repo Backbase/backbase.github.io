@@ -28,7 +28,7 @@ The presentation will take place onsite in Kraków office and will be transmitte
 
 # Place and time
 
-🗓️ Event Date: 26 January 2023
+🗓️ Event Date: January 26, 2023
 
 🕑 Time: 4:00  PM
 

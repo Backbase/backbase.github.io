@@ -32,12 +32,12 @@ Following AI-trends predictions on what to expect in 2025
 [Monika Nowakowska](https://www.linkedin.com/in/monika-nowakowska-71b196105/)
 "Your Ticket to the States: Plan, Pack, and Go!"
 
-Have you ever thought about traveling to the States but didn’t know where to start? I was in the same boat, and I’d be happy to share my journey and tips from my American adventure. 1 month, 4,000 kilometers, and 7 national parks. Get set for an unforgettable adventure across the States!
+Have you ever thought about traveling to the States but didn’t know where to start? I was in the same boat, and I’d be happy to share my journey and tips from my American adventure. 1 month, 4,000 kilometers, and 7 national parks. Get set for an unforgettable adventure across the States.
 
 
 # Place and time
 
-🗓️ Event Date: 4 December 2024
+🗓️ Event Date: December 4, 2024
 
 🕑 Time: 6:00  PM
 

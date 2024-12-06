@@ -26,7 +26,7 @@ Join us for the next Backbase meetup where we speak not only about Tech
 
 # Place and time
 
-🗓️ Event Date: 23 February 2023
+🗓️ Event Date: February 23, 2023
 
 🕑 Time: 4:00  PM
 

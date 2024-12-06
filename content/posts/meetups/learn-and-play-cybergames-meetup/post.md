@@ -26,7 +26,7 @@ Join us for the next Backbase meetup where we speak not only about Tech
 
 # Place and time
 
-🗓️ Event Date: 24 July 2024
+🗓️ Event Date: July 24, 2024
 
 🕑 Time: 6:00  PM
 

@@ -30,7 +30,7 @@ easier and faster. This talk is to discuss and present some of them.
 
 # Place and time
 
-🗓️ Event Date: 30 March 2023
+🗓️ Event Date: March 30, 2023
 
 🕑 Time: 5:00  PM
 

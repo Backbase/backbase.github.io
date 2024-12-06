@@ -27,7 +27,7 @@ A dive into the behavioral principles that drive user behavior, from cognitive b
 
 # Place and time
 
-🗓️ Event Date: 19 June 2024
+🗓️ Event Date: June 19, 2024
 
 🕑 Time: 4:00  PM
 

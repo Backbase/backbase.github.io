@@ -30,7 +30,7 @@ The talk is going to first cover different data types that apply to any programm
 
 # Place and time
 
-🗓️ Event Date: 19 December 2024
+🗓️ Event Date: December 19, 2024
 
 🕑 Time: 5:30  PM
 
