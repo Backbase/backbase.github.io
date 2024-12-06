@@ -39,17 +39,17 @@ Have you ever thought about traveling to the States but didn’t know where to s
 
 🗓️ Event Date: 4 December 2024
 
-🕑 Time: 6:00 pm
+🕑 Time: 6:00  PM
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
-6:00pm - 6:15pm - Doors open, grab a drink
-6:15pm - 6:20pm - Welcome
-6:20pm - 7:15pm - Tomasz Aleksandrowicz | "AI and what next?" (in english)
-7:15pm - 7:30pm - Monika Nowakowska | "Your Ticket to the States: Plan, Pack, and Go!" (in english)
-7:30pm - 8:15pm - Networking, food&drinks
+6:00 PM - 6:15 PM - Doors open, grab a drink
+6:15 PM - 6:20 PM - Welcome
+6:20 PM - 7:15 PM - Tomasz Aleksandrowicz | "AI and what next?" (in english)
+7:15 PM - 7:30 PM - Monika Nowakowska | "Your Ticket to the States: Plan, Pack, and Go!" (in english)
+7:30 PM - 8:15 PM - Networking, food&drinks
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)

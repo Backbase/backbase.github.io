@@ -43,17 +43,17 @@ As a Senior UX Designer I am specializing in employee solutions at Backbase. My 
 
 🗓️ Event Date: 23 January 2025
 
-🕑 Time: 6:00 pm
+🕑 Time: 6:00  PM
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
-6:00pm - 6:30pm - Doors open, grab a drink
-6:30pm - 6:45pm - Welcome
-6:45pm - 7:20pm - Phil Barrett | "How to build your reputation, influence and impact as a real-world UX designer" (in english)
-7:25pm - 8:00pm - Paulina Duźniak | "Good enough research – how to gather data without direct access to users" (in english)
-8:00pm - 9:30pm - Networking, food&drinks
+6:00 PM - 6:30 PM - Doors open, grab a drink
+6:30 PM - 6:45 PM - Welcome
+6:45 PM - 7:20 PM - Phil Barrett | "How to build your reputation, influence and impact as a real-world UX designer" (in english)
+7:25 PM - 8:00 PM - Paulina Duźniak | "Good enough research – how to gather data without direct access to users" (in english)
+8:00 PM - 9:30 PM - Networking, food&drinks
 
 [Get your ticket](http://www.friends.figma.com/krakow/)

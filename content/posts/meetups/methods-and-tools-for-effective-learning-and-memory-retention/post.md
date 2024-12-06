@@ -28,16 +28,16 @@ Join us for the next Backbase meetup where we speak not only about Tech
 
 🗓️ Event Date: 14 December 2023
 
-🕑 Time: 5:00 pm
+🕑 Time: 5:00  PM
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
-5:00pm - 5:15pm - Doors open, grab a drink
-5:15pm - 5:30pm - Welcome
-5:30pm - 6:15pm - Magdalena Chmura-Kula | "Methods and Tools for Effective Learning and Memory Retention" (in english)
-6:15pm - 7:00pm - Networking, food&drinks
+5:00 PM - 5:15 PM - Doors open, grab a drink
+5:15 PM - 5:30 PM - Welcome
+5:30 PM - 6:15 PM - Magdalena Chmura-Kula | "Methods and Tools for Effective Learning and Memory Retention" (in english)
+6:15 PM - 7:00 PM - Networking, food&drinks
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)

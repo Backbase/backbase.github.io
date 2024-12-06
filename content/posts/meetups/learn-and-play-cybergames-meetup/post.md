@@ -28,16 +28,16 @@ Join us for the next Backbase meetup where we speak not only about Tech
 
 🗓️ Event Date: 24 July 2024
 
-🕑 Time: 6:00 pm
+🕑 Time: 6:00  PM
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
-4:00pm - 4:15pm - Doors open, grab a drink
-4:15pm - 5:00pm - Jonathan Bevers | "Behavioral Science Meets UX: Leveraging Psychology to Improve User Engagement" (in english)
-5:00pm - 5:15pm - Break
-6:00pm - 7:00pm - Networking, food&drinks
+4:00 PM - 4:15 PM - Doors open, grab a drink
+4:15 PM - 5:00 PM - Jonathan Bevers | "Behavioral Science Meets UX: Leveraging Psychology to Improve User Engagement" (in english)
+5:00 PM - 5:15 PM - Break
+6:00 PM - 7:00 PM - Networking, food&drinks
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)

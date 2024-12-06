@@ -32,16 +32,16 @@ The talk is going to first cover different data types that apply to any programm
 
 🗓️ Event Date: 19 December 2024
 
-🕑 Time: 5:30 pm
+🕑 Time: 5:30  PM
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
-5:30pm - 5:45pm - Doors open, grab a drink
-5:45pm - 5:50:pm - Welcome
-5:50pm - 7:00pm - Pawel Chrzanowski | "Memory management for Data Structures - Fundamentals" (in english)
-7:05pm - 8:00pm - Networking, food&drinks
+5:30 PM - 5:45 PM - Doors open, grab a drink
+5:45 PM - 5:50: PM - Welcome
+5:50 PM - 7:00 PM - Pawel Chrzanowski | "Memory management for Data Structures - Fundamentals" (in english)
+7:05 PM - 8:00 PM - Networking, food&drinks
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)

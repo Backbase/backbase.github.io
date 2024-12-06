@@ -28,17 +28,17 @@ Join us for the next Backbase meetup where we speak not only about Tech
 
 🗓️ Event Date: 29 February 2024
 
-🕑 Time: 4:00 pm
+🕑 Time: 4:00  PM
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
-4:00pm - 4:15pm - Doors open, grab a drink
-4:15pm - 4:30pm - Welcome
-4:30pm - 5:15pm - Brian Vlootman | "Generative AI Friend or Foe?" (in english)
-5:15pm - 7:00pm - Networking, food&drinks
+4:00 PM - 4:15 PM - Doors open, grab a drink
+4:15 PM - 4:30 PM - Welcome
+4:30 PM - 5:15 PM - Brian Vlootman | "Generative AI Friend or Foe?" (in english)
+5:15 PM - 7:00 PM - Networking, food&drinks
 
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)
