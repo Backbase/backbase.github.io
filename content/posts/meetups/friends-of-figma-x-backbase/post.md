@@ -5,7 +5,7 @@ Event date: January 23, 2025 | Backbase office | User Experience
 ![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
-Date: 2024-12-04T07:18:14.406Z  
+Date: 2025-01-07T07:18:14.406Z  
 Category: meetups
 
 tags: krakow, meetup, UX
