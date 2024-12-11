@@ -16,7 +16,7 @@ tags: krakow, meetup, UX
 
 Join us for the Friends of Figma event organized in collaboration with Backbase.
 
-[Get your ticket](http://www.friends.figma.com/krakow/)
+[Get your ticket](https://friends.figma.com/krakow/)
 
 # Speakers & Topics
 
@@ -58,4 +58,4 @@ As a Senior UX Designer I am specializing in employee solutions at Backbase. My 
 7:25 PM - 8:00 PM - Paulina Duźniak | "Good enough research—how to gather data without direct access to users" (in english)
 8:00 PM - 9:30 PM - Networking, food&drinks
 
-[Get your ticket](http://www.friends.figma.com/krakow/)
+[Get your ticket](https://friends.figma.com/krakow/)
