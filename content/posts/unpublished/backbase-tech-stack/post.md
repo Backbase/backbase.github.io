@@ -1,4 +1,4 @@
-# Backbase Tech Stack
+# Backbase tech stack
 
 What exactly is being used to build banking applications in Backbase?
 
@@ -19,13 +19,13 @@ It is thought out and designed to provide modern architecture with the latest ma
 the most advanced security mechanisms, and great extensibility and flexibility to make it easy
 to integrate with different core banking systems.
 
-To achieve this, different technologies, frameworks, standards and architectural patterns need to be combined.
+To achieve this, different technologies, frameworks, standards, and architectural patterns need to be combined.
 
 
 This article aims to provide an insight into how the Backbase software is built and integrated on a high level,
 what kind of technologies are used on a different levels and layers.
 
-## High Level Architecture
+## High level architecture
 
 <img align="right" src="assets/HL_Architecture.drawio.png">
 
@@ -58,7 +58,7 @@ and custom logic is implemented.
 This approach gives the flexibility of the solution because there is one shared API spec between Banking and Integration Services,
 and what is more Integration Services can deliver something specific which is required to properly deliver integration with Core Banking.
 
-There is also a new way for integrating with Core and Third Parties in Backbase. It was introduced in 2024, and it is called Grand Central.
+Backbase has also a new way for integrating with Core and Third Parties. It was introduced in 2024, and it is called Grand Central.
 Grand Central is something like Integration Platform or Connectivity Platform. It is integrated with Banking Services,
 and it is focused on building integration connectors as a small pieces. In this approach the delivery effort is smaller and time to market is shorter.
 
