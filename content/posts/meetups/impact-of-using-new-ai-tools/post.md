@@ -28,17 +28,17 @@ The presentation will take place onsite in Kraków office and will be transmitte
 
 # Place and time
 
-🗓️ Event Date: 26 January 2023
+🗓️ Event Date: January 26, 2023
 
-🕑 Time: 4:00 pm
+🕑 Time: 4:00  PM
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
-4:00pm - 4:15pm - Doors open, grab a drink
-4:15pm - 6:00pm - Tomasz Aleksandrowicz | "Impact of using new AI tools on software development with OpenAI Chat example" (in english)
-6:00pm - 7:00pm - Networking, food&drinks
+4:00 PM - 4:15 PM - Doors open, grab a drink
+4:15 PM - 6:00 PM - Tomasz Aleksandrowicz | "Impact of using new AI tools on software development with OpenAI Chat example" (in english)
+6:00 PM - 7:00 PM - Networking, food&drinks
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)

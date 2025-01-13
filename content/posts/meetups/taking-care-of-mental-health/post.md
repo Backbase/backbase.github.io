@@ -27,19 +27,19 @@ A dive into the behavioral principles that drive user behavior, from cognitive b
 
 # Place and time
 
-🗓️ Event Date: 19 June 2024
+🗓️ Event Date: June 19, 2024
 
-🕑 Time: 4:00 pm
+🕑 Time: 4:00  PM
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 # Agenda
 
-4:00pm - 4:15pm - Doors open, grab a drink
-4:15pm - 5:00pm - Karolina Sochacz | "Taking care of mental health" (in english)
-5:00pm - 5:15pm - Break
-5:15pm - 6:00pm - Lightning talks space
-6:00pm - 7:00pm - Networking, food&drinks
+4:00 PM - 4:15 PM - Doors open, grab a drink
+4:15 PM - 5:00 PM - Karolina Sochacz | "Taking care of mental health" (in english)
+5:00 PM - 5:15 PM - Break
+5:15 PM - 6:00 PM - Lightning talks space
+6:00 PM - 7:00 PM - Networking, food&drinks
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)

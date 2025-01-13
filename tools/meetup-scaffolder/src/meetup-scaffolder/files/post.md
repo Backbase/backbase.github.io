@@ -16,8 +16,8 @@ tags: <%= tags %>
   
 Join us for the <%= title %> event.  
   
+<!-- vale off -->
 Limited spots available!  
-  
 [Get your ticket](https://#)  
   
 # Speakers & Topics  
@@ -32,3 +32,4 @@ Limited spots available!
 Don't forget to book your spot!  
   
 [Get your ticket](https://#)  
+<!-- vale on -->
