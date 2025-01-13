@@ -12,19 +12,18 @@ tags: krakow, meetup, Learning
  
 --- 
 
-# ✅ Book your spot
+## ✅ Book your spot
 
 Join us for the next Backbase meetup where we speak not only about Tech
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)
 
-# Speakers & Topics
+## Speakers & Topics
 
-[Magdalena Chmura-Kula](https://www.linkedin.com/in/magdalena-chmura/)
-"Methods and Tools for Effective Learning and Memory Retention"
+### [Magdalena Chmura-Kula](https://www.linkedin.com/in/magdalena-chmura/)
+**Topic:** "Methods and Tools for Effective Learning and Memory Retention"
 
-
-# Place and time
+## Place and time
 
 🗓️ Event Date: December 14, 2023
 
@@ -33,11 +32,14 @@ Join us for the next Backbase meetup where we speak not only about Tech
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
-# Agenda
+## Agenda
 
 5:00 PM - 5:15 PM - Doors open, grab a drink
+
 5:15 PM - 5:30 PM - Welcome
+
 5:30 PM - 6:15 PM - Magdalena Chmura-Kula | "Methods and Tools for Effective Learning and Memory Retention" (in english)
+
 6:15 PM - 7:00 PM - Networking, food&drinks
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)

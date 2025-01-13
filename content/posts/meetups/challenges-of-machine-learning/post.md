@@ -1,4 +1,4 @@
-# Challenges of machine learning
+# Challenges of Machine Learning
 
 Event date: September 28, 2023 | Backbase office | Machine Learning
 
@@ -12,19 +12,18 @@ tags: krakow, meetup, Machine Learning
  
 --- 
 
-# ✅ Book your spot
+## ✅ Book your spot
 
 Join us for the next Backbase meetup where we speak not only about Tech
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)
 
-# Speakers & Topics
+## Speakers & Topics
 
-[Sandra Jagiełło](https://www.linkedin.com/in/sandrajagiello/)
-"Challenges of machine learning"
+### [Sandra Jagiełło](https://www.linkedin.com/in/sandrajagiello/)
+**Topic:** "Challenges of machine learning"
 
-
-# Place and time
+## Place and time
 
 🗓️ Event Date: September 28, 2023
 
@@ -33,11 +32,14 @@ Join us for the next Backbase meetup where we speak not only about Tech
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
-# Agenda
+## Agenda
 
 5:00 PM - 5:15 PM - Doors open, grab a drink
+
 5:15 PM - 5:30 PM - Welcome
+
 5:30 PM - 6:15 PM - Sandra Jagiełło | "Challenges of machine learning" (in english)
+
 6:15 PM - 7:00 PM - Networking, food&drinks
 
 
