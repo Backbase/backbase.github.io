@@ -1,4 +1,4 @@
-# Memory Management for Data Structures - Fundamentals
+# Memory Management for Data Structures
 
 Event date: November 19, 2024 | Backbase office | Backend
 
