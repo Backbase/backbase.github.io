@@ -16,7 +16,7 @@ tags: krakow, meetup, UX
 
 Join us for the Friends of Figma event organized in collaboration with Backbase.
 
-[Get your ticket](https://friends.figma.com/krakow/)
+[Get your ticket](https://friends.figma.com/events/details/figma-krakow-presents-fof-krakow-x-backbase/)
 
 ## Speakers & Topics
 
@@ -63,4 +63,4 @@ As a Senior UX Designer I am specializing in employee solutions at Backbase. My 
 
 8:00 PM - 9:30 PM - Networking, food&drinks
 
-[Get your ticket](https://friends.figma.com/krakow/)
+[Get your ticket](https://friends.figma.com/events/details/figma-krakow-presents-fof-krakow-x-backbase/)
