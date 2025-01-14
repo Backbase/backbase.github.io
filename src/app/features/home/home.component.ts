@@ -71,6 +71,6 @@ export class HomeComponent {
   }
 
   private filterSpecialPosts(post: Post): boolean {
-    return !['principles'].includes(post.category);
+    return !['principles', 'meetups'].includes(post.category);
   }
 }

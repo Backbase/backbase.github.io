@@ -88,6 +88,7 @@ export const appConfig: ApplicationConfig = {
       provide: SPECIAL_CATEGORIES,
       useValue: [
         'principles',
+        'meetups',
       ]
     }
   ],
