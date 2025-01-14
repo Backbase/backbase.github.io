@@ -1,4 +1,4 @@
-# Innersourcing on Raiffeisen Example
+# Innersourcing on Backbase Customer
 
 Event date: June 29, 2023 | Backbase office | iOS
 
@@ -21,7 +21,7 @@ Join us for the next Backbase meetup where we speak not only about Tech
 ## Speakers & Topics
 
 ### [Mariusz Jakowienko](https://www.linkedin.com/in/mariusz-ios-developer/)
-**Topic:** "Innersourcing on Raiffeisen example"
+**Topic:** "Innersourcing on Backbase Customer"
 
 ## Place and time
 
@@ -38,7 +38,7 @@ Join us for the next Backbase meetup where we speak not only about Tech
 
 5:15 PM - 5:30 PM - Welcome
 
-5:30 PM - 6:15 PM - Mariusz Jakowienko | "Innersourcing on Raiffeisen example" (in english)
+5:30 PM - 6:15 PM - Mariusz Jakowienko | "Innersourcing on Backbase Customer" (in english)
 
 6:15 PM - 7:00 PM - Networking, food&drinks
 
