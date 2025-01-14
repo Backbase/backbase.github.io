@@ -53,14 +53,14 @@ As a Senior UX Designer I am specializing in employee solutions at Backbase. My 
 
 ## Agenda
 
-6:00 PM - 6:30 PM - Doors open, grab a drink
+6:00 - 6:45 PM - Registration, grab a drink
 
-6:30 PM - 6:45 PM - Welcome
+6:45 - 7:00 PM - Opening remarks
 
-6:45 PM - 7:20 PM - Phil Barrett | "How to build your reputation, influence and impact as a real-world UX designer" (in english)
+7:00 - 7:25 PM - Phil Barrett | "How to build your reputation and impact as a real-world UX designer" [ENG]
 
-7:25 PM - 8:00 PM - Paulina Duźniak | "Good enough research—how to gather data without direct access to users" (in english)
+7:40 - 8:05 PM - Paulina Duźniak | "Good enough research - how to gather data without direct access to users" [ENG]
 
-8:00 PM - 9:30 PM - Networking, food&drinks
+8:05 - 10:00 PM - Networking, food & drinks
 
 [Get your ticket](https://friends.figma.com/events/details/figma-krakow-presents-fof-krakow-x-backbase/)
