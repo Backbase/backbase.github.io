@@ -1,16 +1,16 @@
-# Methods and Tools for Effective Learning and Memory Retention
+# Arduino Weather Station on Azure - IoT
 
-Event date: December 14, 2023 | Backbase office | Learning
+Event date: April 27, 2023 | Backbase office | Arduino, IoT, Azure
 
 ![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
-Date: 2023-12-01T07:11:29.876Z  
+Date: 2023-04-01T06:41:26.235Z  
 Category: meetups
 
-tags: krakow, meetup, Learning
- 
---- 
+tags: krakow, meetup, Arduino, IoT, Azure
+
+---
 
 ## ✅ Book your spot
 
@@ -20,12 +20,12 @@ Join us for the next Backbase meetup where we speak not only about Tech
 
 ## Speakers & Topics
 
-### [Magdalena Chmura-Kula](https://www.linkedin.com/in/magdalena-chmura/)
-**Topic:** "Methods and Tools for Effective Learning and Memory Retention"
+### [Mariusz Walania](https://www.linkedin.com/in/mariusz-walania-7a3a573/)
+**Topic:** "Arduino weather station on Azure - IoT, Terraform, Azure, Programming"
 
 ## Place and time
 
-🗓️ Event Date: December 14, 2023
+🗓️ Event Date: April 27, 2023
 
 🕑 Time: 5:00  PM
 
@@ -38,8 +38,9 @@ Join us for the next Backbase meetup where we speak not only about Tech
 
 5:15 PM - 5:30 PM - Welcome
 
-5:30 PM - 6:15 PM - Magdalena Chmura-Kula | "Methods and Tools for Effective Learning and Memory Retention" (in english)
+5:30 PM - 6:15 PM - Mariusz Walania | "Arduino weather station on Azure - IoT, Terraform, Azure, Programming" (in english)
 
 6:15 PM - 7:00 PM - Networking, food&drinks
+
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)
