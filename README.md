@@ -23,6 +23,8 @@ Run the followig commands to install and run the application:
 
 ## Creating content
 
+### Create blog post
+
 To create a new post, run the following command to scaffold the structure:
 
 ```bash
@@ -38,6 +40,31 @@ Once scaffolded, you can edit your post in `content/posts/unpublished/{title}`
 > - Changes to the post metadata – header of markdown – requires a rebuild: `npm run posts:update` or server restart (`npm start`)
 
 For guidelines on writing your post, please check the [next section](#content)
+
+### Create a meetup post
+First, run this command to prepare the scaffolder:
+```bash
+npm run premeetup:new
+```
+Now you are ready to run this command to create new meetup post:
+```bash
+npm run meetup:new
+```
+Example question during the process:
+```aiignore
+? What's the title of the post? Some new meetup
+? Enter a short description to display on the landing page January 26, 2023 | Backbase office | AI, OpenAI
+? Enter some keywords related to your post (comma-separated) krakow, meetup, AI, OpenAI
+? In which of these categories your post fits best? meetups
+```
+The category is always fixed to `meetups`.
+The author is always fixed to `Backbase Meetups`
+
+There will be two files created. You can fill the `post.md` with you content and replace `placeholder.webp` with your image.
+```
+CREATE content/posts/meetups/some-new-meetup/post.md (499 bytes)
+CREATE content/posts/meetups/some-new-meetup/assets/placeholder.webp (25720 bytes)
+```
 
 ---
 
