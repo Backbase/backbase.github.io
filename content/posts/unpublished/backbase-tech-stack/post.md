@@ -136,8 +136,7 @@ It currently supports several Database and Messaging solutions.
 | Programming<br/>language  | [Java](https://www.java.com/en/)                                                                                                                                   |
 | Dependency<br/>manager    | [Maven](https://maven.apache.org)                                                                                                                                  |
 | Frameworks                | [Spring Framework](https://spring.io/)<br/>[Spring Boot](https://spring.io/projects/spring-boot)<br/>[Spring Cloud](https://spring.io/projects/spring-data)        |
-| Integration<br/>framework | [Apache Camel](https://camel.apache.org)                                                                                                                           |
-| Service Discovery         | [Netflix Eureka](https://cloud.spring.io/spring-cloud-netflix/reference/html/)                                                                                     |
+| Integration<br/>framework | [Apache Camel](https://camel.apache.org)                                                                                                                           |                                                                                |
 | API                       | [RESTful](https://restfulapi.net)<br/>[OpenAPI](https://www.openapis.org/)                                                                                         |
 | Databases                 | [MySQL](https://www.mysql.com/)<br/>[MSSQL](https://www.microsoft.com/en-us/sql-server)<br/>[Oracle](https://www.oracle.com/database/)                             |
 | ORM                       | [Spring Data](https://spring.io/projects/spring-data)                                                                                                              |
@@ -154,6 +153,7 @@ These are quite important set of services which are integral part of entire Back
 |:----------|:--------------------------------------|
 | Framework | [Quarkus](https://quarkus.io)         |
 | Solution  | [Keycloak](https://www.keycloak.org/) |
+| Cache     | [Redis Cache](https://redis.io/)      |
 
 ### Infrastructure
 
