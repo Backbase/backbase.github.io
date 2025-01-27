@@ -1,0 +1,42 @@
+<blog-locations-tab></blog-locations-tab>
+
+@if (posts$ | async; as posts) {
+  @if (posts.posts.length) {
+    <div class="center-container">
+      <blog-posts-list [posts]="posts.posts"></blog-posts-list>
+    </div>
+  
+    <div class="center-container">
+      <mat-paginator
+        [length]="posts.total"
+        [pageSize]="posts.perPage"
+        [showFirstLastButtons]="true"
+        [pageIndex]="currentPage$ | async"
+        (page)="navigate($event)"
+        aria-label="Select page">
+      </mat-paginator>
+    </div>
+  } @else {
+    <div class="center-container">
+      <blog-not-found></blog-not-found>
+    </div>
+  }
+}
+
+@defer (on viewport) {
+  <blog-divider></blog-divider>
+  <blog-meetup-footer></blog-meetup-footer>
+
+  <blog-transition
+    colorFrom="background"
+    colorTo="secondary"></blog-transition>
+  <blog-jobs></blog-jobs>  
+  <blog-transition colorFrom="secondary" colorTo="neutral"></blog-transition>
+} @placeholder {
+  <div class="placeholder">
+    <mat-spinner role="progressbar"></mat-spinner>
+    <blog-transition
+      colorFrom="background"
+      colorTo="neutral"></blog-transition>
+  </div>
+}
