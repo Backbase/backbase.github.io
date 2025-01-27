@@ -9,6 +9,8 @@ Date: 2023-05-01T07:03:38.357Z
 Category: meetups
 
 tags: krakow, meetup, FinTech
+
+Location: Krakow
  
 --- 
 

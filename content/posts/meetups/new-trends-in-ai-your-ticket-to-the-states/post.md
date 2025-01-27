@@ -9,6 +9,8 @@ Date: 2024-12-01T09:00:11.276Z
 Category: meetups
 
 tags: krakow, meetup, AI, Travel
+
+Location: Krakow
  
 --- 
 

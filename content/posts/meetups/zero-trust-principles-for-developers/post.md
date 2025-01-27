@@ -9,6 +9,8 @@ Date: 2024-01-01T07:14:28.488Z
 Category: meetups
 
 tags: krakow, meetup, Zero-Trust
+
+Location: Krakow
  
 --- 
 
