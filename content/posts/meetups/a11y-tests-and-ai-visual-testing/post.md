@@ -24,7 +24,7 @@ Join us for the next Backbase meetup where we speak not only about Tech
 "Testy dostępności (accessibility) – “Od zera do… bohatera?”: Nie takie testy dostępności straszne jak je malują"
 
 #### BIO
-Bobby developer in Test. 23 years of experience in IT. His technology stac is Java ecosystem.
+Bobby developer in Test. 23 years of experience in IT. His technology stack is Java ecosystem.
 
 ---
 
