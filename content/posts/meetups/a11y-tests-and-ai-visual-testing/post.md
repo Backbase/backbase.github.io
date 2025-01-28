@@ -1,4 +1,4 @@
-# a11y tests and AI visual testing
+# a11y Tests and AI Visual Testing
 
 Event date: February 25, 2025 | Backbase office | QA
 
@@ -32,7 +32,7 @@ Bobby developer in Test. 23 years of experience in IT. His technology stack is J
 "AI na Straży Pikseli: Ewolucja w Visual Testing"
 
 #### BIO
-QA automation and CI freak with many years of expierience. Testing everything.. starting with frontend thru backend ending with mobile devices. Quality is his mission and AI is hidden weapon levaraging testing to the next level.
+QA automation and CI freak with many years of experience. Testing everything... starting with frontend, through backend, ending with mobile devices. Quality is his mission and AI his hidden weapon to leverage testing to the next level.
 
 ## Place and time
 
