@@ -45,7 +45,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'location/:loc',
+        path: 'meetups/:loc',
         loadComponent: () =>
           import('./features/location/location.component').then(
             m => m.LocationComponent

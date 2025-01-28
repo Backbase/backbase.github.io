@@ -22,6 +22,10 @@
         "meetups"
       ],
       "x-prompt": "In which of these categories your post fits best?"
+    },
+    "location": {
+      "type": "string",
+      "x-prompt": "Enter in which place new meetup will appear?"
     }
   },
   "required": ["title", "excerpt", "tags" ],
