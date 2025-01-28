@@ -9,6 +9,8 @@ Date: 2023-10-01T07:09:11.368Z
 Category: meetups
 
 tags: krakow, meetup, Machine Learning
+
+Location: Krakow
  
 --- 
 

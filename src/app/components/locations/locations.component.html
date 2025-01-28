@@ -1,0 +1,12 @@
+<div class="center-container">
+  <mat-tab-group
+    (selectedTabChange)="onChange($event)"
+    [selectedIndex]="active ? locations.indexOf(active) + 1 : 0"
+    multiple="true"
+    aria-label="Location selection">
+    <mat-tab labelClass="hide"></mat-tab>
+    @for (category of locations; track $index) {
+      <mat-tab [labelClass]="category" [label]="Location[category]"></mat-tab>
+    }
+  </mat-tab-group>
+</div>

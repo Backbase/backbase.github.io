@@ -10,6 +10,7 @@ import { AssetsService } from './assets.service';
 import { MarkdownService } from 'ngx-markdown';
 import { SPECIAL_CATEGORIES } from '../config/configuration-tokens';
 import { AuthorsList } from '../model/author.model';
+import { Location } from '../model/locations.model';
 
 const POSTS_PER_PAGE = 8;
 
@@ -107,6 +108,27 @@ export class PostsService {
         return entries
           .sort(([_, a], [__, b]) => b - a)
           .map(entry => entry[0] as Category);
+      })
+    );
+  }
+
+  getLocations(): Observable<Location[]> {
+    return this.getAllPosts().pipe(
+      map(posts => {
+        const locations = posts.reduce(
+          (acc: { [location: string]: number }, curr: Post) => {
+            if (curr.location) {
+              acc[curr.location] = (acc[curr.location] || 0) + 1;
+            }
+            return acc;
+          },
+          {}
+        );
+  
+        const entries = Object.entries(locations);
+        return entries
+          .sort(([_, countA], [__, countB]) => countB - countA)
+          .map(([location]) => location as Location);
       })
     );
   }

@@ -8,18 +8,25 @@ import { AsyncPipe } from '@angular/common';
 import { MeetupsHeaderComponent } from '../../components/meetups-header/meetups-header.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { NavigationService } from '../../core/services/navigation.service';
-import { map, switchMap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
+import { Category } from '../../core/model/categories.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LocationsComponent } from '../../components/locations/locations.component';
+import { Location } from '../../core/model/locations.model';
+import { MeetupFooterComponent } from '../../components/meetup-footer/meetup-footer.component';
 
 
 @Component({
   selector: 'blog-meetups',
   standalone: true,
   imports: [
-    DividerComponent,
     GradientComponent,
     PostsListComponent,
     AsyncPipe,
     MeetupsHeaderComponent,
+    LocationsComponent,
+    DividerComponent,
+    MeetupFooterComponent,
     MatPaginator,
   ],
   providers: [NavigationService],
@@ -27,27 +34,41 @@ import { map, switchMap } from 'rxjs';
   styleUrl: './meetups.component.scss',
 })
 export class MeetupsComponent {
+  locations$: Observable<Location[]> = this.postsService
+    .getLocations();
+  
+  selectedCategory$ = this.activatedRoute.paramMap.pipe(
+    map(params => params.get('loc') as Location)
+  );
   currentPage$ = this.navigationService.currentPage$;
   newestMeetup$ = this.findNewestMeetup$();
   allMeetups$ = this.getAllMeetups$();
 
   constructor(
     private postsService: PostsService,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
   ) {}
 
   navigate(page: PageEvent) {
     this.navigationService.navigate(page.pageIndex);
   }
 
+  navigateToLocation(selected: string | string[]) {
+    this.router.navigate(['location', selected]);
+  }
+
   private findNewestMeetup$() {
-    return this.postsService.getPosts(
-      undefined,
-      undefined,
-      false,
-      post => this.isMeetupCategory(post),
-      (a, b) => this.compareByDate(a, b)
-    ).pipe(map(result => result.posts[0]));
+    return this.postsService
+      .getPosts(
+        undefined,
+        undefined,
+        false,
+        post => this.isMeetupCategory(post),
+        (a, b) => this.compareByDate(a, b)
+      )
+      .pipe(map(result => result.posts[0]));
   }
 
   private getAllMeetups$() {

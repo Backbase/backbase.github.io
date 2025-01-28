@@ -10,6 +10,8 @@ Category: meetups
 
 tags: krakow, meetup, AI, OpenAI
 
+Location: Krakow
+
 ---
 
 ## ✅ Book your spot

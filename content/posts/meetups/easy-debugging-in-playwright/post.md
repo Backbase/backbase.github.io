@@ -10,6 +10,8 @@ Category: meetups
 
 tags: krakow, meetup, Playwright, debugging
 
+Location: Krakow
+
 ---
 
 ## ✅ Book your spot

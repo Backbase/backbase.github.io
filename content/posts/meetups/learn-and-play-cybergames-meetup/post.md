@@ -9,6 +9,8 @@ Date: 2024-07-01T08:56:49.711Z
 Category: meetups
 
 tags: krakow, meetup, Cybergames
+
+Location: Krakow
  
 ---
 

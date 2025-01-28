@@ -9,6 +9,8 @@ Date: 2023-09-01T07:06:24.046Z
 Category: meetups
 
 tags: krakow, meetup, hacking, backend
+
+Location: Krakow
  
 --- 
 

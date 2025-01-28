@@ -10,6 +10,8 @@ Category: meetups
 
 tags: krakow, meetup, Arduino, IoT, Azure
 
+Location: Krakow
+
 ---
 
 ## ✅ Book your spot

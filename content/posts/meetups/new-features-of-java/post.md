@@ -9,6 +9,8 @@ Date: 2023-11-01T07:10:03.011Z
 Category: meetups
 
 tags: krakow, meetup, Java, Back-end
+
+Location: Krakow
  
 --- 
 

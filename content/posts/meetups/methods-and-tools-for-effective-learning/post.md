@@ -9,6 +9,8 @@ Date: 2023-12-01T07:11:29.876Z
 Category: meetups
 
 tags: krakow, meetup, Learning
+
+Location: Krakow
  
 --- 
 

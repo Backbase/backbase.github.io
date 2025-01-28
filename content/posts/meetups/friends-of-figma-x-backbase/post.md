@@ -9,6 +9,8 @@ Date: 2025-01-07T07:18:14.406Z
 Category: meetups
 
 tags: krakow, meetup, UX
+
+Location: Krakow
  
 --- 
 

@@ -1,6 +1,7 @@
 import { Author } from './author.model';
 import { Category } from './categories.model';
 import { ProcessedAsset } from './content.model';
+import { Location } from './locations.model';
 
 export interface Post {
   title: string;
@@ -11,6 +12,7 @@ export interface Post {
   authors: Array<Author | string>;
   featured?: boolean;
   category: Category;
+  location?: Location;
   tags: string[];
   readingTime: string;
   specialCategory: boolean;

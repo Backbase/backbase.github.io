@@ -9,6 +9,8 @@ Date: 2023-06-01T07:05:04.716Z
 Category: meetups
 
 tags: krakow, meetup, iOS
+
+Location: Krakow
  
 --- 
 

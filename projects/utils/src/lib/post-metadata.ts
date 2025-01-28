@@ -11,6 +11,7 @@ export function extractPostMetaData(post: string, metaonly: boolean = false) {
       ?.split(',')
       .map(n => n.trim()) || [],
     category: header.match(/^Category: ([^\n]+)/im)?.[1] || '',
+    location: header.match(/^Location: ([^\n]+)/im)?.[1] || '',
     tags: header
       .match(/^Tags: ([^\n]+)/im)?.[1]
       ?.split(',')
