@@ -1,4 +1,4 @@
-# Testy a11y i wizualne testy z AI
+# a11y tests and AI visual testing
 
 Event date: February 25, 2025 | Backbase office | QA
 
@@ -14,17 +14,17 @@ tags: krakow, meetup, QA
 --- 
 ## ✅ Book your spot
 
-Zapraszamy serdeniczenie na kolejne wydarzenie z cyklu Tech Talk Meetup
+Join us for the next Backbase meetup where we speak not only about Tech
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)
 
 ## Speakers & Topics
 
-### [Robert Bobby Gędłek](https://www.linkedin.com/in/robert-gedlek/)
+### [Robert Bobby Gedlek](https://www.linkedin.com/in/robert-gedlek/)
 "Testy dostępności (accessibility) – “Od zera do… bohatera?”: Nie takie testy dostępności straszne jak je malują"
 
 #### BIO
-Bobby developer in Test. Ponad 23 lata w branży IT z bagażem doświadczeń. Stack techniczny to ekosystem Javy
+Bobby developer in Test. 23 years of experience in IT. His technology stac is Java ecosystem.
 
 ---
 
@@ -32,7 +32,7 @@ Bobby developer in Test. Ponad 23 lata w branży IT z bagażem doświadczeń. St
 "AI na Straży Pikseli: Ewolucja w Visual Testing"
 
 #### BIO
-Spec od automatyzacji i CI z długoletnim stażem, który testuje wszystko – od frontendu i backendu po mobile. Jakość to moja misja, a AI to sekretna broń, która podnosi testowanie na nowy poziom.
+QA automation and CI freak with many years of expierience. Testing everything.. starting with frontend thru backend ending with mobile devices. Quality is his mission and AI is hidden weapon levaraging testing to the next level.
 
 ## Place and time
 
@@ -45,7 +45,7 @@ Spec od automatyzacji i CI z długoletnim stażem, który testuje wszystko – o
 
 ## Agenda
 
-6:00 - 6:05 PM - Rejestracja uczestnikow
+6:00 - 6:05 PM - Registration, grab a drink
 
 6:05 - 6:45 PM - Robert Bobby Gędłek | "Testy dostępności (accessibility) – “Od zera do… bohatera?”: Nie takie testy dostępności straszne jak je malują" [POL]
 
