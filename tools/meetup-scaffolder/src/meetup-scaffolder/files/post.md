@@ -9,6 +9,8 @@ Date: <%= currentDate %>
 Category: meetups
 
 tags: <%= tags %>
+
+Location: <%= location %>
  
 --- 
   

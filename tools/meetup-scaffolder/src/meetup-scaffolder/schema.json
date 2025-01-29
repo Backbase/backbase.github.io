@@ -25,7 +25,12 @@
     },
     "location": {
       "type": "string",
-      "x-prompt": "Enter in which place new meetup will appear?"
+      "enum": [
+        "Krakow",
+        "Amsterdam",
+        "Hyderabad"
+      ],
+      "x-prompt": "In which of these locations your post fits best?"
     }
   },
   "required": ["title", "excerpt", "tags" ],
