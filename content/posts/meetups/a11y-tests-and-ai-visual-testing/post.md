@@ -21,7 +21,7 @@ Join us for the next Backbase meetup where we speak not only about Tech
 ## Speakers & Topics
 
 ### [Robert Bobby Gedlek](https://www.linkedin.com/in/robert-gedlek/)
-"Testy dostępności (accessibility) – “Od zera do… bohatera?”: Nie takie testy dostępności straszne jak je malują"
+"Testy dostępności (accessibility) — “Od zera do… bohatera?”: Nie takie testy dostępności straszne jak je malują"
 
 #### BIO
 Bobby developer in Test. 23 years of experience in IT. His technology stack is Java ecosystem.
