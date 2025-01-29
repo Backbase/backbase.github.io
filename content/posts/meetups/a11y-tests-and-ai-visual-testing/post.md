@@ -47,7 +47,7 @@ QA automation and CI freak with many years of experience. Testing everything... 
 
 6:00 - 6:05 PM - Registration, grab a drink
 
-6:05 - 6:45 PM - Robert Bobby Gędłek | "Testy dostępności (accessibility) – “Od zera do… bohatera?”: Nie takie testy dostępności straszne jak je malują" [POL]
+6:05 - 6:45 PM - Robert Bobby Gędłek | "Testy dostępności (accessibility) — “Od zera do… bohatera?”: Nie takie testy dostępności straszne jak je malują" [POL]
 
 6:50 - 7:30 PM - Darek Majcherczyk | "AI na Straży Pikseli: Ewolucja w Visual Testing" [POL]
 
