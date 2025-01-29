@@ -10,6 +10,8 @@ Category: meetups
 
 tags: krakow, meetup, Github, GitHub Actions
 
+Location: Krakow
+
 ---
 
 ## ✅ Book your spot

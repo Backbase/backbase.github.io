@@ -5,7 +5,12 @@
     <blog-meetups-header [post]="meetup"></blog-meetups-header>
   }
 
-  <blog-divider></blog-divider>
+  @if (locations$ | async; as locations) {
+    <blog-locations
+      [locations]="locations"
+      [active]="selectedCategory$ | async"
+      (selected)="navigateToLocation($event)"></blog-locations>
+  }
 
   <div class="center-container">
     <blog-posts-list [posts]="articles.posts"></blog-posts-list>
@@ -21,4 +26,7 @@
       aria-label="Select page">
     </mat-paginator>
   </div>
+
+  <blog-divider></blog-divider>
+  <blog-meetup-footer></blog-meetup-footer>
 }

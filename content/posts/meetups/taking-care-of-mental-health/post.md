@@ -9,6 +9,8 @@ Date: 2024-06-01T08:56:12.211Z
 Category: meetups
 
 tags: krakow, meetup, Health
+
+Location: Krakow
  
 --- 
 

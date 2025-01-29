@@ -22,6 +22,15 @@
         "meetups"
       ],
       "x-prompt": "In which of these categories your post fits best?"
+    },
+    "location": {
+      "type": "string",
+      "enum": [
+        "Krakow",
+        "Amsterdam",
+        "Hyderabad"
+      ],
+      "x-prompt": "In which of these locations your post fits best?"
     }
   },
   "required": ["title", "excerpt", "tags" ],

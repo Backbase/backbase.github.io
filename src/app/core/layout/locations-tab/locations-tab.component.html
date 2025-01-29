@@ -1,0 +1,6 @@
+@if (locations$ | async; as locations) {
+  <blog-locations
+    [locations]="locations"
+    [active]="selectedLocation$ | async"
+    (selected)="navigate($event)"></blog-locations>
+}

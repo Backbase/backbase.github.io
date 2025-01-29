@@ -45,6 +45,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'meetups/:loc',
+        loadComponent: () =>
+          import('./features/location/location.component').then(
+            m => m.LocationComponent
+          ),
+      },
+      {
         path: 'principles',
         loadComponent: () =>
           import('./features/principles/principles.component').then(
