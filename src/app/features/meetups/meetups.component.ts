@@ -56,7 +56,7 @@ export class MeetupsComponent {
   }
 
   navigateToLocation(selected: string | string[]) {
-    this.router.navigate(['meetups', selected]);
+    this.router.navigate(['meetup', selected]);
   }
 
   private findNewestMeetup$() {
