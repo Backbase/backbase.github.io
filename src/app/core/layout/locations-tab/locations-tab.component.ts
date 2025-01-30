@@ -28,6 +28,6 @@ export class LocationsTabComponent {
   ) {}
 
   navigate(selected: string | string[]) {
-    this.router.navigate(['location', selected]);
+    this.router.navigate(['meetups', selected]);
   }
 }
