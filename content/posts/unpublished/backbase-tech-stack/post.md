@@ -158,6 +158,8 @@ It currently supports several Database and Messaging solutions.
 | Framework                 | [Quarkus](https://quarkus.io)                                              |
 | Integration<br/>framework | [Apache Camel](https://camel.apache.org)<br/>[Apache Camel K](https://camel.apache.org/camel-k/2.5.x/index.html) |
 | API                       | [OpenAPI](https://www.openapis.org/) |
+| JSON Processing           | [JOLT](https://camel.apache.org/components/4.8.x/jolt-component.html) |
+| XML Transformation | [XSLT](https://www.w3schools.com/xml/xsl_transformation.asp) |         
 | Container solution        | [Docker](https://www.docker.com/)                                       |
 | Container orchestrator    | [Kubernetes](https://kubernetes.io/)                                    |
 | Package manager           | [Helm](https://helm.sh/docs/)                                           |
