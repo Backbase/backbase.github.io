@@ -1,4 +1,4 @@
-# Backbase tech stack
+# Backbase Engagement Banking Platform Tech Stack
 
 What exactly is being used to build banking applications in Backbase?
 
@@ -14,7 +14,7 @@ tags: architecture,technology,patterns,stack
 
 ## Introduction
 
-Backbase Engagement Banking Services is a comprehensive solution with a lot of capabilities.
+Backbase Engagement Banking Platform is a comprehensive solution with a lot of capabilities.
 It is thought out and designed to provide modern architecture with the latest market standards,
 the most advanced security mechanisms, and great extensibility and flexibility to make it easy
 to integrate with different core banking systems.
@@ -29,7 +29,7 @@ what kind of technologies are used on a different levels and layers.
 
 <img align="right" src="assets/HL_Architecture.drawio.png">
 
-Engagement Banking Services are divided according to the capabilities they offer, the role they play, and on which level they operate.
+Engagement Banking Platform is divided according to the capabilities it offers, the role it plays, and on which level it operates.
 
 Each service is designed to perform completely different tasks and offers specific ways to interact with it.
 
@@ -40,14 +40,13 @@ On the top there are client-facing apps. These applications are available for 2 
 
 These applications allow to interact with backend services for these users who have proper permissions.
 Client APIs are a dedicated and well secured APIs designed for interaction between client-facing applications and backend services.
+They use OIDC Authorization flow with PKCE.
 
-On the next layer, there are services which take care of the security of the client-facing applications.
-These layer of services is able to recognize the user and introduce the same user to backend services in a more understandable way.
-This layer also offers the set of generic services which delivers generic capabilities like document storage or auditing for all other specific services.
+Between client-facing applications and backend services there is a dedicated layer of security services and generic services like document store or auditing.
 
 Next layer offers specific banking services like Arrangements, Batches, Cards, Contacts, Payments etc.
 These services offer set of functions oriented on a specific banking capability.
-Interaction between services on this layer is possible through the Service APIs.
+Interaction between services on this layer is possible through the Service APIs and it is secured with OAuth2.0 Client Credential flow.
 
 To interact with Core Banking services or Third Party services, there is a dedicated integration layer.
 Banking Services have defined set of integration APIs for outbound and inbound connectivity.
@@ -57,10 +56,14 @@ In many scenarios, Integration Services are implemented as a separate layer wher
 and custom logic is implemented.
 This approach gives the flexibility of the solution because there is one shared API spec between Banking and Integration Services,
 and what is more Integration Services can deliver something specific which is required to properly deliver integration with Core Banking.
+Integration APIs are secured with mTLS.
 
 Backbase has also a new way for integrating with Core and Third Parties. It was introduced in 2024, and it is called Grand Central.
 Grand Central is something like Integration Platform or Connectivity Platform. It is integrated with Banking Services,
 and it is focused on building integration connectors as a small pieces. In this approach the delivery effort is smaller and time to market is shorter.
+Grand Central is built with quite different approach. Because GC is focused on quick delivery of new integration connectors it is built with the framework
+which supports most of the Enterprise Integration Patterns - Apache Camel. Development of the connectors is focused on delivering serverless lightweight services - Kamelets, 
+and thanks to that, developers can devote most of their effort to prepare required business logic that need to be delivered with connectors.
 
 ## Technology Stack
 
@@ -133,7 +136,7 @@ It currently supports several Database and Messaging solutions.
 
 |                           |                                                                                                                                                                    |
 |:--------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Programming<br/>language  | [Java](https://www.java.com/en/)                                                                                                                                   |
+| Programming<br/>language  | [Java](https://www.java.com/en/) (JDK 21)                                                                                                                                  |
 | Dependency<br/>manager    | [Maven](https://maven.apache.org)                                                                                                                                  |
 | Frameworks                | [Spring Framework](https://spring.io/)<br/>[Spring Boot](https://spring.io/projects/spring-boot)<br/>[Spring Cloud](https://spring.io/projects/spring-data)        |
 | Integration<br/>framework | [Apache Camel](https://camel.apache.org)                                                                                                                           |                                                                                |
@@ -142,6 +145,9 @@ It currently supports several Database and Messaging solutions.
 | ORM                       | [Spring Data](https://spring.io/projects/spring-data)                                                                                                              |
 | Database schema managemnt | [Liquibase](https://www.liquibase.org/)                                                                                                                            |
 | Messaging                 | [ActiveMQ](https://activemq.apache.org/)<br/>[RabbitMQ](https://www.rabbitmq.com/)<br/>[Azure Service Bus](https://azure.microsoft.com/en-us/products/service-bus) |
+| Event Streaming | [Apache Kafka](https://kafka.apache.org/) |
+| Containers for testing purposes | [Testcontainers](https://testcontainers.com/)                                                                                                                      |
+| Mocks                     | [WireMock](https://wiremock.org/)                                                                                                                                  |
 
 #### IAM
 
@@ -154,6 +160,7 @@ These are quite important set of services which are integral part of entire Back
 | Framework | [Quarkus](https://quarkus.io)         |
 | Solution  | [Keycloak](https://www.keycloak.org/) |
 | Cache     | [Redis Cache](https://redis.io/)      |
+| Key/value data store | [Infinispan](https://infinispan.org/)|
 
 ### Infrastructure
 
@@ -187,7 +194,7 @@ Security in Backbase is built on global standards. It is focused on Zero Trust a
 
 |                                                                                                                                  |                                                                                                                                                                                                        |
 |:---------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [OAuth](https://oauth.net/2/)                                                                                                    | OAuth 2.0 is the industry-standard protocol for authorization.                                                                                                                                         |
+| [OAuth2](https://oauth.net/2/)                                                                                                    | OAuth 2.0 is the industry-standard protocol for authorization.                                                                                                                                         |
 | [Authentication](https://auth0.com/intro-to-iam/what-is-authentication)                                                          | Authentication is the process that companies use to confirm that only the right people, services, and apps with the right permissions can get organizational resources.                                |
 | [Authorization](https://auth0.com/intro-to-iam/what-is-authorization)                                                            | Authorization is the process of giving someone the ability to access a resource.                                                                                                                       |
 | [mTLS](https://www.cloudflare.com/en-gb/learning/access-management/what-is-mutual-tls/)                                          | Mutual TLS is a method for mutual authentication. mTLS ensures that the parties at each end of a network connection are who they claim to be by verifying that they both have the correct private key. |
