@@ -149,6 +149,20 @@ It currently supports several Database and Messaging solutions.
 | Containers for testing purposes | [Testcontainers](https://testcontainers.com/)                                                                                                                      |
 | Mocks                     | [WireMock](https://wiremock.org/)                                                                                                                                  |
 
+#### Grand Central
+|                           |                                                                            |
+|:--------------------------|:---------------------------------------------------------------------------|
+| Banking standard          | [BIAN](https://bian.org/)                                                  |
+| Programming<br/>language  | [Java](https://www.java.com/en/) (JDK 21)                                  |
+| Dependency<br/>manager    | [Maven](https://maven.apache.org)                                          |
+| Framework                 | [Quarkus](https://quarkus.io)                                              |
+| Integration<br/>framework | [Apache Camel](https://camel.apache.org)<br/>[Apache Camel K](https://camel.apache.org/camel-k/2.5.x/index.html) |
+| API                       | [OpenAPI](https://www.openapis.org/) |
+| Container solution        | [Docker](https://www.docker.com/)                                       |
+| Container orchestrator    | [Kubernetes](https://kubernetes.io/)                                    |
+| Package manager           | [Helm](https://helm.sh/docs/)                                           |
+| Infrastructure as a Code  | [Terraform](https://www.terraform.io/) |
+
 #### IAM
 
 IAM is an Identity and Access Management solution. It uses under the hood the Keycloak Identity Provider which is much expanded compared to the original version.
@@ -179,7 +193,7 @@ It is built on the top of Azure and GitHub, and it is fully supported by operati
 | Cloud vendor           | [Azure](https://azure.microsoft.com/)                                   |
 | Container solution     | [Docker](https://www.docker.com/)                                       |
 | Container orchestrator | [Kubernetes](https://kubernetes.io/)                                    |
-| Package manager        | https://helm.sh/docs/                                                   |
+| Package manager        | [Helm](https://helm.sh/docs/)                                           |
 | Service Mesh           | [Istio](https://istio.io)                                               |
 | GitOps tools           | [Argo](https://argoproj.github.io)                                      |
 | Version control        | [GitHub](https://github.com)                                            |
