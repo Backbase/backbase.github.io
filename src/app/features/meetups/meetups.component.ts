@@ -79,8 +79,8 @@ export class MeetupsComponent {
     let soonest: Post | null = null;
   
     for (const post of posts) {
-      const num = new Date(post.date?.trim() || '').getTime();
-      if (num > minValue && (soonest === null || num < new Date(soonest.date?.trim() || '').getTime())) {
+      const num = new Date(post.date?.trim() ?? '').getTime();
+      if (num > minValue && (soonest === null || num < new Date(soonest.date?.trim() ?? '').getTime())) {
         soonest = post;
       }
     }
