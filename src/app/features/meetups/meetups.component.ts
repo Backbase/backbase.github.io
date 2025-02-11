@@ -9,7 +9,6 @@ import { MeetupsHeaderComponent } from '../../components/meetups-header/meetups-
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { NavigationService } from '../../core/services/navigation.service';
 import { map, Observable, switchMap } from 'rxjs';
-import { Category } from '../../core/model/categories.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationsComponent } from '../../components/locations/locations.component';
 import { Location } from '../../core/model/locations.model';
@@ -68,7 +67,25 @@ export class MeetupsComponent {
         post => this.isMeetupCategory(post),
         (a, b) => this.compareByDate(a, b)
       )
-      .pipe(map(result => result.posts[0]));
+      .pipe(map(result => {
+        const startOfToday = new Date();
+        startOfToday.setHours(0, 0, 0, 0);
+
+        return this.findSoonestAfter(result.posts, startOfToday.getTime());
+      }));
+  }
+
+  findSoonestAfter(posts: Post[], minValue: number): Post | null {
+    let soonest: Post | null = null;
+  
+    for (const post of posts) {
+      const num = new Date(post.date?.trim() ?? '').getTime();
+      if (num > minValue && (soonest === null || num < new Date(soonest.date?.trim() ?? '').getTime())) {
+        soonest = post;
+      }
+    }
+  
+    return soonest;
   }
 
   private getAllMeetups$() {
