@@ -51,7 +51,8 @@ export class LocationComponent {
         page,
         undefined,
         false,
-        (post: Post) => post.location === location
+        (post: Post) => post.location === location,
+        (a, b) => this.compareByDate(a, b)
       )
     )
   );
@@ -67,5 +68,12 @@ export class LocationComponent {
 
   navigate(page: PageEvent) {
     this.navigationService.navigate(page.pageIndex);
+  }
+
+  private compareByDate(a: Post, b: Post): number {
+    return (
+      new Date(b.date?.trim() ?? 0).getTime() -
+      new Date(a.date?.trim() ?? 0).getTime()
+    );
   }
 }

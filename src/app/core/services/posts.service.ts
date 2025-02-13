@@ -12,7 +12,7 @@ import { SPECIAL_CATEGORIES } from '../config/configuration-tokens';
 import { AuthorsList } from '../model/author.model';
 import { Location } from '../model/locations.model';
 
-const POSTS_PER_PAGE = 8;
+const POSTS_PER_PAGE = 12;
 
 @Injectable({
   providedIn: 'root',
