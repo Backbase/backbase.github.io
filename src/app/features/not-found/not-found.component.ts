@@ -6,7 +6,6 @@ import { ObservabilityService } from '../../core/services/observability.service'
 
 @Component({
   selector: 'blog-not-found',
-  standalone: true,
   imports: [ButtonComponent, MatButtonModule, RouterLink],
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss'],

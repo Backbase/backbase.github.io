@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'blog-posts-list',
-  standalone: true,
   imports: [
     CommonModule,
     PostItemComponent,

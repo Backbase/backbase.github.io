@@ -36,8 +36,9 @@ async function getAuthorRoutes(source) {
     const utils = await loadEsmModule(
       '../../dist/utils/esm2022/lib/permalink.mjs'
     );
-    return Object.keys(authors).map(name =>
-      `/people/${utils.getAuthorPermalink(name)}`);
+    return Object.keys(authors).map(
+      name => `/people/${utils.getAuthorPermalink(name)}`
+    );
   }
   return [];
 }
@@ -76,9 +77,7 @@ async function main() {
 }
 
 async function withUtils() {
-  utils = await loadEsmModule(
-    '../../dist/utils/esm2022/lib/post-metadata.mjs'
-  );
+  utils = await loadEsmModule('../../dist/utils/esm2022/lib/post-metadata.mjs');
 
   main();
 }

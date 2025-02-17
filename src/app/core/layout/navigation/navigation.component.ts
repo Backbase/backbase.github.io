@@ -14,7 +14,6 @@ import { DarkModeToggleComponent } from '../dark-mode-toggle/dark-mode-toggle.co
 
 @Component({
   selector: 'blog-navigation',
-  standalone: true,
   imports: [
     CommonModule,
     LogoComponent,

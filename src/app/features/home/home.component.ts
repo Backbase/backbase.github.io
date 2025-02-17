@@ -22,7 +22,6 @@ import { TransitionComponent } from '../../components/transition/transition.comp
 
 @Component({
   selector: 'blog-home',
-  standalone: true,
   imports: [
     CommonModule,
     PostFeaturedComponent,

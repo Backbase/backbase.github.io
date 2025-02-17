@@ -2,9 +2,10 @@
 
 $backbase-typography: mat.m2-define-typography-config(
   $font-family: 'Libre Franklin',
-  $headline-5: mat.m2-define-typography-level(3.5em, 1, 700), /* h1 */
-  $headline-6: mat.m2-define-typography-level(1.5em, 2, 700), /* h2 */ 
-  $subtitle-1: mat.m2-define-typography-level(1.2em, 2, 700), /* h3 */
-  $body-1: mat.m2-define-typography-level(1em, 2, 700), /* h4 */
-  $body-2: mat.m2-define-typography-level(1rem, 1.5, 400), /* body text */
+  $headline-5: mat.m2-define-typography-level(3.5em, 1, 700),
+  /* h1 */ $headline-6: mat.m2-define-typography-level(1.5em, 2, 700),
+  /* h2 */ $subtitle-1: mat.m2-define-typography-level(1.2em, 2, 700),
+  /* h3 */ $body-1: mat.m2-define-typography-level(1em, 2, 700),
+  /* h4 */ $body-2: mat.m2-define-typography-level(1rem, 1.5, 400),
+  /* body text */
 );

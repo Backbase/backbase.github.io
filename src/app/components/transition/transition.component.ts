@@ -3,7 +3,6 @@ import { Component, Inject, Input } from '@angular/core';
 
 @Component({
   selector: 'blog-transition',
-  standalone: true,
   imports: [NgStyle, NgClass],
   templateUrl: './transition.component.html',
   styleUrl: './transition.component.scss',

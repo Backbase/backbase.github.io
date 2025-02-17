@@ -5,12 +5,7 @@ import { FooterComponent } from './core/layout/footer/footer.component';
 
 @Component({
   selector: 'blog-root',
-  standalone: true,
-  imports: [
-    NavigationComponent,
-    FooterComponent,
-    RouterOutlet
-  ],
+  imports: [NavigationComponent, FooterComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

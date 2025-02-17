@@ -6,7 +6,6 @@ import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'blog-jobs',
-  standalone: true,
   imports: [CommonModule, MatButtonModule, MatIconModule, ButtonComponent],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.scss',

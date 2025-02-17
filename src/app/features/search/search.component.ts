@@ -18,7 +18,6 @@ import { ObservabilityService } from '../../core/services/observability.service'
 
 @Component({
   selector: 'blog-search',
-  standalone: true,
   imports: [
     FormsModule,
     MatFormFieldModule,
@@ -43,7 +42,7 @@ export class SearchComponent implements OnInit {
   constructor(
     private postsService: PostsService,
     private router: Router,
-    private observabilityService: ObservabilityService,
+    private observabilityService: ObservabilityService
   ) {}
 
   ngOnInit() {
@@ -55,15 +54,19 @@ export class SearchComponent implements OnInit {
       })
     );
 
-    this.control.valueChanges.pipe(
-      filter((search) => 
-        typeof search === 'string' && search.length > 3),
-      debounceTime(1000),
-    ).subscribe((search) => {
-      this.observabilityService.publishEvent({
-        'search.term': <string>search,
-      }, 'search');
-    })
+    this.control.valueChanges
+      .pipe(
+        filter(search => typeof search === 'string' && search.length > 3),
+        debounceTime(1000)
+      )
+      .subscribe(search => {
+        this.observabilityService.publishEvent(
+          {
+            'search.term': <string>search,
+          },
+          'search'
+        );
+      });
   }
 
   displayFn(post: Post): string {

@@ -13,7 +13,6 @@ import { PostImageComponent } from '../post-image/post-image.component';
 
 @Component({
   selector: 'blog-post-item',
-  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,

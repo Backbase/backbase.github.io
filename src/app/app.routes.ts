@@ -1,4 +1,10 @@
-import { ActivatedRouteSnapshot, Route, Router, RouterStateSnapshot, Routes } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Route,
+  Router,
+  RouterStateSnapshot,
+  Routes,
+} from '@angular/router';
 import { postRedirects } from './app.routes.map';
 import { EMPTY, Subject, catchError, map, tap } from 'rxjs';
 import { inject, makeStateKey, TransferState } from '@angular/core';
@@ -18,12 +24,16 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./features/home/home.component').then(mod => mod.HomeComponent),
+          import('./features/home/home.component').then(
+            mod => mod.HomeComponent
+          ),
       },
       {
         path: 'people/:author',
         loadComponent: () =>
-          import('./features/author/author.component').then(m => m.AuthorComponent),
+          import('./features/author/author.component').then(
+            m => m.AuthorComponent
+          ),
       },
       {
         path: ':year/:month/:day/:permalink',
@@ -92,8 +102,8 @@ export const routes: Routes = [
           ),
         data: { meta: notFoundMeta },
       },
-    ]
-  }
+    ],
+  },
 ];
 
 function getRouteData(): Partial<Route> {
@@ -106,41 +116,57 @@ function getRouteData(): Partial<Route> {
         const transferState = inject(TransferState);
         const stateKey = makeStateKey<PostContent | undefined>(url);
         if (transferState.hasKey(stateKey)) {
-          const post = transferState.get<PostContent | undefined>(stateKey, undefined);
+          const post = transferState.get<PostContent | undefined>(
+            stateKey,
+            undefined
+          );
           postData.next(post as PostContent);
           return post;
         }
-        return inject(PostsService).getPost(url)
+        return inject(PostsService)
+          .getPost(url)
           .pipe(
             tap(post => {
               transferState.set<PostContent>(stateKey, post);
-              postData.next(post)}
-            ),
+              postData.next(post);
+            }),
             catchError((_: any) => {
               router.navigate(['**'], { skipLocationChange: true });
               return EMPTY;
             })
-          )
+          );
       },
       meta: (activatedRoute: ActivatedRouteSnapshot) => {
         const url = activatedRoute.url.map(({ path }) => path).join('/');
         const transferState = inject(TransferState);
         const stateKey = makeStateKey<PostContent | undefined>(url);
         if (transferState.hasKey(stateKey)) {
-          return getPostMeta(transferState.get<PostContent | undefined>(stateKey, undefined) as PostContent, url);
+          return getPostMeta(
+            transferState.get<PostContent | undefined>(
+              stateKey,
+              undefined
+            ) as PostContent,
+            url
+          );
         }
-        return postData.pipe(map((post) => getPostMeta(post, url)));
-      }
+        return postData.pipe(map(post => getPostMeta(post, url)));
+      },
     },
     title: (activatedRoute: ActivatedRouteSnapshot) => {
       const url = activatedRoute.url.map(({ path }) => path).join('/');
       const transferState = inject(TransferState);
       const stateKey = makeStateKey<PostContent | undefined>(url);
-      const getTitle = ({ title }: PostContent) => `${title} | ${activatedRoute.parent?.title}`;
+      const getTitle = ({ title }: PostContent) =>
+        `${title} | ${activatedRoute.parent?.title}`;
       if (transferState.hasKey(stateKey)) {
-        return getTitle(transferState.get<PostContent | undefined>(stateKey, undefined) as PostContent);
+        return getTitle(
+          transferState.get<PostContent | undefined>(
+            stateKey,
+            undefined
+          ) as PostContent
+        );
       }
-      return postData.pipe(map((post) => getTitle(post)));
-    }
-  }
+      return postData.pipe(map(post => getTitle(post)));
+    },
+  };
 }

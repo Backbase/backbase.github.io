@@ -19,7 +19,6 @@ import { MeetupFooterComponent } from '../../components/meetup-footer/meetup-foo
 
 @Component({
   selector: 'blog-location',
-  standalone: true,
   imports: [
     CommonModule,
     LocationsTabComponent,

@@ -8,29 +8,26 @@ import { DividerComponent } from '../../components/divider/divider.component';
 
 @Component({
   selector: 'blog-related-posts',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    PostItemComponent,
-    DividerComponent,
-  ],
+  imports: [AsyncPipe, PostItemComponent, DividerComponent],
   templateUrl: './related-posts.component.html',
-  styleUrl: './related-posts.component.scss'
+  styleUrl: './related-posts.component.scss',
 })
 export class RelatedPostsComponent {
   relatedPosts$!: Observable<Post[]>;
 
   @Input() set post(post: Post) {
-    this.relatedPosts$ = this.postsService.getPosts(
-      0,
-      2,
-      false,
-      (_post: Post) =>
-        post.title !== _post.title &&
-        (post.category === _post.category ||
-          post.tags.some(tag => _post.tags.includes(tag)))
-    ).pipe(map(({ posts }) => posts));
-  };
+    this.relatedPosts$ = this.postsService
+      .getPosts(
+        0,
+        2,
+        false,
+        (_post: Post) =>
+          post.title !== _post.title &&
+          (post.category === _post.category ||
+            post.tags.some(tag => _post.tags.includes(tag)))
+      )
+      .pipe(map(({ posts }) => posts));
+  }
 
   constructor(private postsService: PostsService) {}
 }

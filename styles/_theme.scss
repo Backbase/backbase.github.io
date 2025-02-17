@@ -48,7 +48,8 @@
   }
 
   @if $default {
-    @include mat.core-theme($material-theme);
+    @include mat.elevation-classes();
+    @include mat.app-background();
     @include mat.all-component-themes($material-theme);
     @include mat.typography-hierarchy($typography);
   } @else {

@@ -11,7 +11,4 @@ export enum Category {
   'mobile' = 'Mobile',
 }
 
-export const SpecialCategories = [
-  'principles',
-  'meetups'
-];
+export const SpecialCategories = ['principles', 'meetups'];
