@@ -17,6 +17,7 @@ import { TransitionComponent } from '../../components/transition/transition.comp
 import { LocationsTabComponent } from '../../core/layout/locations-tab/locations-tab.component';
 import { MeetupFooterComponent } from '../../components/meetup-footer/meetup-footer.component';
 import { MeetupsHeaderComponent } from '../../components/meetups-header/meetups-header.component';
+import { Category } from '../../core/model/categories.model';
 
 @Component({
   selector: 'blog-location',
@@ -98,7 +99,7 @@ export class LocationComponent {
   }
 
   private isMeetupCategoryByLocation(post: Post, location: string | null): boolean {
-    return (post.category as string) === 'meetups' && post.location === location;
+    return post.category === Category.meetups && post.location === location;
   }
 
   private compareByDate(a: Post, b: Post): number {
