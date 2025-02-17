@@ -42,7 +42,7 @@ export class AuthorComponent {
             param?.toLowerCase().replace(/\W/g, '')
         )?.[1]
     ),
-    tap((author) => {
+    tap(author => {
       if (!author) {
         this.notFound = true;
       }
@@ -51,7 +51,11 @@ export class AuthorComponent {
   posts$: Observable<Post[] | undefined> = this.author$.pipe(
     switchMap(author =>
       this.postsService.getPosts(undefined, undefined, false, (post: Post) =>
-        post.authors.map((author) => typeof author === 'string' ? author : author.fullname).includes(author?.fullname ?? '')
+        post.authors
+          .map(author =>
+            typeof author === 'string' ? author : author.fullname
+          )
+          .includes(author?.fullname ?? '')
       )
     ),
     map(({ posts }) => posts)

@@ -29,5 +29,4 @@ export class AuthorComponent {
   @Input() muted = false;
 
   author!: Author;
-
 }

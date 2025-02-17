@@ -22,7 +22,7 @@ export class AuthorsService {
               ...authors[curr],
               fullname: curr,
               url: `/people/${getAuthorPermalink(curr)}`,
-              displayAvatar: this.generateAvatarPaths(authors[curr]?.avatar)
+              displayAvatar: this.generateAvatarPaths(authors[curr]?.avatar),
             },
           }),
           {}
@@ -34,7 +34,7 @@ export class AuthorsService {
   constructor(
     private httpClient: HttpClient,
     private assetsService: AssetsService,
-    @Inject(AUTHORS_AVATAR_PATH_TOKEN) private basePath: string,
+    @Inject(AUTHORS_AVATAR_PATH_TOKEN) private basePath: string
   ) {}
 
   getAuthors(): Observable<AuthorsList> {
@@ -56,10 +56,13 @@ export class AuthorsService {
   private generateAvatarPaths(url?: string) {
     const sizes: ImageSize[] = ['sm', 'lg'];
     if (url) {
-      return sizes.reduce((acc, curr) => ({
-        ...acc,
-        [curr]: `authors/${this.assetsService.getAssetPath(url, curr)}`
-      }), {});
+      return sizes.reduce(
+        (acc, curr) => ({
+          ...acc,
+          [curr]: `authors/${this.assetsService.getAssetPath(url, curr)}`,
+        }),
+        {}
+      );
     }
     return undefined;
   }

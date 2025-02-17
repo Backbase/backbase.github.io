@@ -16,6 +16,7 @@ import { NotFoundComponent } from '../not-found/not-found.component';
 import { TransitionComponent } from '../../components/transition/transition.component';
 import { LocationsTabComponent } from '../../core/layout/locations-tab/locations-tab.component';
 import { MeetupFooterComponent } from '../../components/meetup-footer/meetup-footer.component';
+import { MeetupsHeaderComponent } from '../../components/meetups-header/meetups-header.component';
 
 @Component({
   selector: 'blog-location',
@@ -31,6 +32,7 @@ import { MeetupFooterComponent } from '../../components/meetup-footer/meetup-foo
     MatProgressSpinnerModule,
     NotFoundComponent,
     TransitionComponent,
+    MeetupsHeaderComponent,
   ],
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss',
@@ -54,8 +56,9 @@ export class LocationComponent {
         (post: Post) => post.location === location,
         (a, b) => this.compareByDate(a, b)
       )
-    )
+    ),
   );
+  newestMeetup$ = this.findNewestMeetup$();
   authors$: Observable<AuthorsList> = this.authorsService.getAuthors();
   locations$: Observable<string[]> = this.postsService.getLocations();
 
@@ -68,6 +71,51 @@ export class LocationComponent {
 
   navigate(page: PageEvent) {
     this.navigationService.navigate(page.pageIndex);
+  }
+
+  private findNewestMeetup$() {
+    return combineLatest([
+      this.currentPage$,
+      this.location$,
+    ]).pipe(
+      switchMap(([_, loc]) => 
+        this.postsService.getPosts(
+          undefined,
+          undefined,
+          false,
+          post => this.isMeetupCategoryByLocation(post, loc),
+          (a, b) => this.compareByDate(a, b)
+        ).pipe(
+          map(result => {
+            const startOfToday = new Date();
+            startOfToday.setHours(0, 0, 0, 0);
+
+            return this.findSoonestAfter(result.posts, startOfToday.getTime());
+          })
+        )
+      )
+    );
+  }
+
+  findSoonestAfter(posts: Post[], minValue: number): Post | null {
+    let soonest: Post | null = null;
+
+    for (const post of posts) {
+      const num = new Date(post.date?.trim() ?? '').getTime();
+      if (
+        num > minValue &&
+        (soonest === null ||
+          num < new Date(soonest.date?.trim() ?? '').getTime())
+      ) {
+        soonest = post;
+      }
+    }
+
+    return soonest;
+  }
+
+  private isMeetupCategoryByLocation(post: Post, location: string | null): boolean {
+    return (post.category as string) === 'meetups' && post.location === location;
   }
 
   private compareByDate(a: Post, b: Post): number {

@@ -1,8 +1,14 @@
 import { Route } from '@angular/router';
 
 const routes = [
-  ['2023/12/13/angular-micro-frontends', '2023/12/13/micro-frontends-with-module-federation'],
-  ['2023/12/13/setup-microfrontend', '2023/12/13/micro-frontends-with-module-federation'],
+  [
+    '2023/12/13/angular-micro-frontends',
+    '2023/12/13/micro-frontends-with-module-federation',
+  ],
+  [
+    '2023/12/13/setup-microfrontend',
+    '2023/12/13/micro-frontends-with-module-federation',
+  ],
   ['2023/10/06/code-coverage', '2023/10/06/code-coverage-for-unit-tests'],
   [
     '2023/09/30/installing-hms-core-in-as-emulator',
