@@ -36,33 +36,34 @@ const walk = async dir => {
       Object.entries(SIZES).forEach(([size, [width, height]]) => {
         if (!(file.endsWith('.gif') || file.endsWith('.webp'))) {
           Jimp.read(fromPath)
-          .then(img => {
-            const distDir = path.join(dir, 'dist', size);
+            .then(img => {
+              const distDir = path.join(dir, 'dist', size);
 
-            fs.ensureDir(distDir).then(() => {
-              let callback;
-              if (height === 0) {
-                callback = img.resize(width, Jimp.AUTO);
-              } else {
-                callback = img.cover(width, height); // crop with same aspect ratio
-              }
+              fs.ensureDir(distDir).then(() => {
+                let callback;
+                if (height === 0) {
+                  callback = img.resize(width, Jimp.AUTO);
+                } else {
+                  callback = img.cover(width, height); // crop with same aspect ratio
+                }
 
-              return callback
-                .clone() // clone resets exif metadata
-                .quality(60) // set JPEG quality
-                .write(path.join(distDir, file)); // save
+                return callback
+                  .clone() // clone resets exif metadata
+                  .quality(60) // set JPEG quality
+                  .write(path.join(distDir, file)); // save
+              });
+            })
+            .catch(err => {
+              console.error(err);
             });
-          })
-          .catch(err => {
-            console.error(err);
-          });
         } else if (file.endsWith('.gif')) {
           GifUtil.read(fromPath).then(gif => {
             const distDir = path.join(dir, 'dist', size);
             fs.ensureDir(distDir).then(() => {
               gif.width = width;
-              gif.height = height ?? Math.ceil((width * gif.height) / gif.width);
-              return GifUtil.write(path.join(distDir, file), gif.frames, gif)
+              gif.height =
+                height ?? Math.ceil((width * gif.height) / gif.width);
+              return GifUtil.write(path.join(distDir, file), gif.frames, gif);
             });
           });
         } else if (file.endsWith('.webp')) {
@@ -70,7 +71,9 @@ const walk = async dir => {
            * TODO: decide on a tool that supports webp
            */
           const distDir = path.join(dir, 'dist', size);
-            fs.ensureDir(distDir).then(() => fs.copy(fromPath, path.join(distDir, file)));
+          fs.ensureDir(distDir).then(() =>
+            fs.copy(fromPath, path.join(distDir, file))
+          );
         }
       });
     }

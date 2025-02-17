@@ -8,7 +8,7 @@ export default function (
   document: Document,
   htmlInMarkdownService: HtmlInMarkdownService,
   assetsService: AssetsService,
-  router: Router,
+  router: Router
 ) {
   markdownService.renderer.link = (
     href: string,
@@ -87,7 +87,7 @@ export default function (
         </figure>
       `;
     }
-  
+
     return htmlInMarkdownService.add(html);
   };
 }

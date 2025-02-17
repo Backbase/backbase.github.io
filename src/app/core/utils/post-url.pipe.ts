@@ -8,7 +8,12 @@ import { getPermalink } from '@blog/utils';
 })
 export class PostUrlPipe implements PipeTransform {
   transform(post: Post, content?: string): string {
-    const postUrl = getPermalink(post.title, post.specialCategory, post.category, post.date);
+    const postUrl = getPermalink(
+      post.title,
+      post.specialCategory,
+      post.category,
+      post.date
+    );
 
     if (content) {
       return `${postUrl}/${content}`;

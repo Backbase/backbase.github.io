@@ -6,10 +6,7 @@ import {
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { PostContent } from '../../core/model/post.model';
-import {
-  RouterLink,
-  RouterModule,
-} from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { AuthorComponent } from '../../components/author/author.component';
 import { MatChipsModule } from '@angular/material/chips';
@@ -59,9 +56,7 @@ export class PostComponent {
 
   Category = Object.fromEntries(Object.entries(Category));
 
-  constructor(
-    private htmlInMarkdownService: HtmlInMarkdownService,
-  ) {}
+  constructor(private htmlInMarkdownService: HtmlInMarkdownService) {}
 
   resolveScripts() {
     this.htmlInMarkdownService.parseAll();

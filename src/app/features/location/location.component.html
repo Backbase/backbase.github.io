@@ -1,3 +1,7 @@
+@if (newestMeetup$ | async; as meetup) {
+  <blog-meetups-header [post]="meetup"></blog-meetups-header>
+}
+
 <blog-locations-tab></blog-locations-tab>
 
 @if (posts$ | async; as posts) {
@@ -5,7 +9,7 @@
     <div class="center-container">
       <blog-posts-list [posts]="posts.posts"></blog-posts-list>
     </div>
-  
+
     <div class="center-container">
       <mat-paginator
         [length]="posts.total"
@@ -27,16 +31,12 @@
   <blog-divider></blog-divider>
   <blog-meetup-footer></blog-meetup-footer>
 
-  <blog-transition
-    colorFrom="background"
-    colorTo="secondary"></blog-transition>
-  <blog-jobs></blog-jobs>  
+  <blog-transition colorFrom="background" colorTo="secondary"></blog-transition>
+  <blog-jobs></blog-jobs>
   <blog-transition colorFrom="secondary" colorTo="neutral"></blog-transition>
 } @placeholder {
   <div class="placeholder">
     <mat-spinner role="progressbar"></mat-spinner>
-    <blog-transition
-      colorFrom="background"
-      colorTo="neutral"></blog-transition>
+    <blog-transition colorFrom="background" colorTo="neutral"></blog-transition>
   </div>
 }

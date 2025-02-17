@@ -37,10 +37,10 @@
     $text-muted: #999999,
     $typography: $backbase-typography,
     $background-color: #{color.mix(
-      #000000,
-      map-get($backbase-secondary, 700),
-      75%
-    )},
+        #000000,
+        map-get($backbase-secondary, 700),
+        75%
+      )},
     $bg-gradient: (
       #69feff,
       #ff6047,
@@ -48,8 +48,8 @@
       #ff6047,
     ),
     $default: false,
-    $dark: true,
-  )
+    $dark: true
+  );
 }
 
 :root {

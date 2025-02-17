@@ -6,12 +6,9 @@ export enum Category {
   'sdlc' = 'SDLC',
   'career' = 'Career',
   'principles' = 'Principles',
-  'meetups' = 'Meetups',
+  'meetups' = 'meetups',
   'qa' = 'Quality Assurance',
   'mobile' = 'Mobile',
 }
 
-export const SpecialCategories = [
-  'principles',
-  'meetups'
-];
+export const SpecialCategories = ['principles', 'meetups'];

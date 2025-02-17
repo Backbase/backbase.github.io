@@ -5,7 +5,7 @@
 a {
   text-decoration-color: var(--backbase-primary);
   text-decoration-thickness: 3px;
-  text-underline-offset: .25em;
+  text-underline-offset: 0.25em;
 }
 .post {
   &__header {
@@ -102,7 +102,8 @@ a {
     }
     line-height: 2;
 
-    p, figure {
+    p,
+    figure {
       margin-bottom: 2rem;
     }
 

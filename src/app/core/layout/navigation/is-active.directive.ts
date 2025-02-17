@@ -35,7 +35,9 @@ export class IsActiveDirective implements OnInit {
         map((event: any) => event.url.split('?')[0])
       )
       .subscribe((url: string) => {
-        this.toggleClass(url.replace(/^\//, this.locationStrategy.getBaseHref()));
+        this.toggleClass(
+          url.replace(/^\//, this.locationStrategy.getBaseHref())
+        );
       });
   }
 

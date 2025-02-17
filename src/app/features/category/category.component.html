@@ -6,7 +6,7 @@
       <blog-category-title [section]="category$ | async"></blog-category-title>
       <blog-posts-list [posts]="posts.posts"></blog-posts-list>
     </div>
-  
+
     <div class="center-container">
       <mat-paginator
         [length]="posts.total"
@@ -28,16 +28,12 @@
   <blog-divider></blog-divider>
   <blog-engineering-content></blog-engineering-content>
 
-  <blog-transition
-    colorFrom="background"
-    colorTo="secondary"></blog-transition>
-  <blog-jobs></blog-jobs>  
+  <blog-transition colorFrom="background" colorTo="secondary"></blog-transition>
+  <blog-jobs></blog-jobs>
   <blog-transition colorFrom="secondary" colorTo="neutral"></blog-transition>
 } @placeholder {
   <div class="placeholder">
     <mat-spinner role="progressbar"></mat-spinner>
-    <blog-transition
-      colorFrom="background"
-      colorTo="neutral"></blog-transition>
+    <blog-transition colorFrom="background" colorTo="neutral"></blog-transition>
   </div>
 }
