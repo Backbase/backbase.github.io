@@ -90,28 +90,11 @@ export class LocationComponent {
             const startOfToday = new Date();
             startOfToday.setHours(0, 0, 0, 0);
 
-            return this.findSoonestAfter(result.posts, startOfToday.getTime());
+            return this.postsService.findSoonestPostAfter(result.posts, startOfToday.getTime());
           })
         )
       )
     );
-  }
-
-  findSoonestAfter(posts: Post[], minValue: number): Post | null {
-    let soonest: Post | null = null;
-
-    for (const post of posts) {
-      const num = new Date(post.date?.trim() ?? '').getTime();
-      if (
-        num > minValue &&
-        (soonest === null ||
-          num < new Date(soonest.date?.trim() ?? '').getTime())
-      ) {
-        soonest = post;
-      }
-    }
-
-    return soonest;
   }
 
   private isMeetupCategoryByLocation(post: Post, location: string | null): boolean {

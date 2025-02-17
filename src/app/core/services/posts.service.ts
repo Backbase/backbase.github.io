@@ -142,6 +142,23 @@ export class PostsService {
     );
   }
 
+  findSoonestPostAfter(posts: Post[], minValue: number): Post | null {
+    let soonest: Post | null = null;
+
+    for (const post of posts) {
+      const num = new Date(post.date?.trim() ?? '').getTime();
+      if (
+        num > minValue &&
+        (soonest === null ||
+          num < new Date(soonest.date?.trim() ?? '').getTime())
+      ) {
+        soonest = post;
+      }
+    }
+
+    return soonest;
+  }
+
   private decoratePost(
     post: Post | PostContent,
     authors: AuthorsList
