@@ -51,7 +51,7 @@ Interaction between services on this layer is possible through the Service APIs 
 To interact with Core Banking services or Third Party services, there is a dedicated integration layer.
 Banking Services have defined set of integration APIs for outbound and inbound connectivity.
 Outbound APIs are for communication from BB to Core. Inbound APIs are from communication from Core to BB.
-Thanks to this asynchronous data exchange is easy achievable and the load can be optimised by the Core.
+This makes asynchronous data exchange easy to achieve and the load can be optimised by the Core.
 In many scenarios, Integration Services are implemented as a separate layer where the communication with Core is defined
 and custom logic is implemented.
 This approach gives the flexibility of the solution because there is one shared API spec between Banking and Integration Services,
