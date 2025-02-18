@@ -35,13 +35,20 @@ export const routes: Routes = [
         path: 'unpublished/:permalink',
         loadComponent: () =>
           import('./features/post/post.component').then(m => m.PostComponent),
-        ...getRouteData()
+        ...getRouteData(),
       },
       {
         path: 'category/:cat',
         loadComponent: () =>
           import('./features/category/category.component').then(
             m => m.CategoryComponent
+          ),
+      },
+      {
+        path: 'meetup/:loc',
+        loadComponent: () =>
+          import('./features/location/location.component').then(
+            m => m.LocationComponent
           ),
       },
       {
@@ -55,7 +62,20 @@ export const routes: Routes = [
         path: 'principles/:permalink',
         loadComponent: () =>
           import('./features/post/post.component').then(m => m.PostComponent),
-        ...getRouteData()
+        ...getRouteData(),
+      },
+      {
+        path: 'meetups',
+        loadComponent: () =>
+          import('./features/meetups/meetups.component').then(
+            m => m.MeetupsComponent
+          ),
+      },
+      {
+        path: 'meetups/:permalink',
+        loadComponent: () =>
+          import('./features/post/post.component').then(m => m.PostComponent),
+        ...getRouteData(),
       },
       {
         path: 'people',

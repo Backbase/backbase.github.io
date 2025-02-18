@@ -1,0 +1,26 @@
+<div
+  class="featured center-container"
+  data-role="button"
+  [routerLink]="post | postUrl">
+  <div class="featured__image">
+    <blog-post-image
+      [asset]="post.displayTeaser"
+      [postUrl]="post | postUrl"></blog-post-image>
+  </div>
+
+  <div class="featured__content">
+    <div class="post-content">
+      <div class="featured__chip">
+        <mat-chip color="neutral">Registration open</mat-chip>
+      </div>
+      <div class="featured__header">🗓️ Next event</div>
+      <h1 class="featured__title">{{ post.title }}</h1>
+      <p>
+        {{ post.excerpt }}
+      </p>
+      <a mat-flat-button color="primary" [routerLink]="'link'">
+        See the event
+      </a>
+    </div>
+  </div>
+</div>

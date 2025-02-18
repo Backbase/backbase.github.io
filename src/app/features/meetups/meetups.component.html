@@ -1,0 +1,32 @@
+@if (allMeetups$ | async; as articles) {
+  <blog-gradient></blog-gradient>
+
+  @if (newestMeetup$ | async; as meetup) {
+    <blog-meetups-header [post]="meetup"></blog-meetups-header>
+  }
+
+  @if (locations$ | async; as locations) {
+    <blog-locations
+      [locations]="locations"
+      [active]="selectedCategory$ | async"
+      (selected)="navigateToLocation($event)"></blog-locations>
+  }
+
+  <div class="center-container">
+    <blog-posts-list [posts]="articles.posts"></blog-posts-list>
+  </div>
+
+  <div class="center-container">
+    <mat-paginator
+      [length]="articles.total"
+      [pageSize]="articles.perPage"
+      [showFirstLastButtons]="true"
+      [pageIndex]="currentPage$ | async"
+      (page)="navigate($event)"
+      aria-label="Select page">
+    </mat-paginator>
+  </div>
+
+  <blog-divider></blog-divider>
+  <blog-meetup-footer></blog-meetup-footer>
+}

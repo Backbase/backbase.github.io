@@ -1,0 +1,11 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "meetup-scaffolder": {
+      "description": "A blank schematic.",
+      "factory": "./meetup-scaffolder/index#meetupScaffolder",
+      "schema": "./meetup-scaffolder/schema.json"
+
+    }
+  }
+}

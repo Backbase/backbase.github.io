@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "meetupSchema",
+  "title": "Meetup Schematic",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "x-prompt": "What's the title of the post?"
+    },
+    "excerpt": {
+      "type": "string",
+      "x-prompt": "Enter a short description to display on the landing page"
+    },
+    "tags": {
+      "type": "string",
+      "x-prompt": "Enter some keywords related to your post (comma-separated)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "meetups"
+      ],
+      "x-prompt": "In which of these categories your post fits best?"
+    },
+    "location": {
+      "type": "string",
+      "enum": [
+        "Krakow",
+        "Amsterdam",
+        "Hyderabad"
+      ],
+      "x-prompt": "In which of these locations your post fits best?"
+    }
+  },
+  "required": ["title", "excerpt", "tags" ],
+  "additionalProperties": false
+}

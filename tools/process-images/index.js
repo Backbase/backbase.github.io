@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const Jimp = require('jimp');
-const { GifFrame, GifUtil, GifCodec } = require('gifwrap');
+const { GifUtil } = require('gifwrap');
 
 // Get directories and sizes from command line arguments
 const sourceDir = path.resolve(process.cwd(), process.argv[2]);
@@ -32,9 +32,9 @@ const walk = async dir => {
         // Exclude 'dist' directories
         await walk(fromPath);
       }
-    } else if (/(png|jpg|jpeg|gif)$/i.test(file)) {
+    } else if (/(png|jpg|jpeg|gif|webp)$/i.test(file)) {
       Object.entries(SIZES).forEach(([size, [width, height]]) => {
-        if (!file.endsWith('.gif')) {
+        if (!(file.endsWith('.gif') || file.endsWith('.webp'))) {
           Jimp.read(fromPath)
           .then(img => {
             const distDir = path.join(dir, 'dist', size);
@@ -56,7 +56,7 @@ const walk = async dir => {
           .catch(err => {
             console.error(err);
           });
-        } else {
+        } else if (file.endsWith('.gif')) {
           GifUtil.read(fromPath).then(gif => {
             const distDir = path.join(dir, 'dist', size);
             fs.ensureDir(distDir).then(() => {
@@ -65,6 +65,12 @@ const walk = async dir => {
               return GifUtil.write(path.join(distDir, file), gif.frames, gif)
             });
           });
+        } else if (file.endsWith('.webp')) {
+          /**
+           * TODO: decide on a tool that supports webp
+           */
+          const distDir = path.join(dir, 'dist', size);
+            fs.ensureDir(distDir).then(() => fs.copy(fromPath, path.join(distDir, file)));
         }
       });
     }
