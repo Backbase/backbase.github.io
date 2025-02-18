@@ -5,7 +5,7 @@ What exactly is being used to build banking applications in Backbase?
 ![](assets/tech_stack_img_2.jpeg)
 
 Authors: Paweł Garbacik
-Date: unpublished
+Date: 2025-02-18T13:12:48.184Z
 Category: tech-life
 
 tags: architecture,technology,patterns,stack
