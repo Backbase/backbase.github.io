@@ -27,7 +27,7 @@ what kind of technologies are used on a different levels and layers.
 
 ## High level architecture
 
-<img align="right" src="assets/HL_Architecture.drawio.png">
+![](assets/HL_Architecture.drawio.png)
 
 Engagement Banking Platform is divided according to the capabilities it offers, the role it plays, and on which level it operates.
 
