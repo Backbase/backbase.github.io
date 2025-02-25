@@ -20,8 +20,10 @@ function updateMetaDate(filePath) {
 }
 
 async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
-  if (!fs.existsSync(sourcePath)) { return; }
-  
+  if (!fs.existsSync(sourcePath)) {
+    return;
+  }
+
   const unpublished = fs.readdirSync(sourcePath);
 
   unpublished.forEach(async articlePath => {
@@ -48,7 +50,7 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
           metaJsonObject.title,
           false,
           metaJsonObject.category,
-          metaJsonObject.date,
+          metaJsonObject.date
         )
       );
 
@@ -69,7 +71,7 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
 
       // Remove the "unpublished" directory
       fs.rmdirSync(unpublishedPath);
-      
+
       if (isDirectoryEmpty(sourcePath)) {
         fs.rmdirSync(sourcePath);
       }
@@ -100,8 +102,7 @@ function isDirectoryEmpty(path) {
   let empty = false;
   if (fs.existsSync(path)) {
     const files = fs.readdirSync(path);
-    empty = !files?.length
+    empty = !files?.length;
   }
   return empty;
 }
-

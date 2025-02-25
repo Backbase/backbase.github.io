@@ -10,7 +10,7 @@ import {
   provideRouter,
   withComponentInputBinding,
   withInMemoryScrolling,
-  withRouterConfig
+  withRouterConfig,
 } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -24,7 +24,7 @@ import {
   AUTHORS_AVATAR_PATH_TOKEN,
   USE_PROCESSED_IMAGES,
   O11Y_CONFIG_TOKEN,
-  SPECIAL_CATEGORIES
+  SPECIAL_CATEGORIES,
 } from './core/config/configuration-tokens';
 import { HtmlInMarkdownService } from './core/services/html-in-markdown.service';
 import { ObservabilityConfig } from './core/model/observability.model';
@@ -68,8 +68,17 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_INITIALIZER,
       multi: true,
-      useFactory: (...deps: any) => () => markdownConfig.apply(this, deps),
-      deps: [MarkdownService, DOCUMENT, HtmlInMarkdownService, AssetsService, Router],
+      useFactory:
+        (...deps: any) =>
+        () =>
+          markdownConfig.apply(this, deps),
+      deps: [
+        MarkdownService,
+        DOCUMENT,
+        HtmlInMarkdownService,
+        AssetsService,
+        Router,
+      ],
     },
     {
       provide: APP_INITIALIZER,
@@ -84,12 +93,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: USE_PROCESSED_IMAGES,
       useValue: !isDevMode(),
-    },{
+    },
+    {
       provide: SPECIAL_CATEGORIES,
-      useValue: [
-        'principles',
-        'meetups',
-      ]
-    }
+      useValue: ['principles', 'meetups'],
+    },
   ],
 };

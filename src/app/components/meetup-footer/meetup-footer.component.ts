@@ -9,5 +9,4 @@ import { MatRippleModule } from '@angular/material/core';
   templateUrl: './meetup-footer.component.html',
   styleUrl: './meetup-footer.component.scss',
 })
-export class MeetupFooterComponent {
-}
+export class MeetupFooterComponent {}

@@ -1,9 +1,10 @@
-import { MetaDefinition } from "@angular/platform-browser";
-import { PostContent } from "./core/model/post.model";
+import { MetaDefinition } from '@angular/platform-browser';
+import { PostContent } from './core/model/post.model';
 
 const prodUrl = 'https://engineering.backbase.com/';
 const rootTitle = 'Backbase Engineering';
-const rootDescription = 'Backbase is a global fintech company creating the best digital banking solutions on the planet. We are a young-spirited, diverse (45+ nationalities), fast-growing and leading company in our niche.';
+const rootDescription =
+  'Backbase is a global fintech company creating the best digital banking solutions on the planet. We are a young-spirited, diverse (45+ nationalities), fast-growing and leading company in our niche.';
 
 export const defaultMeta: MetaDefinition[] = [
   {
@@ -36,10 +37,13 @@ export const notFoundMeta: MetaDefinition[] = [
   {
     name: 'robots',
     content: 'noindex, nofollow',
-  }
-]
+  },
+];
 
-export const getPostMeta = ({ excerpt, title, displayTeaser }: PostContent, url: string) => [
+export const getPostMeta = (
+  { excerpt, title, displayTeaser }: PostContent,
+  url: string
+) => [
   {
     name: 'description',
     content: excerpt,

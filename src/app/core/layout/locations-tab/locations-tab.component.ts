@@ -4,7 +4,7 @@ import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostsService } from '../../services/posts.service';
 import { Location } from '../../model/locations.model';
-import { LocationsComponent } from "../../../components/locations/locations.component";
+import { LocationsComponent } from '../../../components/locations/locations.component';
 
 @Component({
   selector: 'blog-locations-tab',
@@ -14,8 +14,7 @@ import { LocationsComponent } from "../../../components/locations/locations.comp
   styleUrl: './locations-tab.component.scss',
 })
 export class LocationsTabComponent {
-  locations$: Observable<Location[]> = this.postsService
-    .getLocations();
+  locations$: Observable<Location[]> = this.postsService.getLocations();
 
   selectedLocation$ = this.activatedRoute.paramMap.pipe(
     map(params => params.get('loc') as Location)

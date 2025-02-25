@@ -7,7 +7,11 @@ const collectionPath = path.join(__dirname, '../collection.json');
 describe('meetup-scaffolder', () => {
   it('works', async () => {
     const runner = new SchematicTestRunner('schematics', collectionPath);
-    const tree = await runner.runSchematic('meetup-scaffolder', {}, Tree.empty());
+    const tree = await runner.runSchematic(
+      'meetup-scaffolder',
+      {},
+      Tree.empty()
+    );
 
     expect(tree.files).toEqual([]);
   });

@@ -3,10 +3,12 @@ import { USE_PROCESSED_IMAGES } from '../config/configuration-tokens';
 import { ImageSize } from '../model/content.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AssetsService {
-  constructor(@Inject(USE_PROCESSED_IMAGES) private useProcessedImages: boolean) { }
+  constructor(
+    @Inject(USE_PROCESSED_IMAGES) private useProcessedImages: boolean
+  ) {}
 
   getAssetPath(url: string, size: ImageSize) {
     if (this.useProcessedImages && !url.startsWith('http')) {

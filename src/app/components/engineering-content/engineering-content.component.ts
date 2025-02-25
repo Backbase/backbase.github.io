@@ -11,5 +11,4 @@ import { RouterLink } from '@angular/router';
   templateUrl: './engineering-content.component.html',
   styleUrl: './engineering-content.component.scss',
 })
-export class EngineeringContentComponent {
-}
+export class EngineeringContentComponent {}
