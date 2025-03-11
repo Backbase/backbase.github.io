@@ -122,5 +122,33 @@
   "Backbase Meetups": {
     "avatar": "backbase.png",
     "role": "Meetup Organizer"
+  },
+  "Aleh Pachtovy": {
+    "avatar": "aleh_pachtovy.png",
+    "role": "Senior iOS Engineer"
+  },
+  "Ramazan Abdullayev": {
+    "avatar": "ramazan_abdullayev.png",
+    "role": "iOS Engineer"
+  },
+  "Robert Bobby Gedlek": {
+    "avatar": "robert_bobby_gedlek.png",
+    "role": "Principal QA Engineer"
+  },
+  "Darek Majcherczyk": {
+    "avatar": "darek_majcherczyk.png",
+    "role": "Principal QA Engineer"
+  },
+  "Paulina Duźniak": {
+    "avatar": "paulina_duzniak.png",
+    "role": "Senior UX Designer"
+  },
+  "Phil Barrett": {
+    "avatar": "phil_barrett.png",
+    "role": "Manager, UX Design"
+  },
+  "Magdalena Firlit": {
+    "avatar": "magdalena_firlit.png",
+    "role": "Professional Scrum Trainer (PST) at Scrum.org, Consultant, and Product Management Strategist"
   }
 }

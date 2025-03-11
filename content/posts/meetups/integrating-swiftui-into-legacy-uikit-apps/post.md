@@ -4,7 +4,7 @@ Event date: Event date: March 18, 2025 | Backbase office | iOS
 
 ![](assets/placeholder.webp)
 
-Authors: Backbase Meetups
+Authors: Ramazan Abdullayev, Aleh Pachtovy
 Date: 2025-03-18T13:47:04.976Z  
 Category: meetups
 

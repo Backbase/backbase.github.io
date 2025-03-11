@@ -4,7 +4,7 @@ Event date: February 25, 2025 | Backbase office | QA
 
 ![](assets/placeholder.webp)
 
-Authors: Backbase Meetups
+Authors: Robert Bobby Gedlek, Darek Majcherczyk
 Date: 2025-02-25T10:00:42.612Z  
 Category: meetups
 Location: Krakow
