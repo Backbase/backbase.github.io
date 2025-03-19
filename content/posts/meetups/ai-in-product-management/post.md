@@ -42,10 +42,12 @@ through Evidence-Based Management (EBM). Magdalena has worked with US and Europe
 
 ## Agenda
 
-5:45 - 6:05 PM - Registration, grab a drink
+5:45 - 6:05 PM - Grab a drink & take a seat
 
-6:05 - 7:30 PM - Magdalena Firlit | "AI in Product Management: Friend, Foe, or Game-Changer?"
+6:05 - 6:10 PM - Intro
 
-7:30 - 9:00 PM - Networking, food & drinks
+6:10 - 7:35 PM - Magdalena Firlit | "AI in Product Management: Friend, Foe, or Game-Changer?"
+
+7:35 - 9:00 PM - Networking, food & drinks
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)
