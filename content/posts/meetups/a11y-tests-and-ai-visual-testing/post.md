@@ -38,19 +38,19 @@ QA automation and CI freak with many years of experience. Testing everything... 
 
 🗓️ Event Date: February 25, 2025
 
-🕑 Time: 6:00  PM
+🕑 Time: 18:00
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 ## Agenda
 
-6:00 - 6:05 PM - Registration, grab a drink
+18:00 - 18:05 - Registration, grab a drink
 
-6:05 - 6:45 PM - Robert Bobby Gędłek | "Testy dostępności (accessibility) — “Od zera do… bohatera?”: Nie takie testy dostępności straszne jak je malują" [POL]
+18:05 - 18:45 - Robert Bobby Gędłek | "Testy dostępności (accessibility) — “Od zera do… bohatera?”: Nie takie testy dostępności straszne jak je malują" [POL]
 
-6:50 - 7:30 PM - Darek Majcherczyk | "AI na Straży Pikseli: Ewolucja w Visual Testing" [POL]
+18:50 - 19:30 - Darek Majcherczyk | "AI na Straży Pikseli: Ewolucja w Visual Testing" [POL]
 
-7:30 - 08:00 PM - Networking, food & drinks
+19:30 - 20:00 - Networking, food & drinks
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)
