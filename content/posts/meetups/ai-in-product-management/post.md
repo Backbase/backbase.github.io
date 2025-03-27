@@ -34,7 +34,7 @@ through Evidence-Based Management (EBM). Magdalena has worked with US and Europe
 
 🗓️ Event Date: June 4, 2025
 
-🕑 Time: 5:45 PM
+🕑 Time: 17:45
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 
@@ -42,12 +42,10 @@ through Evidence-Based Management (EBM). Magdalena has worked with US and Europe
 
 ## Agenda
 
-5:45 - 6:05 PM - Grab a drink & take a seat
+17:45 - 18:05 - Grab a drink & take a seat
 
-6:05 - 6:10 PM - Intro
+18:05 - 19:30 - Magdalena Firlit | "AI in Product Management: Friend, Foe, or Game-Changer?"
 
-6:10 - 7:35 PM - Magdalena Firlit | "AI in Product Management: Friend, Foe, or Game-Changer?"
-
-7:35 - 9:00 PM - Networking, food & drinks
+19:30 - 21:00 - Networking, food & drinks
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)
