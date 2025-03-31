@@ -5,7 +5,7 @@ Event date: May 15, 2025 | Backbase office | Chess IT
 ![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
-Date: 2025-03-27T09:12:54.344Z  
+Date: 2025-05-15T09:12:54.344Z  
 Category: meetups
 
 tags: krakow, meetup, Chess IT
