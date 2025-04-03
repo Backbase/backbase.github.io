@@ -12,13 +12,13 @@ tags: krakow, meetup, UX
 
 Location: Krakow
  
---- 
+---
 
-## ✅ Book your spot
+## See how it went
 
-Join us for the Friends of Figma event organized in collaboration with Backbase.
+![](assets/event-image.png)
 
-[Get your ticket](https://friends.figma.com/events/details/figma-krakow-presents-fof-krakow-x-backbase/)
+[🔗 See more photos on LinkedIn](https://www.linkedin.com/posts/backbase_friendsoffigma-ux-uxdesign-activity-7291002374486196225-ao7J)
 
 ## Speakers & Topics
 
