@@ -18,7 +18,7 @@ Location: Krakow
 
 ![](assets/event-image.png)
 
-[🔗 See more photos on LinkedIn](https://www.linkedin.com/posts/backbase_friendsoffigma-ux-uxdesign-activity-7291002374486196225-ao7J/?utm_source=share&utm_medium=member_desktop&rcm=ACoAACGxM1gBYfgNeuyVg2Jk7grtXbTTH_Ir4gs)
+[🔗 See more photos on LinkedIn](https://www.linkedin.com/posts/backbase_friendsoffigma-ux-uxdesign-activity-7291002374486196225-ao7J)
 
 ## Speakers & Topics
 
