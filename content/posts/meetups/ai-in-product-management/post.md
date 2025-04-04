@@ -5,7 +5,7 @@ Event date: Event date: June 4, 2025 | Backbase office | Product Owner, Product 
 ![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
-Date: 2025-03-13T16:41:40.286Z  
+Date: 2025-06-04T16:41:40.286Z  
 Category: meetups
 
 tags: krakow, meetup, product management, product owner
