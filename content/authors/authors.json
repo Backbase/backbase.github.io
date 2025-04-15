@@ -122,5 +122,9 @@
   "Backbase Meetups": {
     "avatar": "backbase.png",
     "role": "Meetup Organizer"
+  },
+  "Sirajuddin Rayyan": {
+    "avatar": "siraj.png",
+    "role": "Senior Frontend Engineer - Customer Success"
   }
 }
