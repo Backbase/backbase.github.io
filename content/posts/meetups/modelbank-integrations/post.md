@@ -26,7 +26,7 @@ Join us for the next Backbase meetup where we speak not only about Tech
 "Explore the fundamentals of core banking operations and Backbase's Model Bank through a hands-on money movement demo using out-of-the-box functionalities—no customizations, just real insights."
 
 #### BIO
-Namaste! I'm a Solutions Architect with 14+ years of experience in event-driven microservices, intelligent automation, and cloud-native apps. Currently leading digital banking projects with the largest private bank in the Philippines, I bring deep expertise in Java, Kafka, AWS, and Philippine payment systems like InstaPay and PESONet. Off the clock, you’ll find me smashing shuttles on the badminton court – my ultimate happy place!
+Namaste! I'm a Solutions Architect with 14+ years of experience in event-driven microservices, intelligent automation, and cloud-native apps. Currently leading digital banking projects with the largest private bank in the Philippines, I bring deep expertise in Java, Kafka, AWS, and Philippine payment systems like InstaPay and PESONet. Off the clock, you’ll find me smashing shuttles on the badminton court – my ultimate happy place
 
 ## Place and time
 
