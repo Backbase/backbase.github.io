@@ -14,11 +14,9 @@ Location: Krakow
  
 --- 
 
-## ✅ Book your spot
+## See how it went
 
-Join us for the next Backbase meetup where we speak not only about Tech
-
-[Get your ticket](https://www.meetup.com/backbase-meetups/)
+![](assets/event-image-march.webp)
 
 ## Speakers & Topics
 

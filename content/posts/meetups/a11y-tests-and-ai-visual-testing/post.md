@@ -12,11 +12,10 @@ Location: Krakow
 tags: krakow, meetup, QA
  
 --- 
-## ✅ Book your spot
 
-Join us for the next Backbase meetup where we speak not only about Tech
+## See how it went
 
-[Get your ticket](https://www.meetup.com/backbase-meetups/)
+![](assets/event-image-february.webp)
 
 ## Speakers & Topics
 
