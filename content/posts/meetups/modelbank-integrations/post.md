@@ -13,12 +13,10 @@ tags: hyderabad, meetup, baas, modalbank, transaction, payments
 Location: Hyderabad
  
 --- 
-  
-## ✅ Book your spot
 
-Join us for the next Backbase meetup where we speak not only about Tech
+## See how it went
 
-[Get your ticket](https://www.meetup.com/backbase-meetups/)
+![](assets/event-image-april-hyderabad.webp)
 
 ## Speakers & Topics
 
