@@ -2,11 +2,10 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'blog-avatar',
-  standalone: true,
-  imports: [NgClass],
-  templateUrl: './avatar.component.html',
-  styleUrl: './avatar.component.scss',
+    selector: 'blog-avatar',
+    imports: [NgClass],
+    templateUrl: './avatar.component.html',
+    styleUrl: './avatar.component.scss'
 })
 export class AvatarComponent implements AfterViewInit {
 

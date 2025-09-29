@@ -8,17 +8,16 @@ import { PostsListComponent } from '../../components/posts-list/posts-list.compo
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'blog-principles',
-  standalone: true,
-  imports: [
-    PrinciplesHeaderComponent,
-    DividerComponent,
-    GradientComponent,
-    PostsListComponent,
-    AsyncPipe,
-  ],
-  templateUrl: './principles.component.html',
-  styleUrl: './principles.component.scss',
+    selector: 'blog-principles',
+    imports: [
+        PrinciplesHeaderComponent,
+        DividerComponent,
+        GradientComponent,
+        PostsListComponent,
+        AsyncPipe,
+    ],
+    templateUrl: './principles.component.html',
+    styleUrl: './principles.component.scss'
 })
 export class PrinciplesComponent {
   articles$ = this.postsService.getPosts(

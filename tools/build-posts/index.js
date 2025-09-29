@@ -34,7 +34,7 @@ async function getAuthorRoutes(source) {
     const authors = JSON.parse(fs.readFileSync(source, 'utf8'));
 
     const utils = await loadEsmModule(
-      '../../dist/utils/esm2022/lib/permalink.mjs'
+      '../../dist/utils/fesm2022/utils.mjs'
     );
     return Object.keys(authors).map(name =>
       `/people/${utils.getAuthorPermalink(name)}`);
@@ -77,7 +77,7 @@ async function main() {
 
 async function withUtils() {
   utils = await loadEsmModule(
-    '../../dist/utils/esm2022/lib/post-metadata.mjs'
+    '../../dist/utils/fesm2022/utils.mjs'
   );
 
   main();

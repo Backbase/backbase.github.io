@@ -6,11 +6,10 @@ import { ImageSize } from '../../core/model/content.model';
 import { AvatarComponent } from '../avatar/avatar.component';
 
 @Component({
-  selector: 'blog-author',
-  standalone: true,
-  imports: [NgStyle, NgClass, RouterLink, AvatarComponent],
-  templateUrl: './author.component.html',
-  styleUrl: './author.component.scss',
+    selector: 'blog-author',
+    imports: [NgStyle, NgClass, RouterLink, AvatarComponent],
+    templateUrl: './author.component.html',
+    styleUrl: './author.component.scss'
 })
 export class AuthorComponent {
   @Input('author') set _author(value: Author | string) {

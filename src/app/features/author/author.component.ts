@@ -15,20 +15,19 @@ import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'blog-author',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    PostsListComponent,
-    MatChipsModule,
-    GradientComponent,
-    RouterLink,
-    NotFoundComponent,
-    AvatarComponent,
-    MatButtonModule,
-  ],
-  templateUrl: './author.component.html',
-  styleUrl: './author.component.scss',
+    selector: 'blog-author',
+    imports: [
+        AsyncPipe,
+        PostsListComponent,
+        MatChipsModule,
+        GradientComponent,
+        RouterLink,
+        NotFoundComponent,
+        AvatarComponent,
+        MatButtonModule,
+    ],
+    templateUrl: './author.component.html',
+    styleUrl: './author.component.scss'
 })
 export class AuthorComponent {
   author$: Observable<Author | undefined> = this.activatedRoute.paramMap.pipe(

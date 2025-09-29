@@ -2,13 +2,12 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'blog-gradient',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'blog-gradient',
+    imports: [CommonModule],
+    template: `
     <div class="gradient-container" [ngStyle]="{ height: this.height }"></div>
   `,
-  styleUrl: './gradient.component.scss',
+    styleUrl: './gradient.component.scss'
 })
 export class GradientComponent {
   height = '600px';

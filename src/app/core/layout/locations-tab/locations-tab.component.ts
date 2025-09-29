@@ -7,11 +7,10 @@ import { Location } from '../../model/locations.model';
 import { LocationsComponent } from "../../../components/locations/locations.component";
 
 @Component({
-  selector: 'blog-locations-tab',
-  standalone: true,
-  imports: [AsyncPipe, LocationsComponent],
-  templateUrl: './locations-tab.component.html',
-  styleUrl: './locations-tab.component.scss',
+    selector: 'blog-locations-tab',
+    imports: [AsyncPipe, LocationsComponent],
+    templateUrl: './locations-tab.component.html',
+    styleUrl: './locations-tab.component.scss'
 })
 export class LocationsTabComponent {
   locations$: Observable<Location[]> = this.postsService

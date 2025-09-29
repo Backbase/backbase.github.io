@@ -19,24 +19,23 @@ import { NotFoundComponent } from '../not-found/not-found.component';
 import { TransitionComponent } from '../../components/transition/transition.component';
 
 @Component({
-  selector: 'blog-category',
-  standalone: true,
-  imports: [
-    CommonModule,
-    CategoriesTabComponent,
-    PostsListComponent,
-    MatPaginatorModule,
-    DividerComponent,
-    EngineeringContentComponent,
-    JobsComponent,
-    MatProgressSpinnerModule,
-    CategoryTitleComponent,
-    NotFoundComponent,
-    TransitionComponent,
-  ],
-  templateUrl: './category.component.html',
-  styleUrl: './category.component.scss',
-  providers: [NavigationService],
+    selector: 'blog-category',
+    imports: [
+        CommonModule,
+        CategoriesTabComponent,
+        PostsListComponent,
+        MatPaginatorModule,
+        DividerComponent,
+        EngineeringContentComponent,
+        JobsComponent,
+        MatProgressSpinnerModule,
+        CategoryTitleComponent,
+        NotFoundComponent,
+        TransitionComponent,
+    ],
+    templateUrl: './category.component.html',
+    styleUrl: './category.component.scss',
+    providers: [NavigationService]
 })
 export class CategoryComponent {
   category$ = this.activatedRoute.paramMap.pipe(

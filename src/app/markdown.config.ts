@@ -11,10 +11,11 @@ export default function (
   router: Router,
 ) {
   markdownService.renderer.link = (
-    href: string,
-    title: string | null | undefined,
-    text: string
+    { href, title, tokens }: { href: string, title?: string | null, tokens: any }
   ) => {
+    // Extract text from tokens if needed
+    const text = tokens?.map((token: any) => token.text || token.raw || '').join('') || href;
+    
     const external =
       href.startsWith('http') &&
       !href.includes(document.defaultView?.window?.location.hostname ?? '');
@@ -36,9 +37,7 @@ export default function (
     `;
   };
   markdownService.renderer.image = (
-    href: string,
-    title: string | null,
-    text: string
+    { href, title, text }: { href: string, title?: string | null, text: string }
   ) => {
     const pathname = router.url;
     const url = `${pathname}/${href}`;
@@ -63,10 +62,12 @@ export default function (
     `;
   };
   markdownService.renderer.heading = (
-    text: string,
-    level: number,
-    raw: string
+    { tokens, depth }: { tokens: any[], depth: number }
   ) => {
+    // Extract text from tokens
+    const text = tokens?.map((token: any) => token.text || token.raw || '').join('') || '';
+    const level = depth;
+    
     const auxDiv = document.createElement('div');
     auxDiv.innerHTML = text;
     const id = auxDiv.textContent?.toLocaleLowerCase().replace(/\W/gm, '-');
@@ -75,9 +76,10 @@ export default function (
     `;
   };
   markdownService.renderer.html = (
-    html: string,
-    block?: boolean | undefined
+    { text }: { text: string }
   ) => {
+    const html = text;
+    
     if (html.startsWith('<iframe')) {
       const caption: string | undefined = html.match(/title="([^"]+)/)?.[1];
       return `

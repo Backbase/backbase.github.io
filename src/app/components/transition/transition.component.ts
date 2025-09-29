@@ -2,11 +2,10 @@ import { DOCUMENT, NgClass, NgStyle } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 
 @Component({
-  selector: 'blog-transition',
-  standalone: true,
-  imports: [NgStyle, NgClass],
-  templateUrl: './transition.component.html',
-  styleUrl: './transition.component.scss',
+    selector: 'blog-transition',
+    imports: [NgStyle, NgClass],
+    templateUrl: './transition.component.html',
+    styleUrl: './transition.component.scss'
 })
 export class TransitionComponent {
   colorFrom!: string | undefined;

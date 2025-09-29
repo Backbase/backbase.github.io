@@ -17,20 +17,19 @@ import { HighlightDirective } from './highlight.directive';
 import { ObservabilityService } from '../../core/services/observability.service';
 
 @Component({
-  selector: 'blog-search',
-  standalone: true,
-  imports: [
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    AsyncPipe,
-    HighlightDirective,
-  ],
-  templateUrl: './search.component.html',
-  styleUrl: './search.component.scss',
+    selector: 'blog-search',
+    imports: [
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        AsyncPipe,
+        HighlightDirective,
+    ],
+    templateUrl: './search.component.html',
+    styleUrl: './search.component.scss'
 })
 export class SearchComponent implements OnInit {
   @Output() complete = new EventEmitter<void>();

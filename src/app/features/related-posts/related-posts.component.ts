@@ -7,15 +7,14 @@ import { PostItemComponent } from '../../components/post-item/post-item.componen
 import { DividerComponent } from '../../components/divider/divider.component';
 
 @Component({
-  selector: 'blog-related-posts',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    PostItemComponent,
-    DividerComponent,
-  ],
-  templateUrl: './related-posts.component.html',
-  styleUrl: './related-posts.component.scss'
+    selector: 'blog-related-posts',
+    imports: [
+        AsyncPipe,
+        PostItemComponent,
+        DividerComponent,
+    ],
+    templateUrl: './related-posts.component.html',
+    styleUrl: './related-posts.component.scss'
 })
 export class RelatedPostsComponent {
   relatedPosts$!: Observable<Post[]>;

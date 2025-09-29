@@ -9,13 +9,12 @@ import { AsyncPipe } from '@angular/common';
 import { map } from 'rxjs';
 
 @Component({
-  selector: 'blog-dark-mode-toggle',
-  standalone: true,
-  imports: [MatSlideToggleModule, MatIconModule, AsyncPipe],
-  templateUrl: './dark-mode-toggle.component.html',
-  styleUrl: './dark-mode-toggle.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+    selector: 'blog-dark-mode-toggle',
+    imports: [MatSlideToggleModule, MatIconModule, AsyncPipe],
+    templateUrl: './dark-mode-toggle.component.html',
+    styleUrl: './dark-mode-toggle.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class DarkModeToggleComponent implements AfterViewInit {
   @ViewChild('darkModeSwitch', { read: ViewContainerRef }) toggler!: ViewContainerRef;

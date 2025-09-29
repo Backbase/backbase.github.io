@@ -26,30 +26,29 @@ import { HeadersPipe } from '../../core/utils/headers.pipe';
 import { RelatedPostsComponent } from '../related-posts/related-posts.component';
 
 @Component({
-  selector: 'blog-post',
-  standalone: true,
-  imports: [
-    DatePipe,
-    MarkdownModule,
-    AuthorComponent,
-    MatChipsModule,
-    RouterModule,
-    DividerComponent,
-    PostItemComponent,
-    MarkdownModule,
-    TableOfContentComponent,
-    PostUrlPipe,
-    GradientComponent,
-    RouterLink,
-    MatButtonModule,
-    MatSidenavModule,
-    HeadersPipe,
-    RelatedPostsComponent,
-  ],
-  templateUrl: './post.component.html',
-  styleUrl: './post.component.scss',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'blog-post',
+    imports: [
+        DatePipe,
+        MarkdownModule,
+        AuthorComponent,
+        MatChipsModule,
+        RouterModule,
+        DividerComponent,
+        PostItemComponent,
+        MarkdownModule,
+        TableOfContentComponent,
+        PostUrlPipe,
+        GradientComponent,
+        RouterLink,
+        MatButtonModule,
+        MatSidenavModule,
+        HeadersPipe,
+        RelatedPostsComponent,
+    ],
+    templateUrl: './post.component.html',
+    styleUrl: './post.component.scss',
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostComponent {
   /**

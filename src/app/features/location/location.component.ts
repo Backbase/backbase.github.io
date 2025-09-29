@@ -18,23 +18,22 @@ import { LocationsTabComponent } from '../../core/layout/locations-tab/locations
 import { MeetupFooterComponent } from '../../components/meetup-footer/meetup-footer.component';
 
 @Component({
-  selector: 'blog-location',
-  standalone: true,
-  imports: [
-    CommonModule,
-    LocationsTabComponent,
-    PostsListComponent,
-    MatPaginatorModule,
-    DividerComponent,
-    MeetupFooterComponent,
-    JobsComponent,
-    MatProgressSpinnerModule,
-    NotFoundComponent,
-    TransitionComponent,
-  ],
-  templateUrl: './location.component.html',
-  styleUrl: './location.component.scss',
-  providers: [NavigationService],
+    selector: 'blog-location',
+    imports: [
+        CommonModule,
+        LocationsTabComponent,
+        PostsListComponent,
+        MatPaginatorModule,
+        DividerComponent,
+        MeetupFooterComponent,
+        JobsComponent,
+        MatProgressSpinnerModule,
+        NotFoundComponent,
+        TransitionComponent,
+    ],
+    templateUrl: './location.component.html',
+    styleUrl: './location.component.scss',
+    providers: [NavigationService]
 })
 export class LocationComponent {
   location$ = this.activatedRoute.paramMap.pipe(

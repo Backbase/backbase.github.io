@@ -9,21 +9,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'blog-meetups-header',
-  standalone: true,
-  imports: [
-    MatChip,
-    PostImageComponent,
-    PostUrlPipe,
-    RouterLink,
-    MatAnchor,
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    RouterModule,
-  ],
-  templateUrl: './meetups-header.component.html',
-  styleUrl: './meetups-header.component.scss',
+    selector: 'blog-meetups-header',
+    imports: [
+        MatChip,
+        PostImageComponent,
+        PostUrlPipe,
+        RouterLink,
+        MatAnchor,
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        RouterModule,
+    ],
+    templateUrl: './meetups-header.component.html',
+    styleUrl: './meetups-header.component.scss'
 })
 export class MeetupsHeaderComponent {
   @Input() post!: Post;

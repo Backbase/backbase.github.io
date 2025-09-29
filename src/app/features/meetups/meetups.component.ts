@@ -16,21 +16,20 @@ import { MeetupFooterComponent } from '../../components/meetup-footer/meetup-foo
 
 
 @Component({
-  selector: 'blog-meetups',
-  standalone: true,
-  imports: [
-    GradientComponent,
-    PostsListComponent,
-    AsyncPipe,
-    MeetupsHeaderComponent,
-    LocationsComponent,
-    DividerComponent,
-    MeetupFooterComponent,
-    MatPaginator,
-  ],
-  providers: [NavigationService],
-  templateUrl: './meetups.component.html',
-  styleUrl: './meetups.component.scss',
+    selector: 'blog-meetups',
+    imports: [
+        GradientComponent,
+        PostsListComponent,
+        AsyncPipe,
+        MeetupsHeaderComponent,
+        LocationsComponent,
+        DividerComponent,
+        MeetupFooterComponent,
+        MatPaginator,
+    ],
+    providers: [NavigationService],
+    templateUrl: './meetups.component.html',
+    styleUrl: './meetups.component.scss'
 })
 export class MeetupsComponent {
   locations$: Observable<Location[]> = this.postsService

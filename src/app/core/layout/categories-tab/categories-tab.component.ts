@@ -7,11 +7,10 @@ import { Category } from '../../model/categories.model';
 import { PostsService } from '../../services/posts.service';
 
 @Component({
-  selector: 'blog-categories-tab',
-  standalone: true,
-  imports: [AsyncPipe, CategoriesComponent],
-  templateUrl: './categories-tab.component.html',
-  styleUrl: './categories-tab.component.scss',
+    selector: 'blog-categories-tab',
+    imports: [AsyncPipe, CategoriesComponent],
+    templateUrl: './categories-tab.component.html',
+    styleUrl: './categories-tab.component.scss'
 })
 export class CategoriesTabComponent {
   categories$: Observable<Category[]> = this.postsService
