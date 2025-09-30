@@ -22,7 +22,9 @@ export class PostsService {
     .get<Post[]>('posts.json')
     .pipe(
       withLatestFrom(this.authorsService.getAuthors()),
-      map(([posts, authors]) => posts.map((post) => this.decoratePost(post, authors))),
+      map(([posts, authors]) =>
+        posts.map(post => this.decoratePost(post, authors))
+      ),
       shareReplay()
     );
 
@@ -31,7 +33,7 @@ export class PostsService {
     private authorsService: AuthorsService,
     private assetsService: AssetsService,
     private markdownService: MarkdownService,
-    @Inject(SPECIAL_CATEGORIES) private specialCategories: Category[],
+    @Inject(SPECIAL_CATEGORIES) private specialCategories: Category[]
   ) {}
 
   getAllPosts(): Observable<Post[]> {
@@ -43,7 +45,9 @@ export class PostsService {
       map(
         posts =>
           posts.find(({ featured }) => featured) ??
-          posts.find(({ category }) => !this.specialCategories.includes(category))
+          posts.find(
+            ({ category }) => !this.specialCategories.includes(category)
+          )
       )
     );
   }
@@ -53,7 +57,7 @@ export class PostsService {
     size: number = POSTS_PER_PAGE,
     filterFeatured: boolean = true,
     filterFn?: (post: Post) => boolean,
-    sortFn?: (a: Post, b: Post) => number,
+    sortFn?: (a: Post, b: Post) => number
   ): Observable<Posts> {
     return this.getAllPosts().pipe(
       withLatestFrom(this.getHighlightedPost()),
@@ -85,13 +89,18 @@ export class PostsService {
   }
 
   getPost(permalink: string | null): Observable<PostContent> {
-    return this.markdownService.getSource(`${permalink}/post.md`)
-      .pipe(
-        withLatestFrom(this.authorsService.getAuthors()),
-        map(([markdown, authors]) => ({
-          ...this.decoratePost(extractPostMetaData(markdown) as Post, authors),
-        } as PostContent)),
-      );
+    return this.markdownService.getSource(`${permalink}/post.md`).pipe(
+      withLatestFrom(this.authorsService.getAuthors()),
+      map(
+        ([markdown, authors]) =>
+          ({
+            ...this.decoratePost(
+              extractPostMetaData(markdown) as Post,
+              authors
+            ),
+          }) as PostContent
+      )
+    );
   }
 
   getCategories(): Observable<Category[]> {
@@ -124,7 +133,7 @@ export class PostsService {
           },
           {}
         );
-  
+
         const entries = Object.entries(locations);
         return entries
           .sort(([_, countA], [__, countB]) => countB - countA)
@@ -133,7 +142,10 @@ export class PostsService {
     );
   }
 
-  private decoratePost(post: Post | PostContent, authors: AuthorsList): Post | PostContent {
+  private decoratePost(
+    post: Post | PostContent,
+    authors: AuthorsList
+  ): Post | PostContent {
     return {
       ...post,
       specialCategory: this.specialCategories.includes(post.category),
@@ -141,17 +153,22 @@ export class PostsService {
       displayTeaser: this.generateDisplayAssets(post.teaser),
       authors: post.authors.map(author =>
         typeof author === 'string' ? authors[author] || author : author
-      )
-    }
+      ),
+    };
   }
 
-  private generateDisplayAssets(url?: string): { [size in ImageSize]: string } | undefined {
+  private generateDisplayAssets(
+    url?: string
+  ): { [size in ImageSize]: string } | undefined {
     const sizes: ImageSize[] = ['sm', 'md', 'lg'];
     if (url) {
-      return sizes.reduce((acc, curr) => ({
-        ...acc,
-        [curr]: this.assetsService.getAssetPath(url, curr)
-      }), {} as { [size in ImageSize]: string });
+      return sizes.reduce(
+        (acc, curr) => ({
+          ...acc,
+          [curr]: this.assetsService.getAssetPath(url, curr),
+        }),
+        {} as { [size in ImageSize]: string }
+      );
     }
     return undefined;
   }

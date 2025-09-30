@@ -14,18 +14,18 @@ export enum Reason {
 }
 
 @Component({
-    selector: 'blog-post-featured',
-    imports: [
-        CommonModule,
-        MatCardModule,
-        ReadMoreButtonComponent,
-        PostUrlPipe,
-        RouterLink,
-        MatChipsModule,
-        PostImageComponent,
-    ],
-    templateUrl: './post-featured.component.html',
-    styleUrl: './post-featured.component.scss'
+  selector: 'blog-post-featured',
+  imports: [
+    CommonModule,
+    MatCardModule,
+    ReadMoreButtonComponent,
+    PostUrlPipe,
+    RouterLink,
+    MatChipsModule,
+    PostImageComponent,
+  ],
+  templateUrl: './post-featured.component.html',
+  styleUrl: './post-featured.component.scss',
 })
 export class PostFeaturedComponent {
   @Input({ required: true }) post!: Post;

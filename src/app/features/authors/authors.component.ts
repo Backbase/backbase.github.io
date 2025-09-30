@@ -8,10 +8,10 @@ import { RouterLink } from '@angular/router';
 import { AvatarComponent } from '../../components/avatar/avatar.component';
 
 @Component({
-    selector: 'blog-authors',
-    imports: [CommonModule, GradientComponent, RouterLink, AvatarComponent],
-    templateUrl: './authors.component.html',
-    styleUrl: './authors.component.scss'
+  selector: 'blog-authors',
+  imports: [CommonModule, GradientComponent, RouterLink, AvatarComponent],
+  templateUrl: './authors.component.html',
+  styleUrl: './authors.component.scss',
 })
 export class AuthorsComponent {
   authors$: Observable<Author[] | undefined> = this.authorsService

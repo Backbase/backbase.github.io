@@ -14,27 +14,25 @@ import { LocationsComponent } from '../../components/locations/locations.compone
 import { Location } from '../../core/model/locations.model';
 import { MeetupFooterComponent } from '../../components/meetup-footer/meetup-footer.component';
 
-
 @Component({
-    selector: 'blog-meetups',
-    imports: [
-        GradientComponent,
-        PostsListComponent,
-        AsyncPipe,
-        MeetupsHeaderComponent,
-        LocationsComponent,
-        DividerComponent,
-        MeetupFooterComponent,
-        MatPaginator,
-    ],
-    providers: [NavigationService],
-    templateUrl: './meetups.component.html',
-    styleUrl: './meetups.component.scss'
+  selector: 'blog-meetups',
+  imports: [
+    GradientComponent,
+    PostsListComponent,
+    AsyncPipe,
+    MeetupsHeaderComponent,
+    LocationsComponent,
+    DividerComponent,
+    MeetupFooterComponent,
+    MatPaginator,
+  ],
+  providers: [NavigationService],
+  templateUrl: './meetups.component.html',
+  styleUrl: './meetups.component.scss',
 })
 export class MeetupsComponent {
-  locations$: Observable<Location[]> = this.postsService
-    .getLocations();
-  
+  locations$: Observable<Location[]> = this.postsService.getLocations();
+
   selectedCategory$ = this.activatedRoute.paramMap.pipe(
     map(params => params.get('loc') as Location)
   );
@@ -46,7 +44,7 @@ export class MeetupsComponent {
     private postsService: PostsService,
     private navigationService: NavigationService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
 
   navigate(page: PageEvent) {
@@ -66,24 +64,30 @@ export class MeetupsComponent {
         post => this.isMeetupCategory(post),
         (a, b) => this.compareByDate(a, b)
       )
-      .pipe(map(result => {
-        const startOfToday = new Date();
-        startOfToday.setHours(0, 0, 0, 0);
+      .pipe(
+        map(result => {
+          const startOfToday = new Date();
+          startOfToday.setHours(0, 0, 0, 0);
 
-        return this.findSoonestAfter(result.posts, startOfToday.getTime());
-      }));
+          return this.findSoonestAfter(result.posts, startOfToday.getTime());
+        })
+      );
   }
 
   findSoonestAfter(posts: Post[], minValue: number): Post | null {
     let soonest: Post | null = null;
-  
+
     for (const post of posts) {
       const num = new Date(post.date?.trim() ?? '').getTime();
-      if (num > minValue && (soonest === null || num < new Date(soonest.date?.trim() ?? '').getTime())) {
+      if (
+        num > minValue &&
+        (soonest === null ||
+          num < new Date(soonest.date?.trim() ?? '').getTime())
+      ) {
         soonest = post;
       }
     }
-  
+
     return soonest;
   }
 

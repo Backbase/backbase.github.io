@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'blog-logo',
-    imports: [CommonModule],
-    templateUrl: './logo.component.html',
-    styleUrl: './logo.component.scss'
+  selector: 'blog-logo',
+  imports: [CommonModule],
+  templateUrl: './logo.component.html',
+  styleUrl: './logo.component.scss',
 })
 export class LogoComponent {
   private _size = 2.5;

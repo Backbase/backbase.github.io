@@ -17,19 +17,19 @@ import { HighlightDirective } from './highlight.directive';
 import { ObservabilityService } from '../../core/services/observability.service';
 
 @Component({
-    selector: 'blog-search',
-    imports: [
-        FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatAutocompleteModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        AsyncPipe,
-        HighlightDirective,
-    ],
-    templateUrl: './search.component.html',
-    styleUrl: './search.component.scss'
+  selector: 'blog-search',
+  imports: [
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    AsyncPipe,
+    HighlightDirective,
+  ],
+  templateUrl: './search.component.html',
+  styleUrl: './search.component.scss',
 })
 export class SearchComponent implements OnInit {
   @Output() complete = new EventEmitter<void>();
@@ -42,7 +42,7 @@ export class SearchComponent implements OnInit {
   constructor(
     private postsService: PostsService,
     private router: Router,
-    private observabilityService: ObservabilityService,
+    private observabilityService: ObservabilityService
   ) {}
 
   ngOnInit() {
@@ -54,15 +54,19 @@ export class SearchComponent implements OnInit {
       })
     );
 
-    this.control.valueChanges.pipe(
-      filter((search) => 
-        typeof search === 'string' && search.length > 3),
-      debounceTime(1000),
-    ).subscribe((search) => {
-      this.observabilityService.publishEvent({
-        'search.term': <string>search,
-      }, 'search');
-    })
+    this.control.valueChanges
+      .pipe(
+        filter(search => typeof search === 'string' && search.length > 3),
+        debounceTime(1000)
+      )
+      .subscribe(search => {
+        this.observabilityService.publishEvent(
+          {
+            'search.term': <string>search,
+          },
+          'search'
+        );
+      });
   }
 
   displayFn(post: Post): string {

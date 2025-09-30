@@ -5,14 +5,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'blog-posts-list',
-    imports: [
-        CommonModule,
-        PostItemComponent,
-        MatPaginatorModule,
-    ],
-    templateUrl: './posts-list.component.html',
-    styleUrl: './posts-list.component.scss'
+  selector: 'blog-posts-list',
+  imports: [CommonModule, PostItemComponent, MatPaginatorModule],
+  templateUrl: './posts-list.component.html',
+  styleUrl: './posts-list.component.scss',
 })
 export class PostsListComponent {
   @Input() posts!: Post[] | undefined;

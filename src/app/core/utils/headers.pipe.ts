@@ -1,14 +1,12 @@
-
 import { Inject, Pipe, PipeTransform, DOCUMENT } from '@angular/core';
 import { MarkdownService } from 'ngx-markdown';
 import { HeaderNode } from '../model/content.model';
 
 @Pipe({
   name: 'headers',
-  standalone: true
+  standalone: true,
 })
 export class HeadersPipe implements PipeTransform {
-
   transform(markdown: string): HeaderNode[] {
     const regExp = new RegExp(/<h\d(.*?)<\/h\d>/gm);
     const matches = this.markdownService
@@ -43,14 +41,20 @@ export class HeadersPipe implements PipeTransform {
 
           return hierarchy;
         },
-        [{ id: 'post-header', heading: title?.heading || 'Header', level: 1, children: [] }]
+        [
+          {
+            id: 'post-header',
+            heading: title?.heading || 'Header',
+            level: 1,
+            children: [],
+          },
+        ]
       )
       .splice(0, 1);
   }
 
   constructor(
     private markdownService: MarkdownService,
-    @Inject(DOCUMENT) private document: Document,
+    @Inject(DOCUMENT) private document: Document
   ) {}
-
 }

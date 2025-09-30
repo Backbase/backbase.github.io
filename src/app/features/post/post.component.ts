@@ -6,10 +6,7 @@ import {
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { PostContent } from '../../core/model/post.model';
-import {
-  RouterLink,
-  RouterModule,
-} from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { AuthorComponent } from '../../components/author/author.component';
 import { MatChipsModule } from '@angular/material/chips';
@@ -24,27 +21,27 @@ import { HeadersPipe } from '../../core/utils/headers.pipe';
 import { RelatedPostsComponent } from '../related-posts/related-posts.component';
 
 @Component({
-    selector: 'blog-post',
-    imports: [
-        DatePipe,
-        MarkdownModule,
-        AuthorComponent,
-        MatChipsModule,
-        RouterModule,
-        MarkdownModule,
-        TableOfContentComponent,
-        PostUrlPipe,
-        GradientComponent,
-        RouterLink,
-        MatButtonModule,
-        MatSidenavModule,
-        HeadersPipe,
-        RelatedPostsComponent,
-    ],
-    templateUrl: './post.component.html',
-    styleUrl: './post.component.scss',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'blog-post',
+  imports: [
+    DatePipe,
+    MarkdownModule,
+    AuthorComponent,
+    MatChipsModule,
+    RouterModule,
+    MarkdownModule,
+    TableOfContentComponent,
+    PostUrlPipe,
+    GradientComponent,
+    RouterLink,
+    MatButtonModule,
+    MatSidenavModule,
+    HeadersPipe,
+    RelatedPostsComponent,
+  ],
+  templateUrl: './post.component.html',
+  styleUrl: './post.component.scss',
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostComponent {
   /**
@@ -54,9 +51,7 @@ export class PostComponent {
 
   Category = Object.fromEntries(Object.entries(Category));
 
-  constructor(
-    private htmlInMarkdownService: HtmlInMarkdownService,
-  ) {}
+  constructor(private htmlInMarkdownService: HtmlInMarkdownService) {}
 
   resolveScripts() {
     this.htmlInMarkdownService.parseAll();

@@ -4,14 +4,10 @@ import { NavigationComponent } from './core/layout/navigation/navigation.compone
 import { FooterComponent } from './core/layout/footer/footer.component';
 
 @Component({
-    selector: 'blog-root',
-    imports: [
-        NavigationComponent,
-        FooterComponent,
-        RouterOutlet
-    ],
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+  selector: 'blog-root',
+  imports: [NavigationComponent, FooterComponent, RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'blog';

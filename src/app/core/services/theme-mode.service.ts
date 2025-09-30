@@ -1,4 +1,3 @@
-
 import { Inject, Injectable, DOCUMENT } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 

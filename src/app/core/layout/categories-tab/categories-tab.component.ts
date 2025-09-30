@@ -7,17 +7,19 @@ import { Category } from '../../model/categories.model';
 import { PostsService } from '../../services/posts.service';
 
 @Component({
-    selector: 'blog-categories-tab',
-    imports: [AsyncPipe, CategoriesComponent],
-    templateUrl: './categories-tab.component.html',
-    styleUrl: './categories-tab.component.scss'
+  selector: 'blog-categories-tab',
+  imports: [AsyncPipe, CategoriesComponent],
+  templateUrl: './categories-tab.component.html',
+  styleUrl: './categories-tab.component.scss',
 })
 export class CategoriesTabComponent {
   categories$: Observable<Category[]> = this.postsService
     .getCategories()
     .pipe(
       map(categories =>
-        categories.filter(category => !['principles', 'meetups'].includes(category))
+        categories.filter(
+          category => !['principles', 'meetups'].includes(category)
+        )
       )
     );
   selectedCategory$ = this.activatedRoute.paramMap.pipe(

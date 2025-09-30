@@ -5,10 +5,10 @@ import { ImageSize } from '../../core/model/content.model';
 import { AvatarComponent } from '../avatar/avatar.component';
 
 @Component({
-    selector: 'blog-author',
-    imports: [NgClass, AvatarComponent],
-    templateUrl: './author.component.html',
-    styleUrl: './author.component.scss'
+  selector: 'blog-author',
+  imports: [NgClass, AvatarComponent],
+  templateUrl: './author.component.html',
+  styleUrl: './author.component.scss',
 })
 export class AuthorComponent {
   @Input('author') set _author(value: Author | string) {
@@ -27,5 +27,4 @@ export class AuthorComponent {
   @Input() muted = false;
 
   author!: Author;
-
 }

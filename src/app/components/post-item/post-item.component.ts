@@ -12,20 +12,20 @@ import { RouterLink } from '@angular/router';
 import { PostImageComponent } from '../post-image/post-image.component';
 
 @Component({
-    selector: 'blog-post-item',
-    imports: [
-        CommonModule,
-        MatCardModule,
-        ReadMoreButtonComponent,
-        AuthorComponent,
-        MatRippleModule,
-        MatChipsModule,
-        PostUrlPipe,
-        RouterLink,
-        PostImageComponent,
-    ],
-    templateUrl: './post-item.component.html',
-    styleUrl: './post-item.component.scss'
+  selector: 'blog-post-item',
+  imports: [
+    CommonModule,
+    MatCardModule,
+    ReadMoreButtonComponent,
+    AuthorComponent,
+    MatRippleModule,
+    MatChipsModule,
+    PostUrlPipe,
+    RouterLink,
+    PostImageComponent,
+  ],
+  templateUrl: './post-item.component.html',
+  styleUrl: './post-item.component.scss',
 })
 export class PostItemComponent {
   @Input() post!: Post;

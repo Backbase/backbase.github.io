@@ -1,4 +1,4 @@
-import { ProcessedAsset } from "./content.model";
+import { ProcessedAsset } from './content.model';
 
 export interface Author {
   avatar: string;

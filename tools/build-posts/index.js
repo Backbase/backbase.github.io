@@ -33,11 +33,10 @@ async function getAuthorRoutes(source) {
   if (fs.existsSync(source)) {
     const authors = JSON.parse(fs.readFileSync(source, 'utf8'));
 
-    const utils = await loadEsmModule(
-      '../../dist/utils/fesm2022/utils.mjs'
+    const utils = await loadEsmModule('../../dist/utils/fesm2022/utils.mjs');
+    return Object.keys(authors).map(
+      name => `/people/${utils.getAuthorPermalink(name)}`
     );
-    return Object.keys(authors).map(name =>
-      `/people/${utils.getAuthorPermalink(name)}`);
   }
   return [];
 }
@@ -76,9 +75,7 @@ async function main() {
 }
 
 async function withUtils() {
-  utils = await loadEsmModule(
-    '../../dist/utils/fesm2022/utils.mjs'
-  );
+  utils = await loadEsmModule('../../dist/utils/fesm2022/utils.mjs');
 
   main();
 }

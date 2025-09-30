@@ -4,10 +4,10 @@ import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { Location } from '../../core/model/locations.model';
 
 @Component({
-    selector: 'blog-locations',
-    imports: [CommonModule, MatTabsModule],
-    templateUrl: './locations.component.html',
-    styleUrl: './locations.component.scss'
+  selector: 'blog-locations',
+  imports: [CommonModule, MatTabsModule],
+  templateUrl: './locations.component.html',
+  styleUrl: './locations.component.scss',
 })
 export class LocationsComponent {
   @Input() locations!: Location[];

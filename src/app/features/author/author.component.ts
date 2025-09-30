@@ -15,19 +15,19 @@ import { AvatarComponent } from '../../components/avatar/avatar.component';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'blog-author',
-    imports: [
-        AsyncPipe,
-        PostsListComponent,
-        MatChipsModule,
-        GradientComponent,
-        RouterLink,
-        NotFoundComponent,
-        AvatarComponent,
-        MatButtonModule,
-    ],
-    templateUrl: './author.component.html',
-    styleUrl: './author.component.scss'
+  selector: 'blog-author',
+  imports: [
+    AsyncPipe,
+    PostsListComponent,
+    MatChipsModule,
+    GradientComponent,
+    RouterLink,
+    NotFoundComponent,
+    AvatarComponent,
+    MatButtonModule,
+  ],
+  templateUrl: './author.component.html',
+  styleUrl: './author.component.scss',
 })
 export class AuthorComponent {
   author$: Observable<Author | undefined> = this.activatedRoute.paramMap.pipe(
@@ -41,7 +41,7 @@ export class AuthorComponent {
             param?.toLowerCase().replace(/\W/g, '')
         )?.[1]
     ),
-    tap((author) => {
+    tap(author => {
       if (!author) {
         this.notFound = true;
       }
@@ -50,7 +50,11 @@ export class AuthorComponent {
   posts$: Observable<Post[] | undefined> = this.author$.pipe(
     switchMap(author =>
       this.postsService.getPosts(undefined, undefined, false, (post: Post) =>
-        post.authors.map((author) => typeof author === 'string' ? author : author.fullname).includes(author?.fullname ?? '')
+        post.authors
+          .map(author =>
+            typeof author === 'string' ? author : author.fullname
+          )
+          .includes(author?.fullname ?? '')
       )
     ),
     map(({ posts }) => posts)

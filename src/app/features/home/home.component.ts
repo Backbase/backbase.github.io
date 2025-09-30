@@ -18,23 +18,23 @@ import { CategoriesTabComponent } from '../../core/layout/categories-tab/categor
 import { TransitionComponent } from '../../components/transition/transition.component';
 
 @Component({
-    selector: 'blog-home',
-    imports: [
-        CommonModule,
-        PostFeaturedComponent,
-        EngineeringContentComponent,
-        CategoriesTabComponent,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        JobsComponent,
-        DividerComponent,
-        GradientComponent,
-        PostsListComponent,
-        TransitionComponent,
-    ],
-    providers: [NavigationService],
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.scss'
+  selector: 'blog-home',
+  imports: [
+    CommonModule,
+    PostFeaturedComponent,
+    EngineeringContentComponent,
+    CategoriesTabComponent,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    JobsComponent,
+    DividerComponent,
+    GradientComponent,
+    PostsListComponent,
+    TransitionComponent,
+  ],
+  providers: [NavigationService],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent {
   currentPage$ = this.navigationService.currentPage$;

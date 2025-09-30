@@ -20,7 +20,7 @@ export interface Post {
 
 export type PostContent = Post & {
   markdown: string;
-}
+};
 
 export interface Posts {
   posts: Post[];

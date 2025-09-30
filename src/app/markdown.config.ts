@@ -8,14 +8,22 @@ export default function (
   document: Document,
   htmlInMarkdownService: HtmlInMarkdownService,
   assetsService: AssetsService,
-  router: Router,
+  router: Router
 ) {
-  markdownService.renderer.link = (
-    { href, title, tokens }: { href: string, title?: string | null, tokens: any }
-  ) => {
+  markdownService.renderer.link = ({
+    href,
+    title,
+    tokens,
+  }: {
+    href: string;
+    title?: string | null;
+    tokens: any;
+  }) => {
     // Extract text from tokens if needed
-    const text = tokens?.map((token: any) => token.text || token.raw || '').join('') || href;
-    
+    const text =
+      tokens?.map((token: any) => token.text || token.raw || '').join('') ||
+      href;
+
     const external =
       href.startsWith('http') &&
       !href.includes(document.defaultView?.window?.location.hostname ?? '');
@@ -36,9 +44,15 @@ export default function (
       </a>
     `;
   };
-  markdownService.renderer.image = (
-    { href, title, text }: { href: string, title?: string | null, text: string }
-  ) => {
+  markdownService.renderer.image = ({
+    href,
+    title,
+    text,
+  }: {
+    href: string;
+    title?: string | null;
+    text: string;
+  }) => {
     const pathname = router.url;
     const url = `${pathname}/${href}`;
     return `
@@ -61,13 +75,18 @@ export default function (
       </figure>
     `;
   };
-  markdownService.renderer.heading = (
-    { tokens, depth }: { tokens: any[], depth: number }
-  ) => {
+  markdownService.renderer.heading = ({
+    tokens,
+    depth,
+  }: {
+    tokens: any[];
+    depth: number;
+  }) => {
     // Extract text from tokens
-    const text = tokens?.map((token: any) => token.text || token.raw || '').join('') || '';
+    const text =
+      tokens?.map((token: any) => token.text || token.raw || '').join('') || '';
     const level = depth;
-    
+
     const auxDiv = document.createElement('div');
     auxDiv.innerHTML = text;
     const id = auxDiv.textContent?.toLocaleLowerCase().replace(/\W/gm, '-');
@@ -75,11 +94,9 @@ export default function (
       <h${level > 1 ? level : 2} id="${id}">${text}</h${level}>
     `;
   };
-  markdownService.renderer.html = (
-    { text }: { text: string }
-  ) => {
+  markdownService.renderer.html = ({ text }: { text: string }) => {
     const html = text;
-    
+
     if (html.startsWith('<iframe')) {
       const caption: string | undefined = html.match(/title="([^"]+)/)?.[1];
       return `
@@ -89,7 +106,7 @@ export default function (
         </figure>
       `;
     }
-  
+
     return htmlInMarkdownService.add(html);
   };
 }

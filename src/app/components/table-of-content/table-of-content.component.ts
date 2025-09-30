@@ -6,7 +6,7 @@ import {
   Inject,
   Input,
   OnInit,
-  DOCUMENT
+  DOCUMENT,
 } from '@angular/core';
 import {
   MatTreeFlatDataSource,
@@ -21,10 +21,10 @@ import { NgClass } from '@angular/common';
 import { first } from 'rxjs';
 
 @Component({
-    selector: 'blog-table-of-content',
-    imports: [MatTreeModule, MatButtonModule, MatIconModule, RouterLink, NgClass],
-    templateUrl: './table-of-content.component.html',
-    styleUrl: './table-of-content.component.scss'
+  selector: 'blog-table-of-content',
+  imports: [MatTreeModule, MatButtonModule, MatIconModule, RouterLink, NgClass],
+  templateUrl: './table-of-content.component.html',
+  styleUrl: './table-of-content.component.scss',
 })
 export class TableOfContentComponent implements AfterViewInit {
   @Input() set headers(headers: HeaderNode[]) {
