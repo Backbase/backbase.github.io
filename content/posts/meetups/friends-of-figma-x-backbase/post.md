@@ -12,13 +12,13 @@ tags: krakow, meetup, UX
 
 Location: Krakow
  
---- 
+---
 
-## ✅ Book your spot
+## See how it went
 
-Join us for the Friends of Figma event organized in collaboration with Backbase.
+![](assets/event-image.png)
 
-[Get your ticket](https://friends.figma.com/events/details/figma-krakow-presents-fof-krakow-x-backbase/)
+[🔗 See more photos on LinkedIn](https://www.linkedin.com/posts/backbase_friendsoffigma-ux-uxdesign-activity-7291002374486196225-ao7J)
 
 ## Speakers & Topics
 
@@ -48,21 +48,21 @@ As a Senior UX Designer I am specializing in employee solutions at Backbase. My 
 
 🗓️ Event Date: January 23, 2025
 
-🕑 Time: 6:00  PM
+🕑 Time: 18:00
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 ## Agenda
 
-6:00 - 6:45 PM - Registration, grab a drink
+18:00 - 18:45 - Registration, grab a drink
 
-6:45 - 7:00 PM - Opening remarks
+18:45 - 19:00 - Opening remarks
 
-7:00 - 7:25 PM - Phil Barrett | "How to build your reputation and impact as a real-world UX designer" [ENG]
+19:00 - 19:25 - Phil Barrett | "How to build your reputation and impact as a real-world UX designer" [ENG]
 
-7:40 - 8:05 PM - Paulina Duźniak | "Good enough research - how to gather data without direct access to users" [ENG]
+19:40 - 20:05 - Paulina Duźniak | "Good enough research - how to gather data without direct access to users" [ENG]
 
-8:05 - 10:00 PM - Networking, food & drinks
+20:05 - 22:00 - Networking, food & drinks
 
 [Get your ticket](https://friends.figma.com/events/details/figma-krakow-presents-fof-krakow-x-backbase/)

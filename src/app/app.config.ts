@@ -66,7 +66,7 @@ export const appConfig: ApplicationConfig = {
         appName: 'bb-engineering',
         version: pkg.version,
         url: 'https://rum-collector.backbase.io/v1/traces',
-        enabled: true,
+        enabled: !isDevMode(),
       },
     },
     provideAppInitializer(() =>

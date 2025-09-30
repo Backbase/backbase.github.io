@@ -6,7 +6,7 @@ export enum Category {
   'sdlc' = 'SDLC',
   'career' = 'Career',
   'principles' = 'Principles',
-  'meetups' = 'Meetups',
+  'meetups' = 'meetups',
   'qa' = 'Quality Assurance',
   'mobile' = 'Mobile',
 }

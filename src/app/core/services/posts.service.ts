@@ -12,7 +12,7 @@ import { SPECIAL_CATEGORIES } from '../config/configuration-tokens';
 import { AuthorsList } from '../model/author.model';
 import { Location } from '../model/locations.model';
 
-const POSTS_PER_PAGE = 8;
+const POSTS_PER_PAGE = 12;
 
 @Injectable({
   providedIn: 'root',
@@ -140,6 +140,23 @@ export class PostsService {
           .map(([location]) => location as Location);
       })
     );
+  }
+
+  findSoonestPostAfter(posts: Post[], minValue: number): Post | null {
+    let soonest: Post | null = null;
+
+    for (const post of posts) {
+      const num = new Date(post.date?.trim() ?? '').getTime();
+      if (
+        num > minValue &&
+        (soonest === null ||
+          num < new Date(soonest.date?.trim() ?? '').getTime())
+      ) {
+        soonest = post;
+      }
+    }
+
+    return soonest;
   }
 
   private decoratePost(

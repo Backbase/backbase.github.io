@@ -14,11 +14,9 @@ Location: Krakow
  
 --- 
 
-## ✅ Book your spot
+## See how it went
 
-Join us for the next Backbase meetup where we speak not only about Tech
-
-[Get your ticket](https://www.meetup.com/backbase-meetups/)
+![](assets/event-image-march.webp)
 
 ## Speakers & Topics
 
@@ -43,19 +41,19 @@ Proficient in Cocoa Touch, Xcode, Swift and SwiftUI, with a strong background in
 
 🗓️ Event Date: March 18, 2025
 
-🕑 Time: 6:00  PM
+🕑 Time: 18:00
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 [See the map](https://maps.app.goo.gl/UWpwQ9zNaJBxPLEV9)
 
 ## Agenda
 
-6:00 - 6:05 PM - Registration, grab a drink
+18:00 - 18:05 - Registration, grab a drink
 
-6:05 - 6:35 PM - Ramazan Abdullayev | "Modernize Your UIKit App: Adding SwiftUI Screens Seamlessly" [ENG]
+18:05 - 18:35 - Ramazan Abdullayev | "Modernize Your UIKit App: Adding SwiftUI Screens Seamlessly" [ENG]
 
-6:40 - 7:05 PM - Aleh Pachtovy | "Combine in Action: Building Reactive ViewModels for SwiftUI" [ENG]
+18:40 - 19:05 - Aleh Pachtovy | "Combine in Action: Building Reactive ViewModels for SwiftUI" [ENG]
 
-7:10 - 7:55 PM - Networking, food & drinks
+19:10 - 19:55 - Networking, food & drinks
 
 [Get your ticket](https://www.meetup.com/backbase-meetups/)

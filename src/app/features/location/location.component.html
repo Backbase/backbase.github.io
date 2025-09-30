@@ -1,3 +1,7 @@
+@if (newestMeetup$ | async; as meetup) {
+  <blog-meetups-header [post]="meetup"></blog-meetups-header>
+}
+
 <blog-locations-tab></blog-locations-tab>
 
 @if (posts$ | async; as posts) {
