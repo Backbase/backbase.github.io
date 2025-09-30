@@ -47,11 +47,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
+      - run: |
+          npm ci --ignore-scripts
+          npm rebuild esbuild protobufjs
       - run: |
           npm run build:utils
           npm run posts:update
-          npm run build -- --configuration=production --base-href=/
+          npm run build -- --define=O11Y_APP_KEY="'{{secrets.O11Y_APP_KEY}}'" --configuration=production --base-href=/
           cp dist/blog/browser/404/index.html dist/blog/browser/404.html
       - name: Setup Pages
         uses: actions/configure-pages@v5

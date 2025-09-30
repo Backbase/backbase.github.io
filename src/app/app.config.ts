@@ -1,9 +1,11 @@
 import {
-  APP_INITIALIZER,
   ApplicationConfig,
   SecurityContext,
   importProvidersFrom,
   isDevMode,
+  DOCUMENT,
+  provideAppInitializer,
+  inject
 } from '@angular/core';
 import {
   Router,
@@ -19,7 +21,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import markdownConfig from './markdown.config';
-import { DOCUMENT } from '@angular/common';
+
 import {
   AUTHORS_AVATAR_PATH_TOKEN,
   USE_PROCESSED_IMAGES,
@@ -32,6 +34,8 @@ import * as pkg from '../../package.json';
 import { AssetsService } from './core/services/assets.service';
 import { ObservabilityService } from './core/services/observability.service';
 import { routeEvents } from './core/utils/route-events';
+
+declare const O11Y_APP_KEY: string;
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -58,25 +62,18 @@ export const appConfig: ApplicationConfig = {
     {
       provide: O11Y_CONFIG_TOKEN,
       useValue: <ObservabilityConfig>{
-        apiKey: '68435ee4-f575-4dc0-968b-c43665373f5c',
+        appKey: O11Y_APP_KEY,
         appName: 'bb-engineering',
         version: pkg.version,
         url: 'https://rum-collector.backbase.io/v1/traces',
-        enabled: !isDevMode(),
+        enabled: true,
       },
     },
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      useFactory: (...deps: any) => () => markdownConfig.apply(this, deps),
-      deps: [MarkdownService, DOCUMENT, HtmlInMarkdownService, AssetsService, Router],
-    },
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      useFactory: routeEvents,
-      deps: [Router, Meta, ObservabilityService],
-    },
+    provideAppInitializer(() =>
+      markdownConfig.apply(this, [inject(MarkdownService), inject(DOCUMENT), inject(HtmlInMarkdownService), inject(AssetsService), inject(Router)])),
+    provideAppInitializer(() =>
+      routeEvents.apply(this, [inject(Router), inject(Meta), inject(ObservabilityService)])
+    ),
     {
       provide: AUTHORS_AVATAR_PATH_TOKEN,
       useValue: 'authors',

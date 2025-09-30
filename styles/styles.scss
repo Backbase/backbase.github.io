@@ -14,14 +14,14 @@
 
 .light-theme {
   .mat-mdc-standard-chip.mat-light-primary {
-    --mdc-chip-elevated-container-color: #{map-get($backbase-primary, 100)};
+    --mat-chip-elevated-container-color: #{map-get($backbase-primary, 100)};
   }
   .mat-mdc-slide-toggle {
-    --mdc-switch-unselected-track-color: #{map-get(
+    --mat-slide-toggle-unselected-track-color: #{map-get(
         $backbase-secondary-light,
         100
       )};
-    --mdc-switch-unselected-focus-track-color: #{map-get(
+    --mat-slide-toggle-unselected-focus-track-color: #{map-get(
         $backbase-secondary-light,
         50
       )};
@@ -54,14 +54,14 @@
 }
 
 :root {
-  --mdc-typography-button-font-weight: bold;
-  --mdc-elevated-card-container-elevation: none;
-  --mdc-elevated-card-container-shape: 0;
-  --mdc-outlined-button-container-height: 50px;
-  --mdc-typography-button-letter-spacing: 0.03em;
+  --mat-typography-button-font-weight: bold;
+  --mat-card-elevated-container-elevation: none;
+  --mat-card-elevated-container-shape: 0;
+  --mat-button-outlined-container-height: 50px;
+  --mat-typography-button-letter-spacing: 0.03em;
 
   .mat-mdc-card {
-    --mdc-elevated-card-container-elevation: 0;
+    --mat-card-elevated-container-elevation: 0;
   }
 
   @each $size, $width in $breakpoints {

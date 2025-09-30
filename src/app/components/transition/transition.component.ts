@@ -1,5 +1,5 @@
-import { DOCUMENT, NgClass, NgStyle } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { NgClass, NgStyle } from '@angular/common';
+import { Component, Inject, Input, DOCUMENT } from '@angular/core';
 
 @Component({
     selector: 'blog-transition',

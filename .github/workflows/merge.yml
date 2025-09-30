@@ -30,7 +30,7 @@ jobs:
           node-version: 20
       - name: Move article to current date directory
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm run build:utils
           npm run posts:publish
 

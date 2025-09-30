@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Pipe, PipeTransform } from '@angular/core';
+
+import { Inject, Pipe, PipeTransform, DOCUMENT } from '@angular/core';
 import { MarkdownService } from 'ngx-markdown';
 import { HeaderNode } from '../model/content.model';
 

@@ -13,8 +13,6 @@ import {
 import { MarkdownModule } from 'ngx-markdown';
 import { AuthorComponent } from '../../components/author/author.component';
 import { MatChipsModule } from '@angular/material/chips';
-import { PostItemComponent } from '../../components/post-item/post-item.component';
-import { DividerComponent } from '../../components/divider/divider.component';
 import { Category } from '../../core/model/categories.model';
 import { TableOfContentComponent } from '../../components/table-of-content/table-of-content.component';
 import { PostUrlPipe } from '../../core/utils/post-url.pipe';
@@ -33,8 +31,6 @@ import { RelatedPostsComponent } from '../related-posts/related-posts.component'
         AuthorComponent,
         MatChipsModule,
         RouterModule,
-        DividerComponent,
-        PostItemComponent,
         MarkdownModule,
         TableOfContentComponent,
         PostUrlPipe,

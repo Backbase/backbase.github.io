@@ -1,5 +1,5 @@
 export interface ObservabilityConfig {
-  apiKey: string,
+  appKey: string,
   appName: string,
   version: string,
   url: string,
