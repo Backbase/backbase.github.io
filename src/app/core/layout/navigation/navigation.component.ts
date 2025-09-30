@@ -1,5 +1,11 @@
-import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import {
+  Component,
+  HostListener,
+  Inject,
+  OnInit,
+  DOCUMENT,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { LogoComponent } from '../../../components/logo/logo.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +20,6 @@ import { DarkModeToggleComponent } from '../dark-mode-toggle/dark-mode-toggle.co
 
 @Component({
   selector: 'blog-navigation',
-  standalone: true,
   imports: [
     CommonModule,
     LogoComponent,

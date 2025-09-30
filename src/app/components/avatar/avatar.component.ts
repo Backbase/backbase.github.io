@@ -9,7 +9,6 @@ import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'blog-avatar',
-  standalone: true,
   imports: [NgClass],
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.scss',

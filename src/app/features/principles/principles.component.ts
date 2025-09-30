@@ -9,7 +9,6 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'blog-principles',
-  standalone: true,
   imports: [
     PrinciplesHeaderComponent,
     DividerComponent,

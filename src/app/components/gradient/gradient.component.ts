@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'blog-gradient',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <div class="gradient-container" [ngStyle]="{ height: this.height }"></div>

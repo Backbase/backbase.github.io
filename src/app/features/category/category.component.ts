@@ -20,7 +20,6 @@ import { TransitionComponent } from '../../components/transition/transition.comp
 
 @Component({
   selector: 'blog-category',
-  standalone: true,
   imports: [
     CommonModule,
     CategoriesTabComponent,
