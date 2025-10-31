@@ -27,7 +27,6 @@
       "type": "string",
       "enum": [
         "Krakow",
-        "Amsterdam",
         "Hyderabad"
       ],
       "x-prompt": "In which of these locations your post fits best?"
