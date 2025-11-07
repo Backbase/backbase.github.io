@@ -57,7 +57,7 @@ Mikołaj is a software engineer at Lunar Logic specializing in back-end developm
 
 🗓️ Event Date: November 20, 2025
 
-🕑 Time: 17:30 PM
+🕑 Time: 17:30
 
 📍 Location: Backbase Office, High 5ive Four, Pawia 21, 31-154 Kraków
 
@@ -65,14 +65,14 @@ Mikołaj is a software engineer at Lunar Logic specializing in back-end developm
 
 ## Agenda
 
-17:30 - 17:45 PM - Registration, grab a drink
+17:30 - 17:45 - Registration, grab a drink
 
-17:45 - 17:55 PM - Welcome from Backbase and meet.js
+17:45 - 17:55 - Welcome from Backbase and meet.js
 
-18:00 - 18:20 PM - Piotr Maliga | "Angular is not that bad"
+18:00 - 18:20 - Piotr Maliga | "Angular is not that bad"
 
-18:25 - 18:50 PM - Timofei Iatsenko | "Internalization with LinguiJS"
+18:25 - 18:50 - Timofei Iatsenko | "Internalization with LinguiJS"
 
-18:50 - 19:25 PM - Mikołaj Bogucki | "Beyond Video Calls: A Practical Introduction to WebRTC"
+18:50 - 19:25 - Mikołaj Bogucki | "Beyond Video Calls: A Practical Introduction to WebRTC"
 
-19:30 - 20:30 PM - Networking, food & drinks
+19:30 - 20:30 - Networking, food & drinks
