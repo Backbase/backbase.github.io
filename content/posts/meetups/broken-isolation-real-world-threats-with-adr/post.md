@@ -5,7 +5,7 @@ Event date: December 9, 2025 | Backbase office | Security | macOS
 ![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
-Date: 2025-11-07T14:02:48.085Z  
+Date: 2025-12-09T14:02:48.085Z  
 Category: meetups
 
 tags: krakow, meetup, security, securinga, ADR

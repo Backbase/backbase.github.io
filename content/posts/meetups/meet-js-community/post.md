@@ -5,7 +5,7 @@ Event date: November 20, 2025 | Backbase office | Meet.js
 ![](assets/placeholder.webp)
 
 Authors: Backbase Meetups
-Date: 2025-11-07T08:35:07.567Z  
+Date: 2025-11-20T08:35:07.567Z  
 Category: meetups
 
 tags: krakow, meetup, meet.js, javascript, front-end
