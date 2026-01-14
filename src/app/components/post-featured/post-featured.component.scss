@@ -14,11 +14,11 @@
   &__chip {
     margin-bottom: 1rem;
     mat-chip {
-      --mdc-chip-label-text-size: 0.8em;
-      --mdc-chip-container-height: auto;
+      --mat-chip-label-text-size: 0.8em;
+      --mat-chip-container-height: auto;
 
       &.mat-neutral {
-        --mdc-chip-elevated-container-color: var(--blog-palette-neutral);
+        --mat-chip-elevated-container-color: var(--blog-palette-neutral);
       }
     }
   }

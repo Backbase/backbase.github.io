@@ -18,7 +18,6 @@ import { ObservabilityService } from '../../core/services/observability.service'
 
 @Component({
   selector: 'blog-search',
-  standalone: true,
   imports: [
     FormsModule,
     MatFormFieldModule,

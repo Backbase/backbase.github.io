@@ -21,7 +21,6 @@ import { Category } from '../../core/model/categories.model';
 
 @Component({
   selector: 'blog-location',
-  standalone: true,
   imports: [
     CommonModule,
     LocationsTabComponent,

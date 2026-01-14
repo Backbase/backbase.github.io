@@ -15,7 +15,6 @@ export enum Reason {
 
 @Component({
   selector: 'blog-post-featured',
-  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,

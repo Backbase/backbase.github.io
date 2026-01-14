@@ -7,13 +7,10 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { PostFeaturedComponent } from '../../components/post-featured/post-featured.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EngineeringContentComponent } from '../../components/engineering-content/engineering-content.component';
-import { PostItemComponent } from '../../components/post-item/post-item.component';
-import { PostUrlPipe } from '../../core/utils/post-url.pipe';
 import { JobsComponent } from '../../components/jobs/jobs.component';
 import { AuthorsList } from '../../core/model/author.model';
 import { AuthorsService } from '../../core/services/authors.service';
 import { DividerComponent } from '../../components/divider/divider.component';
-import { PostAuthorsPipe } from '../../core/utils/post-authors.pipe';
 import { GradientComponent } from '../../components/gradient/gradient.component';
 import { PostsListComponent } from '../../components/posts-list/posts-list.component';
 import { NavigationService } from '../../core/services/navigation.service';
@@ -22,19 +19,15 @@ import { TransitionComponent } from '../../components/transition/transition.comp
 
 @Component({
   selector: 'blog-home',
-  standalone: true,
   imports: [
     CommonModule,
     PostFeaturedComponent,
     EngineeringContentComponent,
     CategoriesTabComponent,
-    PostItemComponent,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    PostUrlPipe,
     JobsComponent,
     DividerComponent,
-    PostAuthorsPipe,
     GradientComponent,
     PostsListComponent,
     TransitionComponent,

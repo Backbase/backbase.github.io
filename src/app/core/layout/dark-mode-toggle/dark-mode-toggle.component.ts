@@ -18,7 +18,6 @@ import { map } from 'rxjs';
 
 @Component({
   selector: 'blog-dark-mode-toggle',
-  standalone: true,
   imports: [MatSlideToggleModule, MatIconModule, AsyncPipe],
   templateUrl: './dark-mode-toggle.component.html',
   styleUrl: './dark-mode-toggle.component.scss',

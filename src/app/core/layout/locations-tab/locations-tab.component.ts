@@ -8,7 +8,6 @@ import { LocationsComponent } from '../../../components/locations/locations.comp
 
 @Component({
   selector: 'blog-locations-tab',
-  standalone: true,
   imports: [AsyncPipe, LocationsComponent],
   templateUrl: './locations-tab.component.html',
   styleUrl: './locations-tab.component.scss',

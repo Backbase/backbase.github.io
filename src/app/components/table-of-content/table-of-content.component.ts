@@ -6,6 +6,7 @@ import {
   Inject,
   Input,
   OnInit,
+  DOCUMENT,
 } from '@angular/core';
 import {
   MatTreeFlatDataSource,
@@ -16,12 +17,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderNode, HeaderTreeNode } from '../../core/model/content.model';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DOCUMENT, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { first } from 'rxjs';
 
 @Component({
   selector: 'blog-table-of-content',
-  standalone: true,
   imports: [MatTreeModule, MatButtonModule, MatIconModule, RouterLink, NgClass],
   templateUrl: './table-of-content.component.html',
   styleUrl: './table-of-content.component.scss',

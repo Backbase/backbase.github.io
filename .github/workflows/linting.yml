@@ -5,20 +5,20 @@ jobs:
   prose:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@master
 
-    - name: Get Changed Files
-      id: get_changed_files
-      uses: lots0logs/gh-action-get-changed-files@2.2.2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get Changed Files
+        id: get_changed_files
+        uses: lots0logs/gh-action-get-changed-files@2.2.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Vale
-      uses: errata-ai/vale-action@reviewdog
-      with:
-        reporter: github-pr-check
-        files: '${{ steps.get_changed_files.outputs.modified }}'
-        fail_on_error: true
-      env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Vale
+        uses: errata-ai/vale-action@reviewdog
+        with:
+          reporter: github-pr-check
+          files: '${{ steps.get_changed_files.outputs.modified }}'
+          fail_on_error: true
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

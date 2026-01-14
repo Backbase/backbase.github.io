@@ -8,7 +8,6 @@ import { DividerComponent } from '../../components/divider/divider.component';
 
 @Component({
   selector: 'blog-related-posts',
-  standalone: true,
   imports: [AsyncPipe, PostItemComponent, DividerComponent],
   templateUrl: './related-posts.component.html',
   styleUrl: './related-posts.component.scss',
