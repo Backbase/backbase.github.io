@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'blog-meetups-header',
-  standalone: true,
   imports: [
     MatChip,
     PostImageComponent,

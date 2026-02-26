@@ -4,7 +4,6 @@ import { ProcessedAsset } from '../../core/model/content.model';
 
 @Component({
   selector: 'blog-post-image',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './post-image.component.html',
   styleUrl: './post-image.component.scss',

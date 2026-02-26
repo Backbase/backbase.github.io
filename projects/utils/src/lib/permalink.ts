@@ -2,7 +2,7 @@ export function getPermalink(
   title: string,
   specialCategory: boolean,
   category: string,
-  date?: string,
+  date?: string
 ): string {
   const base = specialCategory ? category : generateBase(date);
   const titleDirectoryName = toKebabCase(title);

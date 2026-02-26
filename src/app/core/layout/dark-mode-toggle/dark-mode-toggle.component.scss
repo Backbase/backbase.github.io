@@ -1,7 +1,7 @@
 .toggler {
   .mdc-switch {
-    --mdc-switch-track-height: 24px;
-    --mdc-switch-track-shape: 24px;
+    --mat-slide-toggle-track-height: 24px;
+    --mat-slide-toggle-track-shape: 24px;
   }
 
   .mdc-switch__track {
@@ -24,7 +24,7 @@
 
   .mat-icon {
     font-size: 1em;
-    color: var(--mdc-switch-selected-icon-color);
+    color: var(--mat-slide-toggle-selected-icon-color);
     line-height: 1.35;
     width: auto;
   }

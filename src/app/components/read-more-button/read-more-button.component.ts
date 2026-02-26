@@ -7,7 +7,6 @@ import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'blog-read-more-button',
-  standalone: true,
   imports: [
     CommonModule,
     MatButtonModule,

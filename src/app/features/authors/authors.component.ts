@@ -9,7 +9,6 @@ import { AvatarComponent } from '../../components/avatar/avatar.component';
 
 @Component({
   selector: 'blog-authors',
-  standalone: true,
   imports: [CommonModule, GradientComponent, RouterLink, AvatarComponent],
   templateUrl: './authors.component.html',
   styleUrl: './authors.component.scss',
