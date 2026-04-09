@@ -23,7 +23,7 @@ Modern applications within the **SCM Platforms** organizations rely on thousands
 * **Operational inefficiency:** manual dependency reviews and license auditing have become unsustainable, consuming significant security team effort.
 * **Licensing costs:** commercial SCA solutions often incur high per-repository or per-user licensing overhead that does not align with the current scaling model.
 
-The decision was made to deploy **Dependency-Track 4.13.5+** on **Amazon EKS** as the centralized SCA platform.
+This led to deploying **Dependency-Track 4.13.5+** on **Amazon EKS** as the centralized SCA platform.
 
 ## The why: understanding SBOM and Dependency-Track
 
@@ -35,7 +35,7 @@ A Software Bill of Materials (SBOM) is effectively a "nutrition label" for softw
 ### What is Dependency-Track?
 Dependency-Track is an intelligent Component Analysis platform that takes these SBOMs and turns them into actionable intelligence.
 - **Continuous monitoring:** it ingests SBOMs and continuously monitors components against several vulnerability databases (NVD, OSS Index, GitHub Advisories).
-- **Risk analysis:** it analyzes the entire dependency graph to calculate a Bill of Materials Health (BCV) score and prioritize remediation efforts.
+- **Risk analysis:** it analyzes the entire dependency graph to calculate a Bill of Materials Health (BCV) score and rank remediation efforts.
 - **Policy enforcement:** it enables defining and enforcing security and license policies across projects.
 
 ![](assets/dependency-track-theme.png)
@@ -53,18 +53,18 @@ Dependency-Track is an intelligent Component Analysis platform that takes these 
 
 ## Architecture overview: the big picture
 
-The solution is built on three robust pillars: the **Infrastructure** (EKS), the **Application** (Dependency-Track), and the **Pipeline** (GitHub Actions). The following diagram illustrates how these pieces interact.
+Three robust pillars underpin the solution: the **Infrastructure** (EKS), the **Application** (Dependency-Track), and the **Pipeline** (GitHub Actions). The following diagram illustrates how these pieces interact.
 
 ![](assets/dependency-track-architecture.png)
 
 The architecture automates the ingestion and analysis of **Software Bill of Materials (SBOM)** data, ensuring that every code commit undergoes security scrutiny.
 
 ### Key components
-* **CI/CD integration:** GitHub Actions automates the generation and upload of SBOM data upon developer code commits.
+* **CI/CD integration:** GitHub Actions automates SBOM generation and upload upon developer code commits.
 * **Orchestration layer:** hosted on **Amazon EKS**, utilizing specialized Kubernetes pods for the user interface (UI) and vulnerability analysis.
-* **Security and traffic control:** **AWS WAF** filters incoming traffic to protect the Dependency-Track API and UI.
+* **Security and traffic control:** **AWS WAF** filters incoming traffic, protecting the Dependency-Track API and UI.
 * **Secret management:** an **External Secrets Operator** synchronizes sensitive credentials directly from **AWS Secrets Manager** into the Kubernetes cluster.
-* **Data persistence:** **Amazon Aurora** provides a secured, high-availability data storage layer for vulnerability data and project history.
+* **Data persistence:** **Amazon Aurora** serves as a secured, high-availability storage layer for vulnerability data and project history.
 * **Access control:** fine-grained **IAM Roles** manage permissions for the underlying EKS infrastructure and AWS service interactions.
 
 ## Deep dive: the infrastructure layer (EKS)
@@ -72,13 +72,13 @@ The architecture automates the ingestion and analysis of **Software Bill of Mate
 The Dependency-Track platform is fully managed within the existing EKS ecosystem, ensuring scalability, resilience, and security.
 
 ### 4.1 Application deployment
-The app is deployed via **Helm Releases**, managed by **OpenTofu** (Terraform) pipelines. This ensures a repeatable and version-controlled deployment.
+**Helm Releases**, managed by **OpenTofu** (Terraform) pipelines, deploy the app. This ensures a repeatable and version-controlled deployment.
 - **Frontend pods:** serve the Dependency-Track user interface.
 - **API server pods:** handle REST API requests, including SBOM uploads.
 - **Database:** a highly available **Aurora PostgreSQL** instance provides persistent storage for projects, findings, and metrics.
 
 ### 4.2 Ingress and traffic flow
-All external traffic is secured and routed through several layers:
+Several layers secure and route all external traffic:
 - **DNS** points to the **Application Load Balancer (ALB)**.
 - A **Web Application Firewall (WAF)** protects the ALB by filtering out common web exploits.
 - The ALB terminates SSL/TLS and forwards traffic to the **Frontend Pods**.
@@ -88,10 +88,10 @@ All external traffic is secured and routed through several layers:
 ### 4.3 Secure secrets management with ESO
 Credentials are never hardcoded. The flow for managing secrets like database passwords and API keys follows a secure, GitOps-friendly pattern:
 
-1.  **Source of truth:** secrets are stored and managed in **AWS Secrets Manager**.
+1.  **Source of truth:** **AWS Secrets Manager** stores and manages all secrets.
 2.  **Synchronization:** the **External Secrets Operator (ESO)** running in the cluster watches for **External Secret** resources.
-3.  **Kubernetes secret creation:** ESO fetches the values from AWS and creates standard **Kubernetes Secrets**.
-4.  **Pod consumption:** the frontend and API server pods use **EKS Pod Identity** to assume specific IAM roles, granting them access only to the necessary secrets. This eliminates the need for long-lived credentials in the cluster.
+3.  **Kubernetes secret creation:** ESO fetches values from AWS and creates standard **Kubernetes Secrets**.
+4.  **Pod consumption:** the frontend and API server pods use **EKS Pod Identity** to assume specific IAM roles, granting access to the necessary secrets and nothing else. This eliminates the need for long-lived credentials in the cluster.
 
 ### 4.4 Helm values that matter in production
 The values template used by the EKS module controls the deployment. The following examples are the most useful knobs to call out for platform teams.
@@ -210,7 +210,7 @@ apiServer:
       initialDelaySeconds: 120
 ```
 
-The generous **initialDelaySeconds** (120 s) accommodates the API server's startup time, particularly during initial database migrations and vulnerability feed synchronization. The high **failureThreshold** on startup (60) prevents premature pod restarts during first-time initialization.
+The generous **initialDelaySeconds** (120 s) accommodates the API server's startup time, during initial database migrations and vulnerability feed synchronization. The high **failureThreshold** on startup (60) prevents premature pod restarts during first-time initialization.
 
 #### JVM tuning for large SBOM ingestion
 
@@ -229,7 +229,7 @@ extraEnv:
 The magic happens in the GitHub Actions pipelines, which automate the entire SBOM lifecycle from code commit to security analysis.
 
 ### 5.1 Pipeline triggers
-The pipelines are flexible and can be triggered by:
+The pipelines support three trigger modes:
 - **Schedule:** automated daily or weekly scans to catch new vulnerabilities in existing dependencies.
 - **Manual:** on-demand execution for ad-hoc analysis or testing.
 - **Pull request:** automatic SBOM generation and upload for PRs, allowing teams to "shift left" and see the security impact of a change before it merges.
@@ -251,7 +251,7 @@ The following architecture illustrates the GitHub Actions pipeline structure and
 
 ### Multi-stack generation strategy
 
-SBOM creation is standardized across six technology stacks without sacrificing ecosystem-specific optimizations:
+A single SBOM creation strategy covers six technology stacks without sacrificing ecosystem-specific optimizations:
 
 | Stack | Tool | Key Configuration |
 |-------|------|-------------------|
@@ -303,7 +303,7 @@ generateSBOM(){
 **Design decisions worth noting:**
 - **Production-only scope**—dev dependencies and test-scoped libraries don't ship to production, so excluding them reduces noise
 - **Lockfile enforcement**—guarantees reproducible SBOMs across environments
-- **Validation**—**jq** syntax verification prevents uploading malformed JSON to Dependency-Track
+- **Validation**—a **jq** syntax verification prevents uploading malformed JSON to Dependency-Track
 
 ### Handling complex project boundaries
 
@@ -471,7 +471,7 @@ curl_dt_upload(){
 
 #### Observability by design
 
-Execution state is surfaced directly in GitHub Actions using job summaries:
+The pipeline surfaces execution state directly in GitHub Actions using job summaries:
 
 ```bash
 # State tracking
@@ -511,7 +511,7 @@ The implementation of this automated SBOM pipeline marks a significant step forw
 
 **What this means for your team:**
 - **Visibility:** every team can now see what's in their apps.
-- **Proactive security:** vulnerabilities are caught earlier in the development cycle.
+- **Proactive security:** the pipeline catches vulnerabilities earlier in the development cycle.
 - **Compliance:** the organization is better positioned to meet evolving software supply chain security regulations.
 
 
