@@ -122,5 +122,9 @@
   "Backbase Meetups": {
     "avatar": "backbase.png",
     "role": "Meetup Organizer"
+  },
+  "Anil Kumar Mamidi": {
+    "avatar": "anilm.jpeg",
+    "role": "System Engineer - Backbase Services"
   }
 }
