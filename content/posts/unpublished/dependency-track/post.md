@@ -1,6 +1,6 @@
 # Dependency-Track
 
-Secure the Future of Your Software Supply Chain with OWASP Dependency-Track.
+Secure the Future of Your Software Supply Chain with OWASP Dependency-Track
 
 ![](assets/dependency-track-banner.png)
 
