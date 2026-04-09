@@ -122,5 +122,9 @@
   "Backbase Meetups": {
     "avatar": "backbase.png",
     "role": "Meetup Organizer"
+  },
+  "Sridhar Modalavalasa": {
+    "avatar": "sridharm.jpeg",
+    "role": "System Engineer - Backbase Services BDC India"
   }
 }
