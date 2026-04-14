@@ -5,7 +5,7 @@ Secure the Future of Your Software Supply Chain with OWASP Dependency-Track
 ![](assets/dependency-track-banner.png)
 
 Authors: Sridhar Modalavalasa
-Date: unpublished
+Date: 2026-04-14T12:09:13.491Z
 Category: devops
 
 tags: dependency-track, devsecops, appsec, sbom, supply chain security
