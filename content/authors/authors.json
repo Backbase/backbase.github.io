@@ -122,5 +122,9 @@
   "Backbase Meetups": {
     "avatar": "backbase.png",
     "role": "Meetup Organizer"
+  },
+  "Aravind": {
+    "avatar": "Aravind.png",
+    "role": "System Engineer - Customer Success"
   }
 }
