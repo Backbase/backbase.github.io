@@ -1,7 +1,6 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Pipe, PipeTransform } from '@angular/core';
-import { MarkdownService } from 'ngx-markdown';
+import { Pipe, PipeTransform } from '@angular/core';
 import { HeaderNode } from '../model/content.model';
+import { marked, Token, Tokens } from 'marked';
 
 @Pipe({
   name: 'headers',
@@ -9,25 +8,18 @@ import { HeaderNode } from '../model/content.model';
 })
 export class HeadersPipe implements PipeTransform {
   transform(markdown: string): HeaderNode[] {
-    const regExp = new RegExp(/<h\d(.*?)<\/h\d>/gm);
-    const matches = this.markdownService
-      .parse(markdown)
-      .toString()
-      .match(regExp);
-
-    const nodes: Element[] =
-      matches?.map(raw => {
-        const node = this.document.createElement('div');
-        node.innerHTML = raw;
-        return node.firstElementChild as Element;
-      }) ?? [];
-
-    const headings = nodes.map(node => ({
-      id: node.getAttribute('id') as string,
-      heading: node.textContent as string,
-      level: Number(node.tagName.replace(/\D/g, '')),
-      children: [],
-    }));
+    const tokens = marked.lexer(markdown);
+    const headings: HeaderNode[] = tokens
+      .filter((t): t is Tokens.Heading => t.type === 'heading')
+      .map(token => {
+        const text = this.extractText(token.tokens);
+        return {
+          id: text.toLocaleLowerCase().replace(/\W/gm, '-'),
+          heading: text,
+          level: token.depth > 1 ? token.depth : 2,
+          children: [],
+        };
+      });
 
     const title = headings.shift();
 
@@ -54,8 +46,15 @@ export class HeadersPipe implements PipeTransform {
       .splice(0, 1);
   }
 
-  constructor(
-    private markdownService: MarkdownService,
-    @Inject(DOCUMENT) private document: Document
-  ) {}
+  private extractText(tokens: Token[]): string {
+    return tokens.reduce<string>((result, token) => {
+      if ('tokens' in token && token.tokens) {
+        return result + this.extractText(token.tokens);
+      }
+      if ('text' in token) {
+        return result + (token as Tokens.Text).text;
+      }
+      return result;
+    }, '');
+  }
 }

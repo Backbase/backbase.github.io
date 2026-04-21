@@ -47,7 +47,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
+      - run: npm ci --ignore-scripts
       - run: |
           npm run build:utils
           npm run posts:update

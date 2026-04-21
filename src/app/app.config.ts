@@ -1,9 +1,9 @@
 import {
-  APP_INITIALIZER,
   ApplicationConfig,
   SecurityContext,
-  importProvidersFrom,
+  inject,
   isDevMode,
+  provideAppInitializer,
 } from '@angular/core';
 import {
   Router,
@@ -16,7 +16,7 @@ import {
 import { routes } from './app.routes';
 import { Meta, provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { MarkdownModule, MarkdownService } from 'ngx-markdown';
+import { MarkdownService, provideMarkdown, SANITIZE } from 'ngx-markdown';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import markdownConfig from './markdown.config';
 import { DOCUMENT } from '@angular/common';
@@ -49,12 +49,9 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideAnimations(),
     provideHttpClient(withFetch()),
-    importProvidersFrom(
-      MarkdownModule.forRoot({
-        loader: HttpClient,
-        sanitize: SecurityContext.NONE,
-      })
-    ),
+    provideMarkdown({
+      sanitize: { provide: SANITIZE, useValue: SecurityContext.NONE },
+    }),
     {
       provide: O11Y_CONFIG_TOKEN,
       useValue: <ObservabilityConfig>{
@@ -65,27 +62,23 @@ export const appConfig: ApplicationConfig = {
         enabled: !isDevMode(),
       },
     },
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      useFactory:
-        (...deps: any) =>
-        () =>
-          markdownConfig.apply(this, deps),
-      deps: [
-        MarkdownService,
-        DOCUMENT,
-        HtmlInMarkdownService,
-        AssetsService,
-        Router,
-      ],
-    },
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      useFactory: routeEvents,
-      deps: [Router, Meta, ObservabilityService],
-    },
+    provideAppInitializer(() => {
+      markdownConfig(
+        inject(MarkdownService),
+        inject(DOCUMENT),
+        inject(HtmlInMarkdownService),
+        inject(AssetsService),
+        inject(Router),
+      );
+    }),
+    provideAppInitializer(() => {
+      const fn = routeEvents(
+        inject(Router),
+        inject(Meta),
+        inject(ObservabilityService),
+      );
+      return fn();
+    }),
     {
       provide: AUTHORS_AVATAR_PATH_TOKEN,
       useValue: 'authors',
