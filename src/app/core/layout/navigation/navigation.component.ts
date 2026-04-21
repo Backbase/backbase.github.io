@@ -51,7 +51,7 @@ export class NavigationComponent implements OnInit {
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize(): void {
     this.defineView();
   }

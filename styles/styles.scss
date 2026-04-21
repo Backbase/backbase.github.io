@@ -13,18 +13,19 @@
 
 .light-theme {
   .mat-mdc-standard-chip.mat-light-primary {
-    --mdc-chip-elevated-container-color: #{map-get($backbase-primary, 100)};
+    @include mat.chips-overrides(
+      (
+        elevated-container-color: #{map-get($backbase-primary, 100)},
+      )
+    );
   }
-  .mat-mdc-slide-toggle {
-    --mdc-switch-unselected-track-color: #{map-get(
-        $backbase-secondary-light,
-        100
-      )};
-    --mdc-switch-unselected-focus-track-color: #{map-get(
-        $backbase-secondary-light,
-        50
-      )};
-  }
+
+  @include mat.slide-toggle-overrides(
+    (
+      unselected-track-color: #{map-get($backbase-secondary-light, 100)},
+      unselected-focus-track-color: #{map-get($backbase-secondary-light, 50)},
+    )
+  );
 }
 
 .dark-theme {
@@ -53,15 +54,35 @@
 }
 
 :root {
-  --mdc-typography-button-font-weight: bold;
-  --mdc-elevated-card-container-elevation: none;
-  --mdc-elevated-card-container-shape: 0;
-  --mdc-outlined-button-container-height: 50px;
-  --mdc-typography-button-letter-spacing: 0.03em;
+  @include mat.button-overrides(
+    (
+      filled-label-text-weight: bold,
+      outlined-label-text-weight: bold,
+      protected-label-text-weight: bold,
+      text-label-text-weight: bold,
+      tonal-label-text-weight: bold,
+      filled-label-text-tracking: 0.03em,
+      outlined-label-text-tracking: 0.03em,
+      protected-label-text-tracking: 0.03em,
+      text-label-text-tracking: 0.03em,
+      tonal-label-text-tracking: 0.03em,
+      outlined-container-height: 50px,
+    )
+  );
 
-  .mat-mdc-card {
-    --mdc-elevated-card-container-elevation: 0;
-  }
+  @include mat.card-overrides(
+    (
+      elevated-container-elevation: none,
+      elevated-container-shape: 0,
+      elevated-container-color: transparent,
+    )
+  );
+
+  @include mat.form-field-overrides(
+    (
+      filled-container-color: transparent,
+    )
+  );
 
   @each $size, $width in $breakpoints {
     --blog-breakpoint-#{$size}: #{$width};

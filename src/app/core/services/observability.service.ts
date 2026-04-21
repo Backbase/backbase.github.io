@@ -4,15 +4,16 @@ import {
   BatchSpanProcessor,
   TraceIdRatioBasedSampler,
 } from '@opentelemetry/sdk-trace-web';
+import type { SpanProcessor, ReadableSpan } from '@opentelemetry/sdk-trace-web';
 import { ZoneContextManager } from '@opentelemetry/context-zone-peer-dep';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
-import { Resource } from '@opentelemetry/resources';
+import { defaultResource, resourceFromAttributes } from '@opentelemetry/resources';
 import {
-  SEMRESATTRS_SERVICE_NAME,
-  SEMRESATTRS_SERVICE_VERSION,
+  ATTR_SERVICE_NAME,
+  ATTR_SERVICE_VERSION,
 } from '@opentelemetry/semantic-conventions';
 import { getWebAutoInstrumentations } from '@opentelemetry/auto-instrumentations-web';
-import opentelemetry, { Attributes, Span } from '@opentelemetry/api';
+import opentelemetry, { Attributes, Span, Context } from '@opentelemetry/api';
 
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { O11Y_CONFIG_TOKEN } from '../config/configuration-tokens';
@@ -41,38 +42,43 @@ export class ObservabilityService {
   private initiateTracking() {
     const { appName, version, url, apiKey } = this.config;
 
-    const resource = Resource.default()?.merge(
-      new Resource({
-        [SEMRESATTRS_SERVICE_NAME]: appName,
-        [SEMRESATTRS_SERVICE_VERSION]: version,
+    const resource = defaultResource().merge(
+      resourceFromAttributes({
+        [ATTR_SERVICE_NAME]: appName,
+        [ATTR_SERVICE_VERSION]: version,
         sessionId: this.getSessionId(),
       })
     );
 
+    const enrichmentProcessor: SpanProcessor = {
+      onStart: (span: Span) => {
+        span.setAttribute('view.name', document.title);
+        span.setAttribute(AttributeNames.HTTP_URL, document.location.href);
+      },
+      onEnd: (_span: ReadableSpan) => {},
+      forceFlush: () => Promise.resolve(),
+      shutdown: () => Promise.resolve(),
+    };
+
     const provider = new WebTracerProvider({
       resource,
       sampler: new TraceIdRatioBasedSampler(1),
+      spanProcessors: [
+        enrichmentProcessor,
+        new BatchSpanProcessor(
+          new OTLPTraceExporter({
+            url: url,
+            headers: {
+              'Bb-App-Key': apiKey,
+            },
+          })
+        ),
+      ],
     });
-
-    provider.addSpanProcessor(
-      new BatchSpanProcessor(
-        new OTLPTraceExporter({
-          url: url,
-          headers: {
-            'Bb-App-Key': apiKey,
-          },
-        })
-      )
-    );
 
     provider.register({
       contextManager: new ZoneContextManager(),
     });
-
-    provider.getActiveSpanProcessor().onStart = (span: Span) => {
-      span.setAttribute('view.name', document.title);
-      span.setAttribute(AttributeNames.HTTP_URL, document.location.href);
-    };
 
     registerInstrumentations({
       instrumentations: [

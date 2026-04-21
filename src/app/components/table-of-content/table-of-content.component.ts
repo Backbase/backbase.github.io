@@ -1,20 +1,15 @@
-import { FlatTreeControl } from '@angular/cdk/tree';
 import {
   AfterViewInit,
   Component,
   HostListener,
   Inject,
   Input,
-  OnInit,
+  ViewChild,
 } from '@angular/core';
-import {
-  MatTreeFlatDataSource,
-  MatTreeFlattener,
-  MatTreeModule,
-} from '@angular/material/tree';
+import { MatTree, MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { HeaderNode, HeaderTreeNode } from '../../core/model/content.model';
+import { HeaderNode } from '../../core/model/content.model';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DOCUMENT, NgClass } from '@angular/common';
 import { first } from 'rxjs';
@@ -27,13 +22,17 @@ import { first } from 'rxjs';
   styleUrl: './table-of-content.component.scss',
 })
 export class TableOfContentComponent implements AfterViewInit {
+  @ViewChild(MatTree) tree?: MatTree<HeaderNode>;
+
+  _headers: HeaderNode[] = [];
+
   @Input() set headers(headers: HeaderNode[]) {
-    this.dataSource.data = headers;
-    this.treeControl.expandAll();
+    this._headers = headers;
     if (headers.length) {
       this.offsetHeaders = this.createOffsets(headers);
       this.checkFirstHeader();
     }
+    queueMicrotask(() => this.tree?.expandAll());
   }
 
   @Input() current!: string;
@@ -42,7 +41,11 @@ export class TableOfContentComponent implements AfterViewInit {
 
   activeHeader: string | undefined = '';
 
-  @HostListener('document:scroll', ['$event'])
+  childrenAccessor = (node: HeaderNode) => node.children ?? [];
+
+  hasChild = (_: number, node: HeaderNode) => node.children?.length > 0;
+
+  @HostListener('document:scroll')
   public onViewportScroll() {
     if (this.offsetHeaders.length) {
       const scroll = Math.ceil(this.document.documentElement.scrollTop);
@@ -86,6 +89,7 @@ export class TableOfContentComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
+    this.tree?.expandAll();
     this.route.fragment.pipe(first()).subscribe(fragment => {
       if (fragment) {
         this.activeHeader = fragment;
@@ -93,31 +97,6 @@ export class TableOfContentComponent implements AfterViewInit {
       }
     });
   }
-
-  private _transformer = (node: HeaderNode, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.heading,
-      level: level,
-      id: node.id,
-    };
-  };
-
-  treeControl = new FlatTreeControl<HeaderTreeNode>(
-    node => node.level,
-    node => node.expandable
-  );
-
-  treeFlattener = new MatTreeFlattener(
-    this._transformer,
-    node => node.level,
-    node => node.expandable,
-    node => node.children
-  );
-
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
-  hasChild = (_: number, node: HeaderTreeNode) => node.expandable;
 
   private createOffsets(data: HeaderNode[]): string[] {
     return data.reduce(
@@ -141,11 +120,9 @@ export class TableOfContentComponent implements AfterViewInit {
       this.activeHeader = this.offsetHeaders[0];
     }
 
-    const offset = (
-      this.document.getElementById(this.activeHeader) as HTMLElement
-    ).offsetTop;
-    if (this.offsetHeaders.includes(this.activeHeader) && offset) {
-      this.document.documentElement.scrollTo(0, offset);
+    const el = this.document.getElementById(this.activeHeader!);
+    if (el && this.offsetHeaders.includes(this.activeHeader!)) {
+      this.document.documentElement.scrollTo(0, el.offsetTop);
     }
   }
 }
