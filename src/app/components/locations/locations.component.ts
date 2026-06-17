@@ -5,7 +5,6 @@ import { Location } from '../../core/model/locations.model';
 
 @Component({
   selector: 'blog-locations',
-  standalone: true,
   imports: [CommonModule, MatTabsModule],
   templateUrl: './locations.component.html',
   styleUrl: './locations.component.scss',

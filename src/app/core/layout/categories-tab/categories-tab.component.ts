@@ -8,7 +8,6 @@ import { PostsService } from '../../services/posts.service';
 
 @Component({
   selector: 'blog-categories-tab',
-  standalone: true,
   imports: [AsyncPipe, CategoriesComponent],
   templateUrl: './categories-tab.component.html',
   styleUrl: './categories-tab.component.scss',

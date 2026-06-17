@@ -15,7 +15,7 @@ jobs:
       - name: Should publish
         id: should-publish
         run: echo "should_publish=$([[ -d "content/posts/unpublished" ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
-      
+
   publish:
     runs-on: ubuntu-latest
     needs: check-unpublished
@@ -30,7 +30,7 @@ jobs:
           node-version: 20
       - name: Move article to current date directory
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm run build:utils
           npm run posts:publish
 
@@ -40,7 +40,7 @@ jobs:
           git config --local user.name "backbaseoss"
           git add content
           git commit -m "[BOT] Post published"
-      
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:

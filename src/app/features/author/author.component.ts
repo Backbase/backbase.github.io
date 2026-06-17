@@ -16,7 +16,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'blog-author',
-  standalone: true,
   imports: [
     AsyncPipe,
     PostsListComponent,

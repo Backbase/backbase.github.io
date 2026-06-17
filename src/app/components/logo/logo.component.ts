@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'blog-logo',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './logo.component.html',
   styleUrl: './logo.component.scss',

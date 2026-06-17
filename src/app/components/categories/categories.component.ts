@@ -5,7 +5,6 @@ import { Category } from '../../core/model/categories.model';
 
 @Component({
   selector: 'blog-categories',
-  standalone: true,
   imports: [CommonModule, MatTabsModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',

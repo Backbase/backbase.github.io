@@ -16,7 +16,6 @@ import { MeetupFooterComponent } from '../../components/meetup-footer/meetup-foo
 
 @Component({
   selector: 'blog-meetups',
-  standalone: true,
   imports: [
     GradientComponent,
     PostsListComponent,
