@@ -1,11 +1,17 @@
-import { DOCUMENT, NgClass, NgStyle } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { NgClass, NgStyle } from '@angular/common';
+import {
+  Component,
+  Inject,
+  Input,
+  DOCUMENT,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
   selector: 'blog-transition',
-  standalone: true,
   imports: [NgStyle, NgClass],
   templateUrl: './transition.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './transition.component.scss',
 })
 export class TransitionComponent {

@@ -2,8 +2,8 @@ import {
   APP_INITIALIZER,
   ApplicationConfig,
   SecurityContext,
-  importProvidersFrom,
   isDevMode,
+  DOCUMENT,
 } from '@angular/core';
 import {
   Router,
@@ -14,12 +14,20 @@ import {
 } from '@angular/router';
 
 import { routes } from './app.routes';
-import { Meta, provideClientHydration } from '@angular/platform-browser';
+import {
+  Meta,
+  provideClientHydration,
+  withNoIncrementalHydration,
+} from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { MarkdownModule, MarkdownService } from 'ngx-markdown';
+import {
+  MarkdownService,
+  provideMarkdown,
+  SANITIZE,
+} from 'ngx-markdown';
 import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 import markdownConfig from './markdown.config';
-import { DOCUMENT } from '@angular/common';
+
 import {
   AUTHORS_AVATAR_PATH_TOKEN,
   USE_PROCESSED_IMAGES,
@@ -46,15 +54,16 @@ export const appConfig: ApplicationConfig = {
         onSameUrlNavigation: 'reload',
       })
     ),
-    provideClientHydration(),
+    provideClientHydration(withNoIncrementalHydration()),
     provideAnimations(),
     provideHttpClient(withFetch()),
-    importProvidersFrom(
-      MarkdownModule.forRoot({
-        loader: HttpClient,
-        sanitize: SecurityContext.NONE,
-      })
-    ),
+    provideMarkdown({
+      loader: HttpClient,
+      sanitize: {
+        provide: SANITIZE,
+        useValue: SecurityContext.NONE,
+      },
+    }),
     {
       provide: O11Y_CONFIG_TOKEN,
       useValue: <ObservabilityConfig>{
@@ -69,9 +78,21 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       multi: true,
       useFactory:
-        (...deps: any) =>
+        (
+          markdownService: MarkdownService,
+          document: Document,
+          htmlInMarkdownService: HtmlInMarkdownService,
+          assetsService: AssetsService,
+          router: Router
+        ) =>
         () =>
-          markdownConfig.apply(this, deps),
+          markdownConfig(
+            markdownService,
+            document,
+            htmlInMarkdownService,
+            assetsService,
+            router
+          ),
       deps: [
         MarkdownService,
         DOCUMENT,

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Author } from '../../core/model/author.model';
 import { NgClass, NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -7,9 +7,9 @@ import { AvatarComponent } from '../avatar/avatar.component';
 
 @Component({
   selector: 'blog-author',
-  standalone: true,
   imports: [NgStyle, NgClass, RouterLink, AvatarComponent],
   templateUrl: './author.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './author.component.scss',
 })
 export class AuthorComponent {

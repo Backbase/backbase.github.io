@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,9 +8,9 @@ import { LocationsComponent } from '../../../components/locations/locations.comp
 
 @Component({
   selector: 'blog-locations-tab',
-  standalone: true,
   imports: [AsyncPipe, LocationsComponent],
   templateUrl: './locations-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './locations-tab.component.scss',
 })
 export class LocationsTabComponent {

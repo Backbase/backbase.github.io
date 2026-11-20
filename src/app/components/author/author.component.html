@@ -9,7 +9,7 @@
     }">
     <blog-avatar
       class="author__avatar"
-      [url]="author.displayAvatar?.[size]"
+      [url]="$safeNavigationMigration(author.displayAvatar?.[size])"
       format="circle"></blog-avatar>
     <div class="author__details">
       <div class="author__fullname">{{ author.fullname }}</div>

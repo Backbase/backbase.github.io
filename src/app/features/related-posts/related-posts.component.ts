@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Post } from '../../core/model/post.model';
 import { PostsService } from '../../core/services/posts.service';
 import { Observable, map } from 'rxjs';
@@ -8,9 +8,9 @@ import { DividerComponent } from '../../components/divider/divider.component';
 
 @Component({
   selector: 'blog-related-posts',
-  standalone: true,
   imports: [AsyncPipe, PostItemComponent, DividerComponent],
   templateUrl: './related-posts.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './related-posts.component.scss',
 })
 export class RelatedPostsComponent {

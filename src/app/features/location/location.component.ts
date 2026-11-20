@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostsListComponent } from '../../components/posts-list/posts-list.component';
 import { NavigationService } from '../../core/services/navigation.service';
@@ -21,7 +21,6 @@ import { Category } from '../../core/model/categories.model';
 
 @Component({
   selector: 'blog-location',
-  standalone: true,
   imports: [
     CommonModule,
     LocationsTabComponent,
@@ -37,6 +36,7 @@ import { Category } from '../../core/model/categories.model';
   ],
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [NavigationService],
 })
 export class LocationComponent {
@@ -57,7 +57,7 @@ export class LocationComponent {
         (post: Post) => post.location === location,
         (a, b) => this.compareByDate(a, b)
       )
-    ),
+    )
   );
   newestMeetup$ = this.findNewestMeetup$();
   authors$: Observable<AuthorsList> = this.authorsService.getAuthors();
@@ -75,30 +75,35 @@ export class LocationComponent {
   }
 
   private findNewestMeetup$() {
-    return combineLatest([
-      this.currentPage$,
-      this.location$,
-    ]).pipe(
-      switchMap(([_, loc]) => 
-        this.postsService.getPosts(
-          undefined,
-          undefined,
-          false,
-          post => this.isMeetupCategoryByLocation(post, loc),
-          (a, b) => this.compareByDate(a, b)
-        ).pipe(
-          map(result => {
-            const startOfToday = new Date();
-            startOfToday.setHours(0, 0, 0, 0);
+    return combineLatest([this.currentPage$, this.location$]).pipe(
+      switchMap(([_, loc]) =>
+        this.postsService
+          .getPosts(
+            undefined,
+            undefined,
+            false,
+            post => this.isMeetupCategoryByLocation(post, loc),
+            (a, b) => this.compareByDate(a, b)
+          )
+          .pipe(
+            map(result => {
+              const startOfToday = new Date();
+              startOfToday.setHours(0, 0, 0, 0);
 
-            return this.postsService.findSoonestPostAfter(result.posts, startOfToday.getTime());
-          })
-        )
+              return this.postsService.findSoonestPostAfter(
+                result.posts,
+                startOfToday.getTime()
+              );
+            })
+          )
       )
     );
   }
 
-  private isMeetupCategoryByLocation(post: Post, location: string | null): boolean {
+  private isMeetupCategoryByLocation(
+    post: Post,
+    location: string | null
+  ): boolean {
     return post.category === Category.meetups && post.location === location;
   }
 

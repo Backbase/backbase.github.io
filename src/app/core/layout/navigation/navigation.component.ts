@@ -1,5 +1,12 @@
-import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import {
+  Component,
+  HostListener,
+  Inject,
+  OnInit,
+  DOCUMENT,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { LogoComponent } from '../../../components/logo/logo.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +21,6 @@ import { DarkModeToggleComponent } from '../dark-mode-toggle/dark-mode-toggle.co
 
 @Component({
   selector: 'blog-navigation',
-  standalone: true,
   imports: [
     CommonModule,
     LogoComponent,
@@ -30,6 +36,7 @@ import { DarkModeToggleComponent } from '../dark-mode-toggle/dark-mode-toggle.co
     DarkModeToggleComponent,
   ],
   templateUrl: './navigation.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navigation.component.scss',
 })
 export class NavigationComponent implements OnInit {
@@ -51,7 +58,7 @@ export class NavigationComponent implements OnInit {
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize(): void {
     this.defineView();
   }

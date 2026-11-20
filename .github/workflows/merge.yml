@@ -27,10 +27,10 @@ jobs:
           token: ${{ secrets.BOSS_TOKEN }}
       - uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 24.22.3
       - name: Move article to current date directory
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm run build:utils
           npm run posts:publish
 

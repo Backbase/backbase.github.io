@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,7 +24,6 @@ import { ObservabilityService } from '../../core/services/observability.service'
 
 @Component({
   selector: 'blog-search',
-  standalone: true,
   imports: [
     FormsModule,
     MatFormFieldModule,
@@ -30,6 +35,7 @@ import { ObservabilityService } from '../../core/services/observability.service'
     HighlightDirective,
   ],
   templateUrl: './search.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search.component.scss',
 })
 export class SearchComponent implements OnInit {

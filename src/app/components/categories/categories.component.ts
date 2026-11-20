@@ -1,13 +1,19 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { Category } from '../../core/model/categories.model';
 
 @Component({
   selector: 'blog-categories',
-  standalone: true,
-  imports: [CommonModule, MatTabsModule],
+  imports: [MatTabsModule],
   templateUrl: './categories.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './categories.component.scss',
 })
 export class CategoriesComponent {

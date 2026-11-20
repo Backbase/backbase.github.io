@@ -3,7 +3,7 @@
   @for (author of authors$ | async; track $index) {
     <div class="authors__item" [routerLink]="'../' + author.url">
       <blog-avatar
-        [url]="author.displayAvatar?.lg"
+        [url]="$safeNavigationMigration(author.displayAvatar?.lg)"
         format="circle"
         class="authors__avatar"></blog-avatar>
       <div class="content">

@@ -30,9 +30,7 @@ async function moveUnpublishedDirectory(sourcePath, destinationRoot) {
     const unpublishedPath = path.join(sourcePath, articlePath);
     const filePath = path.join(unpublishedPath, 'post.md');
 
-    const utils = await loadEsmModule(
-      '../../dist/utils/esm2022/lib/permalink.mjs'
-    );
+    const utils = await loadEsmModule('../../dist/utils/fesm2022/utils.mjs');
 
     if (fs.existsSync(filePath)) {
       updateMetaDate(filePath);

@@ -6,6 +6,8 @@ import {
   Inject,
   Input,
   OnInit,
+  DOCUMENT,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   MatTreeFlatDataSource,
@@ -16,22 +18,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HeaderNode, HeaderTreeNode } from '../../core/model/content.model';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DOCUMENT, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { first } from 'rxjs';
 
 @Component({
   selector: 'blog-table-of-content',
-  standalone: true,
   imports: [MatTreeModule, MatButtonModule, MatIconModule, RouterLink, NgClass],
   templateUrl: './table-of-content.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './table-of-content.component.scss',
 })
 export class TableOfContentComponent implements AfterViewInit {
-  @Input() set headers(headers: HeaderNode[]) {
-    this.dataSource.data = headers;
+  @Input() set headers(headers: HeaderNode[] | null | undefined) {
+    const nodes = headers ?? [];
+    this.dataSource.data = nodes;
     this.treeControl.expandAll();
-    if (headers.length) {
-      this.offsetHeaders = this.createOffsets(headers);
+    if (nodes.length) {
+      this.offsetHeaders = this.createOffsets(nodes);
       this.checkFirstHeader();
     }
   }
@@ -42,7 +45,7 @@ export class TableOfContentComponent implements AfterViewInit {
 
   activeHeader: string | undefined = '';
 
-  @HostListener('document:scroll', ['$event'])
+  @HostListener('document:scroll')
   public onViewportScroll() {
     if (this.offsetHeaders.length) {
       const scroll = Math.ceil(this.document.documentElement.scrollTop);

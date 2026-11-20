@@ -3,25 +3,48 @@ import {
   WebTracerProvider,
   BatchSpanProcessor,
   TraceIdRatioBasedSampler,
+  type Span,
+  type SpanProcessor,
+  type ReadableSpan,
 } from '@opentelemetry/sdk-trace-web';
 import { ZoneContextManager } from '@opentelemetry/context-zone-peer-dep';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
-import { Resource } from '@opentelemetry/resources';
 import {
-  SEMRESATTRS_SERVICE_NAME,
-  SEMRESATTRS_SERVICE_VERSION,
+  defaultResource,
+  resourceFromAttributes,
+} from '@opentelemetry/resources';
+import {
+  ATTR_SERVICE_NAME,
+  ATTR_SERVICE_VERSION,
 } from '@opentelemetry/semantic-conventions';
 import { getWebAutoInstrumentations } from '@opentelemetry/auto-instrumentations-web';
-import opentelemetry, { Attributes, Span } from '@opentelemetry/api';
+import opentelemetry, { Attributes, Context } from '@opentelemetry/api';
 
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, DOCUMENT } from '@angular/core';
 import { O11Y_CONFIG_TOKEN } from '../config/configuration-tokens';
 import { ObservabilityConfig } from '../model/observability.model';
 import { Router } from '@angular/router';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { AttributeNames } from '@opentelemetry/instrumentation-user-interaction';
 
 const ANONYMOUS_USER_ID = 'uid';
+
+class ViewAttributesSpanProcessor implements SpanProcessor {
+  onStart(span: Span, _parentContext: Context): void {
+    span.setAttribute('view.name', document.title);
+    span.setAttribute(AttributeNames.URL_FULL, document.location.href);
+  }
+
+  onEnd(_span: ReadableSpan): void {}
+
+  forceFlush(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  shutdown(): Promise<void> {
+    return Promise.resolve();
+  }
+}
 
 @Injectable({
   providedIn: 'root',
@@ -41,10 +64,10 @@ export class ObservabilityService {
   private initiateTracking() {
     const { appName, version, url, apiKey } = this.config;
 
-    const resource = Resource.default()?.merge(
-      new Resource({
-        [SEMRESATTRS_SERVICE_NAME]: appName,
-        [SEMRESATTRS_SERVICE_VERSION]: version,
+    const resource = defaultResource().merge(
+      resourceFromAttributes({
+        [ATTR_SERVICE_NAME]: appName,
+        [ATTR_SERVICE_VERSION]: version,
         sessionId: this.getSessionId(),
       })
     );
@@ -52,27 +75,22 @@ export class ObservabilityService {
     const provider = new WebTracerProvider({
       resource,
       sampler: new TraceIdRatioBasedSampler(1),
+      spanProcessors: [
+        new ViewAttributesSpanProcessor(),
+        new BatchSpanProcessor(
+          new OTLPTraceExporter({
+            url: url,
+            headers: {
+              'Bb-App-Key': apiKey,
+            },
+          })
+        ),
+      ],
     });
-
-    provider.addSpanProcessor(
-      new BatchSpanProcessor(
-        new OTLPTraceExporter({
-          url: url,
-          headers: {
-            'Bb-App-Key': apiKey,
-          },
-        })
-      )
-    );
 
     provider.register({
       contextManager: new ZoneContextManager(),
     });
-
-    provider.getActiveSpanProcessor().onStart = (span: Span) => {
-      span.setAttribute('view.name', document.title);
-      span.setAttribute(AttributeNames.HTTP_URL, document.location.href);
-    };
 
     registerInstrumentations({
       instrumentations: [

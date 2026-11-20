@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DividerComponent } from '../../components/divider/divider.component';
 import { GradientComponent } from '../../components/gradient/gradient.component';
 import { PostsService } from '../../core/services/posts.service';
@@ -16,7 +16,6 @@ import { MeetupFooterComponent } from '../../components/meetup-footer/meetup-foo
 
 @Component({
   selector: 'blog-meetups',
-  standalone: true,
   imports: [
     GradientComponent,
     PostsListComponent,
@@ -29,6 +28,7 @@ import { MeetupFooterComponent } from '../../components/meetup-footer/meetup-foo
   ],
   providers: [NavigationService],
   templateUrl: './meetups.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './meetups.component.scss',
 })
 export class MeetupsComponent {
@@ -70,7 +70,10 @@ export class MeetupsComponent {
           const startOfToday = new Date();
           startOfToday.setHours(0, 0, 0, 0);
 
-          return this.postsService.findSoonestPostAfter(result.posts, startOfToday.getTime());
+          return this.postsService.findSoonestPostAfter(
+            result.posts,
+            startOfToday.getTime()
+          );
         })
       );
   }

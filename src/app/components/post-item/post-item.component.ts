@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { Post } from '../../core/model/post.model';
@@ -13,7 +13,6 @@ import { PostImageComponent } from '../post-image/post-image.component';
 
 @Component({
   selector: 'blog-post-item',
-  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,
@@ -26,6 +25,7 @@ import { PostImageComponent } from '../post-image/post-image.component';
     PostImageComponent,
   ],
   templateUrl: './post-item.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './post-item.component.scss',
 })
 export class PostItemComponent {
