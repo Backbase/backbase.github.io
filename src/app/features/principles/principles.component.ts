@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PrinciplesHeaderComponent } from '../../components/principles-header/principles-header.component';
 import { DividerComponent } from '../../components/divider/divider.component';
 import { GradientComponent } from '../../components/gradient/gradient.component';
@@ -9,7 +9,6 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'blog-principles',
-  standalone: true,
   imports: [
     PrinciplesHeaderComponent,
     DividerComponent,
@@ -18,6 +17,7 @@ import { AsyncPipe } from '@angular/common';
     AsyncPipe,
   ],
   templateUrl: './principles.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './principles.component.scss',
 })
 export class PrinciplesComponent {

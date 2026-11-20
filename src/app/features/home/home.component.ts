@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, switchMap } from 'rxjs';
 import { Post, Posts } from '../../core/model/post.model';
@@ -22,7 +22,6 @@ import { TransitionComponent } from '../../components/transition/transition.comp
 
 @Component({
   selector: 'blog-home',
-  standalone: true,
   imports: [
     CommonModule,
     PostFeaturedComponent,
@@ -41,6 +40,7 @@ import { TransitionComponent } from '../../components/transition/transition.comp
   ],
   providers: [NavigationService],
   templateUrl: './home.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {

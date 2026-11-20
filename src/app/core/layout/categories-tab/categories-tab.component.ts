@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,9 +8,9 @@ import { PostsService } from '../../services/posts.service';
 
 @Component({
   selector: 'blog-categories-tab',
-  standalone: true,
   imports: [AsyncPipe, CategoriesComponent],
   templateUrl: './categories-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './categories-tab.component.scss',
 })
 export class CategoriesTabComponent {

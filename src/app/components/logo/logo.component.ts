@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'blog-logo',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './logo.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './logo.component.scss',
 })
 export class LogoComponent {

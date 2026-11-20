@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { GradientComponent } from '../../components/gradient/gradient.component';
 import { map, Observable } from 'rxjs';
 import { Author } from '../../core/model/author.model';
@@ -9,9 +9,9 @@ import { AvatarComponent } from '../../components/avatar/avatar.component';
 
 @Component({
   selector: 'blog-authors',
-  standalone: true,
   imports: [CommonModule, GradientComponent, RouterLink, AvatarComponent],
   templateUrl: './authors.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './authors.component.scss',
 })
 export class AuthorsComponent {

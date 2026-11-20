@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ButtonComponent } from '../../components/button/button.component';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
@@ -6,9 +6,9 @@ import { ObservabilityService } from '../../core/services/observability.service'
 
 @Component({
   selector: 'blog-not-found',
-  standalone: true,
   imports: [ButtonComponent, MatButtonModule, RouterLink],
   templateUrl: './not-found.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./not-found.component.scss'],
 })
 export class NotFoundComponent implements OnInit {

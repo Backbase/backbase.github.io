@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+
 import { MatCardModule } from '@angular/material/card';
 import { Post } from '../../core/model/post.model';
 import { RouterLink } from '@angular/router';
@@ -15,9 +15,7 @@ export enum Reason {
 
 @Component({
   selector: 'blog-post-featured',
-  standalone: true,
   imports: [
-    CommonModule,
     MatCardModule,
     ReadMoreButtonComponent,
     PostUrlPipe,
@@ -26,6 +24,7 @@ export enum Reason {
     PostImageComponent,
   ],
   templateUrl: './post-featured.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './post-featured.component.scss',
 })
 export class PostFeaturedComponent {

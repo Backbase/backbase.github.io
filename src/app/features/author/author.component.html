@@ -9,7 +9,7 @@
 
       <blog-avatar
         class="author__avatar"
-        [url]="author.displayAvatar?.lg"
+        [url]="$safeNavigationMigration(author.displayAvatar?.lg)"
         [shadow]="true"
         format="square"></blog-avatar>
     </header>

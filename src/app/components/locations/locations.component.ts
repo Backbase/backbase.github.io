@@ -1,13 +1,19 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { Location } from '../../core/model/locations.model';
 
 @Component({
   selector: 'blog-locations',
-  standalone: true,
-  imports: [CommonModule, MatTabsModule],
+  imports: [MatTabsModule],
   templateUrl: './locations.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './locations.component.scss',
 })
 export class LocationsComponent {

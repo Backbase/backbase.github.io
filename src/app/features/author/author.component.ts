@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthorsService } from '../../core/services/authors.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map, Observable, switchMap, tap, withLatestFrom } from 'rxjs';
@@ -16,7 +16,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'blog-author',
-  standalone: true,
   imports: [
     AsyncPipe,
     PostsListComponent,
@@ -28,6 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
   ],
   templateUrl: './author.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './author.component.scss',
 })
 export class AuthorComponent {

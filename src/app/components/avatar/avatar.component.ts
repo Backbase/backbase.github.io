@@ -4,14 +4,15 @@ import {
   ElementRef,
   Input,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'blog-avatar',
-  standalone: true,
   imports: [NgClass],
   templateUrl: './avatar.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './avatar.component.scss',
 })
 export class AvatarComponent implements AfterViewInit {

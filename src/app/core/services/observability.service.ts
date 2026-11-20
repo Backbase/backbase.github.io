@@ -14,11 +14,11 @@ import {
 import { getWebAutoInstrumentations } from '@opentelemetry/auto-instrumentations-web';
 import opentelemetry, { Attributes, Span } from '@opentelemetry/api';
 
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, DOCUMENT } from '@angular/core';
 import { O11Y_CONFIG_TOKEN } from '../config/configuration-tokens';
 import { ObservabilityConfig } from '../model/observability.model';
 import { Router } from '@angular/router';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { AttributeNames } from '@opentelemetry/instrumentation-user-interaction';
 
 const ANONYMOUS_USER_ID = 'uid';

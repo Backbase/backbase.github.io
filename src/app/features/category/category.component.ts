@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostsListComponent } from '../../components/posts-list/posts-list.component';
 import { NavigationService } from '../../core/services/navigation.service';
@@ -20,7 +20,6 @@ import { TransitionComponent } from '../../components/transition/transition.comp
 
 @Component({
   selector: 'blog-category',
-  standalone: true,
   imports: [
     CommonModule,
     CategoriesTabComponent,
@@ -36,6 +35,7 @@ import { TransitionComponent } from '../../components/transition/transition.comp
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [NavigationService],
 })
 export class CategoryComponent {

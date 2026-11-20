@@ -1,13 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'blog-gradient',
-  standalone: true,
   imports: [CommonModule],
   template: `
     <div class="gradient-container" [ngStyle]="{ height: this.height }"></div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './gradient.component.scss',
 })
 export class GradientComponent {

@@ -1,6 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Pipe, PipeTransform } from '@angular/core';
-import { MarkdownService } from 'ngx-markdown';
+import { Inject, Pipe, PipeTransform, DOCUMENT } from '@angular/core';
+import { marked, Renderer, Tokens } from 'marked';
 import { HeaderNode } from '../model/content.model';
 
 @Pipe({
@@ -8,16 +7,31 @@ import { HeaderNode } from '../model/content.model';
   standalone: true,
 })
 export class HeadersPipe implements PipeTransform {
+  constructor(@Inject(DOCUMENT) private document: Document) {}
+
   transform(markdown: string): HeaderNode[] {
+    if (!markdown) {
+      return [];
+    }
+
+    const doc = this.document;
+    const renderer = new Renderer();
+    renderer.heading = function ({ tokens, depth }: Tokens.Heading) {
+      const text = this.parser.parseInline(tokens);
+      const auxDiv = doc.createElement('div');
+      auxDiv.innerHTML = text;
+      const id = auxDiv.textContent?.toLocaleLowerCase().replace(/\W/gm, '-');
+      const level = depth > 1 ? depth : 2;
+      return `<h${level} id="${id}">${text}</h${level}>`;
+    };
+
+    const html = marked.parse(markdown, { renderer, async: false }) as string;
     const regExp = new RegExp(/<h\d(.*?)<\/h\d>/gm);
-    const matches = this.markdownService
-      .parse(markdown)
-      .toString()
-      .match(regExp);
+    const matches = html.match(regExp);
 
     const nodes: Element[] =
       matches?.map(raw => {
-        const node = this.document.createElement('div');
+        const node = doc.createElement('div');
         node.innerHTML = raw;
         return node.firstElementChild as Element;
       }) ?? [];
@@ -53,9 +67,4 @@ export class HeadersPipe implements PipeTransform {
       )
       .splice(0, 1);
   }
-
-  constructor(
-    private markdownService: MarkdownService,
-    @Inject(DOCUMENT) private document: Document
-  ) {}
 }

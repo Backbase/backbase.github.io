@@ -1,11 +1,23 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import {
+  Inject,
+  Injectable,
+  PLATFORM_ID,
+  DOCUMENT,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HtmlInMarkdownService {
-  constructor(@Inject(DOCUMENT) private document: Document) {}
+  private readonly isBrowser: boolean;
+
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) platformId: object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   add(html: string) {
     if (html.startsWith('<br') || html.startsWith('<!--')) {
@@ -16,13 +28,22 @@ export class HtmlInMarkdownService {
   }
 
   parseAll() {
+    if (!this.isBrowser) {
+      return;
+    }
+
     const frames = this.document.querySelectorAll('iframe[data-content]');
     frames.forEach(iframe => {
+      const contentWindow = (iframe as HTMLIFrameElement).contentWindow;
+      if (!contentWindow) {
+        return;
+      }
+
       const content = this.document.defaultView?.window.atob?.(
         iframe.getAttribute('data-content') ?? ''
       );
       iframe.removeAttribute('data-content');
-      const frameDoc = (iframe as any).contentWindow.document as Document;
+      const frameDoc = contentWindow.document;
       frameDoc.open();
       frameDoc.write(`
       <html>

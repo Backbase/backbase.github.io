@@ -2,8 +2,8 @@ a {
   .arrow {
     transform: translateX(-3px);
     transition: 0.15s ease-out transform;
-    background: var(--mdc-text-button-label-text-color);
-    color: var(--mat-full-pseudo-checkbox-selected-checkmark-color);
+    background: var(--mat-button-text-label-text-color);
+    color: var(--mat-pseudo-checkbox-full-selected-checkmark-color);
     width: 1.2em;
     height: 1.2em;
     display: inline-block;

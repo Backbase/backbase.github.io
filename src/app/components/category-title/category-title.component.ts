@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Category } from '../../core/model/categories.model';
 
 @Component({
   selector: 'blog-category-title',
-  standalone: true,
   imports: [],
   templateUrl: './category-title.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './category-title.component.scss',
 })
 export class CategoryTitleComponent {
